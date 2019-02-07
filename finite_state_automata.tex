@@ -1,0 +1,29 @@
+\subsection{Finite-state automata}
+
+\begin{definition}
+	A finite-state automaton $\mathcal{A}$ is a tuple $\langle \Sigma, Q, I, F, \Delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $I \subseteq Q$ is a set of initial states, $F \subseteq Q$ is a set of final states and $\Delta : Q \times \Sigma \cup \{ \epsilon \} \times Q$ is a relation of transitions.
+\end{definition}
+
+\begin{definition}
+	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ is a non-empty sequence $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in \interval{1}{n-1}(\sigma_i \in \Sigma \cup \{ \epsilon \})$ and $\forall i \in \interval{1}{n-1}(\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta)$.
+\end{definition}
+
+\begin{definition}
+	The label of a path $\pi = \langle q_1, \sigma_1, q_2 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ in a finite-state automaton $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ is a word of length $n-1$ over $\Sigma$ defined as $label(\pi) = \sigma_1 \dots \sigma_{n-1}$.
+\end{definition}
+
+\begin{definition}
+	A path $\pi = \langle q_1, \sigma_1, q_2 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ in a finite-state automaton $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ is successful if $q_1 \in I \land q_n \in F$.
+\end{definition}
+
+\begin{definition}
+	The language recognised by a finite-state automaton $\mathcal{A}$ is the set $\mathcal{L}(\mathcal{A}) = \{ label(\pi) \mid \pi$ is a successful path in $\mathcal{A} \}$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a finite-state automaton. The $\epsilon$-closure of a state $q \in Q$ is the minimal set $\Delta_\epsilon(q)$ such that $q \in \Delta_\epsilon(q)$ and $\forall p \in \Delta_\epsilon(q)\; \forall \langle p, \epsilon, r \rangle \in \Delta (r \in \Delta_\epsilon(q))$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a finite-state automaton. The generalised relation of transitions $\Delta^* : Q \times \Sigma^* \times Q$ is defined as the minimal relation such that $\Delta \subseteq \Delta^*$ and $\forall \langle q_1, w, q_2 \rangle \in \Delta^*\; \forall \langle q_2, \sigma, q_3 \rangle \in \Delta(\langle q_1, w\sigma, q_3 \rangle \in \Delta^*)$.
+\end{definition}

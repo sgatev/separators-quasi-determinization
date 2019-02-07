@@ -1,0 +1,25 @@
+\subsection{Alphabets, words and languages}
+
+\begin{definition}
+	An alphabet $\Sigma$ is a finite set of characters.
+\end{definition}
+
+\begin{definition}
+	A word $w$ of length $n \in \mathbb{N}$ over an alphabet $\Sigma$ is a tuple $\langle \sigma_1, \sigma_2, \dots, \sigma_n \rangle$ where $\forall i \in \interval{1}{n}(\sigma_i \in \Sigma)$. The notation $\sigma_1\sigma_2\dots\sigma_n$ is preferred over $\langle \sigma_1, \sigma_2, \dots, \sigma_n \rangle$ for words.
+\end{definition}
+
+\begin{definition}
+	Let $\Sigma$ be an alphabet. Let $w' = \sigma'_1\sigma'_2\dots\sigma'_n$ be a word of length $n$ over $\Sigma$. Let $w'' = \sigma''_1\sigma''_2\dots\sigma''_m$ be a word of length $m$ over $\Sigma$. The concatenation of $w'$ and $w''$ is a word of length $n+m$ over $\Sigma$ defined as $w'w'' = \sigma_1' \dots \sigma_n' \sigma_1'' \dots \sigma_m''$.
+\end{definition}
+
+\begin{definition}
+	Let $\epsilon$ denote the unique word of length $0$ over any alphabet. It follows that $w\epsilon = \epsilon w = w$ for any word $w$.
+\end{definition}
+
+\begin{definition}
+	Let $\Sigma$ be an alphabet. Let $\Sigma^n = \Sigma^{n-1} \times \Sigma$ be the set of all words of length $n$ over $\Sigma$ where $\Sigma^0 = \{ \epsilon \}$. Let $\Sigma^* = \bigcup_{i = 0}^{\infty} \Sigma^i$ denote the set of all words over $\Sigma$.
+\end{definition}
+
+\begin{definition}
+	A language $L$ over an alphabet $\Sigma$ is a subset $L \subseteq \Sigma^*$.
+\end{definition}
