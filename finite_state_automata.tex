@@ -27,3 +27,40 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a finite-state automaton. The generalised relation of transitions $\Delta^* : Q \times \Sigma^* \times Q$ is defined as the minimal relation such that $\Delta \subseteq \Delta^*$ and $\forall \langle q_1, w, q_2 \rangle \in \Delta^*\; \forall \langle q_2, \sigma, q_3 \rangle \in \Delta(\langle q_1, w\sigma, q_3 \rangle \in \Delta^*)$.
 \end{definition}
+
+\begin{definition}
+	A deterministic finite-state automaton $\mathcal{A}$ is a tuple $\langle \Sigma, Q, i, F, \delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $i \in Q$ is an initial state, $F \subseteq Q$ is a set of final states and $\delta : Q \times \Sigma \rightarrow Q$ is a function of transitions.
+\end{definition}
+
+\begin{definition}
+	A path $\pi$ in a deterministic finite-state automaton $\mathcal{A} = \langle \Sigma, Q, i, F, \delta \rangle$ is a non-empty sequence $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in \interval{1}{n-1}(\sigma_i \in \Sigma)$ and $\forall i \in \interval{1}{n-1}(q_{i+1} = \delta(q_i, \sigma_i))$.
+\end{definition}
+
+\begin{definition}
+	The label of a path $\pi = \langle q_1, \sigma_1, q_2 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ in a deterministic finite-state automaton $\mathcal{A} = \langle \Sigma, Q, i, F, \delta \rangle$ is a word of length $n-1$ over $\Sigma$ defined as $label(\pi) = \sigma_1 \dots \sigma_{n-1}$.
+\end{definition}
+
+\begin{definition}
+	A path $\pi = \langle q_1, \sigma_1, q_2 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ in a deterministic finite-state automaton $\mathcal{A} = \langle \Sigma, Q, i, F, \delta \rangle$ is successful if $q_1 = i \land q_n \in F$.
+\end{definition}
+
+\begin{definition}
+	The language recognised by a deterministic finite-state automaton $\mathcal{A}$ is the set $\mathcal{L}(\mathcal{A}) = \{ label(\pi) \mid \pi$ is a successful path in $\mathcal{A} \}$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, i, F, \delta \rangle$ be a deterministic finite-state automaton. The generalised function of transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined as the minimal function such that $\forall q_1 \in Q\; \forall \sigma \in \Sigma(q_2 = \delta(q_1, \sigma) \implies q_2 = \delta^*(q_1, \sigma))$ and $\forall q_1 \in Q\; \forall w \in \Sigma^*\; \forall \sigma \in \Sigma(q_2 = \delta^*(q_1, w) \land q_3 = \delta(q_2, \sigma) \implies q_3 = \delta^*(q_1, w\sigma))$.
+\end{definition}
+
+\begin{theorem}[Rabin-Scott, see \cite{RS59}]
+	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a finite-state automaton. We can construct a deterministic finite-state automaton $\mathcal{A'} = \langle \Sigma, Q', i, F', \delta \rangle$ such that $\mathcal{L} ( \mathcal{A'} ) = \mathcal{L} ( \mathcal{A} )$ where $Q' \subseteq 2^{Q}$, $F' = \{ q' \in Q' \mid q' \cap F \neq \varnothing \}$ and $\forall q' \in Q'\; \forall \sigma \in \Sigma(\delta(q', \sigma) = \bigcup_{q \in q'} \Delta(q, \sigma) \cup \Delta_\epsilon(q))$.
+\end{theorem}
+
+\begin{corollary}
+	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a finite-state automaton and\\
+	$\mathcal{A'} = \langle \Sigma, Q', i, F', \delta \rangle$ be the deterministic finite-state automaton derived from $\mathcal{A}$ by applying the Rabin-Scott construction. Then $\lvert \delta \rvert \in \mathcal{O}(\lvert 2^Q \rvert)$.
+\end{corollary}
+
+\begin{proof}
+	$\lvert \delta \rvert \leq \lvert Q' \rvert \times \lvert \Sigma \rvert \leq \lvert 2^Q \rvert \times \lvert \Sigma \rvert \in \mathcal{O}(\lvert 2^Q \rvert)$
+\end{proof}
