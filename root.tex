@@ -1,42 +1,33 @@
 \documentclass[a4paper]{article}
 
-\usepackage[english]{babel}
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{interval}
+\usepackage[english]{babel}
 \usepackage[hidelinks]{hyperref}
-\usepackage{comment}
-\usepackage{amssymb}
-\usepackage{mathtools}
-\usepackage{pgfplots}
-\usepackage{enumitem}
-\usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
-\usetikzlibrary{automata,positioning}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{interval}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 
 \newtheorem{definition}{Definition}[subsection]
 \newtheorem{theorem}{Theorem}[subsection]
 \newtheorem{corollary}{Corollary}[theorem]
-\newtheorem{proofpart}{Part}[theorem]
-\newtheorem*{case}{Case}
+\newtheorem{proposition}{Proposition}[subsection]
 
-\title{Separators for\\quasi-determinization of\\finite-state automata}
+\title{Separators for quasi-determinization of finite-state automata}
 \author{Stanislav Gatev}
 
 \begin{document}
-
 \maketitle
-
 \tableofcontents
-
+\input{introduction.tex}
 \input{preliminaries.tex}
-
 \input{quasideterministic_finite_state_automata.tex}
-
 \input{references.tex}
-
 \end{document}

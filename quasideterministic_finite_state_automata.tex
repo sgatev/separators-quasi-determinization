@@ -1,111 +1,159 @@
-\section{Quasi-deterministic finite-state devices}
+\section{Separated finite-state automata}
 
-\subsection{Quasi-deterministic finite-state automata}
+\begin{definition}
+	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
+	finite-state automaton. $\mathcal{A}$ is $k$-separated if there exists
+	a partition $Q = S \cup \bigcup_{i=1}^k{Q_i}$ such that $\forall i, j
+	\in \interval{1}{k}, i \neq j (\hat{\Delta}(Q_i, \Sigma) \cap Q_j =
+	\varnothing)$.
+\end{definition}
+
+\subsection{Quasi-determinization}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton and let $Q = S \cup
+	\bigcup_{i=1}^k{Q_i}$. For $i \in \interval{1}{k}$ we define the
+	transition functions $\mu_i : \prod_{r=1}^k{P_r} \times \Sigma
+	\rightarrow 2^{P_i}$ as $\forall \langle q^1, q^2, \dots, q^k \rangle
+	\in \prod_{r=1}^k{P_r} \forall \sigma \in \Sigma
+	(\mu_i(\langle q^1, q^2, \dots, q^k \rangle, \sigma)
+		= (\Delta^*(q^i, \sigma) \cap P_i) \cup (\bigcup_{r = 1, r \neq i}^k{
+	\Delta^*(q^r, \sigma) \cap S}))$ where $P_i = Q_i \cup S$.
+\end{definition}
 
 \begin{theorem}
-	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
-	finite-state automaton. Let the partition $Q = S \cup Q_1 \cup Q_2$
-	be such that $\forall q \in Q_1 \forall \sigma \in \Sigma
-	(\Delta^*(q, \sigma) \cap Q_2 = \varnothing)$ and $\forall
-	q \in Q_2 \forall \sigma \in \Sigma (\Delta^*(q, \sigma) \cap Q_1 =
-	\varnothing)$. We can construct a deterministic finite-state automaton
-	$\mathcal{A'}$ such that $\mathcal{L} (\mathcal{A'} ) = \mathcal{L} (
-	\mathcal{A} )$.
+	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton and let $Q = S \cup \bigcup_{i=1}^k{Q_i}$.
+	We can construct a deterministic
+	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
+	(\mathcal{A'} ) = \mathcal{L} ( \mathcal{A} )$.
 \end{theorem}
 
 \begin{proof}
-	Let $P_1 = Q_1 \cup S$, $P_2 = Q_2 \cup S$. Consider the automaton
-	$\mathcal{A'} = \langle \Sigma, Q', i, F', \delta \rangle$ where
+	Let $P_r = Q_r \cup S$ for $r \in \interval{1}{k}$. Consider the automaton
+	$\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$ where
 
 	\begin{enumerate}
-		\item $Q' = 2^{P_1} \times 2^{P_2}$;
-		\item $i = \langle P_1 \cap I, P_2 \cap I \rangle$;
-		\item $F' = \{ \langle q', q'' \rangle \in Q' \mid q' \cap F
-			\neq \varnothing \lor q'' \cap F \neq \varnothing \}$;
-		\item $\forall \langle q', q'' \rangle \in Q'\; \forall \sigma
-			\in \Sigma(\delta(\langle q', q'' \rangle, \sigma) =\\
-				\langle (\Delta^*(q', \sigma) \cap P_1) \cup (\Delta^*(q'', \sigma) \cap S),
-			(\Delta^*(q'', \sigma) \cap P_2) \cup (\Delta^*(q', \sigma) \cap S) \rangle)$.
+		\item $Q' = \prod_{r=1}^k{2^{P_r}}$;
+		\item $i = \langle P_1 \cap I, P_2 \cap I, \dots, P_k \cap I \rangle$;
+		\item $F' = \{ \langle q^1, q^2, \dots, q^k \rangle \in Q' \mid \exists r \in \interval{1}{k} (q^r \cap F \neq \varnothing) \}$;
+		\item $\forall q' \in Q'\; \forall \sigma
+			\in \Sigma(\delta(q', \sigma) =
+			\langle \mu_1(q', \sigma), \mu_2(q', \sigma), \dots, \mu_k(q', \sigma) \rangle)$.
 	\end{enumerate}
-
-	\begin{case}We show that every successful path in $\mathcal{A}$ is also a successful
-		path in $\mathcal{A'}$ by induction on the states visited in the path.
-		Let $\pi = \langle q_1, \sigma_1, q_2 \rangle \ldots
-		\langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ be a successful path
-		in $\mathcal{A}$. Then
-		\begin{enumerate}
-			\item $q_1 \in P_1 \cap I \lor q_1 \in P_2 \cap I \implies q_1 \in q_1' \lor q_1 \in q_1''$ where $\langle q_1', q_1'' \rangle = i$.
-			\item Let $\delta^*(i, \sigma_1 \dots \sigma_{i-1}) = \langle q_i', q_i'' \rangle$ and $q_i \in q_i' \lor q_i \in q_i''$.
-				Then $\delta(\langle q_i', q_i'' \rangle, \sigma_i) = \langle q_{i+1}', q_{i+1}'' \rangle$ where\\\\
-				$\begin{aligned}
-					q_{i+1}' &= (\Delta^*(q_i', \sigma_i) \cap P_1) \cup (\Delta^*(q_i'', \sigma_i) \cap S)\\
-					&= \Big[ \big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_1 \Big] \cup \Big[ \big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big]  \cap S \Big]\\
-					&= \Big[ \big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_1 \Big] \cup \Big[ \big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big]  \cap P_1 \Big]\\
-					&= \big[ \bigcup_{q \in q_i' \cup q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_1
-				\end{aligned}$\\
-				$\begin{aligned}
-					q_{i+1}'' &= (\Delta^*(q_i'', \sigma_i) \cap P_2) \cup (\Delta^*(q_i', \sigma_i) \cap S) \rangle)\\
-					&= \Big[ \big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_2 \Big] \cup \Big[ \big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap S \Big]\\
-					&= \Big[ \big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_2 \Big] \cup \Big[ \big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_2 \Big]\\
-					&= \big[ \bigcup_{q \in q_i' \cup q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_2
-				\end{aligned}$\\
-				$\begin{aligned}
-					q_{i+1} \in \Delta(q_i, \sigma_i) \cup \Delta_\epsilon(q_i)
-					&\implies q_{i+1} \in \bigcup_{q \in q_i' \cup q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q)\\
-					&\implies \begin{aligned}[t] &q_{i+1} \in \big[ \bigcup_{q \in q_i' \cup q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_1 \lor\\
-						&q_{i+1} \in \big[ \bigcup_{q \in q_i' \cup q_i''} \Delta(q, \sigma_i) \cup \Delta_\epsilon(q) \big] \cap P_2\\
-					\end{aligned}\\
-					&\implies  q_{i+1} \in q_{i+1}' \lor q_{i+1} \in q_{i+1}''
-				\end{aligned}$
-			\item $\begin{aligned}[t] q_n \in F \land \exists \langle q_n', q_n'' \rangle &\in Q'(q_n \in q_n' \lor q_n \in q_n'')\\
-					&\implies q_n' \cap F \neq \varnothing \lor q_n'' \cap F \neq \varnothing\\
-					&\implies \langle q_n', q_n'' \rangle \in F'
-				\end{aligned}$
-		\end{enumerate}
-		\bigbreak
-		\noindent
-		$\implies \pi' = \langle \langle q_1', q_1'' \rangle, \sigma_1, \langle q_2', q_2'' \rangle \rangle \dots \langle \langle q_{n-1}', q_{n-1}'' \rangle, \sigma_{n-1}, \langle q_n', q_n'' \rangle \rangle$ is a successful path in $\mathcal{A'}$.
-	\end{case}
-
-	\begin{case}We show that every successful path in $\mathcal{A'}$ is also a successful
-		path in $\mathcal{A}$ by induction on the states visited in the path.
-		Let $\pi' = \langle \langle q_1', q_1'' \rangle, \sigma_1', \langle q_2', q_2'' \rangle \rangle \ldots\\
-		\langle \langle q_{n-1}', q_{n-1}'' \rangle, \sigma_{n-1}', \langle q_n', q_n'' \rangle \rangle$ be a successful path in $\mathcal{A'}$.
-		\begin{enumerate}
-			\item $\begin{aligned}[t] \langle q_n', q_n'' \rangle \in F' &\implies q_n' \cap F \neq \varnothing\;\lor\;q_n'' \cap F \neq \varnothing\\
-					&\implies (q_n' \cup q_n'') \cap F \neq \varnothing\\
-					&\implies \exists\;q_n \in q_n' \cup q_n''(q_n \in F)\\
-				\end{aligned}$
-			\item $\begin{aligned}[t] \text{Let } q_{i+1} &\in q_{i+1}' \cup\;q_{i+1}''\\
-					&= \beta_1(\gamma_1(q_i', \sigma_i'), \alpha_2(\gamma_2(q_i'', \sigma_i'))) \cup \beta_2(\gamma_2(q_i'', \sigma_i'), \alpha_1(\gamma_1(q_i', \sigma_i')))\\
-					&= \gamma_1(q_i', \sigma_i') \cup \alpha_2(\gamma_2(q_i'', \sigma_i')) \cup \gamma_2(q_i'', \sigma_i') \cup \alpha_1(\gamma_1(q_i', \sigma_i'))\\
-					&= \begin{aligned}[t] &\big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_1\;\cup\\
-						&\big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_2 \cap S\;\cup\\
-						&\big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_2\;\cup\\
-					&\big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_1 \cap S \end{aligned}\\
-					&= \begin{aligned}[t] &\big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_1\;\cup\\
-						&\big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap S\;\cup\\
-						&\big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_2\;\cup\\
-					&\big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap S  \end{aligned}\\
-					&= \begin{aligned}[t] &\big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_1\;\cup\\
-					&\big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cap P_2  \end{aligned}\\
-					&= \big[ \bigcup_{q \in q_i'} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big] \cup \big[ \bigcup_{q \in q_i''} \Delta(q, \sigma_i') \cup \Delta_\epsilon(q) \big]
-				\end{aligned}$
-				\bigbreak
-				$\implies \begin{aligned}[t] &\exists\;q_i \in q_i' : q_{i+1} \in \Delta(q_i, \sigma_i') \cup \Delta_\epsilon(q_i)\;\lor\\
-				&\exists\;q_i \in q_i'' : q_{i+1} \in \Delta(q_i, \sigma_i') \cup \Delta_\epsilon(q_i) \end{aligned}$
-				\bigbreak
-				$\implies \begin{aligned}[t] &\exists\;q_i \in q_i' : q_{i+1} \in \Delta(q_i, \sigma_i)\;\lor\\
-				&\exists\;q_i \in q_i'' : q_{i+1} \in \Delta(q_i, \sigma_i) \text{, where $\sigma_i \in \Sigma \cup \{ \epsilon \}$} \end{aligned}$
-				\bigbreak
-			\item $\begin{aligned}[t] q_1' &= (Q_1 \cup S) \cap I \implies \forall q \in q_1' : q \in I\\
-					q_1'' &= (S \cup Q_2) \cap I \implies \forall q \in q_1'' : q \in I\\
-				\end{aligned}$
-		\end{enumerate}
-		\bigbreak
-		\noindent
-		$\implies \pi = \langle q_1, \sigma_1, q_2 \rangle \dots \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ is a successful path in $\mathcal{A}$.
-	\end{case}
+	We show that every successful path in $\mathcal{A}$ is also a successful
+	path in $\mathcal{A'}$ by induction on the states present in the path.
+	Let $\pi = \langle q_1, \sigma_1, q_2 \rangle, \ldots, \langle q_{n-1},
+	\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
+	\begin{enumerate}
+		\item Let $q_1' = \langle q_1^1, q_1^2, \dots, q_1^k \rangle = i$. Then $q_1 \in I \implies q_1 \in \bigcup_{i=1}^k{P_i \cap I} \implies q_1 \in \bigcup_{i=1}^k{q_1^i}$;
+		\item Let $q_i' = \delta^*(i, \sigma_1 \dots \sigma_{i-1}) = \langle q_i^1, q_i^2, \dots, q_i^k \rangle$ and $q_i \in \bigcup_{j=1}^k{q_i^j}$.
+			We have\\
+			$q_{i+1}' = \delta(\langle q_i^1, q_i^2, \dots, q_i^k \rangle, \sigma_i) = \langle q_{i+1}^1, q_{i+1}^2, \dots, q_{i+1}^k \rangle$ where
+			for $j \in \interval{1}{k}$
+			$q_{i+1}^j = \mu_j(q_i, \sigma_i)
+			= (\Delta^*(q_i^j, \sigma_i) \cap P_j) \cup (\bigcup_{r = 1, r \neq i}^k{\Delta^*(q_i^r, \sigma_i) \cap S})
+			= (\Delta^*(q_i^j, \sigma_i) \cap P_j) \cup (\bigcup_{r = 1, r \neq i}^k{\Delta^*(q_i^r, \sigma_i) \cap P_j})
+			= \bigcup_{r = 1}^k{\Delta^*(q_i^r, \sigma_i) \cap P_j}$. Then
+			$q_{i+1} \in \Delta^*(q_i, \sigma_i)
+			\implies q_{i+1} \in \bigcup_{j=1}^k{\Delta^*(q_i^j, \sigma_i)}
+			\implies q_{i+1} \in \bigcup_{j=1}^k{\bigcup_{r=1}^k{\Delta^*(q_i^j, \sigma_i) \cap P_j}}\\
+			\implies q_{i+1} \in \bigcup_{j=1}^k{q_i^j}$;
+		\item $q_n \in F \land \exists q_n' = \langle q_n^1, q_n^2, \dots, q_n^k \rangle \in Q'(q_n \in \bigcup_{j=1}^k{q_n^j})
+			\implies \exists r \in \interval{1}{k}{q_n \in q_n^r}
+			\implies \langle q_n^1, q_n^2, \dots, q_n^k \rangle \in F'$.
+	\end{enumerate}
+	\bigbreak
+	\noindent
+	$\implies \pi' = \langle q_1', \sigma_1, q_2' \rangle, \dots, \langle q_{n-1}', \sigma_{n-1}, q_n' \rangle$ is a successful path in $\mathcal{A'}$.
+	\bigbreak
+	\noindent
+	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
+	successful path in $\mathcal{A}$. Let $\pi' = \langle q_1', \sigma_1, q_2'
+	\rangle, \ldots, \langle q_{n-1}', \sigma_{n-1}, q_n' \rangle$ be a
+	successful path in $\mathcal{A'}$. Then
+	\begin{enumerate}
+		\item $q_n' = \langle q_n^1, q_n^2, \dots, q_n^k \rangle \in F'
+			\implies \exists r \in \interval{1}{k} (q_n^r \cap F \neq \varnothing)
+			\implies \exists q_n \in q_n^r (q_n \in F)$;
+		\item Let $\exists j \in \interval{1}{k} \exists q_{i+1} \in Q (q_{i+1} \in q_{i+1}^j)$. We have $q_{i+1}^j = \mu_j(q_i', \sigma_i)
+			= (\Delta^*(q_i^j, \sigma_i) \cap P_j) \cup (\bigcup_{r = 1, r \neq j}^k{\Delta^*(q_i^r, \sigma_i) \cap S})
+			= \bigcup_{r = 1}^k{\Delta^*(q_i^r, \sigma_i) \cap P_j}$. Then $\exists j \in \interval{1}{k} \exists q_i \in Q (q_i \in q_i^j)$;
+		\item $\exists j \in \interval{1}{k} \exists q_1 \in Q (q_1 \in q_1^j) \implies q_1 \in P_j \cap I \implies q_1 \in I$.
+	\end{enumerate}
+	\bigbreak
+	\noindent
+	$\implies \pi = \langle q_1, \sigma_1, q_2 \rangle \dots \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ is a successful path in $\mathcal{A}$.
 \end{proof}
 
-\subsection{Algorithm for quasi-determinization of finite-state automata}
+\begin{proposition}
+	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton and let $Q = S \cup
+	\bigcup_{i=1}^k{Q_i}$. Let $\mathcal{A'} = \langle Q, \Sigma', i, F',
+	\delta \rangle$ be the deterministic finite-state automaton derived
+	from $\mathcal{A}$ by applying the procedure for quasi-determinization.
+	We can efficiently represent $\delta$ so that $|\delta| \in
+	\mathcal{O}(2^x)$.
+\begin{proof}
+\end{proof}
+\end{proposition}
+
+\subsection{Algorithm for quasi-determinization}
+
+\begin{algorithm}
+	\caption{Quasi-determinization of a separated finite-state automaton}\label{euclid}
+    	\hspace*{\algorithmicindent} \textbf{input}
+	$\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$,
+	$Q = \langle S, Q_1, Q_2, \ldots, Q_k \rangle$\\
+    	\hspace*{\algorithmicindent} \textbf{output}
+	$\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$
+	\begin{algorithmic}[1]
+		\Procedure{QDetSFSA}{}
+		\For {$j=1$ to $k$}
+		\State $P_i \gets Q_i \cup S$
+		\EndFor
+
+		\State $Q' \gets \varnothing$,
+		$i \gets \langle P_1 \cap I, \ldots, P_k \cap I \rangle$,
+		$F' \gets \varnothing$
+		\For {$j=1$ to $k$}
+		\State $\delta_i \gets \varnothing$
+		\EndFor
+
+		\State $todo \gets \{ i \}$, $done \gets \varnothing$
+		\While {$todo \neq \varnothing$}
+		\State pick $q = \langle q^1, \ldots, q^k \rangle \in todo$
+		\State $Q' \gets Q' \cup \{ q \}$
+		\If {$\exists j \in \interval{1}{k}(q^j \cap F \neq \varnothing)$}
+		\State $F' \gets F' \cup \{ q \}$
+		\EndIf
+		\ForAll {$\sigma \in \Sigma$}
+		\State $q' \gets \langle \ldots \rangle$
+		\State $\delta \gets \delta \cup \{ \langle q, a, q' \rangle \}$
+		\State $todo \gets todo \cup (\{ q' \} \setminus done)$
+		\EndFor
+		\State $todo \gets todo \setminus \{ q \}$
+		\State $done \gets done \cup \{ q \}$
+		\EndWhile
+
+		\State $\delta \gets \langle \delta_1, \delta_2, \ldots, \delta_k \rangle$
+
+		%\State $\textit{stringlen} \gets \text{length of }\textit{string}$
+		%\State $i \gets \textit{patlen}$
+		%\BState \emph{top}:
+		%\If {$i > \textit{stringlen}$} \Return false
+		%\EndIf
+		%\State $j \gets \textit{patlen}$
+		%\BState \emph{loop}:
+		%\If {$\textit{string}(i) = \textit{path}(j)$}
+		%\State $j \gets j-1$.
+		%\State $i \gets i-1$.
+		%\State \textbf{goto} \emph{loop}.
+		%\State \textbf{close};
+		%\EndIf
+		%\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
+		%\State \textbf{goto} \emph{top}.
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}

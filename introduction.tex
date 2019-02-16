@@ -1,0 +1,21 @@
+\section{Introduction}
+
+Finite-state devices are a well-known theoretical model that finds applications
+in compiler design, natural language processing and many other fields. They are
+studied extensively in the works of Aho and Ullman $\cite{AU72}$ and Hopcroft
+and Ullman $\cite{HU79}$.
+
+Over the years, many flavours of finite-state devices have been studied. One of
+the fundamental classes of finite-state devices is the non-deterministic
+finite-state automaton introduced by Rabing and Scott $\cite{RS59}$. It is shown
+that the expressive power of non-deterministic and deterministic finite-state
+automata is the same. Also, an algorithm is presented that given a non-deterministic finite-state automaton as an input constructs an equivalent deterministic
+finite-state automaton that recognizes the same language. The downside of this
+algorithm is that in the worst case the number of states in resulting deterministic
+finite-state automaton is in the order of $2^n$ where $n$ is the number of states
+in the source non-deterministic finite-state automaton.
+
+In this paper we present a strategy for constructing smaller, quasi-deterministic
+finite-state automata for a special class of non-deterministic finite-state
+automata. At the cost of a small runtime penalty we are able to construct
+finite-state automata that operate deterministically using at most $2^?$ states.

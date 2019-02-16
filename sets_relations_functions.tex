@@ -1,32 +1,66 @@
 \subsection{Sets, relations and functions}
 
 \begin{definition}
-	A set is defined as usual. We denote that an object $x$ belongs
-	to a set $S$ by writing $x \in S$. Alternatively, we write $x
-	\notin S$ to denote that $x$ does not belong to $S$. We write $S_1
-	\cup S_2$ for the union of sets the $S_1$ and $S_2$, and $S_1 \cap
-	S_2$ for their intersection. The cardinality of a set $S$ is denoted
-	by $\lvert S \rvert$.
+	A set is defined as usual. We indicate that a set $S$ contains an
+	object $s$ by writing $s \in S$. Alternatively, we write $s
+	\notin S$ to show that $S$ does not contain $s$. The cardinality of
+	a set $S$ is denoted by $|S|$. We use $\varnothing$ to indicate the
+	unique set with no members ($|\varnothing| = 0)$.
 \end{definition}
 
 \begin{definition}
-	A tuple is defined as usual. We write $\langle x_1, x_2, \dots, x_n
-	\rangle$ to denote the tuple of the $n$ objects $x_1, x_2, \dots, x_n$.
+	A set $S'$ is a subset of a set $S$ if $\forall s \in S' (s \in S)$.
+	It follows that $\varnothing$ is a subset of every set. We write $S'
+	\subseteq S$ to indicate that $S'$ is a subset of $S$.
 \end{definition}
 
 \begin{definition}
-	The cartesian product of the sets $S_1, S_2, \dots, S_n$ is defined
-	as the set $\prod_{i=1}^n{S_i} = \{\langle s_1, s_2, \dots, s_n \rangle
-	\lvert s_i \in S_i$ for $1 \leq i \leq n\}$.
+	The powerset of a set $S$ is the set $2^S = \{ S' \subseteq S \}$.
 \end{definition}
 
 \begin{definition}
-	An $n$-ary relation $R$ on the sets $S_1, S_2, \dots, S_n$ is a subset
+	The union of the sets $S_1, S_2, \ldots, S_n$ is the set
+	$\bigcup_{i=1}^n{S_i} =$\\$
+	\{ s \mid \exists i \in \interval{1}{n}(s \in S_i) \}$. We shall also
+	use the notation $S_1 \cup S_2 \cup \ldots \cup S_n$ to indicate the
+	union of sets.
+\end{definition}
+
+\begin{definition}
+	The intersection of the sets $S_1, S_2, \ldots, S_n$ is the set
+	$\bigcap_{i=1}^n{S_i} = \{ s \mid \forall i \in \interval{1}{n}(s
+	\in S_i) \}$. We shall also use the notation $S_1 \cap S_2 \cap \ldots
+	\cap S_n$ to indicate the intersection of sets.
+\end{definition}
+
+\begin{definition}
+	A tuple is defined as usual. We write $\langle t_1, t_2, \ldots, t_n
+	\rangle$ for the tuple of the $n$ objects $t_1, t_2, \ldots, t_n$.
+\end{definition}
+
+\begin{definition}
+	The Cartesian product of the sets $S_1, S_2, \ldots, S_n$ is defined
+	as the set $\prod_{i=1}^n{S_i} = \{ \langle s_1, s_2, \ldots, s_n
+	\rangle \mid \forall i \in \interval{1}{n}(s_i \in S_i) \}$. We shall
+	also use the notation $S_1 \times S_2 \times \ldots \times S_n$ to
+	indicate the Cartesian product of sets.
+\end{definition}
+
+\begin{definition}
+	An $n$-ary relation $R$ on the sets $S_1, S_2, \ldots, S_n$ is a subset
 	$R \subseteq \prod_{i=1}^n{S_i}$.
 \end{definition}
 
 \begin{definition}
-	A binary relation $R \subseteq M \times N$ is a function if $\forall
-	\langle m', n' \rangle, \langle m'', n'' \rangle \in R (n' \neq n''
-	\implies m' \neq m'')$.
+	A binary relation $R \subseteq D \times C$ is a function if $\forall
+	\langle d', c' \rangle, \langle d'', c'' \rangle$\\
+	$\in R (c' \neq c'' \implies d' \neq d'')$. We write $R : D \rightarrow
+	C$ to indicate that the relation $R \subseteq D \times C$ is a function
+	and $c = R(d)$ in case $\langle d, c \rangle \in R$.
+\end{definition}
+
+\begin{definition}
+	Let $f: D \rightarrow C$ be a function. The set-lifted function $\hat{f}
+	: 2^D \rightarrow 2^C$ is defined as $\forall D' \subseteq D (\hat{f}(D')
+	= \{ f(d) \mid d \in D' \})$.
 \end{definition}
