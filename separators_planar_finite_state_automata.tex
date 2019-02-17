@@ -1,0 +1,36 @@
+\section{Separators in planar finite-state automata}
+
+\begin{definition}
+	A graph $\mathcal{G}$ is a pair $\langle V, E \rangle$ where $V$ is a
+	finite set of vertices and $E \subseteq V \times V$ is a relation of edges.
+\end{definition}
+
+\begin{definition}
+	A graph $\mathcal{G} = \langle V, E \rangle$ is planar if there exists an
+	injective function $f_v : V \rightarrow \mathbb{R}^2$ that maps vertices of
+	the graph to unique points in the real plane and a function $f_e$ that maps
+	edges of the graph to simple curves in the real plane such that curves
+	intersect only at points in $Rng(f_v)$.
+\end{definition}
+
+\begin{definition}
+	The graph $\mathcal{G}_{\mathcal{A}}$ corresponding to a finite-state
+	automaton $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ is the
+	pair $\langle Q, E \rangle$ where $E = \{ \langle q', q'' \rangle \mid
+	\langle q', \sigma, q'' \rangle \in \Delta \}$.
+\end{definition}
+
+\begin{definition}
+	A finite-state automaton $\mathcal{A}$ is planar if and only if its
+	corresponding graph $\mathcal{G}_{\mathcal{A}}$ is planar.
+\end{definition}
+
+\begin{theorem}[Lipton-Tarjan, see \cite{LT79}]
+	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. We can
+	construct a partition $V = V_1 \cup S \cup V_2$ such that
+	$\forall v_1 \in V_1\; \forall v_2 \in V_2(\langle v_1, v_2 \rangle
+	\not\in E \land \langle v_2, v_1 \rangle \not\in E)$, $\lvert V_1 \rvert
+	\leq \frac{2}{3} \times \lvert V \rvert$, $\lvert V_2 \rvert \leq
+	\frac{2}{3} \times \lvert V \rvert$ and $\lvert S \rvert \leq 2 \sqrt{2}
+	\sqrt{\vert V \rvert}$.
+\end{theorem}

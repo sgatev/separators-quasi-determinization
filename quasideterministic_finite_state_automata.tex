@@ -3,12 +3,12 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
 	finite-state automaton. $\mathcal{A}$ is $k$-separated if there exists
-	a partition $Q = S \cup \bigcup_{i=1}^k{Q_i}$ such that $\forall i, j
-	\in \interval{1}{k}, i \neq j (\hat{\Delta}(Q_i, \Sigma) \cap Q_j =
-	\varnothing)$.
+	a partition $Q = \bigcup_{i=1}^k{Q_i} \cup S$ such that $\forall i, j
+	\in \interval{1}{k} (i \neq j \implies \hat{\Delta}(Q_i, \Sigma) \cap
+	Q_j = \varnothing)$.
 \end{definition}
 
-\subsection{Quasi-determinization}
+\subsection{Quasi-deterministic separated finite-state automata}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
@@ -17,52 +17,81 @@
 	transition functions $\mu_i : \prod_{r=1}^k{P_r} \times \Sigma
 	\rightarrow 2^{P_i}$ as $\forall \langle q^1, q^2, \dots, q^k \rangle
 	\in \prod_{r=1}^k{P_r} \forall \sigma \in \Sigma
-	(\mu_i(\langle q^1, q^2, \dots, q^k \rangle, \sigma)
-		= (\Delta^*(q^i, \sigma) \cap P_i) \cup (\bigcup_{r = 1, r \neq i}^k{
-	\Delta^*(q^r, \sigma) \cap S}))$ where $P_i = Q_i \cup S$.
+	(\mu_i(\langle q^1, q^2, \dots, q^k \rangle, \sigma) = (\Delta^*(q^i,
+	\sigma) \cap P_i) \cup (\bigcup_{r = 1, r \neq i}^k{ \Delta^*(q^r,
+	\sigma) \cap S}))$ where $P_i = Q_i \cup S$.
 \end{definition}
 
-\begin{theorem}
+\begin{definition}
+	A quasi-deterministic k-separated finite-state automaton $\mathcal{A}$
+	is a tuple $\langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F, \delta \rangle$
+	where
+	\begin{enumerate}
+		\item $S \subseteq P_i$ for $i \in \interval{1}{k}$;
+		\item $P_i \cap P_j \subseteq S$ for $i, j \in \interval{1}{k},
+			i \neq j$;
+		\item $i \in \prod_{i=1}^k{2^{P_i}}$;
+		\item $F \subseteq \prod_{i=1}^k{2^{P_i}}$;
+		\item $\delta : \prod_{i=1}^k{2^{P_i}} \times \Sigma
+			\rightarrow \prod_{i=1}^k{2^{P_i}}$.
+	\end{enumerate}
+\end{definition}
+
+\begin{theorem}\label{th1}
 	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton and let $Q = S \cup \bigcup_{i=1}^k{Q_i}$.
-	We can construct a deterministic
+	$k$-separated finite-state automaton and let $Q = \bigcup_{i=1}^k{Q_i}
+	\cup S$. We can construct a quasi-deterministic k-separated
 	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
 	(\mathcal{A'} ) = \mathcal{L} ( \mathcal{A} )$.
 \end{theorem}
 
 \begin{proof}
-	Let $P_r = Q_r \cup S$ for $r \in \interval{1}{k}$. Consider the automaton
-	$\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$ where
+	Consider the automaton
+	$\mathcal{A'} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F', \delta
+	\rangle$ where
 
 	\begin{enumerate}
-		\item $Q' = \prod_{r=1}^k{2^{P_r}}$;
-		\item $i = \langle P_1 \cap I, P_2 \cap I, \dots, P_k \cap I \rangle$;
-		\item $F' = \{ \langle q^1, q^2, \dots, q^k \rangle \in Q' \mid \exists r \in \interval{1}{k} (q^r \cap F \neq \varnothing) \}$;
-		\item $\forall q' \in Q'\; \forall \sigma
-			\in \Sigma(\delta(q', \sigma) =
-			\langle \mu_1(q', \sigma), \mu_2(q', \sigma), \dots, \mu_k(q', \sigma) \rangle)$.
+		\item $P_i = Q_i \cup S$ for $i \in \interval{1}{k}$;
+		\item $i = \langle P_1 \cap I, P_2 \cap I, \dots, P_k \cap I
+			\rangle$;
+		\item $F' = \{ \langle q^1, \ldots, q^k \rangle \in
+				\prod_{i=1}^k{2^{P_i}} \mid
+			\exists i \in \interval{1}{k} (q^i \cap F \neq
+			\varnothing) \}$;
+		\item $\delta(q, \sigma) = \langle \mu_1(q, \sigma), \ldots,
+			\mu_k(q, \sigma) \rangle$ for $q \in \prod_{i=1}^k{2^{P_i}}$
+			and $\sigma \in \Sigma$.
 	\end{enumerate}
 	We show that every successful path in $\mathcal{A}$ is also a successful
 	path in $\mathcal{A'}$ by induction on the states present in the path.
 	Let $\pi = \langle q_1, \sigma_1, q_2 \rangle, \ldots, \langle q_{n-1},
 	\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
 	\begin{enumerate}
-		\item Let $q_1' = \langle q_1^1, q_1^2, \dots, q_1^k \rangle = i$. Then $q_1 \in I \implies q_1 \in \bigcup_{i=1}^k{P_i \cap I} \implies q_1 \in \bigcup_{i=1}^k{q_1^i}$;
-		\item Let $q_i' = \delta^*(i, \sigma_1 \dots \sigma_{i-1}) = \langle q_i^1, q_i^2, \dots, q_i^k \rangle$ and $q_i \in \bigcup_{j=1}^k{q_i^j}$.
-			We have\\
-			$q_{i+1}' = \delta(\langle q_i^1, q_i^2, \dots, q_i^k \rangle, \sigma_i) = \langle q_{i+1}^1, q_{i+1}^2, \dots, q_{i+1}^k \rangle$ where
-			for $j \in \interval{1}{k}$
-			$q_{i+1}^j = \mu_j(q_i, \sigma_i)
-			= (\Delta^*(q_i^j, \sigma_i) \cap P_j) \cup (\bigcup_{r = 1, r \neq i}^k{\Delta^*(q_i^r, \sigma_i) \cap S})
-			= (\Delta^*(q_i^j, \sigma_i) \cap P_j) \cup (\bigcup_{r = 1, r \neq i}^k{\Delta^*(q_i^r, \sigma_i) \cap P_j})
-			= \bigcup_{r = 1}^k{\Delta^*(q_i^r, \sigma_i) \cap P_j}$. Then
-			$q_{i+1} \in \Delta^*(q_i, \sigma_i)
-			\implies q_{i+1} \in \bigcup_{j=1}^k{\Delta^*(q_i^j, \sigma_i)}
-			\implies q_{i+1} \in \bigcup_{j=1}^k{\bigcup_{r=1}^k{\Delta^*(q_i^j, \sigma_i) \cap P_j}}\\
-			\implies q_{i+1} \in \bigcup_{j=1}^k{q_i^j}$;
-		\item $q_n \in F \land \exists q_n' = \langle q_n^1, q_n^2, \dots, q_n^k \rangle \in Q'(q_n \in \bigcup_{j=1}^k{q_n^j})
-			\implies \exists r \in \interval{1}{k}{q_n \in q_n^r}
-			\implies \langle q_n^1, q_n^2, \dots, q_n^k \rangle \in F'$.
+		\item Let $q_1' = i = \langle q_1^1, \ldots, q_1^k \rangle$.
+			Then $q_1 \in I \implies q_1 \in \bigcup_{i=1}^k{P_i \cap I}
+			\implies q_1 \in \bigcup_{i=1}^k{q_1^i}$;
+		\item Let $q_i' = \delta^*(i, \sigma_1 \ldots \sigma_{i-1}) =
+			\langle q_i^1, \ldots, q_i^k \rangle$ and $q_i \in
+			\bigcup_{j=1}^k{q_i^j}$. We have\\
+			$q_{i+1}' = \delta(\langle q_i^1, \ldots, q_i^k \rangle,
+			\sigma_i) = \langle q_{i+1}^1, \ldots, q_{i+1}^k \rangle$
+			where $q_{i+1}^j = \mu_j(q_i, \sigma_i) = (\hat{\Delta}^*(
+			q_i^j, \{ \sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1, r
+			\neq j}^k{\hat{\Delta}^*(q_i^r, \{ \sigma_i \}) \cap S})
+			= (\hat{\Delta}^*(q_i^j, \{ \sigma_i \}) \cap P_j) \cup
+			(\bigcup_{r = 1, r \neq i}^k{\hat{\Delta}^*(q_i^r, \{
+			\sigma_i \}) \cap P_j}) = \bigcup_{r = 1}^k{\hat{\Delta}^*(
+			q_i^r, \{ \sigma_i \}) \cap P_j}$ for $j \in
+			\interval{1}{k}$. Then $q_{i+1} \in \hat{\Delta}^*(q_i,
+			\{ \sigma_i \}) \implies q_{i+1} \in \bigcup_{r=1}^k{
+			\hat{\Delta}^*(q_i^r, \{ \sigma_i \})}\\
+			\implies q_{i+1} \in \bigcup_{j=1}^k{\bigcup_{r=1}^k{
+			\hat{\Delta}^*(q_i^r, \{ \sigma_i \}) \cap P_j}}
+			\implies q_{i+1} \in \bigcup_{j=1}^k{q_{i+1}^j}$;
+		\item $q_n \in F \land \exists q_n' = \langle q_n^1, \ldots,
+			q_n^k \rangle \in Q'(q_n \in \bigcup_{j=1}^k{q_n^j})
+			\implies \exists j \in \interval{1}{k}(q_n \in q_n^j)$\\
+			$\implies q_n' \in F'$.
 	\end{enumerate}
 	\bigbreak
 	\noindent
@@ -74,86 +103,80 @@
 	\rangle, \ldots, \langle q_{n-1}', \sigma_{n-1}, q_n' \rangle$ be a
 	successful path in $\mathcal{A'}$. Then
 	\begin{enumerate}
-		\item $q_n' = \langle q_n^1, q_n^2, \dots, q_n^k \rangle \in F'
-			\implies \exists r \in \interval{1}{k} (q_n^r \cap F \neq \varnothing)
-			\implies \exists q_n \in q_n^r (q_n \in F)$;
-		\item Let $\exists j \in \interval{1}{k} \exists q_{i+1} \in Q (q_{i+1} \in q_{i+1}^j)$. We have $q_{i+1}^j = \mu_j(q_i', \sigma_i)
-			= (\Delta^*(q_i^j, \sigma_i) \cap P_j) \cup (\bigcup_{r = 1, r \neq j}^k{\Delta^*(q_i^r, \sigma_i) \cap S})
-			= \bigcup_{r = 1}^k{\Delta^*(q_i^r, \sigma_i) \cap P_j}$. Then $\exists j \in \interval{1}{k} \exists q_i \in Q (q_i \in q_i^j)$;
-		\item $\exists j \in \interval{1}{k} \exists q_1 \in Q (q_1 \in q_1^j) \implies q_1 \in P_j \cap I \implies q_1 \in I$.
+		\item $q_n' = \langle q_n^1, \ldots, q_n^k \rangle \in F'
+			\implies \exists j \in \interval{1}{k} (q_n^j \cap F \neq
+			\varnothing) \implies \exists q_n \in q_n^j (q_n \in F)$;
+		\item Let $q_{i+1}' = \langle q_{i+1}^1, \ldots, q_{i+1}^k \rangle$
+			and $\exists j \in \interval{1}{k} \exists q_{i+1} \in Q
+			(q_{i+1} \in q_{i+1}^j)$. We have $q_{i+1}^j = \mu_j(q_i',
+			\sigma_i) = (\hat{\Delta}^*(q_i^j, \{ \sigma_i \}) \cap P_j)
+			\cup (\bigcup_{r = 1, r \neq j}^k{\hat{\Delta}^*(q_i^r,
+			\{ \sigma_i \}) \cap S}) = (\hat{\Delta}^*(q_i^j, \{
+			\sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1, r \neq j}^k{
+			\hat{\Delta}^*(q_i^r, \{ \sigma_i \}) \cap P_j}) =
+			\bigcup_{r = 1}^k{\hat{\Delta}^*( q_i^r, \{ \sigma_i \})
+			\cap P_j}$. Then $\exists j \in \interval{1}{k} \exists
+			q_{i+1} \in q_{i+1}^j \implies |q_{i+1}^j| > 0 \implies
+			|\bigcup_{r = 1}^k{\hat{\Delta}^*( q_i^r, \{ \sigma_i \})
+			\cap P_j}|$\\ $> 0 \implies \exists r \in \interval{1}{k}
+			\exists q_i \in Q (q_i \in q_i^r)$;
+		\item $\exists j \in \interval{1}{k} \exists q_1 \in Q (q_1 \in
+			q_1^j) \implies q_1 \in P_j \cap I \implies q_1 \in I$.
 	\end{enumerate}
 	\bigbreak
 	\noindent
-	$\implies \pi = \langle q_1, \sigma_1, q_2 \rangle \dots \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ is a successful path in $\mathcal{A}$.
+	$\implies \pi = \langle q_1, \sigma_1, q_2 \rangle, \ldots, \langle q_{n-1},
+	\sigma_{n-1}, q_n \rangle$ is a successful path in $\mathcal{A}$.
+\end{proof}
+
+\begin{corollary}
+	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton where $Q = \bigcup_{i=1}^k{Q_i}
+	\cup S$ and let $\mathcal{A'} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma,
+	i, F', \delta \rangle$ be the quasi-deterministic k-separated finite-state
+	automaton derived from $\mathcal{A}$ by applying the construction of
+	theorem $\ref{th1}$. Then $|\delta| \in \mathcal{O}(2^{k|S| +
+	\sum_{i=1}^k{|Q_i|}})$.
+\end{corollary}
+
+\begin{proof}
+	$\newline$
+	$\begin{aligned}
+		|\delta| &= |\prod_{i=1}^k{2^{P_i}}| \times |\Sigma|
+		\in \mathcal{O}(\prod_{i=1}^k{2^{|P_i|}})
+		= \mathcal{O}(2^{\sum_{i=1}^k{|P_i|}})
+		= \mathcal{O}(2^{\sum_{i=1}^k{|Q_i| + |S|}})\\
+		&= \mathcal{O}(2^{k|S| + \sum_{i=1}^k{|Q_i|}}).
+	\end{aligned}$
 \end{proof}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton and let $Q = S \cup
-	\bigcup_{i=1}^k{Q_i}$. Let $\mathcal{A'} = \langle Q, \Sigma', i, F',
-	\delta \rangle$ be the deterministic finite-state automaton derived
-	from $\mathcal{A}$ by applying the procedure for quasi-determinization.
-	We can efficiently represent $\delta$ so that $|\delta| \in
-	\mathcal{O}(2^x)$.
-\begin{proof}
-\end{proof}
+	Let $\mathcal{A} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F, \delta
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton
+	constructed following the strategy described in theorem $\ref{th1}$. We
+	can express $\delta$ so that $|\delta| \in
+	\mathcal{O}(2^{2k|S|} + \sum_{i=1}^k{2^{|Q_i|}})$.
 \end{proposition}
 
-\subsection{Algorithm for quasi-determinization}
+\begin{proof}
+Consider the functions
+\begin{enumerate}
+	\item $\alpha_i : 2^{P_i} \times \Sigma \rightarrow 2^{P_i}$ for $i \in
+		\interval{1}{k}$;
+	\item $\beta_i : 2^{P_i} \rightarrow 2^S$ for $i \in \interval{1}{k}$;
+	\item $\gamma_i : 2^{P_i} \times 2^S \rightarrow 2^{P_i}$ for $i \in
+		\interval{1}{k}$.
+\end{enumerate}
 
-\begin{algorithm}
-	\caption{Quasi-determinization of a separated finite-state automaton}\label{euclid}
-    	\hspace*{\algorithmicindent} \textbf{input}
-	$\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$,
-	$Q = \langle S, Q_1, Q_2, \ldots, Q_k \rangle$\\
-    	\hspace*{\algorithmicindent} \textbf{output}
-	$\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$
-	\begin{algorithmic}[1]
-		\Procedure{QDetSFSA}{}
-		\For {$j=1$ to $k$}
-		\State $P_i \gets Q_i \cup S$
-		\EndFor
+It is obvious that $\delta(q, \sigma) = \langle \mu_1(q, \sigma), \ldots,
+\mu_k(q, \sigma) \rangle$ where $\mu_i(\langle q^1, \ldots, q^k \rangle, \sigma)
+= (\Delta^*(q^i, \sigma) \cap P_i) \cup (\bigcup_{r = 1, r \neq i}^k{ \Delta^*(q^r,
+\sigma) \cap S}) = \gamma_k(\ldots\gamma_1(\alpha_i(q, \sigma), \beta_1(q^1))\ldots, \beta_k(q^k))$.\\
 
-		\State $Q' \gets \varnothing$,
-		$i \gets \langle P_1 \cap I, \ldots, P_k \cap I \rangle$,
-		$F' \gets \varnothing$
-		\For {$j=1$ to $k$}
-		\State $\delta_i \gets \varnothing$
-		\EndFor
-
-		\State $todo \gets \{ i \}$, $done \gets \varnothing$
-		\While {$todo \neq \varnothing$}
-		\State pick $q = \langle q^1, \ldots, q^k \rangle \in todo$
-		\State $Q' \gets Q' \cup \{ q \}$
-		\If {$\exists j \in \interval{1}{k}(q^j \cap F \neq \varnothing)$}
-		\State $F' \gets F' \cup \{ q \}$
-		\EndIf
-		\ForAll {$\sigma \in \Sigma$}
-		\State $q' \gets \langle \ldots \rangle$
-		\State $\delta \gets \delta \cup \{ \langle q, a, q' \rangle \}$
-		\State $todo \gets todo \cup (\{ q' \} \setminus done)$
-		\EndFor
-		\State $todo \gets todo \setminus \{ q \}$
-		\State $done \gets done \cup \{ q \}$
-		\EndWhile
-
-		\State $\delta \gets \langle \delta_1, \delta_2, \ldots, \delta_k \rangle$
-
-		%\State $\textit{stringlen} \gets \text{length of }\textit{string}$
-		%\State $i \gets \textit{patlen}$
-		%\BState \emph{top}:
-		%\If {$i > \textit{stringlen}$} \Return false
-		%\EndIf
-		%\State $j \gets \textit{patlen}$
-		%\BState \emph{loop}:
-		%\If {$\textit{string}(i) = \textit{path}(j)$}
-		%\State $j \gets j-1$.
-		%\State $i \gets i-1$.
-		%\State \textbf{goto} \emph{loop}.
-		%\State \textbf{close};
-		%\EndIf
-		%\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
-		%\State \textbf{goto} \emph{top}.
-		\EndProcedure
-	\end{algorithmic}
-\end{algorithm}
+Then $|\delta| = \sum_{i=1}^k{(|\alpha_i|+|\beta_i|+|\gamma_i|)} =
+\sum_{i=1}^k{|2^{P_i}|(|2^S| + |\Sigma| + 1)} =\\
+\sum_{i=1}^k{2^{|P_i|}(2^{|S|} + |\Sigma| + 1)} \in
+\mathcal{O}(\sum_{i=1}^k{2^{|P_i| + |S|}}) =
+\mathcal{O}(\sum_{i=1}^k{2^{|Q_i| + 2|S|}}) =\\
+\mathcal{O}(2^{2k|S|} + \sum_{i=1}^k{2^{|Q_i|}})$.
+\end{proof}
