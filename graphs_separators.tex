@@ -1,0 +1,28 @@
+\subsection{Graphs and separators}
+
+\begin{definition}
+	A graph $\mathcal{G}$ is a pair $\langle V, E \rangle$ where $V$ is a
+	finite set of vertices and $E \subseteq V \times V$ is a relation of edges.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{G} = \langle V, E \rangle$ be a graph. The set $S$ is a
+	separator of $\mathcal{G}$ if there exists a partition $V =
+	\bigcup_{i=1}^n{V_i} \cup S$ such that $\forall i, j \in \interval{1}{n}
+	(i \neq j \implies V_i \times V_j \cap E = \varnothing)$.
+\end{definition}
+
+\begin{definition}
+	A graph $\mathcal{G} = \langle V, E \rangle$ is planar if there exists an
+	injective function $f_v : V \rightarrow \mathbb{R}^2$ that maps vertices of
+	the graph to unique points in the real plane and a function $f_e$ that maps
+	edges of the graph to simple curves in the real plane such that curves
+	intersect only at points in $Rng(f_v)$.
+\end{definition}
+
+\begin{theorem}[Lipton-Tarjan, see \cite{LT79}]
+	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. We can
+	construct a partition $V = V_1 \cup V_2 \cup S$ such that $S$ is a
+	separator in $\mathcal{G}$,  $|V_1| \leq \frac{2}{3} \times |V|$, $|V_2|
+	\leq \frac{2}{3} \times |V|$ and $|S| \leq 2 \sqrt{2} \sqrt{|V|}$.
+\end{theorem}

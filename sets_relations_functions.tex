@@ -15,6 +15,11 @@
 \end{definition}
 
 \begin{definition}
+	A set $S'$ and $S''$ be sets. $S' = S''$ if and only if $S' \subseteq S''$
+	and $S'' \subseteq S'$.
+\end{definition}
+
+\begin{definition}
 	The powerset of a set $S$ is the set $2^S = \{ S' \subseteq S \}$.
 \end{definition}
 
@@ -31,6 +36,13 @@
 	$\bigcap_{i=1}^n{S_i} = \{ s \mid \forall i \in \interval{1}{n}(s
 	\in S_i) \}$. We shall also use the notation $S_1 \cap S_2 \cap \ldots
 	\cap S_n$ to indicate the intersection of sets.
+\end{definition}
+
+\begin{definition}
+	Let $S$ be a set. The sets $S_1, S_2, \ldots, S_n$ form a partition of
+	$S$ if and only if $S = \bigcup_{i=1}^n{S_i}$, $\forall i \in
+	\interval{1}{n}(|S_i| > 0)$ and $\forall i, j \in \interval{1}{n}
+	(i \neq j \implies S_i \cap S_j = \varnothing)$.
 \end{definition}
 
 \begin{definition}
@@ -56,11 +68,28 @@
 	\langle d', c' \rangle, \langle d'', c'' \rangle$\\
 	$\in R (c' \neq c'' \implies d' \neq d'')$. We write $R : D \rightarrow
 	C$ to indicate that the relation $R \subseteq D \times C$ is a function
-	and $c = R(d)$ in case $\langle d, c \rangle \in R$.
+	and $R(d) = c$ in case $\langle d, c \rangle \in R$.
+\end{definition}
+
+
+\begin{definition}
+	Let $f: D \rightarrow C$ be a function. The domain of $f$ is the set
+	$Dom(f) = \{ d \in D \mid \exists c \in C (f(d) = c) \}$. The
+	range of $f$ is the set $Rng(f) = \{ c \in C \mid \exists d \in D
+	(f(d) = c) \}$.
+\end{definition}
+
+\begin{definition}
+	A function $f : D \rightarrow C$ is partial if $Dom(f) \neq D$.
+\end{definition}
+
+\begin{definition}
+	A function $f: D \rightarrow C$ is injective if $\forall d', d'' \in Dom(f)
+	(d' \neq d'' \implies f(d') \neq f(d''))$.
 \end{definition}
 
 \begin{definition}
 	Let $f: D \rightarrow C$ be a function. The set-lifted function $\hat{f}
 	: 2^D \rightarrow 2^C$ is defined as $\forall D' \subseteq D (\hat{f}(D')
-	= \{ f(d) \mid d \in D' \})$.
+	= \{ c \in C \mid \exists d \in D' (f(d) = c) \})$.
 \end{definition}

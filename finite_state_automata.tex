@@ -68,9 +68,9 @@
 
 \begin{definition}
 	The language recognised by a deterministic finite-state automaton
-	$\mathcal{A}$ is the set of all successful paths
-	$\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^*
-	\mid \delta^*(i, w) \in F \}$.
+	$\mathcal{A} = \langle Q, \Sigma, i, F, \delta \rangle$ is the set of all
+	successful paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid
+	\delta^*(i, w) \in F \}$.
 \end{definition}
 
 \begin{theorem}[Rabin-Scott, see \cite{RS59}]
@@ -89,10 +89,22 @@
 	$\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$ be the
 	deterministic finite-state automaton derived from $\mathcal{A}$ by
 	applying the Rabin-Scott construction. Then $| \delta | \in \mathcal{O}
-	(|2^Q |)$.
+	(2^{|Q|})$.
 \end{corollary}
 
 \begin{proof}
-	$|\delta| = |Q'| \times |\Sigma| = |2^Q| \times |\Sigma| \in
-	\mathcal{O}(|2^Q|)$.
+	$|\delta| = |Q'| \times |\Sigma| = |2^Q| \times |\Sigma| =
+	2^{|Q|} \times |\Sigma| \in \mathcal{O}(2^{|Q|})$.
 \end{proof}
+
+\begin{definition}
+	The graph $\mathcal{G}_{\mathcal{A}}$ corresponding to a finite-state
+	automaton $\mathcal{A} = \langle Q, \Sigma, I, F, \Delta \rangle$ is the
+	pair $\langle Q, E \rangle$ where $E = \{ \langle q', q'' \rangle \mid
+	q'' \in \Delta(q', \sigma) \}$.
+\end{definition}
+
+\begin{definition}
+	A finite-state automaton $\mathcal{A}$ is planar if and only if its
+	corresponding graph $\mathcal{G}_{\mathcal{A}}$ is planar.
+\end{definition}
