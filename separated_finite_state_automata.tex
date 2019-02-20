@@ -1,0 +1,11 @@
+\section{Separated finite-state automata}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
+	finite-state automaton. $\mathcal{A}$ is $k$-separated if there exists
+	a partition $Q = \bigcup_{i=1}^k{Q_i} \cup S$ such that $\forall i, j
+	\in \interval{1}{k} (i \neq j \implies \hat{\Delta}(Q_i, \Sigma) \cap
+	Q_j = \varnothing)$.
+\end{definition}
+
+\input{quasideterministic_finite_state_automata.tex}

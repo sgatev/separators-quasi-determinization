@@ -1,1 +1,44 @@
 \subsection{Finite-state transducers}
+
+\begin{definition}
+	A finite-state transducer $\mathcal{T}$ is a tuple $\langle \Sigma, \Omega,
+	Q, I, F, \Delta \rangle$ where $\Sigma$ and $\Omega$ are alphabets, $Q$ is
+	a finite set of states, $I \subseteq Q$ is a set of initial states, $F
+	\subseteq Q$ is a set of final states and $\Delta : Q \times (\Sigma
+	\times \Omega^*) \times Q$ is a relation of transitions and outputs.
+\end{definition}
+
+\begin{definition}
+	A path $\pi$ in a finite-state transducer $\mathcal{T} = \langle \Sigma,
+	\Omega, Q, I, F, \Delta \rangle$ is a non-empty sequence $\langle q_1,
+	\sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3 \rangle, \dots,
+	\langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n \rangle$ where $\forall i \in
+	\interval{1}{n}(q_i \in Q)$, $\forall i \in \interval{1}{n-1}(\sigma_i
+	\in \Sigma)$, $\forall i \in \interval{1}{n-1}(w_i \in \Omega^*)$ and
+	$\forall i \in \interval{1}{n-1}(\langle q_i, \sigma_i, w_i, q_{i+1} \rangle
+	\in \Delta)$. The path $\pi$ is successful if $q_1 \in I$ and $q_n \in F$.
+	The label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	of length $n-1$ over $\Sigma$. The output of the path $\pi$ is the word
+	$w_1 w_2 \ldots w_{n-1}$ over $\Omega$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, I, F, \Delta \rangle$ be a
+	finite-state transducer. The generalized relation of transitions and outputs
+	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined as
+	the least relation such that $\forall q_1 \in Q \forall \sigma \in
+	\Sigma \forall w \in \Omega^* (\langle q_1, \sigma, w, q_2 \rangle \in
+	\Delta \implies \langle q_1, \sigma, w, q_2 \rangle \in \Delta^*)$ and
+	$\forall q_1 \in Q \forall w \in \Sigma^* \forall \sigma \in \Sigma
+	\forall u, v \in \Omega^* (\langle q_1, w, u, q_2 \rangle \in \Delta^*
+	\land \langle q_2, \sigma, v, q_3 \rangle \in \Delta \implies
+	\langle q_1, w\sigma, uv, q_3 \rangle \in \Delta^*)$.
+\end{definition}
+
+\begin{definition}
+	The relation recognised by a finite-state transducer $\mathcal{T} =
+	\langle \Sigma, \Omega, Q, I, F, \Delta \rangle$ is the set of all pairs
+	of labels and outputs of successful paths $\mathcal{R}(\mathcal{T}) = \{
+	\langle u, v \rangle \in \Sigma^* \times \Omega^* \mid \exists i \in I
+	\exists f \in F (\langle i, u, v, f \rangle \in \Delta^*) \}$.
+\end{definition}
