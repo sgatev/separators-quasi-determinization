@@ -1,67 +1,85 @@
-\subsection{Quasi-determinization}
-
 \begin{definition}
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
-	is a tuple $\langle \Sigma, \prod_{i=1}^k{2^{P_i}}, S, i, F, \delta_1,
-	\ldots, \delta_k \rangle$
-	where
-	\begin{enumerate}
-		\item $S \subseteq P_i$ for $i \in \interval{1}{k}$;
-		\item $P_i \cap P_j \subseteq S$ for $i, j \in \interval{1}{k},
-			i \neq j$;
-		\item $i \in \prod_{i=1}^k{2^{P_i}}$;
-		\item $F \subseteq \prod_{i=1}^k{2^{P_i}}$;
-		\item $\delta_i : \prod_{j=1}^k{2^{P_j}} \times \Sigma
-			\rightarrow 2^{P_i}$ for $i \in \interval{1}{k}$.
-	\end{enumerate}
+	is a tuple $\langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$ where $\Sigma$ is an alphabet, $Q_i$ is
+	a set of quasi-states for $i \in \interval{1}{k}$, $S$ is such that
+	$\forall i \in \interval{1}{k} (S \subseteq Q_i)$ and $\forall i, j \in
+	\interval{1}{k}, i \neq j (Q_i \cap Q_j \subseteq S)$, $i \in
+	\prod_{i=1}^k{Q_i}$ is an initial state, $F \subseteq \prod_{i=1}^k{Q_i}$
+	is a set of final states, $\kappa_i : Q_i \times \Sigma \rightarrow Q_i$ is
+	a component quasi-transition function for $i \in \interval{1}{k}$,
+	$\rho_i : Q_i \rightarrow S$ is a component reducer function for $i \in
+	\interval{1}{k}$ and $\eta_i : Q_i \times S \rightarrow Q_i$ is a component
+	extension function for $i \in \interval{1}{k}$.
 \end{definition}
 
 \begin{remark}
-	Let $\mathcal{A} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F,
-	\delta_1, \ldots, \delta_k \rangle$ be a quasi-deterministic $k$-separated
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$ be a quasi-deterministic $k$-separat\-ed
 	finite-state automaton. We use $q^j$ for $j \in \interval{1}{k}$ to denote
 	the $j$-th component of $q = \langle q^1, q^2, \ldots, q^k \rangle \in
-	\prod_{j=1}^k{2^{P_j}}$.
+	\prod_{i=1}^k{Q_i}$.
 \end{remark}
 
 \begin{definition}
-	A path $\pi$ in a quasi-deterministic $k$-separated finite-state\\
-	automaton $\mathcal{A} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F,
-	\delta_1, \ldots, \delta_k \rangle$ is a non-empty sequence\\
-	$\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
-	\dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
-	\interval{1}{n}(q_i \in \prod_{j=1}^k{2^{P_j}})$, $\forall i \in
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$ be a quasi-deterministic $k$-separated
+	finite-state automaton. The component tansition function $\delta_i :
+	\prod_{j=1}^k{Q_j}$\\
+	$\times \Sigma \rightarrow Q_i$ is defined inductively such that
+	$\delta_i^0(q, \sigma) = \kappa_i(q^i, \sigma)$ for $q \in
+	\prod_{j=1}^k{Q_j}$ and $\sigma \in \Sigma$, and $\delta_i^j(q, \sigma) =
+	\eta_i(\delta_i^{j-1}(q, \sigma), \rho_j(\kappa_j(q^j, \sigma)))$ for
+	$j \in \interval{1}{k}$, $q \in \prod_{j=1}^k{Q_j}$ and $\sigma \in
+	\Sigma$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$
+	be a quasi-deterministic $k$-separated finite-state automaton. The tansition
+	function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow
+	\prod_{i=1}^k{Q_i}$ is defined as $\delta(q, \sigma) = \langle
+	\delta_1(q, \sigma), \delta_2(q, \sigma), \ldots, \delta_k(q, \sigma)
+	\rangle$ for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+\end{definition}
+
+\begin{definition}
+	A path $\pi$ in a quasi-deterministic $k$-separated finite-state
+	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$ is a non-empty sequence
+	$\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,$\\
+	$\dots, \langle q_{n-1}, \sigma_{n-1},
+	q_n \rangle$ where $\forall i \in \interval{1}{n}(q_i \in
+	\prod_{j=1}^k{Q_j})$, $\forall i \in
 	\interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
-	\interval{1}{n-1} \forall j \in \interval{1}{k} (q_{i+1}^j =
-	\delta_j(q_i, \sigma_i))$. The path $\pi$ is successful if $q_1 = i$
+	\interval{1}{n-1} (q_{i+1} =
+	\delta(q_i, \sigma_i))$. The path $\pi$ is successful if $q_1 = i$
 	and $q_n \in F$. The label of the path $\pi$ is the word
 	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F,
-	\delta_1, \ldots, \delta_k \rangle$ be a quasi-determin\-istic $k$-separated
-	finite-state automaton. The generalised function of transitions\\
-	$\delta^* : \prod_{j=1}^k{2^{P_j}} \times \Sigma^* \rightarrow
-	\prod_{j=1}^k{2^{P_j}}$ is defined as the least function such that
-	\begin{enumerate}
-		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{j=1}^k{2^{P_j}}$;
-		\item $\delta^*(q, w\sigma) = \langle \delta_1(\delta^*(q, w)^1,
-			\sigma), \ldots, \delta_k(\delta^*(q, w)^k, \sigma) \rangle$
-			for $q \in \prod_{j=1}^k{2^{P_j}}$,\\
-			$w \in \Sigma^*$ and $\sigma \in \Sigma$.
-	\end{enumerate}
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$
+	be a quasi-deterministic $k$-separated finite-state automaton. The
+	generalised function of transitions $\delta^* : \prod_{j=1}^k{Q_j}
+	\times \Sigma^* \rightarrow \prod_{j=1}^k{Q_j}$ is defined as the least
+	function such that $\delta^*(q, \epsilon) = q$ for $q \in
+	\prod_{j=1}^k{Q_j}$ and $\delta^*(q, \sigma w) = \delta^*(\langle
+	\delta_1(q^1, \sigma), \ldots, \delta_k(q^k, \sigma) \rangle, w)$
+	for $q \in \prod_{j=1}^k{Q_j}$, $\sigma \in \Sigma$ and $w \in \Sigma^*$.
 \end{definition}
 
 \begin{definition}
 	The language recognised by a quasi-deterministic $k$-separated finite-state
-	automaton $\mathcal{A} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F,
-	\delta_1, \ldots, \delta_k \rangle$ is the set of all labels of successful
+	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$ is the set of all labels of successful
 	paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \delta^*(i, w) \in
 	F \}$.
 \end{definition}
 
-\begin{theorem}\label{th1}
+\begin{theorem}
 	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton where $Q = \bigcup_{i=1}^k{Q_i}
 	\cup S$. We can construct a quasi-deterministic $k$-separated
@@ -70,22 +88,25 @@
 \end{theorem}
 
 \begin{proof}
-	Consider the automaton
-	$\mathcal{A'} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F', \delta_1,
-	\ldots, \delta_k \rangle$ where
+	Consider the quasi-deterministic $k$-separated finite-state automaton
+	$\mathcal{A'} = \langle \Sigma, \vec{Q'}, 2^S, i, F', \vec{\kappa},
+	\vec{\rho}, \vec{\eta} \rangle$ where
 
 	\begin{enumerate}
 		\item $P_i = Q_i \cup S$ for $i \in \interval{1}{k}$;
+		\item $Q_i' = 2^{P_i}$ for $i \in \interval{1}{k}$;
 		\item $i = \langle P_1 \cap I, P_2 \cap I, \dots, P_k \cap I
 			\rangle$;
-		\item $F' = \{ q \in \prod_{i=1}^k{2^{P_i}} \mid
+		\item $F' = \{ q \in \prod_{i=1}^k{Q_i'} \mid
 			\exists i \in \interval{1}{k} (q^i \cap F \neq
 			\varnothing) \}$;
-		\item $\delta_i(q, \sigma)
-			= (\hat{\Delta}^*(q^i, \{ \sigma \}) \cap P_i) \cup
-			(\bigcup_{j = 1, j \neq i}^k{\hat{\Delta}^*(q^j, \{ \sigma
-			\} ) \cap S})$\\ for $q \in \prod_{i=1}^k{2^{P_i}}$
-			and $\sigma \in \Sigma$.
+		\item $\kappa_i(q, \sigma) = \hat{\Delta}(q, \{ \sigma \})
+			\cap P_i$ where $q \in Q_i'$ and $\sigma
+			\in \Sigma$ for $i \in \interval{1}{k}$;
+		\item $\rho_i(q) = q \cap S$ where $q \in Q_i'$ for $i \in
+			\interval{1}{k}$;
+		\item $\eta_i(q, s) = q \cup s$ where $q \in Q_i'$ and $s \in 2^S$
+			for $i \in \interval{1}{k}$.
 	\end{enumerate}
 	We show that every successful path in $\mathcal{A}$ is also a successful
 	path in $\mathcal{A'}$ by induction on the states present in the path.
@@ -151,56 +172,4 @@
 	\noindent
 	$\implies \pi = \langle q_1, \sigma_1, q_2 \rangle, \ldots, \langle q_{n-1},
 	\sigma_{n-1}, q_n \rangle$ is a successful path in $\mathcal{A}$.
-\end{proof}
-
-\begin{corollary}
-	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton where $Q = \bigcup_{i=1}^k{Q_i}
-	\cup S$ and let $\mathcal{A'} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma,
-	i, F', \delta \rangle$ be the quasi-deterministic $k$-separated finite-state
-	automaton derived from $\mathcal{A}$ by applying the construction of
-	theorem $\ref{th1}$. Then $|\delta| \in \mathcal{O}(2^{k|S| +
-	\sum_{i=1}^k{|Q_i|}})$.
-\end{corollary}
-
-\begin{proof}
-	$\newline$
-	$\begin{aligned}
-		|\delta| &= |\prod_{i=1}^k{2^{P_i}}| \times |\Sigma|
-		\in \mathcal{O}(\prod_{i=1}^k{2^{|P_i|}})
-		= \mathcal{O}(2^{\sum_{i=1}^k{|P_i|}})
-		= \mathcal{O}(2^{\sum_{i=1}^k{|Q_i| + |S|}})\\
-		&= \mathcal{O}(2^{k|S| + \sum_{i=1}^k{|Q_i|}}).
-	\end{aligned}$
-\end{proof}
-
-\begin{proposition}
-	Let $\mathcal{A} = \langle \prod_{i=1}^k{2^{P_i}}, S, \Sigma, i, F, \delta
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton
-	constructed following the strategy described in theorem $\ref{th1}$. We
-	can express $\delta$ so that $|\delta| \in
-	\mathcal{O}(2^{2|S|}(\sum_{i=1}^k{2^{|Q_i|}}))$.
-\end{proposition}
-
-\begin{proof}
-Consider the functions
-\begin{enumerate}
-	\item $\alpha_i : 2^{P_i} \times \Sigma \rightarrow 2^{P_i}$ for $i \in
-		\interval{1}{k}$;
-	\item $\beta_i : 2^{P_i} \rightarrow 2^S$ for $i \in \interval{1}{k}$;
-	\item $\gamma_i : 2^{P_i} \times 2^S \rightarrow 2^{P_i}$ for $i \in
-		\interval{1}{k}$.
-\end{enumerate}
-
-It is obvious that $\delta(q, \sigma) = \langle \delta_1(q, \sigma), \ldots,
-\delta_k(q, \sigma) \rangle$ where $\delta_i(\langle q^1, \ldots, q^k \rangle, \sigma)
-= (\Delta^*(q^i, \sigma) \cap P_i) \cup (\bigcup_{r = 1, r \neq i}^k{ \Delta^*(q^r,
-\sigma) \cap S}) = \gamma_k(\ldots\gamma_1(\alpha_i(q, \sigma), \beta_1(q^1))\ldots, \beta_k(q^k))$.\\
-
-Then $|\delta| = \sum_{i=1}^k{(|\alpha_i|+|\beta_i|+|\gamma_i|)} =
-\sum_{i=1}^k{|2^{P_i}|(|2^S| + |\Sigma| + 1)} =\\
-\sum_{i=1}^k{2^{|P_i|}(2^{|S|} + |\Sigma| + 1)} \in
-\mathcal{O}(\sum_{i=1}^k{2^{|P_i| + |S|}}) =
-\mathcal{O}(\sum_{i=1}^k{2^{|Q_i| + 2|S|}}) =\\
-\mathcal{O}(2^{2|S|}(\sum_{i=1}^k{2^{|Q_i|}}))$.
 \end{proof}

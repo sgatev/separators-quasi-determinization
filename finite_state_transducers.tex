@@ -42,3 +42,14 @@
 	\langle u, v \rangle \in \Sigma^* \times \Omega^* \mid \exists i \in I
 	\exists f \in F (\langle i, u, v, f \rangle \in \Delta^*) \}$.
 \end{definition}
+
+\begin{definition}
+	A subsequential finite-state transducer $\mathcal{T}$ is a tuple $\langle
+	\Sigma, \Omega, Q, i,$\\
+	$F, \delta, \lambda, \Phi \rangle$ where $\Sigma$ and $\Omega$ are
+	alphabets, $Q$ is a finite set of states, $i \in Q$ is an initial state,
+	$F \subseteq Q$ is a set of final states, $\delta : Q \times \Sigma
+	\rightarrow Q$ is a transition function, $\lambda : Q \times \Sigma
+	\rightarrow \Omega^*$ is a transition output function and $\Phi : F
+	\rightarrow \Omega^*$ is a final state output function.
+\end{definition}
