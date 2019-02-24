@@ -2,9 +2,9 @@
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
 	is a tuple $\langle \Sigma, \vec{Q}, S, i, F, \vec{\kappa},
 	\vec{\rho}, \vec{\eta} \rangle$ where $\Sigma$ is an alphabet, $Q_i$ is
-	a set of quasi-states for $i \in \interval{1}{k}$, $S$ is such that
-	$\forall i \in \interval{1}{k} (S \subseteq Q_i)$ and $\forall i, j \in
-	\interval{1}{k}, i \neq j (Q_i \cap Q_j \subseteq S)$, $i \in
+	a set of quasi-states for $i \in \interval{1}{k}$, $S$ is a non-empty set
+	such that $\forall i \in \interval{1}{k} (S \subseteq Q_i)$ and $\forall i,
+	j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j \subseteq S)$, $i \in
 	\prod_{i=1}^k{Q_i}$ is an initial state, $F \subseteq \prod_{i=1}^k{Q_i}$
 	is a set of final states, $\kappa_i : Q_i \times \Sigma \rightarrow Q_i$ is
 	a component quasi-transition function for $i \in \interval{1}{k}$,
@@ -26,7 +26,9 @@
 	\vec{\rho}, \vec{\eta} \rangle$ be a quasi-deterministic $k$-separated
 	finite-state automaton. The component tansition function $\delta_i :
 	\prod_{j=1}^k{Q_j}$\\
-	$\times \Sigma \rightarrow Q_i$ is defined inductively such that
+	$\times \Sigma \rightarrow Q_i$ is defined as $\delta_i^k$ where
+	$\delta_i^j : \prod_{r=1}^k{Q_r}$ is defined inductively for $j \in
+	\interval{0}{k}$ such that
 	$\delta_i^0(q, \sigma) = \kappa_i(q^i, \sigma)$ for $q \in
 	\prod_{j=1}^k{Q_j}$ and $\sigma \in \Sigma$, and $\delta_i^j(q, \sigma) =
 	\eta_i(\delta_i^{j-1}(q, \sigma), \rho_j(\kappa_j(q^j, \sigma)))$ for
@@ -66,9 +68,8 @@
 	generalised function of transitions $\delta^* : \prod_{j=1}^k{Q_j}
 	\times \Sigma^* \rightarrow \prod_{j=1}^k{Q_j}$ is defined as the least
 	function such that $\delta^*(q, \epsilon) = q$ for $q \in
-	\prod_{j=1}^k{Q_j}$ and $\delta^*(q, \sigma w) = \delta^*(\langle
-	\delta_1(q^1, \sigma), \ldots, \delta_k(q^k, \sigma) \rangle, w)$
-	for $q \in \prod_{j=1}^k{Q_j}$, $\sigma \in \Sigma$ and $w \in \Sigma^*$.
+	\prod_{j=1}^k{Q_j}$ and $\delta^*(q, \sigma w) = \delta(\delta^*(q, w),
+	\sigma)$ for $q \in \prod_{j=1}^k{Q_j}$, $\sigma \in \Sigma$ and $w \in \Sigma^*$.
 \end{definition}
 
 \begin{definition}
@@ -110,37 +111,38 @@
 	\end{enumerate}
 	We show that every successful path in $\mathcal{A}$ is also a successful
 	path in $\mathcal{A'}$ by induction on the states present in the path.
-	Let $\pi = \langle q_1, \sigma_1, q_2 \rangle, \ldots, \langle q_{n-1},
-	\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
+	Let $\pi = \langle q_1, \sigma_1, q_2 \rangle,
+	\langle q_2, \sigma_2, q_3 \rangle, \ldots, \langle q_{n-1},$\\
+	$\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
 	\begin{enumerate}
-		\item Let $q_1' = i$. Then $q_1 \in I \implies q_1 \in
+		\item Let $p_1 = i$. Then $q_1 \in I \implies q_1 \in
 			\bigcup_{i=1}^k{P_i \cap I} \implies q_1 \in
-			\bigcup_{i=1}^k{q_1^i}$;
-		\item Let $q_i' = \delta^*(i, \sigma_1 \ldots \sigma_{i-1})$ and
-			$q_i \in \bigcup_{j=1}^k{q_i^j}$. We have
-			$q_{i+1}' = \langle \delta_1(q_i, \sigma_i), \ldots,$\\
-			$\delta_k(q_i, \sigma_i) \rangle$ where $q_{i+1}^j =
-			(\hat{\Delta}^*(
-			q_i^j, \{ \sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1, r
-			\neq j}^k{\hat{\Delta}^*(q_i^r, \{ \sigma_i \}) \cap S})
-			= (\hat{\Delta}^*(q_i^j, \{ \sigma_i \}) \cap P_j) \cup
-			(\bigcup_{r = 1, r \neq i}^k{\hat{\Delta}^*(q_i^r, \{
-			\sigma_i \}) \cap P_j}) = \bigcup_{r = 1}^k{\hat{\Delta}^*(
-			q_i^r, \{ \sigma_i \}) \cap P_j}$ for $j \in
-			\interval{1}{k}$. Then $q_{i+1} \in \Delta^*(q_i,
+			\bigcup_{i=1}^k{p_1^i}$;
+		\item Let $p_i = \delta^*(i, \sigma_1 \ldots \sigma_{i-1})$ and
+			$q_i \in \bigcup_{j=1}^k{p_i^j}$. We have
+			$p_{i+1} = \langle \delta_1(p_i, \sigma_i), \ldots,$\\
+			$\delta_k(p_i, \sigma_i) \rangle$ where $p_{i+1}^j =
+			(\hat{\Delta}(
+			p_i^j, \{ \sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1, r
+			\neq j}^k{\hat{\Delta}(p_i^r, \{ \sigma_i \}) \cap S})
+			= (\hat{\Delta}(p_i^j, \{ \sigma_i \}) \cap P_j) \cup
+			(\bigcup_{r = 1, r \neq j}^k{\hat{\Delta}(p_i^r, \{
+			\sigma_i \}) \cap P_j}) = \bigcup_{r = 1}^k{\hat{\Delta}(
+			p_i^r, \{ \sigma_i \}) \cap P_j}$ for $j \in
+			\interval{1}{k}$. Then $q_{i+1} \in \Delta(q_i,
 			\sigma_i) \implies q_{i+1} \in \bigcup_{r=1}^k{
-			\hat{\Delta}^*(q_i^r, \{ \sigma_i \})}\\
+			\hat{\Delta}(p_i^r, \{ \sigma_i \})}\\
 			\implies q_{i+1} \in \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-			\hat{\Delta}^*(q_i^r, \{ \sigma_i \}) \cap P_j}}
-			\implies q_{i+1} \in \bigcup_{j=1}^k{q_{i+1}^j}$;
-		\item $q_n \in F \land \exists q_n' \in \prod_{i=1}^k{2^{P_i}}
-			(q_n \in \bigcup_{j=1}^k{q_n^j})
-			\implies \exists j \in \interval{1}{k}(q_n \in q_n^j)$\\
-			$\implies q_n' \in F'$.
+			\hat{\Delta}(p_i^r, \{ \sigma_i \}) \cap P_j}}
+			\implies q_{i+1} \in \bigcup_{j=1}^k{p_{i+1}^j}$;
+		\item $q_n \in F \land \exists p_n \in \prod_{i=1}^k{Q_i'}
+			(q_n \in \bigcup_{j=1}^k{p_n^j})
+			\implies \exists j \in \interval{1}{k}(q_n \in p_n^j)$\\
+			$\implies p_n \in F'$.
 	\end{enumerate}
 	\bigbreak
 	\noindent
-	$\implies \pi' = \langle q_1', \sigma_1, q_2' \rangle, \dots, \langle q_{n-1}', \sigma_{n-1}, q_n' \rangle$ is a successful path in $\mathcal{A'}$.
+	$\implies \pi' = \langle p_1, \sigma_1, p_2 \rangle, \dots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ is a successful path in $\mathcal{A'}$.
 	\bigbreak
 	\noindent
 	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
