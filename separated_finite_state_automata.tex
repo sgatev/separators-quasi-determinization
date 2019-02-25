@@ -1,9 +1,9 @@
 \section{Separated finite-state automata}
 
 \begin{definition}
-	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta
+	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
 	\rangle$ is $k$-separated if there exists a partition $Q =
-	\bigcup_{i=1}^k{Q_i} \cup S$ for $k \in \mathbb{N}$ such that $\forall i, j
+	\bigcup_{i=1}^k{Q_i} \cup X$ for $k \in \mathbb{N}$ such that $\forall i, j
 	\in \interval{1}{k} (i \neq j \implies \Delta \cap (Q_i \times \Sigma \times
 	Q_j) = \varnothing)$.
 \end{definition}

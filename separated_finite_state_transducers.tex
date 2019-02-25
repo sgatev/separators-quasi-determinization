@@ -1,10 +1,10 @@
 \section{Separated finite-state transducers}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, I, F, \Delta \rangle$ be a
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
 	finite-state transducer. $\mathcal{T}$ is $k$-separated if there exists a
-	partition $Q = \bigcup_{i=1}^k{Q_i} \cup S$ such that $\forall i, j
-	\in \interval{1}{k} (i \neq j \implies \hat{\Delta} \cap (Q_i \times \Sigma
+	partition $Q = \bigcup_{i=1}^k{Q_i} \cup X$ such that $\forall i, j
+	\in \interval{1}{k} (i \neq j \implies \Delta \cap (Q_i \times \Sigma
 	\times \Omega^* \times Q_j) = \varnothing)$.
 \end{definition}
 

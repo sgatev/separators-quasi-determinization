@@ -3,24 +3,25 @@
 \begin{definition}
 	A set is defined as usual. We indicate that a set $S$ contains an
 	object $s$ by writing $s \in S$. Alternatively, we write $s
-	\notin S$ to show that $S$ does not contain $s$. The cardinality of
+	\notin S$ to show that $s$ is not a member of $S$. The cardinality of
 	a set $S$ is denoted by $|S|$. We use $\varnothing$ to indicate the
 	unique set with no members ($|\varnothing| = 0)$.
 \end{definition}
 
 \begin{definition}
-	A set $S'$ is a subset of a set $S$ if $\forall s \in S' (s \in S)$.
-	It follows that $\varnothing$ is a subset of every set. We write $S'
-	\subseteq S$ to indicate that $S'$ is a subset of $S$.
+	A set $S'$ is a subset of a set $S''$ if and only if $\forall s \in S'
+	(s \in S'')$. It follows that $\varnothing$ is a subset of every set. We
+	write $S' \subseteq S''$ to indicate that $S'$ is a subset of $S''$.
 \end{definition}
 
 \begin{definition}
-	Let $S'$ and $S''$ be sets. $S' = S''$ if and only if $S' \subseteq S''$
-	and $S'' \subseteq S'$.
+	A set $S'$ is equal to a set $S''$ if and only if $S' \subseteq S''$
+	and $S'' \subseteq S'$. We write $S' = S''$ to indicate that $S'$ is equal
+	to $S''$.
 \end{definition}
 
 \begin{definition}
-	The powerset of a set $S$ is the set $2^S = \{ S' \subseteq S \}$.
+	The powerset of a set $S$ is the set $2^S$ consisting of all subsets of $S$.
 \end{definition}
 
 \begin{definition}
@@ -39,10 +40,11 @@
 \end{definition}
 
 \begin{definition}
-	Let $S$ be a set. The sets $S_1, S_2, \ldots, S_n$ form a partition of
-	$S$ if and only if $S = \bigcup_{i=1}^n{S_i}$, $\forall i \in
-	\interval{1}{n}(|S_i| > 0)$ and $\forall i, j \in \interval{1}{n}
-	(i \neq j \implies S_i \cap S_j = \varnothing)$.
+	The sets $S_1, S_2, \ldots, S_n$ form a partition of a set $S$ if and only
+	if $S = \bigcup_{i=1}^n{S_i}$, $\forall i \in \interval{1}{n}(|S_i| > 0)$
+	and $\forall i, j \in \interval{1}{n} (i \neq j \implies S_i \cap S_j =
+	\varnothing)$. We write $P^S$ to indicate that the set $P = \{ S_1, S_2,
+	\ldots, S_n \}$ is a partition of the set $S$.
 \end{definition}
 
 \begin{definition}
@@ -64,28 +66,28 @@
 \end{definition}
 
 \begin{definition}
-	A binary relation $R \subseteq D \times C$ is a function if $\forall
-	\langle d', c' \rangle, \langle d'', c'' \rangle$\\
-	$\in R (c' \neq c'' \implies d' \neq d'')$. We write $R : D \rightarrow
-	C$ to indicate that the relation $R \subseteq D \times C$ is a function
-	and $R(d) = c$ in case $\langle d, c \rangle \in R$.
+	A binary relation $R \subseteq X \times Y$ is a function if and only if
+	$\forall \langle x', y' \rangle, \langle x'', y'' \rangle \in R (y' \neq
+	y'' \implies x' \neq x'')$. We write $R : X \rightarrow Y$ to indicate that
+	the relation $R \subseteq X \times Y$ is a function and $R(x) = y$ in case
+	$\langle x, y \rangle \in R$.
 \end{definition}
 
 
 \begin{definition}
-	Let $f: D \rightarrow C$ be a function. The domain of $f$ is the set
-	$Dom(f) = \{ d \in D \mid \exists c \in C (f(d) = c) \}$. The
-	range of $f$ is the set $Rng(f) = \{ c \in C \mid \exists d \in D
-	(f(d) = c) \}$.
+	Let $f: X \rightarrow Y$ be a function. The domain of $f$ is the set
+	$Dom(f) = \{ x \in X \mid \exists y \in Y (f(x) = y) \}$. The
+	range of $f$ is the set $Rng(f) = \{ y \in Y \mid \exists x \in X
+	(f(x) = y) \}$.
 \end{definition}
 
 \begin{definition}
-	A function $f: D \rightarrow C$ is injective if $\forall d', d'' \in Dom(f)
-	(d' \neq d'' \implies f(d') \neq f(d''))$.
+	A function $f: X \rightarrow Y$ is injective if and only if $\forall x', x''
+	\in Dom(f) (x' \neq x'' \implies f(x') \neq f(x''))$.
 \end{definition}
 
 \begin{definition}
-	Let $f: D \rightarrow C$ be a function. The set-lifted function $\hat{f}
-	: 2^D \rightarrow 2^C$ is defined as $\forall D' \subseteq D (\hat{f}(D')
-	= \{ c \in C \mid \exists d \in D' (f(d) = c) \})$.
+	Let $f: X \rightarrow Y$ be a function. The set-lifted function $\hat{f}
+	: 2^X \rightarrow 2^Y$ is defined as $\hat{f}(X') = \{ y \in Y \mid \exists
+	x \in X' (f(x) = y) \}$ for $X' \subseteq X$.
 \end{definition}

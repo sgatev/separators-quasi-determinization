@@ -2,113 +2,110 @@
 
 \begin{definition}
 	A finite-state automaton $\mathcal{A}$ is a tuple $\langle \Sigma, Q,
-	I, F, \Delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set
-	of states, $I \subseteq Q$ is a set of initial states, $F \subseteq Q$
+	S, F, \Delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set
+	of states, $S \subseteq Q$ is a set of start states, $F \subseteq Q$
 	is a set of final states and $\Delta : Q \times \Sigma \rightarrow 2^Q$
 	is a function of transitions.
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle
-	\Sigma, Q, I, F, \Delta \rangle$ is a non-empty sequence $\langle q_1,
+	\Sigma, Q, S, F, \Delta \rangle$ is a non-empty sequence $\langle q_1,
 	\sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \dots,
 	\langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
 	\interval{1}{n}(q_i \in Q)$, $\forall i \in \interval{1}{n-1}(\sigma_i
 	\in \Sigma)$ and $\forall i \in \interval{1}{n-1}(q_{i+1} \in
-	\Delta(q_i, \sigma_i))$. The path $\pi$ is successful if $q_1 \in I$ and
+	\Delta(q_i, \sigma_i))$. The path $\pi$ is successful if $q_1 \in S$ and
 	$q_n \in F$. The label of the path $\pi$ is the word
 	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton. The generalized function of transitions
-	$\Delta^* : Q \times \Sigma^* \rightarrow 2^Q$ is defined as
-	the least function such that $\forall q_1 \in Q\; \forall \sigma \in
-	\Sigma(q_2 \in \Delta(q_1, \sigma) \implies q_2 \in \Delta^*(q_1,
-	\sigma))$ and $\forall q_1 \in Q\; \forall w \in \Sigma^*\; \forall
-	\sigma \in \Sigma(q_2 \in \Delta^*(q_1, w) \land q_3 \in \Delta(q_2,
-	\sigma) \implies q_3 \in \Delta^*(q_1, w\sigma))$.
+	$\Delta^* : Q \times \Sigma^* \rightarrow 2^Q$ is defined inductively as
+	the least function such that $\Delta^*(q, \epsilon) = \{ q \}$ for $q \in Q$
+	and $\Delta^*(q, w\sigma) = \Delta(\Delta^*(q, w), \sigma)$ if $q' =
+	\Delta^*(q, w)$ and $\Delta(q', \sigma)$ are defined for $q \in Q$, $w \in
+	\Sigma^*$, $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
-	The language recognised by a finite-state automaton $\mathcal{A} =
-	\langle \Sigma, Q, I, F, \Delta \rangle$ is the set of all labels of
+	The language recognized by a finite-state automaton $\mathcal{A} =
+	\langle \Sigma, Q, S, F, \Delta \rangle$ is the set of all labels of
 	successful paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid
-	\hat{\Delta}^*(I, \{ w \}) \cap F \neq \varnothing \}$.
+	\hat{\Delta}^*(S, \{ w \}) \cap F \neq \varnothing \}$.
 \end{definition}
-
-\begin{definition}
-	A deterministic finite-state automaton $\mathcal{A}$ is a tuple $\langle
-	\Sigma, Q, i, F,$\\
-	$\delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set of
-	states,$i \in Q$ is an initial state, $F \subseteq Q$ is a set of final
-	states and $\delta : Q \times \Sigma \rightarrow Q$ is a function of
-	transitions.
-\end{definition}
-
-\begin{definition}
-	A path $\pi$ in a deterministic finite-state automaton $\mathcal{A} =
-	\langle \Sigma, Q, i, F, \delta \rangle$ is a non-empty sequence $\langle
-	q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle \dots,
-	\langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
-	\interval{1}{n}(q_i \in Q)$, $\forall i \in \interval{1}{n-1}(\sigma_i
-	\in \Sigma)$ and $\forall i \in \interval{1}{n-1}(q_{i+1} = \delta(q_i,
-	\sigma_i))$. The path $\pi$ is successful if $q_1 = i$ and $q_n \in F$.
-	The label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
-	of length $n-1$ over $\Sigma$.
-\end{definition}
-
-\begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, i, F, \delta \rangle$ be a
-	deterministic finite-state automaton. The generalized function of
-	transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined as
-	the least function such that $\forall q_1 \in Q\; \forall \sigma \in
-	\Sigma(\delta(q_1, \sigma) = q_2 \implies \delta^*(q_1, \sigma) = q_2)$
-	and $\forall q_1 \in Q\; \forall w \in \Sigma^*\; \forall \sigma \in
-	\Sigma(\delta^*(q_1, w) = q_2 \land \delta(q_2, \sigma) = q_3 \implies
-	\delta^*(q_1, w\sigma) = q_3)$.
-\end{definition}
-
-\begin{definition}
-	The language recognised by a deterministic finite-state automaton
-	$\mathcal{A} = \langle \Sigma, Q, i, F, \delta \rangle$ is the set of all
-	labels of successful paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^*
-	\mid \delta^*(i, w) \in F \}$.
-\end{definition}
-
-\begin{theorem}[Rabin-Scott, see \cite{RS59}]
-	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
-	finite-state automaton. We can construct a deterministic finite-state
-	automaton $\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$
-	such that $\mathcal{L} ( \mathcal{A'} ) = \mathcal{L} ( \mathcal{A} )$
-	where $Q' = 2^{Q}$, $F' = \{ q' \in Q' \mid q' \cap F \neq \varnothing
-	\}$ and $\forall q' \in Q'\; \forall \sigma \in \Sigma(\delta(q',
-	\sigma) = \bigcup_{q \in q'} \Delta^*(q, \sigma))$.
-\end{theorem}
-
-\begin{corollary}
-	Let $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ be a
-	finite-state automaton and\\
-	$\mathcal{A'} = \langle Q, \Sigma', i, F', \delta \rangle$ be the
-	deterministic finite-state automaton derived from $\mathcal{A}$ by
-	applying the Rabin-Scott construction. Then $| \delta | = 2^{|Q|} \times
-	|\Sigma|$.
-\end{corollary}
-
-\begin{proof}
-	$|\delta| = |Q'| \times |\Sigma| = |2^Q| \times |\Sigma| =
-	2^{|Q|} \times |\Sigma|$.
-\end{proof}
 
 \begin{definition}
 	The graph $\mathcal{G}_{\mathcal{A}}$ corresponding to a finite-state
-	automaton $\mathcal{A} = \langle \Sigma, Q, I, F, \Delta \rangle$ is the
-	pair $\langle Q, E \rangle$ where $E = \{ \langle q', q'' \rangle \mid
-	q'' \in \Delta(q', \sigma) \}$.
+	automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is the
+	triple $\langle Q, \Sigma, \Delta \rangle$.
 \end{definition}
 
 \begin{definition}
 	A finite-state automaton $\mathcal{A}$ is planar if and only if its
 	corresponding graph $\mathcal{G}_{\mathcal{A}}$ is planar.
 \end{definition}
+
+\begin{definition}
+	A deterministic finite-state automaton $\mathcal{A}$ is a tuple $\langle
+	\Sigma, Q, s, F,$\\
+	$\delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set of
+	states, $s \in Q$ is a start state, $F \subseteq Q$ is a set of final
+	states and $\delta : Q \times \Sigma \rightarrow Q$ is a function of
+	transitions.
+\end{definition}
+
+\begin{definition}
+	A path $\pi$ in a deterministic finite-state automaton $\mathcal{A} =
+	\langle \Sigma, Q, s, F, \delta \rangle$ is a non-empty sequence $\langle
+	q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle \dots,
+	\langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
+	\interval{1}{n}(q_i \in Q)$, $\forall i \in \interval{1}{n-1}(\sigma_i
+	\in \Sigma)$ and $\forall i \in \interval{1}{n-1}(q_{i+1} = \delta(q_i,
+	\sigma_i))$. The path $\pi$ is successful if $q_1 = s$ and $q_n \in F$.
+	The label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	of length $n-1$ over $\Sigma$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ be a
+	deterministic finite-state automaton. The generalized function of
+	transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined
+	inductively as the least function such that $\delta^*(q, \epsilon) = q$ for
+	$q \in Q$ and $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ if
+	$q' = \delta^*(q, w)$ and $\delta(q', \sigma)$ are defined for $q \in Q$,
+	$w \in \Sigma^*$ and $\sigma \in \Sigma$.
+\end{definition}
+
+\begin{definition}
+	The language recognized by a deterministic finite-state automaton
+	$\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ is the set of all
+	labels of successful paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^*
+	\mid \delta^*(s, w) \in F \}$.
+\end{definition}
+
+\begin{theorem}[Rabin, Scott \cite{RS59}]
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	finite-state automaton. We can construct a deterministic finite-state
+	automaton $\mathcal{A'} = \langle Q', \Sigma, S, F', \delta \rangle$
+	such that $\mathcal{L} ( \mathcal{A'} ) = \mathcal{L} ( \mathcal{A} )$
+	where $Q' = 2^{Q}$, $F' = \{ q' \in Q' \mid q' \cap F \neq \varnothing
+	\}$ and $\delta(q, \sigma) = \hat{\Delta}(q, \{ \sigma \})$ for $q \in Q'$
+	and $\sigma \in \Sigma$.
+\end{theorem}
+
+\begin{corollary}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	finite-state automaton and\\
+	$\mathcal{A'} = \langle Q, \Sigma', s, F', \delta \rangle$ be the
+	deterministic finite-state automaton derived from $\mathcal{A}$ by
+	applying the Rabin-Scott construction. Then $| \delta | = 2^{|Q|} \times
+	|\Sigma|$.
+\end{corollary}
+
+\begin{proof}
+	$\delta$ is a function $\implies |\delta| = |Q'| \times |\Sigma| = |2^Q|
+	\times |\Sigma| = 2^{|Q|} \times |\Sigma|$.
+\end{proof}

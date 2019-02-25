@@ -14,9 +14,9 @@
 \end{definition}
 
 \begin{definition}
-	Let $\Sigma', \Sigma''$ be alphabets. Let $w' =
-	\sigma'_1\sigma'_2\ldots\sigma'_n$ be a word of length $n$ over $\Sigma'$.
-	Let $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ be a word of length $m$
+	Let $\Sigma', \Sigma''$ be alphabets, $w' =
+	\sigma'_1\sigma'_2\ldots\sigma'_n$ be a word of length $n$ over $\Sigma'$
+	and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ be a word of length $m$
 	over $\Sigma''$. The concatenation of $w'$ and $w''$ is a word of length
 	$n+m$ over $\Sigma' \cup \Sigma''$ defined as $w'w'' = \sigma_1' \ldots
 	\sigma_n' \sigma_1'' \ldots \sigma_m''$.
@@ -29,9 +29,16 @@
 
 \begin{definition}
 	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is prefix of
-	$w$ if $\exists v \in \Sigma^* (w = uv)$. It follows that $\epsilon$ is
-	a prefix of every word. $Pref(w) = \{ u \in \Sigma^* \mid \exists v \in
-	\Sigma^* (w = uv) \}$ is the set of all prefixes of the word $w$.
+	$w$ if and only if $\exists v \in \Sigma^* (w = uv)$. It follows that
+	$\epsilon$ is a prefix of every word. $Pref(w) = \{ u \in \Sigma^* \mid
+	\exists v \in \Sigma^* (w = uv) \}$ is the set of all prefixes of the word
+	$w$.
+\end{definition}
+
+\begin{definition}
+	Let $w = uv$ be a word over an alphabet $\Sigma$. With $u^{-1}w$ we denote
+	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
+	$\epsilon^{-1}w = w$ for any word $w$.
 \end{definition}
 
 \begin{definition}
