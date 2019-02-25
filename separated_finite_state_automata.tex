@@ -2,19 +2,19 @@
 
 \begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is $k$-separated if there exists a partition $Q =
-	\bigcup_{i=1}^k{Q_i} \cup X$ for $k \in \mathbb{N}$ such that $\forall i, j
-	\in \interval{1}{k} (i \neq j \implies \Delta \cap (Q_i \times \Sigma \times
-	Q_j) = \varnothing)$.
+	\rangle$ is $k$-separated for $k \in \mathbb{N}$ if and only if there
+	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{A} = \langle Q,
+	\Sigma, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1, Q_2, \ldots,
+	Q_k\}$.
 \end{definition}
 
 \begin{definition}
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
-	is a tuple $\langle \Sigma, \vec{Q}, X, s, F, \vec{\kappa},
-	\vec{\rho}, \vec{\eta} \rangle$ where $\Sigma$ is an alphabet, $Q_i$ is
-	a set of quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty set
-	such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$ and $\forall i,
-	j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j \subseteq X)$, $s \in
+	is a tuple $\langle \Sigma, \vec{Q}, X, s, F, \vec{\kappa}, \vec{\rho},
+	\vec{\eta} \rangle$ where $k \in \mathbb{N}$, $\Sigma$ is an alphabet,
+	$Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$ is a
+	non-empty set such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$
+	and $\forall i, j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j = X)$, $s \in
 	\prod_{i=1}^k{Q_i}$ is a start state, $F \subseteq \prod_{i=1}^k{Q_i}$
 	is a set of final states, $\kappa_i : Q_i \times \Sigma \rightarrow Q_i$ is
 	a component quasi-transition function for $i \in \interval{1}{k}$,
@@ -41,7 +41,7 @@
 	inductively for $j \in \interval{0}{k}$ such that $\delta_i^0(q, \sigma) =
 	\kappa_i(q^i, \sigma)$ for $q \in \prod_{r=1}^k{Q_r}$ and $\sigma \in
 	\Sigma$, and $\delta_i^j(q, \sigma) = \eta_i(\delta_i^{j-1}(q, \sigma),
-	\rho_j(\kappa_j(q^j, \sigma)))$ if $j \neq i$, $\delta_i^j(q, \sigma) =
+	\rho_j(\kappa_j(q^j, \sigma)))$ if $j \neq i$ or $\delta_i^j(q, \sigma) =
 	\delta_i^{j-1}(q, \sigma)$ if $j = i$ for $j \in \interval{1}{k}$, $q \in
 	\prod_{r=1}^k{Q_r}$ and $\sigma \in \Sigma$.
 \end{definition}
@@ -75,16 +75,16 @@
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\kappa},
 	\vec{\rho}, \vec{\eta} \rangle$
 	be a quasi-deterministic $k$-separated finite-state automaton. The
-	generalised function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
-	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined as the least
-	function such that $\delta^*(q, \epsilon) = q$ for $q \in
+	generalized function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
+	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined inductively as
+	the least function such that $\delta^*(q, \epsilon) = q$ for $q \in
 	\prod_{i=1}^k{Q_i}$ and $\delta^*(q, w\sigma) = \delta(\delta^*(q, w),
 	\sigma)$ for $q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma \in
 	\Sigma$.
 \end{definition}
 
 \begin{definition}
-	The language recognised by a quasi-deterministic $k$-separated finite-state
+	The language recognized by a quasi-deterministic $k$-separated finite-state
 	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\kappa},
 	\vec{\rho}, \vec{\eta} \rangle$ is the set of all labels of successful
 	paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \delta^*(s, w) \in
@@ -93,9 +93,9 @@
 
 \begin{theorem}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton where $Q = \bigcup_{i=1}^k{Q_i}
-	\cup X$. We can construct a quasi-deterministic $k$-separated
-	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
+	$k$-separated finite-state automaton with separator $X$ where $Q_X =
+	\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-deterministic
+	$k$-separated finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
 	(\mathcal{A'} ) = \mathcal{L} ( \mathcal{A} )$.
 \end{theorem}
 
