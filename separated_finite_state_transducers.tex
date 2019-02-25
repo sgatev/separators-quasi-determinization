@@ -1,56 +1,56 @@
-\subsection{Separated finite-state transducers}
+\subsection{Quasi-deterministic finite-state transducers}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. $\mathcal{T}$ is $k$-separated if there exists a
-	partition $Q = \bigcup_{i=1}^k{Q_i} \cup X$ such that $\forall i, j
-	\in \interval{1}{k} (i \neq j \implies \Delta \cap (Q_i \times \Sigma
-	\times \Omega^* \times Q_j) = \varnothing)$.
+	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
+	\Delta \rangle$ is $k$-separated for $k \in \mathbb{N}$ if and only if there
+	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{T} = \langle Q,
+	\Sigma \times \Omega^*, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1,
+	Q_2, \ldots, Q_k\}$.
 \end{definition}
 
 \begin{definition}
 	A quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}$
-	is a tuple $\langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\kappa},
-	\vec{\rho}, \vec{\eta}, \vec{\lambda} \rangle$ where $\Sigma$ is an
+	is a tuple $\langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ where $\Sigma$ is an
 	alphabet, $Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$
 	is a non-empty set such that $\forall i \in \interval{1}{k} (X \subseteq
 	Q_i)$ and $\forall i, j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j
-	\subseteq X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start state, $F \subseteq
-	\prod_{i=1}^k{Q_i}$ is a set of final states, $\kappa_i : Q_i \times \Sigma
+	= X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start state, $F \subseteq
+	\prod_{i=1}^k{Q_i}$ is a set of final states, $\tau_i : Q_i \times \Sigma
 	\rightarrow Q_i$ is a component quasi-transition function for $i \in
 	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reducer
 	function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow
 	Q_i$ is a component extension function for $i \in \interval{1}{k}$ and
-	$\lambda_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a component output
+	$\mu_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a component quasi-output
 	function.
 \end{definition}
 
 \begin{remark}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\kappa},
-	\vec{\rho}, \vec{\eta}, \vec{\lambda} \rangle$ be a quasi-subsequential
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
 	$k$-separated finite-state transducer. We use $q^j$ for $j \in
 	\interval{1}{k}$ to denote the $j$-th component of $q = \langle q^1, q^2,
 	\ldots, q^k \rangle \in \prod_{i=1}^k{Q_i}$.
 \end{remark}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\kappa},
-	\vec{\rho}, \vec{\eta}, \vec{\lambda} \rangle$ be a quasi-subsequential
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
 	$k$-separated finite-state transducer. The component tansition function
 	$\delta_i : \prod_{j=1}^k{Q_j}$\\
 	$\times \Sigma \rightarrow Q_i$ is defined as
 	$\delta_i^k$ where $\delta_i^j : \prod_{r=1}^k{Q_r} \times \Sigma
 	\rightarrow Q_i$ is defined inductively for $j \in \interval{0}{k}$ such
-	that $\delta_i^0(q, \sigma) = \kappa_i(q^i, \sigma)$ for $q \in
+	that $\delta_i^0(q, \sigma) = \tau_i(q^i, \sigma)$ for $q \in
 	\prod_{r=1}^k{Q_r}$ and $\sigma \in \Sigma$, and $\delta_i^j(q, \sigma) =
-	\eta_i(\delta_i^{j-1}(q, \sigma), \rho_j(\kappa_j(q^j, \sigma)))$ if $j
-	\neq i$, $\delta_i^j(q, \sigma) = \delta_i^{j-1}(q, \sigma)$ if $j = i$ for
+	\eta_i(\delta_i^{j-1}(q, \sigma), \rho_j(\tau_j(q^j, \sigma)))$ if $j
+	\neq i$ or $\delta_i^j(q, \sigma) = \delta_i^{j-1}(q, \sigma)$ if $j = i$ for
 	$j \in \interval{1}{k}$, $q \in \prod_{r=1}^k{Q_r}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\kappa},
-	\vec{\rho}, \vec{\eta}, \vec{\lambda} \rangle$ be a quasi-subsequential
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
 	$k$-separated finite-state transducer. The tansition function $\delta :
 	\prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \prod_{i=1}^k{Q_i}$ is defined
 	as $\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma),
@@ -61,7 +61,7 @@
 \begin{definition}
 	A path $\pi$ in a quasi-subsequential $k$-separated finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
-	\vec{\kappa}, \vec{\rho}, \vec{\eta}, \vec{\lambda} \rangle$ is a non-empty
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ is a non-empty
 	sequence $\langle q_1, \sigma_1, w_1, q_2 \rangle,$\\
 	$\langle q_2, \sigma_2, w_2, q_3 \rangle, \ldots, \langle q_{n-1},
 	\sigma_{n-1}, w_{n-1}, q_n \rangle$ where $\forall i \in
@@ -71,18 +71,56 @@
 	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
 	successful if $q_1 = s$ and $q_n \in F$. The label of the path $\pi$ is the
 	word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
-	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$ over
-	$\Omega$.
+	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$
+	of length $\sum_{i=1}^{n-1}{|w_i|}+|\Phi(q_n)|$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
-	\vec{\kappa}, \vec{\rho}, \vec{\eta}, \vec{\lambda} \rangle$
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$
 	be a quasi-subsequential $k$-separated finite-state transducer. The
-	generalised function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
-	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined as the least
-	function such that $\delta^*(q, \epsilon) = q$ for $q \in
+	generalized function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
+	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined inductively as
+	the least function such that $\delta^*(q, \epsilon) = q$ for $q \in
 	\prod_{i=1}^k{Q_i}$ and $\delta^*(q, w\sigma) = \delta(\delta^*(q, w),
 	\sigma)$ for $q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma \in
 	\Sigma$.
 \end{definition}
+
+\begin{definition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
+	$k$-separated finite-state transducer. The tansition output function
+	$\lambda : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \Omega^*$
+	is defined as $\lambda(q, \sigma) = \bigwedge_{i=1}^k \mu_i(q^i, \sigma)$
+	for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$
+	be a quasi-subsequential $k$-separated finite-state transducer. The
+	generalized function of transition outputs $\lambda^* : \prod_{i=1}^k{Q_i}
+	\times \Sigma^* \rightarrow \Omega^*$ is defined inductively as the least
+	function such that $\lambda^*(q, \epsilon) = \epsilon$ for $q \in
+	\prod_{i=1}^k{Q_i}$ and $\lambda^*(q, w\sigma) = \lambda^*(q, w)\lambda
+	(\delta^*(q, w), \sigma)$ for $q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$
+	and $\sigma \in \Sigma$.
+\end{definition}
+
+\begin{definition}
+	The relation recognized by a quasi-subsequential $k$-separated finite-state
+	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ is the set of all
+	labels and outputs of successful paths $\mathcal{R}(\mathcal{T}) = \{
+	\langle w, \lambda^*(s, w)\Phi(f) \rangle \mid \exists f \in F (\delta^*(s,
+	w) = f) \}$.
+\end{definition}
+
+\begin{theorem}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state transducer with separator $X$ where $Q_X =
+	\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-subsequential
+	$k$-separated finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}
+	(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
+\end{theorem}
