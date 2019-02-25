@@ -14,12 +14,16 @@
 \end{definition}
 
 \begin{definition}
-	Let $\Sigma', \Sigma''$ be alphabets, $w' =
-	\sigma'_1\sigma'_2\ldots\sigma'_n$ be a word of length $n$ over $\Sigma'$
-	and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ be a word of length $m$
+	Concatenation of words over alphabets $\Sigma'$ and $\Sigma''$ is a
+	function $\circ : 2^{\Sigma'} \times 2^{\Sigma''} \rightarrow
+	2^{\Sigma' \cup \Sigma''}$ defined as $w' \circ w'' = \sigma_1' \ldots
+	\sigma_n' \sigma_1'' \ldots \sigma_m''$ where $w' =
+	\sigma'_1\sigma'_2\ldots\sigma'_n$ is a word of length $n$ over $\Sigma'$
+	and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ is a word of length $m$
 	over $\Sigma''$. The concatenation of $w'$ and $w''$ is a word of length
-	$n+m$ over $\Sigma' \cup \Sigma''$ defined as $w'w'' = \sigma_1' \ldots
-	\sigma_n' \sigma_1'' \ldots \sigma_m''$.
+	$n+m$ over $\Sigma' \cup \Sigma''$. Since concatenation is associative
+	we prefer the notation $w'w''$ over $w' \circ w''$. That is $u \circ
+	(v \circ w) = (u \circ v) \circ w = uvw$ for $u, v, w \in \Sigma^*$.
 \end{definition}
 
 \begin{definition}
@@ -59,4 +63,23 @@
 \begin{definition}
 	A language $L$ over an alphabet $\Sigma$ is a subset $L \subseteq
 	\Sigma^*$.
+\end{definition}
+
+\begin{definition}
+	A language $L$ over an alphabet $\Sigma$ is regular if and only if it can be
+	defined inductively as follows
+	\begin{enumerate}
+		\item $\varnothing$ is a regular language over $\Sigma$;
+		\item If $\sigma \in \Sigma \cup \{ \epsilon \}$ then $\{ \sigma \}$
+			is a regular language over $\Sigma$;
+		\item If $L'$ and $L''$ are regular languages over $\Sigma$ then
+			\begin{itemize}
+				\item $L' \hat{\circ} L''$ is a regular language over
+					$\Sigma$;
+				\item $L' \cup L''$ is a regular language over
+					$\Sigma$;
+				\item $L'^*$ is a regular language over $\Sigma$;
+			\end{itemize}
+		\item There are no other regular languages over $\Sigma$.
+	\end{enumerate}
 \end{definition}

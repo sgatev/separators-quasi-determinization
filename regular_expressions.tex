@@ -1,0 +1,42 @@
+\subsection{Regular expressions}
+
+\begin{definition}
+	A regular expression $\mathcal{R}$ over an alphabet $\Sigma$ where $\Sigma
+	\cap \{ (, ), ., +,$\\
+	$* \} = \varnothing$ is a word over $\Sigma \cup \{ (, ), ., +, * \}$
+	denoting a regular language $\mathcal{L}(\mathcal{R})$ over $\Sigma$. A
+	regular expression and the regular language it denotes are defined
+	inductively as follows
+	\begin{enumerate}
+		\item $\varnothing$ is a regular expression over $\Sigma$
+			denoting the regular language $\varnothing$;
+		\item If $\sigma \in \Sigma \cup \{ \epsilon \}$ then $\sigma$ is
+			a regular expression over $\Sigma$ denoting the regular
+			language $\{ \sigma \}$;
+		\item If $\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions
+			over $\Sigma$ denoting the regular languages $\mathcal{L}
+			(\mathcal{R}')$ and $\mathcal{L}(\mathcal{R}'')$
+			respectively then
+			\begin{itemize}
+				\item $(\mathcal{R}'.\mathcal{R}'')$ is a regular
+					expression over $\Sigma$ denoting the
+					regular language $\mathcal{L}(\mathcal{R}')
+					\circ \mathcal{L}(\mathcal{R}'')$;
+				\item $(\mathcal{R}'+\mathcal{R}'')$ is a regular
+					expression over $\Sigma$ denoting the
+					regular language $\mathcal{L}(\mathcal{R}')
+					\cup \mathcal{L}(\mathcal{R}'')$;
+				\item $(\mathcal{R}'*)$ is a regular
+					expression over $\Sigma$ denoting the
+					regular language $\mathcal{L}
+					(\mathcal{R}')^*$;
+			\end{itemize}
+		\item There are no other regular expressions over $\Sigma$.
+	\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Thompson \cite{T68}]
+	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. We can
+	construct a finite-state automaton $\mathcal{A}$ such that $\mathcal{L}
+	(\mathcal{A}) = \mathcal{L}(\mathcal{R})$.
+\end{theorem}

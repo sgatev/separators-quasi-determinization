@@ -41,6 +41,11 @@
 \end{definition}
 
 \begin{definition}
+	A finite-state transducer $\mathcal{T}$ is functional if and only if
+	$\mathcal{R}(\mathcal{T})$ is a function.
+\end{definition}
+
+\begin{definition}
 	The graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
 	is the triple $\langle Q, \Sigma \times \Omega^*, \Delta \rangle$.
@@ -108,9 +113,9 @@
 
 \begin{theorem}[Choffrut, Mohri \cite{C77, M96}]\label{t_choffrut_mohri}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. We can construct a subsequential finite-state
-	transducer $\mathcal{T'} = \langle \Sigma, \Omega, Q', s', F', \delta,
-	\lambda, \Phi \rangle$ such that $\mathcal{R}(\mathcal{T'}) =
+	functional finite-state transducer. We can construct a subsequential
+	finite-state transducer $\mathcal{T'} = \langle \Sigma, \Omega, Q', s', F',
+	\delta, \lambda, \Phi \rangle$ such that $\mathcal{R}(\mathcal{T'}) =
 	\mathcal{R}(\mathcal{T})$ where $Q' = 2^{Q \times \Omega^*}$.
 \end{theorem}
 
