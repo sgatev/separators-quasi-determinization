@@ -10,21 +10,21 @@
 
 \begin{definition}
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
-	is a tuple $\langle \Sigma, \vec{Q}, X, s, F, \vec{\tau}, \vec{\rho},
+	is a tuple $\langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau}, \vec{\rho},
 	\vec{\eta} \rangle$ where $k \in \mathbb{N}$, $\Sigma$ is an alphabet,
 	$Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$ is a
 	non-empty set such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$
 	and $\forall i, j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j = X)$, $s \in
-	\prod_{i=1}^k{Q_i}$ is a start state, $F \subseteq \prod_{i=1}^k{Q_i}$
-	is a set of final states, $\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is
-	a component quasi-transition function for $i \in \interval{1}{k}$,
-	$\rho_i : Q_i \rightarrow X$ is a component reducer function for $i \in
-	\interval{1}{k}$ and $\eta_i : Q_i \times X \rightarrow Q_i$ is a component
-	extension function for $i \in \interval{1}{k}$.
+	\prod_{i=1}^k{Q_i}$ is a start state, $f_i \subseteq Q_i$ is a set of final
+	quasi-states for $i \in \interval{1}{k}$, $\tau_i : Q_i \times \Sigma
+	\rightarrow Q_i$ is a component quasi-transition function for $i \in
+	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reducer
+	function for $i \in \interval{1}{k}$ and $\eta_i : Q_i \times X \rightarrow
+	Q_i$ is a component extension function for $i \in \interval{1}{k}$.
 \end{definition}
 
 \begin{remark}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\tau},
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
 	\vec{\rho}, \vec{\eta} \rangle$ be a quasi-deterministic $k$-separa\-ted
 	finite-state automaton. We use $q^j$ for $j \in \interval{1}{k}$ to denote
 	the $j$-th component of $q = \langle q^1, q^2, \ldots, q^k \rangle \in
@@ -32,7 +32,7 @@
 \end{remark}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\tau},
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
 	\vec{\rho}, \vec{\eta} \rangle$ be a quasi-deterministic $k$-separated
 	finite-state automaton. The component tansition function $\delta_i :
 	\prod_{j=1}^k{Q_j}$\\
@@ -47,32 +47,31 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta} \rangle$
-	be a quasi-deterministic $k$-separated finite-state automaton. The tansition
-	function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow
-	\prod_{i=1}^k{Q_i}$ is defined as $\delta(q, \sigma) = \langle
-	\delta_1(q, \sigma), \delta_2(q, \sigma), \ldots, \delta_k(q, \sigma)
-	\rangle$ for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
+	\vec{\rho}, \vec{\eta} \rangle$ be a quasi-deterministic $k$-separated
+	finite-state automaton. The tansition function $\delta : \prod_{i=1}^k{Q_i}
+	\times \Sigma \rightarrow \prod_{i=1}^k{Q_i}$ is defined as $\delta(q,
+	\sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
+	\delta_k(q, \sigma) \rangle$ for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in
+	\Sigma$.
 \end{definition}
 
 \begin{definition}
-	A path $\pi$ in a quasi-deterministic $k$-separated finite-state
-	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta} \rangle$ is a non-empty sequence
-	$\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,$\\
-	$\dots, \langle q_{n-1}, \sigma_{n-1},
-	q_n \rangle$ where $\forall i \in \interval{1}{n}(q_i \in
-	\prod_{j=1}^k{Q_j})$, $\forall i \in
+	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
+	$\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
+	\vec{\rho}, \vec{\eta} \rangle$ is a non-empty sequence $\langle q_1,
+	\sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,$\\
+	$\dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
+	\interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall i \in
 	\interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
-	\interval{1}{n-1} (q_{i+1} =
-	\delta(q_i, \sigma_i))$. The path $\pi$ is successful if $q_1 = s$
-	and $q_n \in F$. The label of the path $\pi$ is the word
+	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
+	successful if $q_1 = s$ and $q_n^j \in f^j$ for some $j \in \interval{1}{k}$.
+	The label of the path $\pi$ is the word
 	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\tau},
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
 	\vec{\rho}, \vec{\eta} \rangle$
 	be a quasi-deterministic $k$-separated finite-state automaton. The
 	generalized function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
@@ -85,14 +84,14 @@
 
 \begin{definition}
 	The language recognized by a quasi-deterministic $k$-separated finite-state
-	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, F, \vec{\tau},
+	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
 	\vec{\rho}, \vec{\eta} \rangle$ is the set of all labels of successful
-	paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \delta^*(s, w) \in
-	F \}$.
+	paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \exists j \in
+	\interval{1}{k}(\delta^*(s, w)^j \in f^j \}$.
 \end{definition}
 
 \begin{theorem}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	Let $\mathcal{A} = \langle \Sigma, Q, S, \vec{f}, \Delta \rangle$ be a
 	$k$-separated finite-state automaton with separator $X$ where $Q_X =
 	\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-deterministic
 	$k$-separated finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
@@ -102,12 +101,13 @@
 \begin{proof}
 	Consider the quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A'} = \langle \Sigma, \vec{Q'},
-	2^X, s, F', \vec{\tau},
+	2^X, s, \vec{f}, \vec{\tau},
 	\vec{\rho}, \vec{\eta} \rangle$ where $P_i = Q_i \cup X$ for $i \in
 	\interval{1}{k}$, $Q_i' = 2^{P_i}$ for $i \in \interval{1}{k}$,
 	$s = \langle P_1 \cap S, P_2 \cap S, \dots, P_k \cap S \rangle$,
-	$F' = \{ q \in \prod_{i=1}^k{Q_i'} \mid \exists i \in \interval{1}{k}
-	(q^i \cap F \neq \varnothing) \}$, $\tau_i(q, \sigma) = \hat{\Delta}(q,
+	$f_i = \{ q \in Q_i' \mid q^i \cap F \neq \varnothing \}$ for $i \in
+	\interval{1}{k}$,
+	$\tau_i(q, \sigma) = \hat{\Delta}(q,
 	\{ \sigma \}) \cap P_i$ where $q \in Q_i'$ and $\sigma \in \Sigma$ for $i
 	\in \interval{1}{k}$, $\rho_i(q) = q \cap X$ where $q \in Q_i'$ for $i \in
 	\interval{1}{k}$ and $\eta_i(q, x) = q \cup x$ where $q \in Q_i'$ and $x
@@ -150,7 +150,7 @@
 		\item $q_n \in F \land \exists p_n \in \prod_{i=1}^k{Q_i'}
 			(q_n \in \bigcup_{j=1}^k{p_n^j})
 			\implies \exists j \in \interval{1}{k}(q_n \in p_n^j)$\\
-			$\implies p_n \in F'$.
+			$\implies p_n \in f_j$.
 	\end{enumerate}
 	\bigbreak
 	\noindent

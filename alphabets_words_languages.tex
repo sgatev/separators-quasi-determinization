@@ -14,16 +14,16 @@
 \end{definition}
 
 \begin{definition}
-	Concatenation of words over alphabets $\Sigma'$ and $\Sigma''$ is a
-	function $\circ : 2^{\Sigma'} \times 2^{\Sigma''} \rightarrow
-	2^{\Sigma' \cup \Sigma''}$ defined as $w' \circ w'' = \sigma_1' \ldots
+	Concatenation of words over the alphabets $\Sigma'$ and $\Sigma''$ is a
+	function $\circ : \Sigma'^* \times \Sigma''^* \rightarrow
+	(\Sigma' \cup \Sigma'')^*$ defined as $w' \circ w'' = \sigma_1' \ldots
 	\sigma_n' \sigma_1'' \ldots \sigma_m''$ where $w' =
 	\sigma'_1\sigma'_2\ldots\sigma'_n$ is a word of length $n$ over $\Sigma'$
 	and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ is a word of length $m$
 	over $\Sigma''$. The concatenation of $w'$ and $w''$ is a word of length
 	$n+m$ over $\Sigma' \cup \Sigma''$. Since concatenation is associative
 	we prefer the notation $w'w''$ over $w' \circ w''$. That is $u \circ
-	(v \circ w) = (u \circ v) \circ w = uvw$ for $u, v, w \in \Sigma^*$.
+	(v \circ w) = (u \circ v) \circ w = uvw$ for the words $u, v, w$.
 \end{definition}
 
 \begin{definition}

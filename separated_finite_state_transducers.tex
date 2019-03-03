@@ -1,7 +1,7 @@
 \subsection{Quasi-deterministic finite-state transducers}
 
 \begin{definition}
-	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
+	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, \vec{f},
 	\Delta \rangle$ is $k$-separated for $k \in \mathbb{N}$ if and only if there
 	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{T} = \langle Q,
 	\Sigma \times \Omega^*, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1,
@@ -10,34 +10,34 @@
 
 \begin{definition}
 	A quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}$
-	is a tuple $\langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ where $\Sigma$ is an
-	alphabet, $Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$
+	is a tuple $\langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f}, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ where $\Sigma$ and $\Omega$ are
+	alphabets, $Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$
 	is a non-empty set such that $\forall i \in \interval{1}{k} (X \subseteq
 	Q_i)$ and $\forall i, j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j
-	= X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start state, $F \subseteq
-	\prod_{i=1}^k{Q_i}$ is a set of final states, $\tau_i : Q_i \times \Sigma
-	\rightarrow Q_i$ is a component quasi-transition function for $i \in
-	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reducer
-	function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow
-	Q_i$ is a component extension function for $i \in \interval{1}{k}$ and
-	$\mu_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a component quasi-output
-	function.
+	= X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start state, $f_i : Q_i \rightarrow
+	\Omega^*$ is a final quasi-state output function for $i \in \interval{1}{k}$,
+	$\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a component
+	quasi-transition function for $i \in \interval{1}{k}$, $\rho_i : Q_i
+	\rightarrow X$ is a component reducer function for $i \in \interval{1}{k}$,
+	$\eta_i : Q_i \times X \rightarrow Q_i$ is a component extension function
+	for $i \in \interval{1}{k}$ and $\mu_i : Q_i \times \Sigma \rightarrow
+	\Omega^*$ is a component quasi-output function.
 \end{definition}
 
 \begin{remark}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
-	$k$-separated finite-state transducer. We use $q^j$ for $j \in
-	\interval{1}{k}$ to denote the $j$-th component of $q = \langle q^1, q^2,
-	\ldots, q^k \rangle \in \prod_{i=1}^k{Q_i}$.
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a
+	quasi-subsequential $k$-separated finite-state transducer. We use $q^j$ for
+	$j \in \interval{1}{k}$ to denote the $j$-th component of $q = \langle q^1,
+	q^2, \ldots, q^k \rangle \in \prod_{i=1}^k{Q_i}$.
 \end{remark}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
-	$k$-separated finite-state transducer. The component tansition function
-	$\delta_i : \prod_{j=1}^k{Q_j}$\\
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a
+	quasi-subsequential $k$-separated finite-state transducer. The component
+	tansition function $\delta_i : \prod_{j=1}^k{Q_j}$\\
 	$\times \Sigma \rightarrow Q_i$ is defined as
 	$\delta_i^k$ where $\delta_i^j : \prod_{r=1}^k{Q_r} \times \Sigma
 	\rightarrow Q_i$ is defined inductively for $j \in \interval{0}{k}$ such
@@ -49,18 +49,18 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
-	$k$-separated finite-state transducer. The tansition function $\delta :
-	\prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \prod_{i=1}^k{Q_i}$ is defined
-	as $\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma),
-	\ldots, \delta_k(q, \sigma) \rangle$ for $q \in \prod_{i=1}^k{Q_i}$ and
-	$\sigma \in \Sigma$.
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a
+	quasi-subsequential $k$-separated finite-state transducer. The tansition
+	function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow
+	\prod_{i=1}^k{Q_i}$ is defined as $\delta(q, \sigma) = \langle \delta_1(q,
+	\sigma), \delta_2(q, \sigma), \ldots, \delta_k(q, \sigma) \rangle$ for $q
+	\in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a quasi-subsequential $k$-separated finite-state
-	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
+	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ is a non-empty
 	sequence $\langle q_1, \sigma_1, w_1, q_2 \rangle,$\\
 	$\langle q_2, \sigma_2, w_2, q_3 \rangle, \ldots, \langle q_{n-1},
@@ -69,14 +69,15 @@
 	\interval{1}{n-1} (\sigma_i \in \Sigma)$, $\forall i \in
 	\interval{1}{n-1} (w_i \in \Omega^*)$ and $\forall i \in
 	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
-	successful if $q_1 = s$ and $q_n \in F$. The label of the path $\pi$ is the
-	word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
-	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$
-	of length $\sum_{i=1}^{n-1}{|w_i|}+|\Phi(q_n)|$ over $\Omega$.
+	successful if $q_1 = s$ and $\exists j \in \interval{1}{k} \exists w \in
+	\Omega^*(f_j(q_n^j) = w)$. The label of the path $\pi$ is the word
+	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$. The
+	output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$ of length
+	$\sum_{i=1}^{n-1}{|w_i|}+|\Phi(q_n)|$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$
 	be a quasi-subsequential $k$-separated finite-state transducer. The
 	generalized function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
@@ -88,16 +89,16 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a quasi-subsequential
-	$k$-separated finite-state transducer. The tansition output function
-	$\lambda : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \Omega^*$
-	is defined as $\lambda(q, \sigma) = \bigwedge_{i=1}^k \mu_i(q^i, \sigma)$
-	for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ be a
+	quasi-subsequential $k$-separated finite-state transducer. The tansition
+	output function $\lambda : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow
+	\Omega^*$ is defined as $\lambda(q, \sigma) = \bigwedge_{i=1}^k \mu_i(q^i,
+	\sigma)$ for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$
 	be a quasi-subsequential $k$-separated finite-state transducer. The
 	generalized function of transition outputs $\lambda^* : \prod_{i=1}^k{Q_i}
@@ -110,16 +111,17 @@
 
 \begin{definition}
 	The relation recognized by a quasi-subsequential $k$-separated finite-state
-	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, F,
+	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \vec{\mu} \rangle$ is the set of all
 	labels and outputs of successful paths $\mathcal{R}(\mathcal{T}) = \{
-	\langle w, \lambda^*(s, w)\Phi(f) \rangle \mid \exists f \in F (\delta^*(s,
-	w) = f) \}$.
+	\langle u, \lambda^*(s, u) \circ v \rangle \mid \exists q \in
+	\prod_{i=1}^k{Q_i} \exists j \in \interval{1}{k}(\delta^*(s, u) = q \land
+	f_j(q^j) = v) \}$.
 \end{definition}
 
 \begin{theorem}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state transducer with separator $X$ where $Q_X =
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, \vec{f}, \Delta \rangle$
+	be a $k$-separated finite-state transducer with separator $X$ where $Q_X =
 	\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-subsequential
 	$k$-separated finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}
 	(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.

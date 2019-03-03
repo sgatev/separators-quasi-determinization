@@ -1,1 +1,232 @@
 \subsection{Finite-state automata from regular expressions}
+
+\begin{proposition}
+	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$ and
+	let $\mathcal{A}$ be the finite-state automaton derived from $\mathcal{R}$
+	by applying the construction in Theorem $\ref{t_thompson}$ such that
+	$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$. Then $\mathcal{A}$
+	is planar.
+\end{proposition}
+
+\begin{proof}
+	We prove by induction on the construction of the finite-state automaton
+	$\mathcal{A}$ that its corresponding graph $\mathcal{G}_{\mathcal{A}}$ can
+	be embedded in a square where
+	\begin{enumerate}
+		\item the vertex corresponding to the single start state of
+			$\mathcal{A}$ is mapped to a point that lies on the left
+			side of the square;
+		\item the vertex corrresponding to the single final state of
+			$\mathcal{A}$ is mapped to a point that lies on the right
+			side of the square;
+		\item the vertices corresponding to all other states of $\mathcal{A}$
+			are mapped to points that lie properly inside the square;
+		\item edges that correspond to transitions of $\mathcal{A}$ are
+			mapped to curves that lie properly inside the square;
+		\item no curves intersect at a point that does not correspond to
+			a vertex of $\mathcal{G}_{\mathcal{A}}$.
+	\end{enumerate}
+
+	\begin{case}[$\mathcal{R} = \emptyset$]
+		$\mathcal{A} = \langle \Sigma, \emptyset, \emptyset, \emptyset,
+		\emptyset \rangle$ is the finite-state automaton such that
+		$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$ according to
+		Theorem $\ref{t_thompson}$. The embedding of the graph
+		$\mathcal{G}_{\mathcal{A}}$ in a square is presented in Figure
+		$\ref{fig:f_thompson_1}$.
+
+		\begin{figure}[!h]
+			\centering
+			\begin{tikzpicture}[on grid, auto, scale=2]
+				\draw[dotted] (-1, -1) rectangle (1, 1);
+			\end{tikzpicture}
+			\caption{Square embedding of the graph corresponding to a
+				finite-state automaton that recognizes the language
+				of the regular expression $\mathcal{R} = \emptyset$.}
+			\label{fig:f_thompson_1}
+		\end{figure}
+	\end{case}
+
+	\begin{case}[$\mathcal{R} = \sigma$ where
+		$\sigma \in \Sigma\cup\{\epsilon\}$]
+		$\mathcal{A} = \langle \Sigma, \{ s, f \}, \{ s \}, \{ f \}, \{
+		\langle s, \sigma, f \rangle \} \rangle$ is the finite-state
+		automaton such that $\mathcal{L}(\mathcal{A}) =
+		\mathcal{L}(\mathcal{R})$ according to Theorem $\ref{t_thompson}$.
+		The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square
+		is presented in Figure $\ref{fig:f_thompson_2}$.
+
+		\begin{figure}[!h]
+			\centering
+			\begin{tikzpicture}[on grid, auto, scale=0.5]
+  				\draw[dotted] (-4, -4) rectangle (4, 4);
+  				\node[state, initial, fill=white, scale=0.75] (s) at (-4, 0) {$s$};
+  				\node[state, accepting, fill=white, scale=0.75] (f) at (4, 0) {$f$};
+  				\path[->] (s) edge node {$\sigma$} (f);
+			\end{tikzpicture}
+			\caption{Square embedding of the graph corresponding to a
+				finite-state automaton that recognizes the language
+				of the regular expression $\mathcal{R} = \sigma$
+				where $\sigma \in \Sigma\cup\{\epsilon\}$.}
+			\label{fig:f_thompson_2}
+		\end{figure}
+	\end{case}
+
+	\begin{case}[$\mathcal{R} = \mathcal{R}'.\mathcal{R}''$ where
+		$\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions]
+		Let $\mathcal{A}' = \langle \Sigma, Q', \{ s' \}, \{ f' \}, \Delta'
+		\rangle$ be the finite-state automaton such that
+		$\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{R}')$ according to
+		Theorem $\ref{t_thompson}$.
+
+		Let $\mathcal{A}'' = \langle \Sigma, Q'', \{ s'' \}, \{ f'' \},
+		\Delta'' \rangle$ be the finite-state automaton such that
+		$\mathcal{L}(\mathcal{A}'') = \mathcal{L}(\mathcal{R}'')$ according
+		to Theorem $\ref{t_thompson}$.
+
+		Then $\mathcal{A} = \langle \Sigma, Q' \cup Q'', \{ s' \}, \{ f'' \},
+		\Delta' \cup \Delta'' \cup \{ \langle f', \epsilon, s'' \rangle \}
+		\rangle$ is the finite-state automaton such that
+		$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$ according to
+		Theorem $\ref{t_thompson}$. The embedding of the graph
+		$\mathcal{G}_{\mathcal{A}}$ in a square is presented in Figure
+		$\ref{fig:f_thompson_3}$.
+
+		\begin{figure}[!h]
+			\centering
+			\begin{tikzpicture}[on grid, auto, scale=0.25]
+  				\draw[dotted] (-8, -8) rectangle (8, 8);
+
+				\draw (-8, -3) rectangle (-2, 3);
+  				\node[state, initial, fill=white, scale=0.75]
+					(s') at (-8, 0) {$s'$};
+  				\node[state, fill=white, scale=0.75]
+					(f') at (-2, 0) {$f'$};
+
+  				\draw (2, -3) rectangle (8, 3);
+  				\node[state, fill=white, scale=0.75]
+					(s'') at (2, 0) {$s''$};
+  				\node[state, accepting, fill=white, scale=0.75]
+					(f'') at (8, 0) {$f''$};
+
+  				\path[->] (f') edge node {$\epsilon$} (s'');
+			\end{tikzpicture}
+		\caption{Square embedding of the graph corresponding to a
+			finite-state automaton that recognizes the language of
+			the regular expression $\mathcal{R} =
+			\mathcal{R}'.\mathcal{R}''$ where $\mathcal{R}'$ and
+			$\mathcal{R}''$ are regular expressions.}
+		\label{fig:f_thompson_3}
+		\end{figure}
+	\end{case}
+
+	\begin{case}[$\mathcal{R} = \mathcal{R}'+\mathcal{R}''$ where
+		$\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions]
+		Let $\mathcal{A}' = \langle \Sigma, Q', \{ s' \}, \{ f' \}, \Delta'
+		\rangle$ be the finite-state automaton such that
+		$\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{R}')$ according to
+		Theorem $\ref{t_thompson}$.
+
+		Let $\mathcal{A}'' = \langle \Sigma, Q'', \{ s'' \}, \{ f'' \},
+		\Delta'' \rangle$ be the finite-state automaton such that
+		$\mathcal{L}(\mathcal{A}'') = \mathcal{L}(\mathcal{R}'')$ according
+		to Theorem $\ref{t_thompson}$.
+
+		Then $\mathcal{A} = \langle \Sigma, Q' \cup Q'' \cup \{ s, f\},
+		\{ s \}, \{ f \}, \Delta' \cup \Delta'' \cup \{ \langle s, \epsilon,
+		s' \rangle, \langle s, \epsilon, s'' \rangle, \langle f', \epsilon,
+		f \rangle,$\\
+		$\langle f'', \epsilon, f \rangle \} \rangle$ is the
+		finite-state automaton such that $\mathcal{L}(\mathcal{A}) =
+		\mathcal{L}(\mathcal{R})$ according to Theorem $\ref{t_thompson}$.
+		The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square
+		is presented in Figure $\ref{fig:f_thompson_4}$.
+
+		\begin{figure}[!h]
+			\centering
+			\begin{tikzpicture}[on grid, auto, scale=0.25]
+  				\draw[dotted] (-8, -8) rectangle (8, 8);
+
+				\draw (-3, 8) rectangle (3, 2);
+  				\node[state, fill=white, scale=0.75]
+					(s') at (-3, 5) {$s'$};
+  				\node[state, fill=white, scale=0.75]
+					(f') at (3, 5) {$f'$};
+
+				\draw (-3, -8) rectangle (3, -2);
+  				\node[state, fill=white, scale=0.75]
+					(s'') at (-3, -5) {$s''$};
+  				\node[state, fill=white, scale=0.75]
+					(f'') at (3, -5) {$f''$};
+
+				\node[state, initial, fill=white, scale=0.75]
+					(s) at (-8, 0) {$s$};
+				\node[state, accepting, fill=white, scale=0.75]
+					(f) at (8, 0) {$f$};
+
+  				\path[->]
+					(s) edge node {$\epsilon$} (s')
+					(s) edge node {$\epsilon$} (s'')
+					(f') edge node {$\epsilon$} (f)
+					(f'') edge node {$\epsilon$} (f);
+
+			\end{tikzpicture}
+		\caption{Square embedding of the graph corresponding to a
+			finite-state automaton that recognizes the language of
+			the regular expression $\mathcal{R} =
+			\mathcal{R}'+\mathcal{R}''$ where $\mathcal{R}'$ and
+			$\mathcal{R}''$ are regular expressions.}
+		\label{fig:f_thompson_4}
+		\end{figure}
+	\end{case}
+
+	\begin{case}[$\mathcal{R} = \mathcal{R}'*$ where $\mathcal{R}'$ is a regular
+		expression]
+		Let $\mathcal{A}' = \langle \Sigma, Q', \{ s' \}, \{ f' \}, \Delta'
+		\rangle$ be
+		the finite-state automaton such that $\mathcal{L}(\mathcal{A}') =
+		\mathcal{L}(\mathcal{R}')$ according to Theorem $\ref{t_thompson}$.
+
+		Then $\mathcal{A} = \langle \Sigma, Q' \cup \{ s, f \}, \{ s \},
+		\{ f \}, \Delta' \cup \{ \langle s, \epsilon, s' \rangle,
+		\langle f', \epsilon, f \rangle, \langle f', \epsilon, s' \rangle,
+		\langle s, \epsilon, f \rangle \} \rangle$ is the finite-state
+		automaton such that $\mathcal{L}(\mathcal{A}) =
+		\mathcal{L}(\mathcal{R})$ according to Theorem $\ref{t_thompson}$.
+		The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square
+		is presented in Figure $\ref{fig:f_thompson_5}$.
+
+		\begin{figure}[!h]
+			\centering
+			\begin{tikzpicture}[on grid, auto, scale=0.25]
+  				\draw[dotted] (-8, -8) rectangle (8, 8);
+
+  				\draw (-3, -3) rectangle (3, 3);
+  				\node[state, initial, fill=white, scale=0.75]
+					(s) at (-8, 0) {$s$};
+  				\node[state, fill=white, scale=0.75]
+					(s') at (-3, 0) {$s'$};
+  				\node[state, fill=white, scale=0.75]
+					(f') at (3, 0) {$f'$};
+  				\node[state, accepting, fill=white, scale=0.75]
+					(f) at (8, 0) {$f$};
+
+  				\path[->]
+    					(s) edge node {$\epsilon$} (s')
+    					(f') edge node {$\epsilon$} (f)
+    					(f') edge [bend right=110, looseness=2]
+						node {$\epsilon$} (s')
+    					(s) edge [bend right=50, looseness=1.5]
+						node {$\epsilon$} (f);
+			\end{tikzpicture}
+			\caption{Square embedding of the graph corresponding to a
+			finite-state automaton recognizing the language of
+			the regular expression $\mathcal{R} = \mathcal{R}'*$ where
+			$\mathcal{R}'$ is a regular expression.}
+			\label{fig:f_thompson_5}
+		\end{figure}
+	\end{case}
+
+	It follows that $\mathcal{G}_{\mathcal{A}}$ is planar and thus $\mathcal{A}$
+	is planar.
+\end{proof}
