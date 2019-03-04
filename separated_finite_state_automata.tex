@@ -1,3 +1,11 @@
+\section{Separated finite-state automata}
+
+In this section we define the notion of separated finite-state device based on
+properties of the transition relation. We show that the states of such device could
+be partitioned in disjoint components and that a procedure similar to determinization
+can be applied to these components so that we end up with a finite-state device
+that behaves deterministically.
+
 \subsection{Quasi-deterministic finite-state automata}
 
 \begin{definition}
@@ -87,107 +95,185 @@
 	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{f}, \vec{\tau},
 	\vec{\rho}, \vec{\eta} \rangle$ is the set of all labels of successful
 	paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \exists j \in
-	\interval{1}{k}(\delta^*(s, w)^j \in f^j \}$.
-\end{definition}
+		\interval{1}{k}(\delta^*(s, w)^j \in f^j \}$.
+	\end{definition}
 
-\begin{theorem}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, \vec{f}, \Delta \rangle$ be a
-	$k$-separated finite-state automaton with separator $X$ where $Q_X =
-	\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-deterministic
-	$k$-separated finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
-	(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
-\end{theorem}
+	\begin{theorem}
+		Let $\mathcal{A} = \langle \Sigma, Q, S, \vec{f}, \Delta \rangle$ be a
+		$k$-separated finite-state automaton with separator $X$ where $Q_X =
+		\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-deterministic
+		$k$-separated finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
+		(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
+	\end{theorem}
 
-\begin{proof}
-	Consider the quasi-deterministic $k$-separated finite-state automaton
-	$\mathcal{A'} = \langle \Sigma, \vec{Q'},
-	2^X, s, \vec{f}, \vec{\tau},
-	\vec{\rho}, \vec{\eta} \rangle$ where $P_i = Q_i \cup X$ for $i \in
-	\interval{1}{k}$, $Q_i' = 2^{P_i}$ for $i \in \interval{1}{k}$,
-	$s = \langle P_1 \cap S, P_2 \cap S, \dots, P_k \cap S \rangle$,
-	$f_i = \{ q \in Q_i' \mid q^i \cap F \neq \varnothing \}$ for $i \in
-	\interval{1}{k}$,
-	$\tau_i(q, \sigma) = \hat{\Delta}(q,
-	\{ \sigma \}) \cap P_i$ where $q \in Q_i'$ and $\sigma \in \Sigma$ for $i
-	\in \interval{1}{k}$, $\rho_i(q) = q \cap X$ where $q \in Q_i'$ for $i \in
-	\interval{1}{k}$ and $\eta_i(q, x) = q \cup x$ where $q \in Q_i'$ and $x
-	\in 2^X$ for $i \in \interval{1}{k}$.
-	\bigbreak
-	For $i \in \interval{1}{k}$, $q \in \prod_{j=1}^k{Q_j'}$ and $\sigma \in
-	\Sigma$ we have $\delta_i^0(q, \sigma) = \tau_i(q^i, \sigma) = \hat{\Delta}
-	(q^i, \{ \sigma \}) \cap P_i$ and $\delta_i^j(q, \sigma) = \eta_i
-	(\delta_i^{j-1}(q, \sigma), \rho_j(\tau_j(q^j, \sigma))) = \delta_i^{j-1}
-	(q, \sigma) \cup (\hat{\Delta}(q^j, \{ \sigma \})$\\
-	$\cap X)$ if $j \neq i$ or
-	$\delta_i^j(q, \sigma) = \delta_i^{j-1}(q, \sigma)$ if $j = i$. Then
-	$\delta_i(q, \sigma) = (\hat{\Delta}(q^i, \{ \sigma \}) \cap P_i) \cup
-	(\bigcup_{j = 1, j \neq i}^k{\hat{\Delta}(q^j, \{ \sigma \}) \cap X})$.
-	\bigbreak
-	We show that every successful path in $\mathcal{A}$ is also a successful
-	path in $\mathcal{A'}$ by induction on the states present in the path.
-	Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
-	\ldots, \langle q_{n-1},$\\
-	$\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
-	\begin{enumerate}
-		\item Let $p_1 = s$. Then $q_1 \in S \implies q_1 \in
-			\bigcup_{i=1}^k{P_i \cap S} \implies q_1 \in
-			\bigcup_{i=1}^k{p_1^i}$;
-		\item Let $p_i = \delta^*(s, \sigma_1 \sigma_2 \ldots \sigma_{i-1})$ and
-			$q_i \in \bigcup_{j=1}^k{p_i^j}$. We have
-			$p_{i+1} = \delta(p_i, \sigma_i) = \langle \delta_1(p_i,
-			\sigma_i), \delta_2(p_i, \sigma_i), \ldots, \delta_k(p_i,
-			\sigma_i) \rangle$ where $p_{i+1}^j = \delta_j(p_i, \sigma_i)
-			= (\hat{\Delta}(p_i^j, \{ \sigma_i \}) \cap P_j) \cup
-			(\bigcup_{r = 1, r \neq j}^k{\hat{\Delta}(p_i^r, \{ \sigma_i
-			\}) \cap X}) = \bigcup_{r = 1}^k{\hat{\Delta}(p_i^r, \{
-			\sigma_i \}) \cap P_j}$ for $j \in
-			\interval{1}{k}$. Then $q_{i+1} \in \Delta(q_i,
-			\sigma_i) \implies q_{i+1} \in \bigcup_{r=1}^k{
-			\hat{\Delta}(p_i^r, \{ \sigma_i \})}\\
-			\implies q_{i+1} \in \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-			\hat{\Delta}(p_i^r, \{ \sigma_i \}) \cap P_j}}
-			\implies q_{i+1} \in \bigcup_{j=1}^k{p_{i+1}^j}$;
-		\item $q_n \in F \land \exists p_n \in \prod_{i=1}^k{Q_i'}
-			(q_n \in \bigcup_{j=1}^k{p_n^j})
-			\implies \exists j \in \interval{1}{k}(q_n \in p_n^j)$\\
-			$\implies p_n \in f_j$.
-	\end{enumerate}
-	\bigbreak
-	\noindent
-	$\implies \langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2,
-	p_3 \rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ is a
-	successful path in $\mathcal{A'}$.
-	\bigbreak
-	\noindent
-	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
-	successful path in $\mathcal{A}$. Let $\langle p_1, \sigma_1, p_2
-	\rangle, \langle p_2, \sigma_2, p_3 \rangle, \ldots, \langle p_{n-1},
-	\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A'}$. Then
-	\begin{enumerate}
-		\item $p_n \in F' \implies \exists j \in \interval{1}{k} (p_n^j
-			\cap F \neq \varnothing) \implies \exists q_n \in F
-			(q_n \in p_n^j)$;
-		\item Let $p_{i+1} = \langle p_{i+1}^1, p_{i+1}^2 \ldots,
-			p_{i+1}^k \rangle$
-			and $\exists j \in \interval{1}{k} \exists q_{i+1} \in Q
-			(q_{i+1} \in p_{i+1}^j)$. We have $p_{i+1}^j = \delta_j(p_i,
-			\sigma_i) = (\hat{\Delta}(p_i^j, \{ \sigma_i \}) \cap P_j)
-			\cup (\bigcup_{r = 1, r \neq j}^k{\hat{\Delta}(p_i^r,
-			\{ \sigma_i \}) \cap X}) = (\hat{\Delta}(p_i^j, \{
-			\sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1, r \neq j}^k{
-			\hat{\Delta}(p_i^r, \{ \sigma_i \}) \cap P_j}) =
-			\bigcup_{r = 1}^k{\hat{\Delta}( p_i^r, \{ \sigma_i \})
-			\cap P_j}$. Then $\exists j \in \interval{1}{k} \exists
-			q_{i+1} \in p_{i+1}^j \implies |p_{i+1}^j| > 0 \implies
-			|\bigcup_{r = 1}^k{\hat{\Delta}( p_i^r, \{ \sigma_i \})
-			\cap P_j}|$\\ $> 0 \implies \exists r \in \interval{1}{k}
-			\exists q_i \in Q (q_i \in p_i^r)$;
-		\item $\exists j \in \interval{1}{k} \exists q_1 \in Q (q_1 \in
-			p_1^j) \implies q_1 \in P_j \cap S \implies q_1 \in S$.
-	\end{enumerate}
-	\bigbreak
-	\noindent
-	$\implies \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2,
-	q_3, \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ is a
-	successful path in $\mathcal{A}$.
-\end{proof}
+	\begin{proof}
+		Consider the quasi-deterministic $k$-separated finite-state automaton
+		$\mathcal{A'} = \langle \Sigma, \vec{Q'},
+		2^X, s, \vec{f}, \vec{\tau},
+		\vec{\rho}, \vec{\eta} \rangle$ where $P_i = Q_i \cup X$ for $i \in
+		\interval{1}{k}$, $Q_i' = 2^{P_i}$ for $i \in \interval{1}{k}$,
+		$s = \langle P_1 \cap S, P_2 \cap S, \dots, P_k \cap S \rangle$,
+		$f_i = \{ q \in Q_i' \mid q^i \cap F \neq \emptyset \}$ for $i \in
+		\interval{1}{k}$,
+		$\tau_i(q, \sigma) = \hat{\Delta}(q,
+		\{ \sigma \}) \cap P_i$ where $q \in Q_i'$ and $\sigma \in \Sigma$ for $i
+		\in \interval{1}{k}$, $\rho_i(q) = q \cap X$ where $q \in Q_i'$ for $i \in
+		\interval{1}{k}$ and $\eta_i(q, x) = q \cup x$ where $q \in Q_i'$ and $x
+		\in 2^X$ for $i \in \interval{1}{k}$.
+		\bigbreak
+		For $i \in \interval{1}{k}$, $q \in \prod_{j=1}^k{Q_j'}$ and $\sigma \in
+		\Sigma$ we have $\delta_i^0(q, \sigma) = \tau_i(q^i, \sigma) = \hat{\Delta}
+		(q^i, \{ \sigma \}) \cap P_i$ and $\delta_i^j(q, \sigma) = \eta_i
+		(\delta_i^{j-1}(q, \sigma), \rho_j(\tau_j(q^j, \sigma))) = \delta_i^{j-1}
+		(q, \sigma) \cup (\hat{\Delta}(q^j, \{ \sigma \})$\\
+		$\cap X)$ if $j \neq i$ or
+		$\delta_i^j(q, \sigma) = \delta_i^{j-1}(q, \sigma)$ if $j = i$. Then
+		$\delta_i(q, \sigma) = (\hat{\Delta}(q^i, \{ \sigma \}) \cap P_i) \cup
+		(\bigcup_{j = 1, j \neq i}^k{\hat{\Delta}(q^j, \{ \sigma \}) \cap X})$.
+		\bigbreak
+		We show that every successful path in $\mathcal{A}$ is also a successful
+		path in $\mathcal{A'}$ by induction on the states present in the path.
+		Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
+		\ldots, \langle q_{n-1},$\\
+		$\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
+		\begin{enumerate}
+			\item Let $p_1 = s$. Then $q_1 \in S \implies q_1 \in
+				\bigcup_{i=1}^k{P_i \cap S} \implies q_1 \in
+				\bigcup_{i=1}^k{p_1^i}$;
+			\item Let $p_i = \delta^*(s, \sigma_1 \sigma_2 \ldots \sigma_{i-1})$ and
+				$q_i \in \bigcup_{j=1}^k{p_i^j}$. We have
+				$p_{i+1} = \delta(p_i, \sigma_i) = \langle \delta_1(p_i,
+				\sigma_i), \delta_2(p_i, \sigma_i), \ldots, \delta_k(p_i,
+				\sigma_i) \rangle$ where $p_{i+1}^j = \delta_j(p_i, \sigma_i)
+				= (\hat{\Delta}(p_i^j, \{ \sigma_i \}) \cap P_j) \cup
+				(\bigcup_{r = 1, r \neq j}^k{\hat{\Delta}(p_i^r, \{ \sigma_i
+				\}) \cap X}) = \bigcup_{r = 1}^k{\hat{\Delta}(p_i^r, \{
+				\sigma_i \}) \cap P_j}$ for $j \in
+				\interval{1}{k}$. Then $q_{i+1} \in \Delta(q_i,
+				\sigma_i) \implies q_{i+1} \in \bigcup_{r=1}^k{
+				\hat{\Delta}(p_i^r, \{ \sigma_i \})}\\
+				\implies q_{i+1} \in \bigcup_{j=1}^k{\bigcup_{r=1}^k{
+				\hat{\Delta}(p_i^r, \{ \sigma_i \}) \cap P_j}}
+				\implies q_{i+1} \in \bigcup_{j=1}^k{p_{i+1}^j}$;
+			\item $q_n \in F \land \exists p_n \in \prod_{i=1}^k{Q_i'}
+				(q_n \in \bigcup_{j=1}^k{p_n^j})
+				\implies \exists j \in \interval{1}{k}(q_n \in p_n^j)$\\
+				$\implies p_n \in f_j$.
+		\end{enumerate}
+		\bigbreak
+		\noindent
+		$\implies \langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2,
+		p_3 \rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ is a
+		successful path in $\mathcal{A'}$.
+		\bigbreak
+		\noindent
+		Similarly, we show that every successful path in $\mathcal{A'}$ is also a
+		successful path in $\mathcal{A}$. Let $\langle p_1, \sigma_1, p_2
+		\rangle, \langle p_2, \sigma_2, p_3 \rangle, \ldots, \langle p_{n-1},
+		\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A'}$. Then
+		\begin{enumerate}
+			\item $p_n \in F' \implies \exists j \in \interval{1}{k} (p_n^j
+				\cap F \neq \emptyset) \implies \exists q_n \in F
+				(q_n \in p_n^j)$;
+			\item Let $p_{i+1} = \langle p_{i+1}^1, p_{i+1}^2 \ldots,
+				p_{i+1}^k \rangle$
+				and $\exists j \in \interval{1}{k} \exists q_{i+1} \in Q
+				(q_{i+1} \in p_{i+1}^j)$. We have $p_{i+1}^j = \delta_j(p_i,
+				\sigma_i) = (\hat{\Delta}(p_i^j, \{ \sigma_i \}) \cap P_j)
+				\cup (\bigcup_{r = 1, r \neq j}^k{\hat{\Delta}(p_i^r,
+				\{ \sigma_i \}) \cap X}) = (\hat{\Delta}(p_i^j, \{
+				\sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1, r \neq j}^k{
+				\hat{\Delta}(p_i^r, \{ \sigma_i \}) \cap P_j}) =
+				\bigcup_{r = 1}^k{\hat{\Delta}( p_i^r, \{ \sigma_i \})
+				\cap P_j}$. Then $\exists j \in \interval{1}{k} \exists
+				q_{i+1} \in p_{i+1}^j \implies |p_{i+1}^j| > 0 \implies
+				|\bigcup_{r = 1}^k{\hat{\Delta}( p_i^r, \{ \sigma_i \})
+				\cap P_j}|$\\ $> 0 \implies \exists r \in \interval{1}{k}
+				\exists q_i \in Q (q_i \in p_i^r)$;
+			\item $\exists j \in \interval{1}{k} \exists q_1 \in Q (q_1 \in
+				p_1^j) \implies q_1 \in P_j \cap S \implies q_1 \in S$.
+		\end{enumerate}
+		\bigbreak
+		\noindent
+		$\implies \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2,
+		q_3, \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ is a
+		successful path in $\mathcal{A}$.
+	\end{proof}
+
+\subsection{Algorithm for quasi-determinization of finite-state automata}
+
+	\begin{algorithm}
+		\caption{Quasi-determinization of a $k$-separated finite-state automaton}
+		\hspace*{\algorithmicindent} \textbf{input}
+		$\mathcal{A} = \langle Q, \Sigma, S, F, \Delta \rangle$,
+		$Q = \langle X, Q_1, Q_2, \ldots, Q_k \rangle$\\
+		\hspace*{\algorithmicindent} \textbf{output}
+		$\mathcal{A}' = \langle \Sigma, \vec{Q'}, X, s, \vec{f}, \vec{\tau},
+		\vec{\rho}, \vec{\eta} \rangle$
+		\begin{algorithmic}[1]
+			\For {$i \in \interval{1}{k}$}
+			\State $P_i \gets Q_i \cup S$
+			\EndFor
+
+			\State $s \gets \langle P_1 \cap S, P_2 \cap S, \ldots,
+			P_k \cap S \rangle$
+
+			\For {$i \in \interval{1}{k}$}
+			\State $\rho_i \gets \{ \langle s^i, s^i \cap X
+			\rangle \}$
+			\State $Q'_i, f_i, \tau_i, \eta_i \gets \emptyset$
+			\EndFor
+
+			\State $todo \gets \{ s \}$
+			\For {$i \in \interval{1}{k}$}
+			\State $done_k \gets \{ s^i \}$
+			\EndFor
+
+			\While {$todo \neq \emptyset$}
+			\State pick $\langle q^1, q^2, \ldots, q^k \rangle
+			\in todo$
+
+			\For {$i \in \interval{1}{k}$}
+			\State $Q'_i \gets \{ q^i \}$
+
+			\If {$q^i \cap F \neq \emptyset$}
+			\State $f_i \gets f_i \cup \{ q^i \}$
+			\EndIf
+			\EndFor
+
+			\For {$\sigma \in \Sigma$}
+			\For {$i \in \interval{1}{k}$}
+			\State $t_i \gets \hat{\Delta}(q_i, \{ \sigma \}) \cap P_i$
+			\State $r_j \gets t_j \cap X$
+			\EndFor
+
+			\State $x \gets r_1$
+			\For {$i \in \interval{2}{k}$}
+			\State $x' \gets x \cup r_i$
+			\State $\eta_x \gets \eta_x \cup \{ \langle x, r_i, x'
+				\rangle \}$
+			\State $x \gets x'$
+			\EndFor
+
+			\For {$i \in \interval{1}{k}$}
+			\State $p_i \gets t_i \cup x$
+			\State $Q'_i \gets Q'_i \cup \{ p_i \}$
+			\State $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma,
+				t_i \rangle \}$
+			\State $\rho_i \gets \rho_i \cup \{ \langle t_i, r_i
+				\rangle \}$
+			\State $\eta_i \gets \eta_i \cup \{ \langle t_i, x, q_i
+				\rangle \}$
+			\EndFor
+
+			\If {$\exists i \in \interval{1}{k}(p^i \not\in done_i)$}
+			\State $todo \gets todo \cup \{ \langle p^1, p^2, \ldots,
+				p^k \rangle$
+				\For {$i \in \interval{1}{k}$}
+			\State $done_i \gets done_i \cup \{ p^i \}$
+			\EndFor
+			\EndIf
+			\EndFor
+			\EndWhile
+		\end{algorithmic}
+	\end{algorithm}
