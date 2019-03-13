@@ -1,12 +1,6 @@
-\section{Separated finite-state automata}
+\section{Separators in finite-state automata}
 
-In this section we define the notion of separated finite-state device based on
-properties of the transition relation. We show that the states of such device could
-be partitioned in disjoint components and that a procedure similar to determinization
-can be applied to these components so that we end up with a finite-state device
-that behaves deterministically.
-
-\subsection{Quasi-deterministic finite-state automata}
+\subsection{Separated finite-state automata}
 
 \begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
@@ -15,6 +9,103 @@ that behaves deterministically.
 	\Sigma, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1, Q_2, \ldots,
 	Q_k\}$.
 \end{definition}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	\{ Q_1, Q_2, \ldots, Q_k\}$. Then $\Delta \subseteq \bigcup_{i=1}^k (Q_i
+	\cup X) \times \Sigma$\\
+	$\times (Q_i \cup X)$.
+\end{proposition}
+
+\begin{proof}
+	$\newline$
+	$\begin{aligned}
+		\Delta &= \Delta \cap \big[ Q \times \Sigma \times Q \big] = \Delta
+		\cap \big[ (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma \times
+		(\bigcup_{i=1}^k{Q_i} \cup X) \big]\\
+		&= \begin{aligned}[t]
+		\Delta \cap \big[ &\bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times
+		\Sigma \times Q_j) \cup \bigcup_{i=1}^k (X \times \Sigma \times Q_i)
+		\cup\\
+		&\bigcup_{i=1}^k (Q_i \times \Sigma \times X) \cup
+		(X \times \Sigma \times X) \big]
+		\end{aligned}\\
+		&= \begin{aligned}[t]
+		\Delta \cap \big[ &\bigcup_{i=1}^k (Q_i \times \Sigma \times Q_i)
+		\cup \bigcup_{i=1}^k (X \times \Sigma \times Q_i) \cup\\
+		&\bigcup_{i=1}^k (Q_i \times \Sigma \times X) \cup
+		(X \times \Sigma \times X) \big]
+		\end{aligned}\\
+		&= \Delta \cap \big[ \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma
+		\times Q_i) \cup \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma \times
+		X) \big]\\
+		&= \Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma
+		\times (Q_i \cup X) \big]
+	\end{aligned}$
+	$\newline$
+	Therefore $\Delta \subseteq \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma
+	\times (Q_i \cup X)$.
+\end{proof}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	\{ Q_1, Q_2, \ldots, Q_k\}$. Let $\Delta_i = \Delta \cap ((Q_i \cup X)
+	\times \Sigma \times (Q_i \cup X))$ for $i \in \interval{1}{k}$. Then for
+	$i \in \interval{1}{k}$, $q \in Q_i \cup X$ and $\sigma \in \Sigma$ we have
+	$\Delta(q, \sigma) = \Delta_i(q, \sigma)$.
+\end{proposition}
+
+\begin{proof}
+	We have $p \in \Delta(q, \sigma) \implies p \in \bigcup_{j=1}^k (Q_j \cup X)
+	\times \Sigma \times (Q_j \cup X) \implies \exists! i \in \interval{1}{k}(
+	p \in (Q_i \cup X) \times \Sigma \times (Q_i \cup X)) \implies p \in
+	\Delta_i$. Conversely, $p \in \Delta_i(q, \sigma) \implies p \in
+	\bigcup_{j=1}^k \Delta_j(q, \sigma) \implies p \in \Delta(q, \sigma)$.
+\end{proof}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	\{ Q_1, Q_2, \ldots, Q_k\}$. Let $\Delta_i = \Delta \cap ((Q_i \cup X)
+	\times \Sigma \times (Q_i \cup X))$ for $i \in \interval{1}{k}$. Then for $P
+	\subseteq Q$ and $\sigma \in \Sigma$ we have $\hat{\Delta}(P, \sigma) =
+	\bigcup_{i=1}^k \hat{\Delta}_i(P_i, a)$ where $P_i = P \cap (Q_i \cup X)$
+	for $i \in \interval{1}{k}$.
+\end{proposition}
+
+\begin{proof}
+	$\newline$
+	$\begin{aligned}
+	\hat{\Delta}(P, \sigma) &= \bigcup_{p \in P} \Delta(p, \sigma) =
+	\bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta(p, \sigma)
+	&= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta_i(p, \sigma)
+	= \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \sigma)
+	\end{aligned}$
+	$\newline$
+\end{proof}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	\{ Q_1, Q_2, \ldots, Q_k\}$. Let $\Delta_i = \Delta \cap ((Q_i \cup X)
+	\times \Sigma \times (Q_i \cup X))$ for $i \in \interval{1}{k}$. Then for $P
+	\subseteq Q$, $\sigma \in \Sigma$ and $i \in \interval{1}{k}$ we have
+	$\hat{\Delta}(P, \sigma) = P'$ if and only if $\hat{\Delta}_i(P_i, \sigma)
+	= P_i'$ where $P_i = P \cap (Q_i \cup X)$ and $P' = \bigcup_{i=1}^k P_i'$.
+\end{proposition}
+
+\begin{proof}
+	We have $\hat{\Delta}(P, \sigma) = P' \implies \bigcup_{i=1}^k
+	\hat{\Delta}_i(P_i, \sigma) = P' \implies \bigcup_{i=1}^k P_i' = P'$ where
+	$P_i' = \hat{\Delta}_i(P_i, \sigma)$. Conversely, $\hat{\Delta}_i(P_i,
+	\sigma) = P_i'$ for $i \in \interval{1}{k} \implies \bigcup_{i=1}^k
+	\hat{\Delta}_i(P_i, \sigma) = \bigcup_{i=1}^k P_i' \implies \hat{\Delta}(P,
+	\sigma) = \bigcup_{i=1}^k P_i' = P'$.
+\end{proof}
+
+\subsection{Quasi-deterministic finite-state automata}
 
 \begin{definition}
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
@@ -200,10 +291,10 @@ that behaves deterministically.
 		successful path in $\mathcal{A}$.
 	\end{proof}
 
-\subsection{Algorithm for quasi-determinization of finite-state automata}
 
 	\begin{algorithm}
 		\caption{Quasi-determinization of a $k$-separated finite-state automaton}
+		\label{alg:a_quasidet_automaton}
 		\hspace*{\algorithmicindent} \textbf{input}
 		$\mathcal{A} = \langle Q, \Sigma, S, F, \Delta \rangle$,
 		$Q = \langle X, Q_1, Q_2, \ldots, Q_k \rangle$\\
@@ -251,7 +342,7 @@ that behaves deterministically.
 			\For {$i \in \interval{2}{k}$}
 			\State $x' \gets x \cup r_i$
 			\State $\eta_x \gets \eta_x \cup \{ \langle x, r_i, x'
-				\rangle \}$
+			\rangle \}$
 			\State $x \gets x'$
 			\EndFor
 
@@ -259,21 +350,27 @@ that behaves deterministically.
 			\State $p_i \gets t_i \cup x$
 			\State $Q'_i \gets Q'_i \cup \{ p_i \}$
 			\State $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma,
-				t_i \rangle \}$
+			t_i \rangle \}$
 			\State $\rho_i \gets \rho_i \cup \{ \langle t_i, r_i
-				\rangle \}$
+			\rangle \}$
 			\State $\eta_i \gets \eta_i \cup \{ \langle t_i, x, q_i
-				\rangle \}$
+			\rangle \}$
 			\EndFor
 
 			\If {$\exists i \in \interval{1}{k}(p^i \not\in done_i)$}
 			\State $todo \gets todo \cup \{ \langle p^1, p^2, \ldots,
 				p^k \rangle$
 				\For {$i \in \interval{1}{k}$}
-			\State $done_i \gets done_i \cup \{ p^i \}$
-			\EndFor
-			\EndIf
-			\EndFor
-			\EndWhile
-		\end{algorithmic}
-	\end{algorithm}
+				\State $done_i \gets done_i \cup \{ p^i \}$
+				\EndFor
+				\EndIf
+				\EndFor
+				\EndWhile
+			\end{algorithmic}
+		\end{algorithm}
+
+		\begin{proposition}
+			Algorithm $\ref{alg:a_quasidet_automaton}$ constructs a quasi-deterministic
+			$k$-separated finite-state automaton from the source $k$-separated
+			finite-state automaton.
+		\end{proposition}
