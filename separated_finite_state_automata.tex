@@ -1,5 +1,9 @@
 \section{Separators in finite-state automata}
 
+In this section, we define the notion of separated finite-state automata. We observe
+some of the key properties and use them to derive a more efficient procedure for
+determinization of such devices.
+
 \subsection{Separated finite-state automata}
 
 \begin{definition}
@@ -12,7 +16,7 @@
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ and $Q_X =
 	\{ Q_1, Q_2, \ldots, Q_k\}$. Then $\Delta \subseteq \bigcup_{i=1}^k (Q_i
 	\cup X) \times \Sigma$\\
 	$\times (Q_i \cup X)$.
@@ -50,7 +54,7 @@
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ and $Q_X =
 	\{ Q_1, Q_2, \ldots, Q_k\}$. Let $\Delta_i = \Delta \cap ((Q_i \cup X)
 	\times \Sigma \times (Q_i \cup X))$ for $i \in \interval{1}{k}$. Then for
 	$i \in \interval{1}{k}$, $q \in Q_i \cup X$ and $\sigma \in \Sigma$ we have
@@ -67,7 +71,7 @@
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ and $Q_X =
 	\{ Q_1, Q_2, \ldots, Q_k\}$. Let $\Delta_i = \Delta \cap ((Q_i \cup X)
 	\times \Sigma \times (Q_i \cup X))$ for $i \in \interval{1}{k}$. Then for $P
 	\subseteq Q$ and $\sigma \in \Sigma$ we have $\hat{\Delta}(P, \sigma) =
@@ -88,7 +92,7 @@
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton for $k \in \mathbb{N}$ where $Q_X =
+	$k$-separated finite-state automaton for $k \in \mathbb{N}$ and $Q_X =
 	\{ Q_1, Q_2, \ldots, Q_k\}$. Let $\Delta_i = \Delta \cap ((Q_i \cup X)
 	\times \Sigma \times (Q_i \cup X))$ for $i \in \interval{1}{k}$. Then for $P
 	\subseteq Q$, $\sigma \in \Sigma$ and $i \in \interval{1}{k}$ we have
