@@ -1,14 +1,23 @@
-\section{Separated finite-state transducers}
+\section{Separators in finite-state transducers}
 
-\subsection{Quasi-deterministic finite-state transducers}
+In this section, we define the notion of separated finite-state transducers. We then
+observe some of the key properties and use them to derive more efficient procedures
+for determinization and minimization of such devices.
+
+\subsection{Separated finite-state transducers}
 
 \begin{definition}
-	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, \vec{f},
-	\Delta \rangle$ is $k$-separated for $k \in \mathbb{N}$ if and only if there
-	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{T} = \langle Q,
-	\Sigma \times \Omega^*, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1,
-	Q_2, \ldots, Q_k\}$.
+	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S,
+	\vec{f}, \Delta \rangle$ is $k$-separated for $k \in \mathbb{N}$ if and
+	only if there exists a separator $X$ in the graph $\mathcal{G}_\mathcal{T}
+	= \langle Q, \Sigma \times \Omega^*, \Delta \rangle$ inducing a partition
+	$Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. We write $\mathcal{T} = \langle \Sigma,
+	\Omega, \vec{Q}, X,$\\
+	$S, \vec{f}, \Delta \rangle$ to denote the $k$-separated finite-state
+	transducer $\mathcal{T}$.
 \end{definition}
+
+\subsection{Quasi-deterministic finite-state transducers}
 
 \begin{definition}
 	A quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}$
