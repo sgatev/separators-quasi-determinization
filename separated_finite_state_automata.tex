@@ -171,18 +171,13 @@ for determinization and minimization of such devices.
 	i \in \interval{1}{k}(\delta^*(s, w)^i \in F^i \}$.
 \end{definition}
 
-\begin{theorem}
+\begin{construction}\label{conctruction_1}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. We can construct a quasi-deterministic
-	$k$-separated finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}
-	(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
-\end{theorem}
-
-\begin{proof}
-	Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
-	quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}' =
-	\langle \Sigma, \vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho},
-	\vec{\eta}, \eta_x \rangle$ inductively.
+	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
+	\interval{1}{k}$. We construct the quasi-deterministic $k$-separated
+	finite-state automaton $\mathcal{A}' = \langle \Sigma, \vec{Q'}, 2^X, s,
+	\vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x \rangle$ and the set
+	of states $M$ inductively.
 
 	\bigbreak
 	We define $M^{(0)} = \emptyset$. At the base of the construction is a
@@ -215,8 +210,9 @@ for determinization and minimization of such devices.
 			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
 			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
 		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
-			\bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma)) \rangle \mid q
-			\in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma \}$;
+			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
+			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in
+			\Sigma \}$;
 		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
 			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
 			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
@@ -224,15 +220,62 @@ for determinization and minimization of such devices.
 			\}$ for $i \in \interval{1}{k}$;
 		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)}) \cup
 			Rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$;
-		\item $M^{(n+1)} = M^{(n)} \cup \{ \delta(q, \sigma) \mid q \in
-			M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma \}$.
+		\item $M^{(n+1)} = M^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid q
+			\in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma \}$.
 	\end{itemize}
 
 	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq \prod_{i=1}^k{2^{P_i}}$
 	and if $n > 1$ then $M^{(n-1)} \subseteq M^{(n)}$. Therefore, there
 	exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n-1)}$.
 	For the smallest such $n$ we declare $\mathcal{A}' = \mathcal{A}'^{(n)}$.
+\end{construction}
 
+\begin{lemma}
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Let $\mathcal{A}' = \langle \Sigma,
+	\vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x
+	\rangle$ be the quasi-deterministic $k$-separated finite state automaton
+	and let $M$ be the set of states derived from $\mathcal{A}$ by applying
+	Construction \ref{conctruction_1}. Then $q^i \in Q_i'$ for $q \in M$ and
+	$i \in \interval{1}{k}$.
+\end{lemma}
+
+\begin{proof}
+	We prove the statement by induction on the construction of $\mathcal{A}'$
+	and $M$.
+
+	\begin{enumerate}
+		\item We have $M^{(1)} = \{ s \}$ and $s^i \in Q_i'^{(1)}$ for $i
+			\in \interval{1}{k}$;
+		\item Let $q^i \in Q_i'^{(n)}$ for $q \in M^{(n)}$ and $i \in
+			\interval{1}{k}$. We have $M^{(n+1)} = M^{(n)} \cup \{
+			\delta^{(n+1)}(q, \sigma) \mid q \in M^{(n)} \setminus
+			M^{(n-1)}, \sigma \in \Sigma \} = \{ \langle
+			\eta_1^{(n+1)}(\tau_1^{(n+1)}(q^1, \sigma),$\\
+			$\delta_x^{(n+1)}(q, \sigma)),
+			\eta_2^{(n+1)}(\tau_2^{(n+1)}(q^2, \sigma),
+			\delta_x^{(n+1)}(q, \sigma)), \ldots,
+			\eta_k^{(n+1)}(\tau_k^{(n+1)}(q^k, \sigma),$\\
+			$\delta_x^{(n+1)}(q, \sigma)) \rangle
+			\mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma
+			\}$. Also, $Q_i'^{(n+1)} = Q_i'^{(n)} \cup
+			Rng(\tau_i^{(n+1)}) \cup Rng(\eta_i^{(n+1)})$ for $i \in
+			\interval{1}{k}$. Then $q^i \in Q_i'^{(n+1)}$ for $q \in
+			M^{(n+1)}$ and $i \in \interval{1}{k}$.
+	\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Let $\mathcal{A}' = \langle \Sigma,
+	\vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x
+	\rangle$ be the quasi-deterministic $k$-separated finite state automaton
+	and $M$ be the set of states derived from $\mathcal{A}$ by applying
+	Construction \ref{conctruction_1}. Then $\mathcal{L}(\mathcal{A'}) =
+	\mathcal{L}(\mathcal{A})$.
+\end{theorem}
+
+\begin{proof}
 	\bigbreak
 	We show that every successful path in $\mathcal{A}$ is also a successful
 	path in $\mathcal{A'}$ by induction on the states present in the path.
