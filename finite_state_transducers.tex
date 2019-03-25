@@ -58,10 +58,9 @@
 
 \begin{definition}
 	A subsequential finite-state transducer $\mathcal{T}$ is a tuple $\langle
-	\Sigma, \Omega, Q, s,$\\
-	$F, \delta, \lambda, \Phi \rangle$ where $\Sigma$ and $\Omega$ are
-	alphabets, $Q$ is a finite set of states, $s \in Q$ is a start state,
-	$F \subseteq Q$ is a set of final states, $\delta : Q \times \Sigma
+	\Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle$ where $\Sigma$ and
+	$\Omega$ are alphabets, $Q$ is a finite set of states, $s \in Q$ is a start
+	state, $F \subseteq Q$ is a set of final states, $\delta : Q \times \Sigma
 	\rightarrow Q$ is a transition function, $\lambda : Q \times \Sigma
 	\rightarrow \Omega^*$ is a transition output function and $\Phi : F
 	\rightarrow \Omega^*$ is a final state output function.
@@ -71,8 +70,7 @@
 	A path $\pi$ in a subsequential finite-state transducer $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle$ is a
 	non-empty sequence $\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2,
-	\sigma_2, w_2, q_3 \rangle, \ldots,$\\
-	$\langle q_{n-1}, \sigma_{n-1}, w_{n-1},
+	\sigma_2, w_2, q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1},
 	q_n \rangle$ where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i
 	\in \interval{1}{n-1}(\sigma_i \in \Sigma)$, $\forall i \in
 	\interval{1}{n-1}(w_i \in \Omega^*)$, $\forall i \in \interval{1}{n-1}

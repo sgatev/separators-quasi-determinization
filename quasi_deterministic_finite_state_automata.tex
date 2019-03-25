@@ -29,21 +29,20 @@
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
 	$k$-separated finite-state automaton. The separator tansition function
-	$\delta_x : \prod_{i=1}^k{Q_i}$\\
-	$\times \Sigma \rightarrow X$ is defined as $\delta_x(q, \sigma) =
-	\eta_x(\rho_1(\tau_1(q^1, \sigma)), \rho_2(\tau_2(q^2, \sigma)), \ldots,
-	\rho_k(\tau_k(q^k, \sigma)))$ for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma
-	\in \Sigma$.
+	$\delta_x : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow X$ is defined as
+	$\delta_x(q, \sigma) = \eta_x(\rho_1(\tau_1(q^1, \sigma)),
+	\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma)))$ for $q
+	\in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
 	$k$-separated finite-state automaton. The component tansition functions
-	$\delta_i : \prod_{j=1}^k{Q_j}$\\
-	$\times \Sigma \rightarrow Q_i$ are defined as $\delta_i(q, \sigma) =
-	\eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))$ for $i \in
-	\interval{1}{k}$, $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+	$\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ are defined
+	as $\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))$
+	for $i \in \interval{1}{k}$, $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in
+	\Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -60,10 +59,10 @@
 	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is a non-empty sequence $\langle q_1,
-	\sigma_1, q_2 \rangle, \langle q_2,$\\
-	$\sigma_2, q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$
-	where $\forall i \in \interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall
-	i \in \interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
+	\sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \dots,
+	\langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
+	\interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall i \in
+	\interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
 	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
 	successful if and only if $q_1 = s$ and $\exists i \in \interval{1}{k}
 	(q_n^i \in F^i)$. The label of the path $\pi$ is the word
@@ -101,8 +100,8 @@
 	We define $M^{(0)} = \emptyset$. At the base of the construction is a
 	single-state quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A}'^{(1)} = \langle \Sigma, \vec{Q'^{(1)}}, 2^X, s,
-	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},$\\
-	$\emptyset \rangle$ where
+	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
+	\emptyset \rangle$ where
 
 	\begin{itemize}
 		\item $s = \langle P_1 \cap S, P_2 \cap S, \ldots, P_k \cap S
@@ -169,12 +168,12 @@
 			\interval{1}{k}$. We have $M^{(n+1)} = M^{(n)} \cup \{
 			\delta^{(n+1)}(q, \sigma) \mid q \in M^{(n)} \setminus
 			M^{(n-1)}, \sigma \in \Sigma \} = \{ \langle
-			\eta_1^{(n+1)}(\tau_1^{(n+1)}(q^1, \sigma),$\\
-			$\delta_x^{(n+1)}(q, \sigma)),
+			\eta_1^{(n+1)}(\tau_1^{(n+1)}(q^1, \sigma),
+			\delta_x^{(n+1)}(q, \sigma)),
 			\eta_2^{(n+1)}(\tau_2^{(n+1)}(q^2, \sigma),
 			\delta_x^{(n+1)}(q, \sigma)), \ldots,
-			\eta_k^{(n+1)}(\tau_k^{(n+1)}(q^k, \sigma),$\\
-			$\delta_x^{(n+1)}(q, \sigma)) \rangle
+			\eta_k^{(n+1)}(\tau_k^{(n+1)}(q^k, \sigma),
+			\delta_x^{(n+1)}(q, \sigma)) \rangle
 			\mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma
 			\}$. Also, $Q_i'^{(n+1)} = Q_i'^{(n)} \cup
 			Rng(\tau_i^{(n+1)}) \cup Rng(\eta_i^{(n+1)})$ for $i \in
@@ -198,8 +197,8 @@
 	We show that every successful path in $\mathcal{A}$ is also a successful
 	path in $\mathcal{A'}$ by induction on the states present in the path.
 	Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
-	\ldots, \langle q_{n-1},$\\
-	$\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
+	\ldots, \langle q_{n-1},
+	\sigma_{n-1}, q_n \rangle$ be a successful path in $\mathcal{A}$. Then
 
 	\begin{enumerate}
 		\item Let $p_1 = s$. Then $p_1 \in M^{(1)}$ and $q_1 \in S =
@@ -209,11 +208,11 @@
 			p_i^j}$. Let $p_{i+1} = \delta^{(i)}(p_i, \sigma_i) =
 			\langle \delta_1^{(i)}(p_i, \sigma_i), \delta_2^{(i)}(p_i,
 			\sigma_i), \ldots, \delta_k^{(i)}(p_i, \sigma_i) \rangle$
-			where $p_{i+1}^j =$\\
-			$\delta_j^{(i)}(p_i, \sigma_i) = (\hat{\Delta}(p_i^j, \{
+			where $p_{i+1}^j =
+			\delta_j^{(i)}(p_i, \sigma_i) = (\hat{\Delta}(p_i^j, \{
 			\sigma_i \}) \cap P_j) \cup (\bigcup_{r = 1}^k{\hat{\Delta}
-			(p_i^r, \{ \sigma_i \}) \cap X}) =$\\
-			$\bigcup_{r = 1}^k{\hat{\Delta}(p_i^r, \{
+			(p_i^r, \{ \sigma_i \}) \cap X}) =
+			\bigcup_{r = 1}^k{\hat{\Delta}(p_i^r, \{
 			\sigma_i \}) \cap P_j}$ for $j \in
 			\interval{1}{k}$. Then $p_{i+1} \in M^{(i+1)}$ and $q_{i+1}
 			\in \Delta(q_i, \sigma_i) \implies q_{i+1} \in

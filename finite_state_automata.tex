@@ -49,11 +49,10 @@
 
 \begin{definition}
 	A deterministic finite-state automaton $\mathcal{A}$ is a tuple $\langle
-	\Sigma, Q, s, F,$\\
-	$\delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set of
-	states, $s \in Q$ is a start state, $F \subseteq Q$ is a set of final
-	states and $\delta : Q \times \Sigma \rightarrow Q$ is a function of
-	transitions.
+	\Sigma, Q, s, F, \delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a
+	finite set of states, $s \in Q$ is a start state, $F \subseteq Q$ is a set
+	of final states and $\delta : Q \times \Sigma \rightarrow Q$ is a function
+	of transitions.
 \end{definition}
 
 \begin{definition}
@@ -94,11 +93,10 @@
 
 \begin{corollary}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton and\\
-	$\mathcal{A'} = \langle Q', \Sigma, s', F', \delta \rangle$ be the
-	deterministic finite-state automaton derived from $\mathcal{A}$ by
-	applying the construction in Theorem $\ref{t_rabin_scott}$. Then
-	$|\delta| = 2^{|Q|} \times |\Sigma|$.
+	finite-state automaton and $\mathcal{A'} = \langle Q', \Sigma, s', F',
+	\delta \rangle$ be the deterministic finite-state automaton derived from
+	$\mathcal{A}$ by applying the construction in Theorem $\ref{t_rabin_scott}$.
+	Then $|\delta| = 2^{|Q|} \times |\Sigma|$.
 \end{corollary}
 
 \begin{proof}
