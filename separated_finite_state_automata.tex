@@ -121,11 +121,11 @@ for determinization and minimization of such devices.
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The component tansition function
+	$k$-separated finite-state automaton. The component tansition functions
 	$\delta_i : \prod_{j=1}^k{Q_j}$\\
-	$\times \Sigma \rightarrow Q_i$ is defined as $\delta_i(q, \sigma) =
-	\eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))$ for $q \in
-	\prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+	$\times \Sigma \rightarrow Q_i$ are defined as $\delta_i(q, \sigma) =
+	\eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))$ for $i \in
+	\interval{1}{k}$, $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}

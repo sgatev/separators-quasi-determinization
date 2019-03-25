@@ -39,10 +39,10 @@ for determinization and minimization of such devices.
 		&(X \times (\Sigma \times \Omega^*) \times X)
 		\end{aligned}\\
 		&\subseteq \begin{aligned}[t]
-		&\bigcup_{i=1}^k (Q_i \times (\Sigma \times \Omega^*)
-		\times Q_i) \cup (X \times (\Sigma \times \Omega^*) \times Q_i)
-		\cup (Q_i \times (\Sigma \times \Omega^*) \times X) \cup\\
-		&(X \times (\Sigma \times \Omega^*) \times X)
+		\bigcup_{i=1}^k &(Q_i \times (\Sigma \times \Omega^*) \times Q_i)
+		\cup (X \times (\Sigma \times \Omega^*) \times Q_i) \cup\\
+		&(Q_i \times (\Sigma \times \Omega^*) \times X) \cup
+		(X \times (\Sigma \times \Omega^*) \times X)
 		\end{aligned}\\
 		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times (\Sigma \times
 		\Omega^*) \times Q_i \big] \cup \big[ (Q_i \cup X) \times (\Sigma
@@ -113,7 +113,7 @@ for determinization and minimization of such devices.
 	Q_i$ is a component extension function for $i \in \interval{1}{k}$, $\eta_x
 	: \prod_{i=1}^k{X} \rightarrow X$ is a separator extension function and
 	$\mu_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a component quasi-output
-	function.
+	function for $i \in \interval{1}{k}$.
 \end{definition}
 
 \begin{remark}
@@ -139,10 +139,10 @@ for determinization and minimization of such devices.
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\mu} \rangle$ be a
 	quasi-subsequential $k$-separated finite-state transducer. The component
-	tansition function $\delta_i : \prod_{j=1}^k{Q_j}$\\
-	$\times \Sigma \rightarrow Q_i$ is defined as $\delta_i(q, \sigma) =
-	\eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))$ for $q \in
-	\prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
+	tansition functions $\delta_i : \prod_{j=1}^k{Q_j}$\\
+	$\times \Sigma \rightarrow Q_i$ are defined as $\delta_i(q, \sigma) =
+	\eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))$ for $i \in
+	\interval{1}{k}$, $q \in \prod_{j=1}^k{Q_j}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -166,11 +166,11 @@ for determinization and minimization of such devices.
 	\interval{1}{n-1} (\sigma_i \in \Sigma)$, $\forall i \in
 	\interval{1}{n-1} (w_i \in \Omega^*)$ and $\forall i \in
 	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
-	successful if $q_1 = s$ and $\exists j \in \interval{1}{k} \exists w \in
-	\Omega^*(f_j(q_n^j) = w)$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$. The
-	output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$ of length
-	$\sum_{i=1}^{n-1}{|w_i|}+|\Phi(q_n)|$ over $\Omega$.
+	successful if and only if $q_1 = s$ and $\exists j \in \interval{1}{k}
+	\exists w_n \in \Omega^*(f_j(q_n^j) = w_n)$. The label of the path $\pi$ is
+	the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
+	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1} w_n$ of
+	length $\sum_{i=1}^{n}{|w_i|}$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
@@ -217,9 +217,8 @@ for determinization and minimization of such devices.
 \end{definition}
 
 \begin{theorem}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, \vec{f}, \Delta \rangle$
-	be a $k$-separated finite-state transducer with separator $X$ where $Q_X =
-	\{ Q_1, Q_2, \ldots, Q_k \}$. We can construct a quasi-subsequential
-	$k$-separated finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}
-	(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
+	be a $k$-separated finite-state transducer. We can construct a
+	quasi-subsequential $k$-separated finite-state transducer $\mathcal{T'}$
+	such that $\mathcal{R}(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
 \end{theorem}
