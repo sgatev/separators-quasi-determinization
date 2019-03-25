@@ -2,20 +2,20 @@
 
 Finite-state devices are part of a well-studied theoretical model that finds
 applications in compiler design, natural language processing and many other fields.
-They are discussed extensively in the works of Aho and Ullman $\cite{AU72}$,
-Hopcroft and Ullman $\cite{HMU01}$, and Mihov and Schulz $\cite{MS19}$.
+They are discussed extensively in the works of Aho and Ullman \cite{AU72}, Hopcroft
+and Ullman \cite{HMU01}, and Mihov and Schulz \cite{MS19}.
 
 Over the years, many flavours of finite-state devices have been developed. One of
 the fundamental classes of finite-state devices is the non-deterministic
-finite-state automaton introduced by Rabin and Scott $\cite{RS59}$. In their
-classical paper, Rabin and Scott prove that the expressive power of
-non-deterministic and deterministic finite-state automata is the same. Furthermore,
-they outline an effective algorithm that constructs a deterministic finite-state
-automaton recognizing the same language as the one recognized by a source
-non-deterministic finite-state automaton. The downside of this algorithm is that in
-the worst case the number of states in the resulting deterministic finite-state
-automaton is in the order $\mathcal{O}(2^n)$ where $n$ is the number of states in
-the source non-deterministic finite-state automaton.
+finite-state automaton introduced by Rabin and Scott \cite{RS59}. In their classical
+paper, Rabin and Scott prove that the expressive power of non-deterministic and
+deterministic finite-state automata is the same. Furthermore, they outline an
+effective algorithm that constructs a deterministic finite-state automaton
+recognizing the same language as the one recognized by a source non-deterministic
+finite-state automaton. The downside of this algorithm is that in the worst case the
+number of states in the resulting deterministic finite-state automaton is in the
+order $\mathcal{O}(2^n)$ where $n$ is the number of states in the source
+non-deterministic finite-state automaton.
 
 In this thesis, we present a new kind of finite-state devices inspired by the
 concept of graph separators. We show that for such devices there exist algorithms
@@ -23,9 +23,10 @@ for determinization and minimization that are more efficient than those applicab
 to the general case. We discuss ways to combine these findings with existing
 finite-state algorithms to achieve better practical results.
 
-The rest of this work is organized as follows. In Section 2 we provide formal
-preliminaries. Section 3 introduces the notion of separated finite-state automata
-and provides efficient algorithms for determinization and minimization of such
-automata. Section 4 introduces the notion of separated finite-state transducers and
-provides efficient algorithms for determinization and minimization of such
-transducers.
+The rest of this work is organized as follows. In Section \ref{sec_preliminaries}
+we provide formal preliminaries. Section \ref{sec_separators_finite_state_automata}
+introduces the notion of separated finite-state automata and provides efficient
+algorithms for determinization and minimization of such automata. Section
+\ref{sec_separators_finite_state_transducers} introduces the notion of separated
+finite-state transducers and provides efficient algorithms for determinization and
+minimization of such transducers.
