@@ -216,6 +216,65 @@ for determinization and minimization of such devices.
 	f_j(q^j) = v) \}$.
 \end{definition}
 
+\begin{construction}\label{conctruction_2}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta
+	\rangle$ be a $k$-separated finite-state transducer and let $P_i = Q_i \cup
+	X$ for $i \in \interval{1}{k}$. We construct the quasi-subsequential
+	$k$-separated finite-state transducer $\mathcal{T}' = \langle \Sigma,
+	\Omega, \vec{Q'}, X, s, \vec{f}, \vec{\tau}, \vec{\rho}, \vec{\eta},
+	\eta_x,$\\
+	$\vec{\mu} \rangle$ and the set of states $M$ inductively.
+
+	\bigbreak
+	We define $M^{(0)} = \emptyset$. At the base of the construction is a
+	single-state quasi-subsequential $k$-separated finite-state transducer
+	$\mathcal{T}'^{(1)} = \langle \Sigma, \Omega, \vec{Q'^{(1)}}, 2^X, s,
+	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},$\\
+	$\vec{\emptyset}, \emptyset, \vec{\emptyset} \rangle$ where
+
+	\begin{itemize}
+		\item $s = \langle (P_1 \cap S) \times \{ \epsilon \},
+				(P_2 \cap S) \times \{ \epsilon \}, \ldots,
+				(P_k \cap S) \times \{ \epsilon \} \rangle$;
+		\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$;
+		\item $M^{(1)} = \{ s \}$.
+	\end{itemize}
+
+	The inductive step constructs a quasi-subsequential $k$-separated
+	finite-state transducer $\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega,
+	\vec{Q'^{(n+1)}}, 2^X, s, \vec{f'^{(n+1)}}, \vec{\tau^{(n+1)}},
+	\vec{\rho^{(n+1)}}, \vec{\eta^{(n+1)}}, \eta_x^{(n+1)},$\\
+	$\vec{\mu^{(n+1)}} \rangle$ where
+
+	\begin{itemize}
+		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
+			\hat{\Delta}(q^i, \sigma) \cap P_i \rangle \mid q \in
+			M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma\}$ for $i \in
+			\interval{1}{k}$;
+		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
+			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
+			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
+		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
+			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
+			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in
+			\Sigma \}$;
+		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
+			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
+			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
+			\mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma
+			\}$ for $i \in \interval{1}{k}$;
+		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)}) \cup
+			Rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$;
+		\item $M^{(n+1)} = M^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid q
+			\in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma \}$.
+	\end{itemize}
+
+	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq \prod_{i=1}^k{2^{P_i}}$
+	and if $n > 1$ then $M^{(n-1)} \subseteq M^{(n)}$. Therefore, there
+	exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n-1)}$.
+	For the smallest such $n$ we declare $\mathcal{A}' = \mathcal{A}'^{(n)}$.
+\end{construction}
+
 \begin{theorem}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
 	be a $k$-separated finite-state transducer. We can construct a
