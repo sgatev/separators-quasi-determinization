@@ -1,4 +1,4 @@
 #!/bin/sh
 
-pdflatex root.tex
-open -a Preview.app root.pdf
+pdflatex main.tex
+open -a Preview.app main.pdf
