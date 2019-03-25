@@ -13,18 +13,6 @@
 \usepackage{pgfplots}
 \usetikzlibrary{automata,positioning}
 
-\makeatletter
-\renewcommand\@biblabel[1]{#1.}
-\makeatother
-
-\makeatletter
-\def\BState{\State\hskip-\ALG@thistlm}
-\makeatother
-
-\makeatletter
-\newcommand{\vo}{\vec{o}\@ifnextchar{^}{\,}{}}
-\makeatother
-
 \newtheorem{definition}{Definition}[subsection]
 \newtheorem{theorem}{Theorem}[subsection]
 \newtheorem{lemma}{Lemma}[subsection]
@@ -40,5 +28,5 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\input{thesis.tex}
+\input{content.tex}
 \end{document}
