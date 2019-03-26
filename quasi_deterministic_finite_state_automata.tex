@@ -117,28 +117,28 @@
 
 	\begin{itemize}
 		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid q \in M^{(n)}
-			\setminus M^{(n-1)}, q^i \cap F \neq \emptyset \}$ for $i
-			\in \interval{1}{k}$;
+			\setminus M^{(n-1)} \land q^i \cap F \neq \emptyset \}$ for
+			$i \in \interval{1}{k}$;
 		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
 			\hat{\Delta}(q^i, \sigma) \cap P_i \rangle \mid q \in
-			M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma\}$ for $i \in
-			\interval{1}{k}$;
+			M^{(n)} \setminus M^{(n-1)} \land \sigma \in \Sigma\}$ for
+			$i \in \interval{1}{k}$;
 		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
 			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
 		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
 			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in
-			\Sigma \}$;
+			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma
+			\in \Sigma \}$;
 		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
 			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
 			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
-			\mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma
-			\}$ for $i \in \interval{1}{k}$;
+			\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma \in
+			\Sigma \}$ for $i \in \interval{1}{k}$;
 		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)}) \cup
 			Rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$;
 		\item $M^{(n+1)} = M^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid q
-			\in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma \}$.
+			\in M^{(n)} \setminus M^{(n-1)} \land \sigma \in \Sigma \}$.
 	\end{itemize}
 
 	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq \prod_{i=1}^k{2^{P_i}}$
@@ -167,15 +167,15 @@
 		\item Let $q^i \in Q_i'^{(n)}$ for $q \in M^{(n)}$ and $i \in
 			\interval{1}{k}$. We have $M^{(n+1)} = M^{(n)} \cup \{
 			\delta^{(n+1)}(q, \sigma) \mid q \in M^{(n)} \setminus
-			M^{(n-1)}, \sigma \in \Sigma \} = \{ \langle
+			M^{(n-1)} \land \sigma \in \Sigma \} = \{ \langle
 			\eta_1^{(n+1)}(\tau_1^{(n+1)}(q^1, \sigma),
 			\delta_x^{(n+1)}(q, \sigma)),
 			\eta_2^{(n+1)}(\tau_2^{(n+1)}(q^2, \sigma),
 			\delta_x^{(n+1)}(q, \sigma)), \ldots,
 			\eta_k^{(n+1)}(\tau_k^{(n+1)}(q^k, \sigma),
 			\delta_x^{(n+1)}(q, \sigma)) \rangle
-			\mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma
-			\}$. Also, $Q_i'^{(n+1)} = Q_i'^{(n)} \cup
+			\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma \in
+			\Sigma \}$. Also, $Q_i'^{(n+1)} = Q_i'^{(n)} \cup
 			Rng(\tau_i^{(n+1)}) \cup Rng(\eta_i^{(n+1)})$ for $i \in
 			\interval{1}{k}$. Then $q^i \in Q_i'^{(n+1)}$ for $q \in
 			M^{(n+1)}$ and $i \in \interval{1}{k}$.

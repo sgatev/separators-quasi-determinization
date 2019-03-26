@@ -147,26 +147,39 @@
 	\rangle$ where
 
 	\begin{itemize}
-		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-			\hat{\Delta}(q^i, \sigma) \cap P_i \rangle \mid q \in
-			M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma\}$ for $i \in
+		\item $lcp(q^i, \sigma) = \bigwedge \{ uv \mid \exists \langle
+			p', u \rangle \in q^i \exists p'' \in Q (\langle, p',
+			\sigma, v, p'' \rangle \in \Delta) \}$ for $i \in
 			\interval{1}{k}$;
-		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
-			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
-			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
+		\item $nxt(q^i, \sigma) = \{ \langle p'', lcp(q^i, \sigma)^{-1}uv
+			\rangle \mid \exists \langle p', u \rangle \in q^i
+			\exists v \in \Omega^* (\langle, p', \sigma, v, p'' \rangle
+			\in \Delta) \}$ for $i \in \interval{1}{k}$;
+		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
+			nxt(q^i, \sigma) \rangle \mid q \in M^{(n)} \setminus
+			M^{(n-1)} \land \sigma \in \Sigma\}$ for $i \in
+			\interval{1}{k}$;
+		\item $\mu_i^{(n+1)} = \mu_i^{(n)} \cup \{ \langle q^i, \sigma,
+			lcp(q^i, \sigma) \rangle \mid q \in M^{(n)} \setminus
+			M^{(n-1)} \land \sigma \in \Sigma \}$ for $i \in
+			\interval{1}{k}$;
+		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q, \langle
+			p, w \rangle \rangle \mid q \in Rng(\tau_i^{(n+1)})
+			\setminus Rng(\tau_i^{(n)}) \land \langle p, w \rangle \in
+			q \land p \in X \}$ for $i \in \interval{1}{k}$;
 		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
 			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in
-			\Sigma \}$;
+			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma
+			\in \Sigma \}$;
 		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
 			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
 			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
-			\mid q \in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma
-			\}$ for $i \in \interval{1}{k}$;
+			\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma \in
+			\Sigma \}$ for $i \in \interval{1}{k}$;
 		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)}) \cup
 			Rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$;
 		\item $M^{(n+1)} = M^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid q
-			\in M^{(n)} \setminus M^{(n-1)}, \sigma \in \Sigma \}$.
+			\in M^{(n)} \setminus M^{(n-1)} \land \sigma \in \Sigma \}$.
 	\end{itemize}
 
 	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq \prod_{i=1}^k{2^{P_i}}$
