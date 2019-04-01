@@ -1,17 +1,17 @@
 \subsection{Regular expressions}
 
 \begin{definition}
-	A regular expression $\mathcal{R}$ over an alphabet $\Sigma$ where $\Sigma
-	\cap \{ (, ), ., +, * \} = \emptyset$ is a word over $\Sigma \cup \{ (, ),
-	., +, * \}$ denoting a regular language $\mathcal{L}(\mathcal{R})$ over
-	$\Sigma$. A regular expression and the regular language it denotes are
-	defined inductively as follows
+	A regular expression $\mathcal{R}$ over an alphabet $\Sigma$ such that
+	$\Sigma \cap \{ \varnothing, (, ), ., +, * \} = \emptyset$ is a word over
+	$\Sigma \cup \{ \varnothing, (, ), ., +, * \}$ denoting a regular language
+	$\mathcal{L}(\mathcal{R})$ over $\Sigma$. A regular expression and the
+	regular language it denotes are defined inductively as follows
 	\begin{enumerate}
-		\item $\emptyset$ is a regular expression over $\Sigma$
+		\item $\varnothing$ is a regular expression over $\Sigma$
 			denoting the regular language $\emptyset$;
-		\item If $\sigma \in \Sigma \cup \{ \epsilon \}$ then $\sigma$ is
-			a regular expression over $\Sigma$ denoting the regular
-			language $\{ \sigma \}$;
+		\item If $\sigma \in \Sigma_\epsilon$ then $\sigma$ is a regular
+			expression over $\Sigma$ denoting the regular language $\{
+			\sigma \}$;
 		\item If $\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions
 			over $\Sigma$ denoting the regular languages $\mathcal{L}
 			(\mathcal{R}')$ and $\mathcal{L}(\mathcal{R}'')$
@@ -20,7 +20,7 @@
 				\item $(\mathcal{R}'.\mathcal{R}'')$ is a regular
 					expression over $\Sigma$ denoting the
 					regular language $\mathcal{L}(\mathcal{R}')
-					\circ \mathcal{L}(\mathcal{R}'')$;
+					\hat{\cdot} \mathcal{L}(\mathcal{R}'')$;
 				\item $(\mathcal{R}'+\mathcal{R}'')$ is a regular
 					expression over $\Sigma$ denoting the
 					regular language $\mathcal{L}(\mathcal{R}')

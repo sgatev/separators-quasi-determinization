@@ -17,25 +17,29 @@
 \end{proposition}
 
 \begin{proof}
-	$\newline$
-	$\begin{aligned}
-		\Delta &\subseteq Q \times \Sigma_\epsilon \times Q =
-		(\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
+	\begin{align*}
+		\Delta &\subseteq Q \times \Sigma_\epsilon \times Q\\
+		&= (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
 		(\bigcup_{i=1}^k{Q_i} \cup X)\\
-		&= \bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times
-		\Sigma_\epsilon \times Q_j) \cup \bigcup_{i=1}^k (X \times
-		\Sigma_\epsilon \times Q_i) \cup (Q_i \times \Sigma_\epsilon \times
-		X) \cup (X \times \Sigma_\epsilon \times X)\\
-		&\subseteq \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
-		\cup (X \times \Sigma_\epsilon \times Q_i) \cup (Q_i \times
-		\Sigma_\epsilon \times X) \cup (X \times \Sigma_\epsilon \times X)\\
+		&= \begin{aligned}[t]
+			&\bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times
+			\Sigma_\epsilon \times Q_j) \cup\\
+			&\bigcup_{i=1}^k (X \times \Sigma_\epsilon \times Q_i) \cup
+			(Q_i \times \Sigma_\epsilon \times X) \cup\\
+			&(X \times \Sigma_\epsilon \times X)
+		\end{aligned}\\
+		&\subseteq \begin{aligned}[t]
+			\bigcup_{i=1}^k &(Q_i \times \Sigma_\epsilon \times Q_i)
+			\cup (X \times \Sigma_\epsilon \times Q_i) \cup\\
+			&(Q_i \times \Sigma_\epsilon \times X) \cup (X \times
+			\Sigma_\epsilon \times X)
+		\end{aligned}\\
 		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times \Sigma_\epsilon
 		\times Q_i \big] \cup \big[ (Q_i \cup X) \times \Sigma_\epsilon
 		\times X \big]\\
 		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times
 		(Q_i \cup X)
-	\end{aligned}$
-	$\newline$
+	\end{align*}
 \end{proof}
 
 \begin{proposition}
@@ -50,11 +54,12 @@
 \begin{proof}
 	We have $p \in \Delta(q, \sigma) \implies \langle q, \sigma, p \rangle \in
 	\Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon
-	\times (Q_i \cup X) \big] \implies \exists i \in \interval{1}{k}(\langle q,
-	\sigma, p \rangle \in \Delta \cap \big[ (Q_i \cup X) \times \Sigma_\epsilon
-	\times (Q_i \cup X) \big]) \implies p \in \Delta_i(q, \sigma)$. Similarly,
-	$p \in \Delta_i(q, \sigma)$ for $i \in \interval{1}{k} \implies p \in
-	\bigcup_{i=1}^k \Delta_i(q, \sigma) \implies p \in \Delta(q, \sigma)$.
+	\times (Q_i \cup X) \big] \implies \langle q, \sigma, p \rangle \in \Delta
+	\cap \big[ (Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X) \big]
+	\implies p \in \Delta_i(q, \sigma)$.
+
+	Similarly, $p \in \Delta_i(q, \sigma) \implies p \in \bigcup_{i=1}^k
+	\Delta_i(q, \sigma) \implies p \in \Delta(q, \sigma)$.
 \end{proof}
 
 \begin{proposition}
@@ -67,13 +72,11 @@
 \end{proposition}
 
 \begin{proof}
-	$\newline$
-	$\begin{aligned}
+	\begin{align*}
 		\hat{\Delta}(P, \{ \sigma \})
-		= \bigcup_{p \in P} \Delta(p, \sigma)
-		= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta(p, \sigma)
-		= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta_i(p, \sigma)
+		&= \bigcup_{p \in P} \Delta(p, \sigma)\\
+		&= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta(p, \sigma)\\
+		&= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta_i(p, \sigma)
 		= \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \{ \sigma \})
-	\end{aligned}$
-	$\newline$
+	\end{align*}
 \end{proof}
