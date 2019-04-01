@@ -14,47 +14,12 @@
 \end{definition}
 
 \begin{definition}
-	Concatenation of words over the alphabets $\Sigma'$ and $\Sigma''$ is a
-	function $\circ : \Sigma'^* \times \Sigma''^* \rightarrow
-	(\Sigma' \cup \Sigma'')^*$ defined as $w' \circ w'' = \sigma_1' \ldots
-	\sigma_n' \sigma_1'' \ldots \sigma_m''$ where $w' =
-	\sigma'_1\sigma'_2\ldots\sigma'_n$ is a word of length $n$ over $\Sigma'$
-	and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ is a word of length $m$
-	over $\Sigma''$. The concatenation of $w'$ and $w''$ is a word of length
-	$n+m$ over $\Sigma' \cup \Sigma''$. Since concatenation is associative
-	we prefer the notation $w'w''$ over $w' \circ w''$. That is $u \circ
-	(v \circ w) = (u \circ v) \circ w = uvw$ for the words $u, v, w$.
-\end{definition}
-
-\begin{definition}
-	Let $\epsilon$ denote the unique word of length $0$ over any alphabet.
-	It follows that $w\epsilon = \epsilon w = w$ for any word $w$.
+	We use $\epsilon$ to denote the unique word of length $0$ over any alphabet.
 \end{definition}
 
 \begin{definition}
 	Let $\Sigma$ be an alphabet. We use $\Sigma_\epsilon$ to denote the set
 	$\Sigma \cup \{ \epsilon \}$.
-\end{definition}
-
-\begin{definition}
-	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is prefix of
-	$w$ if and only if $\exists v \in \Sigma^* (w = uv)$. It follows that
-	$\epsilon$ is a prefix of every word. $Pref(w) = \{ u \in \Sigma^* \mid
-	\exists v \in \Sigma^* (w = uv) \}$ is the set of all prefixes of the word
-	$w$.
-\end{definition}
-
-\begin{definition}
-	Let $w = uv$ be a word over an alphabet $\Sigma$. We use $u^{-1}w$ to denote
-	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
-	$\epsilon^{-1}w = w$ for any word $w$.
-\end{definition}
-
-\begin{definition}
-	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ is the
-	word $u = \bigwedge_{i=1}^n w_i$. That is $u = \argmax_{u' \in
-	\bigcap_{i=1}^n Pref(w_i)} |u'|$. We shall also use the notation $w_1 \wedge
-	w_2 \wedge \ldots \wedge w_n$ to indicate the longest common prefix of words.
 \end{definition}
 
 \begin{definition}
@@ -65,8 +30,48 @@
 \end{definition}
 
 \begin{definition}
-	A language $L$ over an alphabet $\Sigma$ is a subset $L \subseteq
-	\Sigma^*$.
+	Concatenation of words over an alphabet $\Sigma$ is the function $\cdot :
+	\Sigma^* \times \Sigma^* \rightarrow \Sigma^*$ defined as
+	\begin{align*}
+		w' \cdot w'' = \sigma_1' \ldots \sigma_n' \sigma_1'' \ldots
+		\sigma_m''
+	\end{align*}
+	where $w' = \sigma'_1\sigma'_2\ldots\sigma'_n$ is a word of length $n$ over
+	$\Sigma$ and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ is a word of
+	length $m$ over $\Sigma$. The concatenation $w' \cdot w''$ is a word of
+	length $n+m$ over $\Sigma$. It follows that $w \cdot \epsilon = \epsilon
+	\cdot w = w$ for any word $w$. Concatenation of words is an associative
+	operation. That is, $u \cdot (v \cdot w) = (u \cdot v) \cdot w$ for all
+	words $u$, $v$ and $w$. Thus, we shall from now on write $w'w''$ instead of
+	$w' \cdot w''$.
+\end{definition}
+
+\begin{definition}
+	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is prefix of
+	$w$ if and only if $\exists v \in \Sigma^* (w = uv)$. It follows that
+	$\epsilon$ is a prefix of every word. We use $Pref(w) = \{ u \in \Sigma^*
+	\mid \exists v \in \Sigma^* (w = uv) \}$ to denote the set of all prefixes
+	of the word $w$.
+\end{definition}
+
+\begin{definition}
+	Let $w = uv$ be a word over an alphabet $\Sigma$. We use $u^{-1}w$ to denote
+	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
+	$\epsilon^{-1}w = w$ for any word $w$.
+\end{definition}
+
+\begin{definition}
+	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ is the word
+	\begin{align*}
+		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
+		|u|}.
+	\end{align*}
+	We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to
+	indicate the longest common prefix of words.
+\end{definition}
+
+\begin{definition}
+	A language $L$ over an alphabet $\Sigma$ is a subset $L \subseteq \Sigma^*$.
 \end{definition}
 
 \begin{definition}
@@ -78,8 +83,8 @@
 			is a regular language over $\Sigma$;
 		\item If $L'$ and $L''$ are regular languages over $\Sigma$ then
 			\begin{itemize}
-				\item $L' \hat{\circ} L''$ is a regular language over
-					$\Sigma$;
+				\item $L' \hat{\cdot} L''$ is a regular language
+					over $\Sigma$;
 				\item $L' \cup L''$ is a regular language over
 					$\Sigma$;
 				\item $L'^*$ is a regular language over $\Sigma$;
