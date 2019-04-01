@@ -50,7 +50,7 @@
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
 		\sigma))
 	\end{align*}
-	for $i \in \interval{1}{k}$, $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in
+	for $i \in \interval{1}{k}$, $q \in \prod_{j=1}^k{Q_j}$ and $\sigma \in
 	\Sigma$.
 \end{definition}
 
@@ -70,7 +70,8 @@
 \begin{definition}
 	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is a non-empty sequence
+	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is a non-empty sequence of
+	transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
@@ -98,8 +99,11 @@
 	The language recognized by a quasi-deterministic $k$-separa\-ted finite-state
 	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is the set of all labels of
-	successful paths $\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \exists
-	i \in \interval{1}{k}(\delta^*(s, w)^i \in F^i \}$.
+	successful paths
+	\begin{align*}
+		\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \exists i \in
+		\interval{1}{k}(\delta^*(s, w)^i \in F^i \}.
+	\end{align*}
 \end{definition}
 
 \begin{construction}\label{conctruction_1}
@@ -109,7 +113,7 @@
 	finite-state automaton $\mathcal{A}'$ and the set of states $M$ inductively.
 
 	\bigbreak
-	We define $M^{(0)} = \emptyset$. At the base of the construction is a
+	Let $M^{(0)} = \emptyset$. At the base of the construction is a
 	single-state quasi-deterministic $k$-separated finite-state automaton
 	\begin{align*}
 		\mathcal{A}'^{(1)} = \langle \Sigma, \vec{Q'^{(1)}}, 2^X, s,
@@ -127,8 +131,8 @@
 
 	Assuming $\mathcal{A}'^{(n)} = \langle \Sigma, \vec{Q'^{(n)}}, 2^X, s,
 	\vec{F'^{(n)}}, \vec{\tau^{(n)}}, \vec{\rho^{(n)}}, \vec{\eta^{(n)}},
-	\eta_x^{(n)} \rangle$ and $M^{(n)}$ are already constructed the inductive
-	step constructs a quasi-deterministic $k$-separated finite-state automaton
+	\eta_x^{(n)} \rangle$ and $M^{(n)}$ are already defined we construct a
+	quasi-deterministic $k$-separated finite-state automaton
 	\begin{align*}
 		\mathcal{A}'^{(n+1)} = \langle \Sigma,
 		\vec{Q'^{(n+1)}}, 2^X, s, \vec{F'^{(n+1)}}, \vec{\tau^{(n+1)}},
@@ -169,15 +173,15 @@
 	\interval{1}{k}$. Let $\mathcal{A}'^{(n)}$ be the quasi-deterministic
 	$k$-separated finite-state automaton and let $M^{(n)}$ be the set of states
 	derived from $\mathcal{A}$ by applying Construction \ref{conctruction_1} for
-	$n \in \mathbb{N}$. Then there exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such
-	that $M^{(n)} = M^{(n-1)}$ and $\mathcal{A}^{(n)} = \mathcal{A}^{(n-1)}$.
+	$n \in \mathbb{N}$. There exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such
+	that $M^{(n)} = M^{(n+1)}$ and $\mathcal{A}^{(n)} = \mathcal{A}^{(n+1)}$.
 \end{lemma}
 
 \begin{proof}
 	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq \prod_{i=1}^k{2^{P_i}}$
 	and if $n > 1$ then $M^{(n-1)} \subseteq M^{(n)}$. Therefore, there
-	exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n-1)}$.
-	In that case, $\mathcal{A}'^{(n)} = \mathcal{A}'^{(n-1)}$. For the smallest
+	exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n+1)}$.
+	In that case, $\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$. For the smallest
 	such $n$ we declare $M = M^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n)}$.
 \end{proof}
 
