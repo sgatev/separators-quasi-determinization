@@ -32,6 +32,11 @@
 \end{definition}
 
 \begin{definition}
+	Let $\Sigma$ be an alphabet. We use $\Sigma_\epsilon$ to denote the set
+	$\Sigma \cup \{ \epsilon \}$.
+\end{definition}
+
+\begin{definition}
 	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is prefix of
 	$w$ if and only if $\exists v \in \Sigma^* (w = uv)$. It follows that
 	$\epsilon$ is a prefix of every word. $Pref(w) = \{ u \in \Sigma^* \mid
@@ -40,24 +45,23 @@
 \end{definition}
 
 \begin{definition}
-	Let $w = uv$ be a word over an alphabet $\Sigma$. With $u^{-1}w$ we denote
+	Let $w = uv$ be a word over an alphabet $\Sigma$. We use $u^{-1}w$ to denote
 	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
 	$\epsilon^{-1}w = w$ for any word $w$.
 \end{definition}
 
 \begin{definition}
 	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ is the
-	word $u = \bigwedge_{i=1}^n w_i$. That is $u \in \bigcap_{i=1}^n Pref(w_i)$
-	and $\forall v \in \bigcap_{i=1}^n Pref(w_i)(|v| \leq |u|)$. We
-	shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to
-	indicate the longest common prefix of words.
+	word $u = \bigwedge_{i=1}^n w_i$. That is $u = \argmax_{u' \in
+	\bigcap_{i=1}^n Pref(w_i)} |u'|$. We shall also use the notation $w_1 \wedge
+	w_2 \wedge \ldots \wedge w_n$ to indicate the longest common prefix of words.
 \end{definition}
 
 \begin{definition}
-	Let $\Sigma$ be an alphabet. $\Sigma^n = \Sigma^{n-1} \times \Sigma$ is
-	the set of all words of length $n$ over $\Sigma$ where $\Sigma^0 = \{
-	\epsilon \}$. $\Sigma^* = \bigcup_{i = 0}^{\infty} \Sigma^i$ is the set
-	of all words over $\Sigma$.
+	Let $\Sigma$ be an alphabet. We use $\Sigma^n = \Sigma^{n-1} \times \Sigma$
+	to denote the set of all words of length $n$ over $\Sigma$ where $\Sigma^0
+	= \{ \epsilon \}$. We use $\Sigma^* = \bigcup_{i = 0}^{\infty} \Sigma^i$ to
+	denote the set of all words over $\Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -67,10 +71,10 @@
 
 \begin{definition}
 	A language $L$ over an alphabet $\Sigma$ is regular if and only if it can be
-	defined inductively as follows
+	constructed inductively as follows
 	\begin{enumerate}
 		\item $\emptyset$ is a regular language over $\Sigma$;
-		\item If $\sigma \in \Sigma \cup \{ \epsilon \}$ then $\{ \sigma \}$
+		\item If $\sigma \in \Sigma_\epsilon$ then $\{ \sigma \}$
 			is a regular language over $\Sigma$;
 		\item If $L'$ and $L''$ are regular languages over $\Sigma$ then
 			\begin{itemize}

@@ -4,26 +4,28 @@
 	A finite-state transducer $\mathcal{T}$ is a tuple $\langle \Sigma, \Omega,
 	Q, S, F, \Delta \rangle$ where $\Sigma$ and $\Omega$ are alphabets, $Q$ is
 	a finite set of states, $S \subseteq Q$ is a set of start states, $F
-	\subseteq Q$ is a set of final states and $\Delta : Q \times (\Sigma
-	\times \Omega^*) \rightarrow 2^Q$ is a function of transitions and outputs.
+	\subseteq Q$ is a set of final states and $\Delta : Q \times
+	(\Sigma_\epsilon \times \Omega^*) \rightarrow 2^Q$ is a function of
+	transitions and outputs.
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a finite-state transducer $\mathcal{T} = \langle \Sigma,
-	\Omega, Q, S, F, \Delta \rangle$ is a non-empty sequence
+	\Omega, Q, S, F, \Delta \rangle$ is a non-empty sequence of transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
 	where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in
-	\interval{1}{n-1}(\sigma_i \in \Sigma)$, $\forall i \in
+	\interval{1}{n-1}(\sigma_i \in \Sigma_\epsilon)$, $\forall i \in
 	\interval{1}{n-1}(w_i \in \Omega^*)$ and $\forall i \in
 	\interval{1}{n-1}(q_{i+1} \in \Delta(q_i, \sigma_i, w_i))$. The path $\pi$
 	is successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the
-	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$
-	over $\Sigma$. The output of the path $\pi$ is the word $w_1 w_2 \ldots
-	w_{n-1}$ of length $\sum_{i=1}^{n-1}{|w_i|}$ over $\Omega$.
+	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length
+	$\sum_{i=1}^{n-1}{|\sigma_i|}$ over $\Sigma$. The output of the path $\pi$
+	is the word $w_1 w_2 \ldots w_{n-1}$ of length $\sum_{i=1}^{n-1}{|w_i|}$
+	over $\Omega$.
 \end{definition}
 
 \begin{definition}
@@ -32,8 +34,8 @@
 	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \rightarrow 2^Q$ is defined
 	inductively as the least function such that $\Delta^*(q, \epsilon, \epsilon)
 	= \{ q \}$ for $q \in Q$ and $\Delta^*(q, w\sigma, uv) = \Delta(\Delta^*(
-	q, w, u), \sigma, v)$ for $q \in Q$, $w \in \Sigma^*$, $\sigma \in \Sigma$
-	and $u, v \in \Omega^*$.
+	q, w, u), \sigma, v)$ for $q \in Q$, $w \in \Sigma^*$, $\sigma \in
+	\Sigma_\epsilon$ and $u, v \in \Omega^*$.
 \end{definition}
 
 \begin{definition}
@@ -52,7 +54,7 @@
 \begin{definition}
 	The graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
-	is the triple $\langle Q, \Sigma \times \Omega^*, \Delta \rangle$.
+	is the triple $\langle Q, \Sigma_\epsilon \times \Omega^*, \Delta \rangle$.
 \end{definition}
 
 \begin{definition}
@@ -73,7 +75,7 @@
 \begin{definition}
 	A path $\pi$ in a subsequential finite-state transducer $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle$ is a
-	non-empty sequence
+	non-empty sequence of transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n

@@ -4,33 +4,36 @@
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
 	\rangle$ is $k$-separated for $k \in \mathbb{N}$ if and only if there
 	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{A} = \langle Q,
-	\Sigma, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1, Q_2, \ldots,
-	Q_k \}$. We write $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta
-	\rangle$ to denote the $k$-separated finite-state automaton $\mathcal{A}$.
+	\Sigma_\epsilon, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1, Q_2,
+	\ldots, Q_k \}$. We write $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F,
+	\Delta \rangle$ to denote the $k$-separated finite-state automaton
+	$\mathcal{A}$.
 \end{definition}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $\Delta \subseteq \bigcup_{i=1}^k
-	(Q_i \cup X) \times \Sigma \times (Q_i \cup X)$.
+	(Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X)$.
 \end{proposition}
 
 \begin{proof}
 	$\newline$
 	$\begin{aligned}
-		\Delta &\subseteq Q \times \Sigma \times Q =
-		(\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma \times
+		\Delta &\subseteq Q \times \Sigma_\epsilon \times Q =
+		(\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
 		(\bigcup_{i=1}^k{Q_i} \cup X)\\
 		&= \bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times
-		\Sigma \times Q_j) \cup \bigcup_{i=1}^k (X \times \Sigma \times Q_i)
-		\cup (Q_i \times \Sigma \times X) \cup (X \times \Sigma \times X)\\
-		&\subseteq \bigcup_{i=1}^k (Q_i \times \Sigma \times Q_i)
-		\cup (X \times \Sigma \times Q_i) \cup (Q_i \times \Sigma \times X)
-		\cup (X \times \Sigma \times X)\\
-		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times \Sigma
-		\times Q_i \big] \cup \big[ (Q_i \cup X) \times \Sigma \times X
-		\big]\\
-		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma \times (Q_i \cup X)
+		\Sigma_\epsilon \times Q_j) \cup \bigcup_{i=1}^k (X \times
+		\Sigma_\epsilon \times Q_i) \cup (Q_i \times \Sigma_\epsilon \times
+		X) \cup (X \times \Sigma_\epsilon \times X)\\
+		&\subseteq \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
+		\cup (X \times \Sigma_\epsilon \times Q_i) \cup (Q_i \times
+		\Sigma_\epsilon \times X) \cup (X \times \Sigma_\epsilon \times X)\\
+		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times \Sigma_\epsilon
+		\times Q_i \big] \cup \big[ (Q_i \cup X) \times \Sigma_\epsilon
+		\times X \big]\\
+		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times
+		(Q_i \cup X)
 	\end{aligned}$
 	$\newline$
 \end{proof}
@@ -38,28 +41,29 @@
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\Delta_i = \Delta \cap \big[ (Q_i
-	\cup X) \times \Sigma \times (Q_i \cup X) \big]$ for $i \in \interval{1}{k}$.
-	Then for $i \in \interval{1}{k}$, $q \in Q_i \cup X$ and $\sigma \in
-	\Sigma$ we have $\Delta(q, \sigma) = \Delta_i(q, \sigma)$.
+	\cup X) \times \Sigma_\epsilon \times (Q_i \cup X) \big]$ for $i \in
+	\interval{1}{k}$. Then for $i \in \interval{1}{k}$, $q \in Q_i \cup X$ and
+	$\sigma \in \Sigma_\epsilon$ we have $\Delta(q, \sigma) = \Delta_i(q,
+	\sigma)$.
 \end{proposition}
 
 \begin{proof}
 	We have $p \in \Delta(q, \sigma) \implies \langle q, \sigma, p \rangle \in
-	\Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma \times (Q_i
-	\cup X) \big] \implies \exists i \in \interval{1}{k}(\langle q, \sigma, p
-	\rangle \in \Delta \cap \big[ (Q_i \cup X) \times \Sigma \times (Q_i \cup X)
-	\big]) \implies p \in \Delta_i(q, \sigma)$. Similarly, $p \in \Delta_i(q,
-	\sigma)$ for $i \in \interval{1}{k} \implies p \in \bigcup_{i=1}^k
-	\Delta_i(q, \sigma) \implies p \in \Delta(q, \sigma)$.
+	\Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon
+	\times (Q_i \cup X) \big] \implies \exists i \in \interval{1}{k}(\langle q,
+	\sigma, p \rangle \in \Delta \cap \big[ (Q_i \cup X) \times \Sigma_\epsilon
+	\times (Q_i \cup X) \big]) \implies p \in \Delta_i(q, \sigma)$. Similarly,
+	$p \in \Delta_i(q, \sigma)$ for $i \in \interval{1}{k} \implies p \in
+	\bigcup_{i=1}^k \Delta_i(q, \sigma) \implies p \in \Delta(q, \sigma)$.
 \end{proof}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\Delta_i = \Delta \cap \big[ (Q_i
-	\cup X) \times \Sigma \times (Q_i \cup X) \big]$ for $i \in \interval{1}{k}$.
-	Then for $P \subseteq Q$ and $\sigma \in \Sigma$ we have $\hat{\Delta}(P,
-	\{ \sigma \}) = \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \{ \sigma \})$ where
-	$P_i = P \cap (Q_i \cup X)$ for $i \in \interval{1}{k}$.
+	\cup X) \times \Sigma_\epsilon \times (Q_i \cup X) \big]$ for $i \in
+	\interval{1}{k}$. Then for $P \subseteq Q$ and $\sigma \in \Sigma_\epsilon$
+	we have $\hat{\Delta}(P, \{ \sigma \}) = \bigcup_{i=1}^k \hat{\Delta}_i(P_i,
+	\{ \sigma \})$ where $P_i = P \cap (Q_i \cup X)$ for $i \in \interval{1}{k}$.
 \end{proposition}
 
 \begin{proof}

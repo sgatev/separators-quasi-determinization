@@ -106,8 +106,9 @@
 	\emptyset \rangle$ where
 
 	\begin{itemize}
-		\item $s = \langle P_1 \cap S, P_2 \cap S, \ldots, P_k \cap S
-			\rangle$;
+		\item $s = \langle \hat{C_\epsilon}(S) \cap P_1,
+			\hat{C_\epsilon}(S) \cap P_2,
+			\ldots, \hat{C_\epsilon}(S) \cap P_k \rangle$;
 		\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$;
 		\item $M^{(1)} = \{ s \}$.
 	\end{itemize}
@@ -122,9 +123,9 @@
 			\setminus M^{(n-1)} \land q^i \cap F \neq \emptyset \}$ for
 			$i \in \interval{1}{k}$;
 		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-			\hat{\Delta}(q^i, \sigma) \cap P_i \rangle \mid q \in
-			M^{(n)} \setminus M^{(n-1)} \land \sigma \in \Sigma\}$ for
-			$i \in \interval{1}{k}$;
+			\hat{C_\epsilon}(\hat{\Delta}(q^i, \sigma)) \cap P_i \rangle
+			\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma \in
+			\Sigma\}$ for $i \in \interval{1}{k}$;
 		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
 			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;

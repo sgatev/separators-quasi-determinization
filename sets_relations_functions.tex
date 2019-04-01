@@ -26,24 +26,37 @@
 
 \begin{definition}
 	The union of the sets $S_1, S_2, \ldots, S_n$ for $n \in \mathbb{N}$ is
-	the set $\bigcup_{i=1}^n{S_i} = \{ s \mid \exists i \in \interval{1}{n}(s
-	\in S_i) \}$. We shall also use the notation $S_1 \cup S_2 \cup \ldots \cup
-	S_n$ to indicate the union of sets.
+	the set
+	\begin{align*}
+		\bigcup_{i=1}^n{S_i} = \{ s \mid \exists i \in \interval{1}{n}(s
+		\in S_i) \}.
+	\end{align*}
+	We shall also use the notation $S_1 \cup S_2 \cup \ldots \cup S_n$ to
+	indicate the union of sets.
 \end{definition}
 
 \begin{definition}
 	The intersection of the sets $S_1, S_2, \ldots, S_n$ for $n \in \mathbb{N}$
-	is the set $\bigcap_{i=1}^n{S_i} = \{ s \mid \forall i \in \interval{1}{n}(s
-	\in S_i) \}$. We shall also use the notation $S_1 \cap S_2 \cap \ldots
-	\cap S_n$ to indicate the intersection of sets.
+	is the set
+	\begin{align*}
+		\bigcap_{i=1}^n{S_i} = \{ s \mid \forall i \in \interval{1}{n}(s
+		\in S_i) \}.
+	\end{align*}
+	We shall also use the notation $S_1 \cap S_2 \cap \ldots \cap S_n$ to
+	indicate the intersection of sets.
 \end{definition}
 
 \begin{definition}
-	The sets $S_1, S_2, \ldots, S_n$ form a partition of a set $S$ for $n \in
-	\mathbb{N}$ if and only if $S = \bigcup_{i=1}^n{S_i}$, $\forall i \in
-	\interval{1}{n}(|S_i| > 0)$ and $\forall i, j \in \interval{1}{n} (i \neq j
-	\implies S_i \cap S_j = \emptyset)$. We write $P^S$ to indicate that the
-	set $P = \{ S_1, S_2, \ldots, S_n \}$ is a partition of the set $S$.
+	The sets $S_1, S_2, \ldots, S_n$ form a partition of the set $S$ for $n \in
+	\mathbb{N}$ if and only if
+	\begin{itemize}
+		\item $S = \bigcup_{i=1}^n{S_i}$;
+		\item $|S_i| > 0$ for $i \in \interval{1}{n}$;
+		\item $S_i \cap S_j = \emptyset$ for $i, j \in \interval{1}{n}, i
+			\neq j$.
+	\end{itemize}
+	We write $P^S$ to indicate that the set $P = \{ S_1, S_2, \ldots, S_n \}$
+	is a partition of the set $S$.
 \end{definition}
 
 \begin{definition}
@@ -53,10 +66,13 @@
 
 \begin{definition}
 	The Cartesian product of the sets $S_1, S_2, \ldots, S_n$ for $n \in
-	\mathbb{N}$ is defined as the set $\prod_{i=1}^n{S_i} = \{ \langle s_1,
-	s_2, \ldots, s_n \rangle \mid \forall i \in \interval{1}{n}(s_i \in S_i)
-	\}$. We shall also use the notation $S_1 \times S_2 \times \ldots \times
-	S_n$ to indicate the Cartesian product of sets.
+	\mathbb{N}$ is defined as the set
+	\begin{align*}
+		\prod_{i=1}^n{S_i} = \{ \langle s_1, s_2, \ldots, s_n \rangle \mid
+		\forall i \in \interval{1}{n}(s_i \in S_i) \}.
+	\end{align*}
+	We shall also use the notation $S_1 \times S_2 \times \ldots \times S_n$ to
+	indicate the Cartesian product of sets.
 \end{definition}
 
 \begin{definition}
@@ -74,10 +90,12 @@
 
 
 \begin{definition}
-	Let $f: X \rightarrow Y$ be a function. The domain of $f$ is the set
-	$Dom(f) = \{ x \in X \mid \exists y \in Y (f(x) = y) \}$. The
-	range of $f$ is the set $Rng(f) = \{ y \in Y \mid \exists x \in X
-	(f(x) = y) \}$.
+	Let $f: X \rightarrow Y$ be a function. The domain $Dom(f)$ and range
+	$Rng(f)$ of $f$ are the sets respectively defined as
+	\begin{align*}
+		Dom(f) &= \{ x \in X \mid \exists y \in Y (f(x) = y) \}\\
+		Rng(f) &= \{ y \in Y \mid \exists x \in X (f(x) = y) \}.
+	\end{align*}
 \end{definition}
 
 \begin{definition}
@@ -87,6 +105,8 @@
 
 \begin{definition}
 	Let $f: X \rightarrow Y$ be a function. The set-lifted function $\hat{f}
-	: 2^X \rightarrow 2^Y$ is defined as $\hat{f}(X') = \{ y \in Y \mid \exists
-	x \in X' (f(x) = y) \}$ for $X' \subseteq X$.
+	: 2^X \rightarrow 2^Y$ is defined as
+	\begin{align*}
+		\hat{f}(X') = \{ f(x) \mid x \in X' \cap Dom(f) \}.
+	\end{align*}
 \end{definition}

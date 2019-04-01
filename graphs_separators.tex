@@ -18,14 +18,14 @@
 \begin{definition}
 	A graph $\mathcal{G} = \langle V, L, E \rangle$ is planar if and only if
 	there exists an injective function $f_v : V \rightarrow \mathbb{R}^2$ that
-	maps vertices of the graph to unique points in the real plane and an
+	maps vertices of the graph to distinct points in the real plane and an
 	injective function $f_e$ that maps edges of the graph to simple curves in
 	the real plane such that curves intersect only at points in $Rng(f_v)$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan \cite{LT79}]
 	Let $\mathcal{G} = \langle V, L, E \rangle$ be a planar graph. We can
-	find a separator $X$ in $\mathcal{G}$ such that $V_X = \{ V_1, V_2 \}$,
-	$|V_1| \leq \frac{2}{3} \times |V|$, $|V_2| \leq \frac{2}{3} \times |V|$ and
-	$|X| \leq 2 \sqrt{2} \sqrt{|V|}$.
+	efficiently find a separator $X$ in $\mathcal{G}$ such that $V_X = \{ V_1,
+	V_2 \}$, $|V_1| \leq \frac{2}{3} \times |V|$, $|V_2| \leq \frac{2}{3}
+	\times |V|$ and $|X| \leq 2 \sqrt{2} \sqrt{|V|}$.
 \end{theorem}
