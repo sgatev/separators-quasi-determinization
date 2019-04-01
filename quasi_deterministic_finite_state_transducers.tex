@@ -61,9 +61,13 @@
 	A path $\pi$ in a quasi-subsequential $k$-separated finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\mu} \rangle$ is a
-	non-empty sequence $\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2,
-	\sigma_2, w_2, q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1},
-	q_n \rangle$ where $\forall i \in \interval{1}{n}(q_i \in
+	non-empty sequence
+	\begin{align*}
+		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2,
+		w_2, q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1},
+		q_n \rangle
+	\end{align*}
+	where $\forall i \in \interval{1}{n}(q_i \in
 	\prod_{j=1}^k{Q_j})$, $\forall i \in \interval{1}{n-1} (\sigma_i \in
 	\Sigma)$, $\forall i \in \interval{1}{n-1} (w_i \in \Omega^*)$ and $\forall
 	i \in \interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$
@@ -128,9 +132,14 @@
 	\bigbreak
 	We define $M^{(0)} = \emptyset$. At the base of the construction is a
 	single-state quasi-subsequential $k$-separated finite-state transducer
-	$\mathcal{T}'^{(1)} = \langle \Sigma, \Omega, \vec{Q'^{(1)}}, 2^X, s,
-	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
-	\emptyset, \vec{\emptyset} \rangle$ where
+
+	\begin{align*}
+		\mathcal{T}'^{(1)} = \langle \Sigma, \Omega, \vec{Q'^{(1)}}, 2^X,
+		s, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
+		\vec{\emptyset}, \emptyset, \vec{\emptyset} \rangle
+	\end{align*}
+
+	where
 
 	\begin{itemize}
 		\item $s = \langle (P_1 \cap S) \times \{ \epsilon \},
@@ -141,10 +150,15 @@
 	\end{itemize}
 
 	The inductive step constructs a quasi-subsequential $k$-separated
-	finite-state transducer $\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega,
-	\vec{Q'^{(n+1)}}, 2^X, s, \vec{f'^{(n+1)}}, \vec{\tau^{(n+1)}},
-	\vec{\rho^{(n+1)}}, \vec{\eta^{(n+1)}}, \eta_x^{(n+1)}, \vec{\mu^{(n+1)}}
-	\rangle$ where
+	finite-state transducer
+
+	\begin{align*}
+		\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega, \vec{Q'^{(n+1)}},
+		2^X, s, \vec{f'^{(n+1)}}, \vec{\tau^{(n+1)}}, \vec{\rho^{(n+1)}},
+		\vec{\eta^{(n+1)}}, \eta_x^{(n+1)}, \vec{\mu^{(n+1)}} \rangle
+	\end{align*}
+
+	where
 
 	\begin{itemize}
 		\item $lcp(q^i, \sigma) = \bigwedge \{ uv \mid \exists \langle

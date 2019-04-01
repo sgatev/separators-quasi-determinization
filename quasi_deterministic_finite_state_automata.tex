@@ -58,11 +58,13 @@
 \begin{definition}
 	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is a non-empty sequence $\langle q_1,
-	\sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \dots,
-	\langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ where $\forall i \in
-	\interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall i \in
-	\interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
+	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is a non-empty sequence
+	\begin{align*}
+		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
+		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+	\end{align*}
+	where $\forall i \in \interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall
+	i \in \interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
 	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
 	successful if and only if $q_1 = s$ and $\exists i \in \interval{1}{k}
 	(q_n^i \in F^i)$. The label of the path $\pi$ is the word
