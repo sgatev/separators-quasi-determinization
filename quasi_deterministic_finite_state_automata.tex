@@ -2,19 +2,22 @@
 
 \begin{definition}
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
-	is a tuple $\langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau}, \vec{\rho},
-	\vec{\eta}, \eta_x \rangle$ where $k \in \mathbb{N}$, $\Sigma$ is an
-	alphabet, $Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$
-	is a non-empty separator set such that $\forall i \in \interval{1}{k} (X
-	\subseteq Q_i)$ and $\forall i, j \in \interval{1}{k}(i \neq j \implies Q_i
-	\cap Q_j \subseteq X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start state, $F_i
-	\subseteq Q_i$ is a set of final quasi-states for $i \in \interval{1}{k}$,
-	$\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a component
-	quasi-transition function for $i \in \interval{1}{k}$, $\rho_i : Q_i
-	\rightarrow X$ is a component reduction function for $i \in
-	\interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow Q_i$ is a component
-	extension function for $i \in \interval{1}{k}$ and $\eta_x :
-	\prod_{i=1}^k{X} \rightarrow X$ is a separator extension function.
+	is a tuple
+	\begin{align*}
+		\langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau}, \vec{\rho},
+		\vec{\eta}, \eta_x \rangle
+	\end{align*}
+	where $k \in \mathbb{N}$, $\Sigma$ is an alphabet, $Q_i$ is a set of
+	quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty separator set
+	such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$ and $\forall i,
+	j \in \interval{1}{k}(i \neq j \implies Q_i \cap Q_j \subseteq X)$, $s \in
+	\prod_{i=1}^k{Q_i}$ is a start state, $F_i \subseteq Q_i$ is a set of final
+	quasi-states for $i \in \interval{1}{k}$, $\tau_i : Q_i \times \Sigma
+	\rightarrow Q_i$ is a component quasi-transition function for $i \in
+	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reduction
+	function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow
+	Q_i$ is a component extension function for $i \in \interval{1}{k}$ and
+	$\eta_x : \prod_{i=1}^k{X} \rightarrow X$ is a separator extension function.
 \end{definition}
 
 \begin{remark}
@@ -201,11 +204,25 @@
 				M^{(n+1)} &= M^{(n)} \cup \{
 				\delta^{(n+1)}(q, \sigma) \mid q \in M^{(n)}
 				\setminus M^{(n-1)} \land \sigma \in \Sigma \}\\
-				&= \{ \langle \delta_1^{(n+1)}(q, \sigma),
-				\delta_2^{(n+1)}(q, \sigma), \ldots,
-				\delta_k^{(n+1)}(q, \sigma) \rangle
-				\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma
-				\in \Sigma \}.
+				&= M^{(n)} \cup \begin{aligned}[t]
+					\{ &\langle \delta_1^{(n+1)}(q, \sigma),
+					\delta_2^{(n+1)}(q, \sigma), \ldots,
+					\delta_k^{(n+1)}(q, \sigma) \rangle \mid\\
+					&q \in M^{(n)} \setminus M^{(n-1)}
+					\land \sigma \in \Sigma \}
+				\end{aligned}\\
+				&= M^{(n)} \cup \begin{aligned}[t]
+					\{ &\langle
+					\eta_1^{(n+1)}(\tau_1^{(n+1)}(q^1, \sigma),
+					\delta_x^{(n+1)}(q, \sigma)),\\
+					&\eta_2^{(n+1)}(\tau_2^{(n+1)}(q^2, \sigma),
+					\delta_x^{(n+1)}(q, \sigma)),\\
+					&\ldots,\\
+					&\eta_k^{(n+1)}(\tau_k^{(n+1)}(q^k, \sigma),
+					\delta_x^{(n+1)}(q, \sigma)) \rangle \mid\\
+					&q \in M^{(n)} \setminus M^{(n-1)}
+					\land \sigma \in \Sigma \}
+				\end{aligned}
 			\end{align*}
 			Also, $Q_i'^{(n+1)} = Q_i'^{(n)} \cup
 			Rng(\tau_i^{(n+1)}) \cup Rng(\eta_i^{(n+1)})$ for $i \in
@@ -236,20 +253,29 @@
 
 	\begin{enumerate}
 		\item Let $p_1 = s$. We have $p_1 \in M^{(1)}$ and $q_1 \in S
-			\subseteq C_\epsilon(S) = \bigcup_{i=1}^k{C_\epsilon(S)
-			\cap P_i} = \bigcup_{i=1}^k{p_1^i}$;
+			\subseteq \hat{C_\epsilon}(S)
+			= \bigcup_{i=1}^k{\hat{C_\epsilon}(S) \cap P_i}
+			= \bigcup_{i=1}^k{p_1^i}$;
 		\item Let $p_i = \delta^{(i)*}(p_1, \sigma_1 \sigma_2 \ldots
 			\sigma_{i-1}) \in M^{(i)}$ and $q_i \in \bigcup_{j=1}^k{
-			p_i^j}$. Let $p_{i+1} = \delta^{(i)}(p_i, \sigma_i) =
-			\langle \delta_1^{(i)}(p_i, \sigma_i), \delta_2^{(i)}(p_i,
-			\sigma_i), \ldots, \delta_k^{(i)}(p_i, \sigma_i) \rangle$
-			where $p_{i+1}^j = \delta_j^{(i)}(p_i, \sigma_i) =
-			(\hat{C_\epsilon}(\hat{\Delta}(p_i^j, \{ \sigma_i \})) \cap
-			P_j) \cup (\bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
-			(p_i^r, \{ \sigma_i \})) \cap X}) =
-			\bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}(p_i^r, \{
-			\sigma_i \})) \cap P_j}$ for $j \in
-			\interval{1}{k}$.
+			p_i^j}$. Let
+			\begin{align*}
+				p_{i+1} = \delta^{(i)}(p_i, \sigma_i) = \langle
+				\delta_1^{(i)}(p_i, \sigma_i), \delta_2^{(i)}(p_i,
+				\sigma_i), \ldots, \delta_k^{(i)}(p_i, \sigma_i)
+				\rangle
+			\end{align*}
+			where
+			\begin{align*}
+				p_{i+1}^j &= \delta_j^{(i)}(p_i, \sigma_i)\\
+				&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_i^j, \{
+				\sigma_i \})) \cap P_j \big] \cup
+				\big[ \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
+				(p_i^r, \{ \sigma_i \})) \cap X} \big]\\
+				&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
+				(p_i^r, \{ \sigma_i \})) \cap P_j}
+			\end{align*}
+			for $j \in \interval{1}{k}$.
 			Then $p_{i+1} \in M^{(i+1)}$ and $q_{i+1}
 			\in \Delta(q_i, \sigma_i) \implies q_{i+1} \in
 			\bigcup_{r=1}^k{\hat{\Delta}(p_i^r, \{ \sigma_i \})}
@@ -272,9 +298,11 @@
 
 	\bigbreak
 	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
-	successful path in $\mathcal{A}$. Let $\langle p_1, \sigma_1, p_2
-	\rangle, \langle p_2, \sigma_2, p_3 \rangle, \ldots, \langle p_{n-1},
-	\sigma_{n-1}, p_n \rangle$ be a successful path in $\mathcal{A'}$. Then
+	successful path in $\mathcal{A}$.
+
+	Let $\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3 \rangle,
+	\ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ be a successful path in
+	$\mathcal{A'}$. Then
 
 	\begin{enumerate}
 		\item We have $\exists i \in \interval{1}{k}(p_n^i \in F_i')

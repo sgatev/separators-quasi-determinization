@@ -2,21 +2,25 @@
 
 \begin{definition}
 	A quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}$
-	is a tuple $\langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x, \vec{\mu} \rangle$ where $k \in \mathbb{N}$,
-	$\Sigma$ and $\Omega$ are alphabets, $Q_i$ is a set of quasi-states for $i
-	\in \interval{1}{k}$, $X$ is a non-empty separator set such that $\forall i
-	\in \interval{1}{k} (X \subseteq Q_i)$ and $\forall i, j \in \interval{1}{k},
-	i \neq j (Q_i \cap Q_j \subseteq X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start
-	state, $f_i : Q_i \rightarrow \Omega^*$ is a final quasi-state output
-	function for $i \in \interval{1}{k}$, $\tau_i : Q_i \times \Sigma
-	\rightarrow Q_i$ is a component quasi-transition function for $i \in
-	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reduction
-	function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow
-	Q_i$ is a component extension function for $i \in \interval{1}{k}$, $\eta_x
-	: \prod_{i=1}^k{X} \rightarrow X$ is a separator extension function and
-	$\mu_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a component quasi-output
-	function for $i \in \interval{1}{k}$.
+	is a tuple
+	\begin{align*}
+		\langle \Sigma, \Omega, \vec{Q}, X, s, \vec{f}, \vec{\tau},
+		\vec{\rho}, \vec{\eta}, \eta_x, \vec{\mu} \rangle
+	\end{align*}
+	where $k \in \mathbb{N}$, $\Sigma$ and $\Omega$ are alphabets, $Q_i$ is a
+	set of quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty
+	separator set such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$
+	and $\forall i, j \in \interval{1}{k}, i \neq j (Q_i \cap Q_j \subseteq X)$,
+	$s \in \prod_{i=1}^k{Q_i}$ is a start state, $f_i : Q_i \rightarrow
+	\Omega^*$ is a final quasi-state output function for $i \in
+	\interval{1}{k}$, $\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a
+	component quasi-transition function for $i \in \interval{1}{k}$, $\rho_i :
+	Q_i \rightarrow X$ is a component reduction function for $i \in
+	\interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow Q_i$ is a component
+	extension function for $i \in \interval{1}{k}$, $\eta_x : \prod_{i=1}^k{X}
+	\rightarrow X$ is a separator extension function and $\mu_i : Q_i \times
+	\Sigma \rightarrow \Omega^*$ is a component quasi-output function for $i
+	\in \interval{1}{k}$.
 \end{definition}
 
 \begin{remark}

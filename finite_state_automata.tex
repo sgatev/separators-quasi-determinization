@@ -1,11 +1,14 @@
 \subsection{Finite-state automata}
 
 \begin{definition}
-	A finite-state automaton $\mathcal{A}$ is a tuple $\langle \Sigma, Q,
-	S, F, \Delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a finite set
-	of states, $S \subseteq Q$ is a set of start states, $F \subseteq Q$
-	is a set of final states and $\Delta : Q \times \Sigma_\epsilon
-	\rightarrow 2^Q$ is a function of transitions.
+	A finite-state automaton $\mathcal{A}$ is a tuple
+	\begin{align*}
+		\langle \Sigma, Q, S, F, \Delta \rangle
+	\end{align*}
+	where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $S \subseteq
+	Q$ is a set of start states, $F \subseteq Q$ is a set of final states and
+	$\Delta : Q \times \Sigma_\epsilon \rightarrow 2^Q$ is a function of
+	transitions.
 \end{definition}
 
 \begin{definition}
@@ -58,11 +61,13 @@
 \end{definition}
 
 \begin{definition}
-	A deterministic finite-state automaton $\mathcal{A}$ is a tuple $\langle
-	\Sigma, Q, s, F, \delta \rangle$ where $\Sigma$ is an alphabet, $Q$ is a
-	finite set of states, $s \in Q$ is a start state, $F \subseteq Q$ is a set
-	of final states and $\delta : Q \times \Sigma \rightarrow Q$ is a function
-	of transitions.
+	A deterministic finite-state automaton $\mathcal{A}$ is a tuple
+	\begin{align*}
+		\langle \Sigma, Q, s, F, \delta \rangle
+	\end{align*}
+	where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $s \in Q$ is
+	a start state, $F \subseteq Q$ is a set of final states and $\delta : Q
+	\times \Sigma \rightarrow Q$ is a function of transitions.
 \end{definition}
 
 \begin{definition}

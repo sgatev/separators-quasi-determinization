@@ -1,12 +1,14 @@
 \subsection{Finite-state transducers}
 
 \begin{definition}
-	A finite-state transducer $\mathcal{T}$ is a tuple $\langle \Sigma, \Omega,
-	Q, S, F, \Delta \rangle$ where $\Sigma$ and $\Omega$ are alphabets, $Q$ is
-	a finite set of states, $S \subseteq Q$ is a set of start states, $F
-	\subseteq Q$ is a set of final states and $\Delta : Q \times
-	(\Sigma_\epsilon \times \Omega^*) \rightarrow 2^Q$ is a function of
-	transitions and outputs.
+	A finite-state transducer $\mathcal{T}$ is a tuple
+	\begin{align*}
+		\langle \Sigma, \Omega, Q, S, F, \Delta \rangle
+	\end{align*}
+	where $\Sigma$ and $\Omega$ are alphabets, $Q$ is a finite set of states,
+	$S \subseteq Q$ is a set of start states, $F \subseteq Q$ is a set of final
+	states and $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \rightarrow
+	2^Q$ is a function of transitions and outputs.
 \end{definition}
 
 \begin{definition}
@@ -63,13 +65,15 @@
 \end{definition}
 
 \begin{definition}
-	A subsequential finite-state transducer $\mathcal{T}$ is a tuple $\langle
-	\Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle$ where $\Sigma$ and
-	$\Omega$ are alphabets, $Q$ is a finite set of states, $s \in Q$ is a start
-	state, $F \subseteq Q$ is a set of final states, $\delta : Q \times \Sigma
-	\rightarrow Q$ is a transition function, $\lambda : Q \times \Sigma
-	\rightarrow \Omega^*$ is a transition output function and $\Phi : F
-	\rightarrow \Omega^*$ is a final state output function.
+	A subsequential finite-state transducer $\mathcal{T}$ is a tuple
+	\begin{align*}
+		\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle
+	\end{align*}
+	where $\Sigma$ and $\Omega$ are alphabets, $Q$ is a finite set of states,
+	$s \in Q$ is a start state, $F \subseteq Q$ is a set of final states,
+	$\delta : Q \times \Sigma \rightarrow Q$ is a transition function, $\lambda
+	: Q \times \Sigma \rightarrow \Omega^*$ is a transition output function and
+	$\Phi : F \rightarrow \Omega^*$ is a final state output function.
 \end{definition}
 
 \begin{definition}
