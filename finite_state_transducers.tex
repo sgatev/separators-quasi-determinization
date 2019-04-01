@@ -24,10 +24,9 @@
 	\interval{1}{n-1}(w_i \in \Omega^*)$ and $\forall i \in
 	\interval{1}{n-1}(q_{i+1} \in \Delta(q_i, \sigma_i, w_i))$. The path $\pi$
 	is successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the
-	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length
-	$\sum_{i=1}^{n-1}{|\sigma_i|}$ over $\Sigma$. The output of the path $\pi$
-	is the word $w_1 w_2 \ldots w_{n-1}$ of length $\sum_{i=1}^{n-1}{|w_i|}$
-	over $\Omega$.
+	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
+	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$ over
+	$\Omega$.
 \end{definition}
 
 \begin{definition}
@@ -43,9 +42,12 @@
 \begin{definition}
 	The relation recognized by a finite-state transducer $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all pairs
-	of labels and outputs of successful paths $\mathcal{R}(\mathcal{T}) = \{
-	\langle u, v \rangle \in \Sigma^* \times \Omega^* \mid \hat{\Delta}^*
-	(S, \{ u \}, \{ v \}) \cap F \neq \emptyset \}$.
+	of labels and outputs of successful paths
+	\begin{align*}
+		\mathcal{R}(\mathcal{T}) = \{ \langle u, v \rangle \in \Sigma^*
+		\times \Omega^* \mid \hat{\Delta}^* (S, \{ u \}, \{ v \}) \cap F
+		\neq \emptyset \}.
+	\end{align*}
 \end{definition}
 
 \begin{definition}
@@ -56,7 +58,10 @@
 \begin{definition}
 	The graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
-	is the triple $\langle Q, \Sigma_\epsilon \times \Omega^*, \Delta \rangle$.
+	is the triple
+	\begin{align*}
+		\langle Q, \Sigma_\epsilon \times \Omega^*, \Delta \rangle.
+	\end{align*}
 \end{definition}
 
 \begin{definition}
@@ -93,7 +98,7 @@
 	if $q_1 \in S$ and $q_n \in F$. The label of the path $\pi$ is the word
 	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$. The
 	output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1} \Phi(q_n)$
-	of length $\sum_{i=1}^{n-1}{|w_i|}+|\Phi(q_n)|$ over $\Omega$.
+	over $\Omega$.
 \end{definition}
 
 \begin{definition}
@@ -119,8 +124,11 @@
 	The relation recognized by a subsequential finite-state transducer
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi
 	\rangle$ is the set of all pairs of labels and outputs of successful paths
-	$\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(w)\Phi(f) \rangle \in
-	\Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) = f) \}$.
+	\begin{align*}
+		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(w)\Phi(f) \rangle
+		\in \Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) =
+		f) \}.
+	\end{align*}
 \end{definition}
 
 \begin{theorem}[Choffrut, Mohri \cite{C77, M96}]\label{t_choffrut_mohri}
@@ -128,19 +136,5 @@
 	functional finite-state transducer. We can construct a subsequential
 	finite-state transducer $\mathcal{T'} = \langle \Sigma, \Omega, Q', s', F',
 	\delta, \lambda, \Phi \rangle$ such that $\mathcal{R}(\mathcal{T'}) =
-	\mathcal{R}(\mathcal{T})$ where $Q' = 2^{Q \times \Omega^*}$.
+	\mathcal{R}(\mathcal{T})$.
 \end{theorem}
-
-\begin{corollary}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer and $\mathcal{T'} = \langle \Sigma, \Omega, Q', s',
-	F', \delta, \lambda, \Phi \rangle$ be the subsequential finite-state
-	transducer derived from $\mathcal{T}$ by applying the construction in
-	Theorem $\ref{t_choffrut_mohri}$. Then $|\delta| = 2^{|Q|} \times |\Sigma|$
-	and $|\lambda| = 2^{|Q|} \times |\Sigma|$.
-\end{corollary}
-
-\begin{proof}
-	$\delta$ and $\lambda$ are functions $\implies |\delta| = |\lambda| = |Q'|
-	\times |\Sigma| = |2^Q| \times |\Sigma| = 2^{|Q|} \times |\Sigma|$.
-\end{proof}
