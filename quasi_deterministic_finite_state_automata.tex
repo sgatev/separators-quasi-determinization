@@ -145,9 +145,9 @@
 			\setminus M^{(n-1)} \land q^i \cap F \neq \emptyset \}$ for
 			$i \in \interval{1}{k}$;
 		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-			\hat{C_\epsilon}(\hat{\Delta}(q^i, \sigma)) \cap P_i \rangle
-			\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma \in
-			\Sigma\}$ for $i \in \interval{1}{k}$;
+			\hat{C_\epsilon}(\hat{\Delta}(q^i, \{ \sigma \})) \cap P_i
+			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma
+			\in \Sigma\}$ for $i \in \interval{1}{k}$;
 		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
 			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
@@ -178,11 +178,11 @@
 \end{lemma}
 
 \begin{proof}
-	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq \prod_{i=1}^k{2^{P_i}}$
-	and if $n > 1$ then $M^{(n-1)} \subseteq M^{(n)}$. Therefore, there
-	exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n+1)}$.
-	In that case, $\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$. For the smallest
-	such $n$ we declare $M = M^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n)}$.
+	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq M^{(n+1)} \subseteq
+	\prod_{i=1}^k{2^{P_i}}$. Therefore, there exists $n \leq
+	|\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n+1)}$. In that case,
+	$\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$. For the smallest such $n$ we
+	declare $M = M^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n)}$.
 \end{proof}
 
 \begin{lemma}
@@ -196,8 +196,7 @@
 \end{lemma}
 
 \begin{proof}
-	We prove the statement by induction on the construction of $\mathcal{A}'$
-	and $M$.
+	We prove the statement by induction on Construction \ref{conctruction_1}.
 
 	\begin{enumerate}
 		\item We have $M^{(1)} = \{ s \}$ and $s^i \in Q_i'^{(1)}$ for $i
@@ -228,10 +227,14 @@
 					\land \sigma \in \Sigma \}
 				\end{aligned}
 			\end{align*}
-			Also, $Q_i'^{(n+1)} = Q_i'^{(n)} \cup
-			Rng(\tau_i^{(n+1)}) \cup Rng(\eta_i^{(n+1)})$ for $i \in
-			\interval{1}{k}$. Then $q^i \in Q_i'^{(n+1)}$ for $q \in
-			M^{(n+1)}$ and $i \in \interval{1}{k}$.
+			Also
+			\begin{align*}
+				Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)})
+				\cup Rng(\eta_i^{(n+1)})
+			\end{align*}
+			for $i \in \interval{1}{k}$. Therefore, $q^i
+			\in Q_i'^{(n+1)}$ for $q \in M^{(n+1)}$ and $i \in
+			\interval{1}{k}$.
 	\end{enumerate}
 \end{proof}
 
@@ -249,56 +252,67 @@
 \begin{proof}
 	\bigbreak
 	We show that every successful path in $\mathcal{A}$ is also a successful
-	path in $\mathcal{A'}$ by induction on the states present in the path.
+	path in $\mathcal{A'}$ by induction on the transitions present in the path.
 
 	Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
 	\ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ be a successful path in
-	$\mathcal{A}$. Then
+	$\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2,
+	\ldots, n-1 \}$ for $l \leq n-1$ be the set of indexes where  $\sigma_{i_j}
+	\in \Sigma$ for $j \in \interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h,
+	j \in \interval{1}{l}$.
 
-	\begin{enumerate}
-		\item Let $p_1 = s$. We have $p_1 \in M^{(1)}$ and $q_1 \in S
-			\subseteq \hat{C_\epsilon}(S)
-			= \bigcup_{i=1}^k{\hat{C_\epsilon}(S) \cap P_i}
-			= \bigcup_{i=1}^k{p_1^i}$;
-		\item Let $p_i = \delta^{(i)*}(p_1, \sigma_1 \sigma_2 \ldots
-			\sigma_{i-1}) \in M^{(i)}$ and $q_i \in \bigcup_{j=1}^k{
-			p_i^j}$. Let
-			\begin{align*}
-				p_{i+1} = \delta^{(i)}(p_i, \sigma_i) = \langle
-				\delta_1^{(i)}(p_i, \sigma_i), \delta_2^{(i)}(p_i,
-				\sigma_i), \ldots, \delta_k^{(i)}(p_i, \sigma_i)
-				\rangle
-			\end{align*}
-			where
-			\begin{align*}
-				p_{i+1}^j &= \delta_j^{(i)}(p_i, \sigma_i)\\
-				&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_i^j, \{
-				\sigma_i \})) \cap P_j \big] \cup
-				\big[ \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
-				(p_i^r, \{ \sigma_i \})) \cap X} \big]\\
-				&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
-				(p_i^r, \{ \sigma_i \})) \cap P_j}
-			\end{align*}
-			for $j \in \interval{1}{k}$.
-			Then $p_{i+1} \in M^{(i+1)}$ and $q_{i+1}
-			\in \Delta(q_i, \sigma_i) \implies q_{i+1} \in
-			\bigcup_{r=1}^k{\hat{\Delta}(p_i^r, \{ \sigma_i \})}
-			\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(\hat{\Delta}(
-			p_i^r, \{ \sigma_i \}))}
-			= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-			\hat{C_\epsilon}(\hat{\Delta}(p_i^r, \{ \sigma_i \})) \cap
-			P_j}} = \bigcup_{j=1}^k{p_{i+1}^j}$;
-		\item We have $q_n \in F$ and $\exists p_n \in M^{(n)}
-			(q_n \in \bigcup_{i=1}^k{p_n^i})$. Therefore, $\exists i
-			\in \interval{1}{k}(q_n \in p_n^i)$. If $p_n \notin
-			M^{(n-1)}$ then $p_n \in F_i'^{(n+1)} \subseteq F_i'^{(m)}$
-			for $m \geq n+1$. Otherwise, $p_n \in F_i'^{(n)} \subseteq
-			F_i'^{(m)}$ for $m \geq n$.
-	\end{enumerate}
+	Let $p_1 = s \in M^{(1)}$. We have $\sigma_{i_1} \in \Sigma$ and
+	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
+	Therefore, $q_{i_1} \in C_\epsilon(q_1) \subseteq \hat{C_\epsilon}(S) =
+	\bigcup_{j=1}^k{\hat{C_\epsilon}(S) \cap P_j} = \bigcup_{j=1}^k{p_1^j}$.
 
-	$\implies \langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2,
-	p_3 \rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ is a
-	successful path in $\mathcal{A'}$.
+	Let $p_h = \delta^{(h)*}(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_h-1}) \in M^{(h)}$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$.
+	Let $p_{h+1} = \delta^{(h+1)}(p_h, \sigma_{i_h}) = \langle p_{h+1}^1,
+	p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
+	\begin{align*}
+		p_{h+1}^j &= \delta_j^{(h+1)}(p_h, \sigma_{i_h})\\
+		&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_h^j, \{
+		\sigma_{i_h} \})) \cap P_j \big] \cup
+		\big[ \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
+		(p_h^r, \{ \sigma_{i_h} \})) \cap X} \big]\\
+		&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
+		(p_h^r, \{ \sigma_{i_h} \})) \cap P_j}
+	\end{align*}
+	for $j \in \interval{1}{k}$. Therefore, $p_{h+1} \in M^{(h+1)}$.
+
+	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
+	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
+	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
+	\begin{align*}
+		q_{i_{h+1}} \in \hat{C_\epsilon}(\Delta(q_{i_h}, \sigma_{i_h}))
+		&\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(
+		\hat{\Delta}(p_h^r, \{ \sigma_{i_h} \}))}\\
+		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
+		\hat{C_\epsilon}(\hat{\Delta}(p_h^r, \{
+		\sigma_{i_h} \})) \cap P_j}}\\
+		&= \bigcup_{j=1}^k{p_{h+1}^j}.
+	\end{align*}
+
+	Otherwise, $h = l$ and if $n - i_l > 2$ then $\sigma_j = \epsilon$ for $j
+	\in \interval{i_l+1}{n-1}$. Therefore,
+	\begin{align*}
+		q_n \in \hat{C_\epsilon}(\Delta(q_{i_l}, \sigma_{i_l}))
+		&\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(
+		\hat{\Delta}(p_l^r, \{ \sigma_{i_l} \}))}\\
+		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
+		\hat{C_\epsilon}(\hat{\Delta}(p_l^r, \{
+		\sigma_{i_l} \})) \cap P_j}}\\
+		&= \bigcup_{j=1}^k{p_{l+1}^j}.
+	\end{align*}
+
+	We have $q_n \in F$ and $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$. Therefore,
+	there exists $j \in \interval{1}{k}(p_{l+1}^j \cap F = \emptyset)$.
+	Therefore, $p_{l+1}^j \in F^j$.
+
+	Therefore, $\langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2,
+	\sigma_{i_2}, p_3 \rangle, \ldots, \langle p_l, \sigma_{i_l}, p_{l+1}
+	\rangle$ is a successful path in $\mathcal{A'}$.
 
 	\bigbreak
 	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
