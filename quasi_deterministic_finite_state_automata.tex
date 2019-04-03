@@ -252,23 +252,25 @@
 \begin{proof}
 	\bigbreak
 	We show that every successful path in $\mathcal{A}$ is also a successful
-	path in $\mathcal{A'}$ by induction on the transitions present in the path.
+	path in $\mathcal{A'}$ by induction on the sequence of transitions that
+	constitutes the path.
 
 	Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
 	\ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ be a successful path in
 	$\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2,
-	\ldots, n-1 \}$ for $l \leq n-1$ be the set of indexes where  $\sigma_{i_j}
-	\in \Sigma$ for $j \in \interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h,
-	j \in \interval{1}{l}$.
+	\ldots, n-1 \}$ be a set of indexes for $l \in \interval{1}{n-1}$ such that
+	$\sigma_{i_j} \in \Sigma$ for $j \in \interval{1}{l}$ and $h < j$ if $i_h <
+	i_j$ for $h, j \in \interval{1}{l}$.
 
-	Let $p_1 = s \in M$. We have $\sigma_{i_1} \in \Sigma$ and
+	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
 	Therefore, $q_{i_1} \in C_\epsilon(q_1) \subseteq \hat{C_\epsilon}(S) =
 	\bigcup_{j=1}^k{\hat{C_\epsilon}(S) \cap P_j} = \bigcup_{j=1}^k{p_1^j}$.
 
 	Let $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_h-1}) \in M$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$ for
-	$h \in \interval{2}{l}$. Let $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
+	\sigma_{i_h-1})$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$ for
+	$h \in \interval{2}{l}$.
+	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
 	\begin{align*}
 		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
@@ -279,8 +281,7 @@
 		&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
 		(p_h^r, \{ \sigma_{i_h} \})) \cap P_j}
 	\end{align*}
-	for $j \in \interval{1}{k}$. Therefore, $p_{h+1} \in M$.
-
+	for $j \in \interval{1}{k}$.
 	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
 	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
@@ -290,10 +291,9 @@
 		\hat{\Delta}(p_h^r, \{ \sigma_{i_h} \}))}\\
 		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
 		\hat{C_\epsilon}(\hat{\Delta}(p_h^r, \{
-		\sigma_{i_h} \})) \cap P_j}}\\
-		&= \bigcup_{j=1}^k{p_{h+1}^j}.
+		\sigma_{i_h} \})) \cap P_j}}
+		= \bigcup_{j=1}^k{p_{h+1}^j}.
 	\end{align*}
-
 	Otherwise, $h = l$ and if $n - i_l > 2$ then $\sigma_j = \epsilon$ for $j
 	\in \interval{i_l+1}{n-1}$. Therefore,
 	\begin{align*}
@@ -302,15 +302,15 @@
 		\hat{\Delta}(p_l^r, \{ \sigma_{i_l} \}))}\\
 		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
 		\hat{C_\epsilon}(\hat{\Delta}(p_l^r, \{
-		\sigma_{i_l} \})) \cap P_j}}\\
-		&= \bigcup_{j=1}^k{p_{l+1}^j}.
+		\sigma_{i_l} \})) \cap P_j}}
+		= \bigcup_{j=1}^k{p_{l+1}^j}.
 	\end{align*}
 
-	We have $q_n \in F$ and $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$. Therefore,
-	$p_{l+1}^j \cap F \neq \emptyset$ and so $p_{l+1}^j \in F_j'$ for some $j
-	\in \interval{1}{k}$. Therefore, $\langle p_1, \sigma_{i_1}, p_2 \rangle,
-	\langle p_2, \sigma_{i_2}, p_3 \rangle, \ldots, \langle p_l, \sigma_{i_l},
-	p_{l+1} \rangle$ is a successful path in $\mathcal{A'}$.
+	We have $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$. Therefore,
+	$p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$ for some $j
+	\in \interval{1}{k}$. Therefore, $\langle p_1, \sigma_{i_1}, p_2 \rangle$,
+	$\langle p_2, \sigma_{i_2}, p_3 \rangle$, $\ldots$, $\langle p_l,
+	\sigma_{i_l}, p_{l+1} \rangle$ is a successful path in $\mathcal{A'}$.
 
 	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
 	successful path in $\mathcal{A}$.
@@ -318,7 +318,7 @@
 	Let $\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3 \rangle,
 	\ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ be a successful path in
 	$\mathcal{A'}$.
-	There exists $i \in \interval{1}{k}$ such that $p_n^i \in F_i'$ and so
+	There exists $i \in \interval{1}{k}$ such that $p_n^i \in F_i'$ and thus
 	$p_n^i \cap F \neq \emptyset$. Therefore, there exists $q_n \in p_n^i$ such
 	that $q_n \in F$.
 
@@ -327,16 +327,16 @@
 	\interval{2}{n}$. We have
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
-		&= (\hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^j, \{ \sigma_{i-1} \}))
-		\cap P_j) \cup (\bigcup_{r=1}^k{\hat{C_\epsilon}(\hat{\Delta}
-		(p_{i-1}^r, \{ \sigma_{i-1} \})) \cap X})\\
+		&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^j, \{ \sigma_{i-1}
+		\})) \cap P_j \big] \cup \big[ \bigcup_{r=1}^k{\hat{C_\epsilon}(
+		\hat{\Delta} (p_{i-1}^r, \{ \sigma_{i-1} \})) \cap X} \big]\\
 		&= \bigcup_{r=1}^k{\hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^r, \{
 		\sigma_{i-1} \})) \cap P_j}.
 	\end{align*}
 	Also, $q_i \in p_i^j \implies |p_i^j| > 0$. Then there exists $r \in
-	\interval{1}{k}$ such that $|\hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^r, \{
-	\sigma_{i-1} \})) \cap P_j| > 0$ and thus $|p_{i-1}^r| > 0$. Therefore,
-	there exists $q_{i-1} \in Q$ such that $q_{i-1} \in p_{i-1}^r$.
+	\interval{1}{k}$ such that $q_i \in \hat{C_\epsilon}(\hat{\Delta}
+	(p_{i-1}^r, \{ \sigma_{i-1} \})) \cap P_j$ and thus $|p_{i-1}^r| > 0$.
+	Therefore, there exists $q_{i-1} \in Q$ such that $q_{i-1} \in p_{i-1}^r$.
 	Moreover, since $q_i \in \hat{C_\epsilon}(\hat{\Delta}
 	(p_{i-1}^r, \{ \sigma_{i-1} \}))$ there exists $l_{i-1} > 0$ and
 	$q_{i-1, h} \in Q$ for $h \in \interval{1}{l_{i-1}}$ such that
@@ -346,16 +346,18 @@
 	case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i \rangle \in
 	\Delta$.
 
-	Therefore, there exists $j \in \interval{1}{k}$ and $q_1 \in Q$
-	such that $q_1 \in p_1^j$ and thus $q_1 \in S$.
-	Therefore, $\langle q_1, \epsilon, q_{1,1} \rangle$,
-	$\langle q_{1,1}, \epsilon, q_{1,2} \rangle$, $\ldots$,
-	$\langle q_{1,l_1-1}, \sigma_1, q_2 \rangle$,
-	$\langle q_2, \epsilon, q_{2,1}, \rangle$,
-	$\langle q_{2,1}, \epsilon, q_{2,2}, \rangle$,
+	There exists $j \in \interval{1}{k}$ and $q_1 \in Q$ such that $q_1 \in
+	p_1^j$ and thus $q_1 \in S$. Therefore, $\langle q_1, \sigma_1, q_{1,1}
+	\rangle$, $\langle q_{1,1}, \epsilon, q_{1,2} \rangle$, $\ldots$,
+	$\langle q_{1,l_1-1}, \epsilon, q_2 \rangle$,
+	$\langle q_2, \sigma_2, q_{2,1} \rangle$,
+	$\langle q_{2,1}, \epsilon, q_{2,2} \rangle$,
 	$\ldots$,
-	$\langle q_{2,l_2-1}, \sigma_2, q_3 \rangle$,
+	$\langle q_{2,l_2-1}, \epsilon, q_3 \rangle$,
 	$\ldots$,
-	$\langle q_{n-1,l_{n-1}-1}, \sigma_{n-1}, q_n \rangle$ is a
+	$\langle q_{n-1}, \sigma_{n-1}, q_{n-1,1} \rangle$,
+	$\langle q_{n-1,1}, \epsilon, q_{n-1,2} \rangle$,
+	$\ldots$,
+	$\langle q_{n-1,l_{n-1}-1}, \epsilon, q_n \rangle$ is a
 	successful path in $\mathcal{A}$.
 \end{proof}
