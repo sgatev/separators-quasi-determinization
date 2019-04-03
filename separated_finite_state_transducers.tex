@@ -4,86 +4,84 @@
 	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S,
 	F, \Delta \rangle$ is $k$-separated for $k \in \mathbb{N}$ if and
 	only if there exists a separator $X$ in the graph $\mathcal{G}_\mathcal{T}
-	= \langle Q, \Sigma \times \Omega^*, \Delta \rangle$ inducing a partition
-	$Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. We write $\mathcal{T} = \langle \Sigma,
-	\Omega, \vec{Q}, X, S, F, \Delta \rangle$ to denote the $k$-separated
-	finite-state transducer $\mathcal{T}$.
+	= \langle Q, \Sigma_\epsilon \times \Omega^*, \Delta \rangle$ inducing a
+	partition $Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. We write $\mathcal{T} =
+	\langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$ to denote the
+	$k$-separated finite-state transducer $\mathcal{T}$.
 \end{definition}
 
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
 	be a $k$-separated finite-state transducer. Then $\Delta \subseteq
-	\bigcup_{i=1}^k (Q_i \cup X) \times (\Sigma \times \Omega^*) \times (Q_i
-	\cup X)$.
+	\bigcup_{i=1}^k (Q_i \cup X) \times (\Sigma_\epsilon \times \Omega^*) \times
+	(Q_i \cup X)$.
 \end{proposition}
 
 \begin{proof}
-	$\newline$
-	$\begin{aligned}
-		\Delta &\subseteq Q \times (\Sigma \times \Omega^*) \times Q =
-		(\bigcup_{i=1}^k{Q_i} \cup X) \times (\Sigma \times \Omega^*)
-		\times (\bigcup_{i=1}^k{Q_i} \cup X)\\
+	\begin{align*}
+		\Delta &\subseteq Q \times (\Sigma_\epsilon \times \Omega^*) \times
+		Q\\
+		&= (\bigcup_{i=1}^k{Q_i} \cup X) \times (\Sigma_\epsilon \times
+		\Omega^*) \times (\bigcup_{i=1}^k{Q_i} \cup X)\\
 		&= \begin{aligned}[t]
-		&\bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times (\Sigma \times
+		&\bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times (\Sigma_\epsilon \times
 		\Omega^*) \times Q_j) \cup\\
-		&\bigcup_{i=1}^k (X \times (\Sigma \times
-		\Omega^*) \times Q_i) \cup (Q_i \times (\Sigma \times \Omega^*)
-		\times X) \cup\\
-		&(X \times (\Sigma \times \Omega^*) \times X)
+		&\bigcup_{i=1}^k (X \times (\Sigma_\epsilon \times
+		\Omega^*) \times Q_i) \cup (Q_i \times (\Sigma_\epsilon \times
+		\Omega^*) \times X) \cup\\
+		&(X \times (\Sigma_\epsilon \times \Omega^*) \times X)
 		\end{aligned}\\
 		&\subseteq \begin{aligned}[t]
-		\bigcup_{i=1}^k &(Q_i \times (\Sigma \times \Omega^*) \times Q_i)
-		\cup (X \times (\Sigma \times \Omega^*) \times Q_i) \cup\\
-		&(Q_i \times (\Sigma \times \Omega^*) \times X) \cup
-		(X \times (\Sigma \times \Omega^*) \times X)
+		\bigcup_{i=1}^k &(Q_i \times (\Sigma_\epsilon \times \Omega^*)
+		\times Q_i) \cup (X \times (\Sigma_\epsilon \times \Omega^*) \times
+		Q_i) \cup\\
+		&(Q_i \times (\Sigma_\epsilon \times \Omega^*) \times X) \cup
+		(X \times (\Sigma_\epsilon \times \Omega^*) \times X)
 		\end{aligned}\\
-		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times (\Sigma \times
-		\Omega^*) \times Q_i \big] \cup \big[ (Q_i \cup X) \times (\Sigma
-		\times \Omega^*) \times X \big]\\
-		&= \bigcup_{i=1}^k (Q_i \cup X) \times (\Sigma \times \Omega^*)
-		\times (Q_i \cup X)
-	\end{aligned}$
-	$\newline$
+		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times (\Sigma_\epsilon \times
+		\Omega^*) \times Q_i \big] \cup \big[ (Q_i \cup X) \times
+		(\Sigma_\epsilon \times \Omega^*) \times X \big]\\
+		&= \bigcup_{i=1}^k (Q_i \cup X) \times (\Sigma_\epsilon \times
+		\Omega^*) \times (Q_i \cup X)
+	\end{align*}
 \end{proof}
 
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
 	be a $k$-separated finite-state transducer. Let $\Delta_i = \Delta \cap
-	\big[ (Q_i \cup X) \times (\Sigma \times \Omega^*) \times (Q_i \cup X)
-	\big]$ for $i \in \interval{1}{k}$. Then for $i \in \interval{1}{k}$, $q
-	\in Q_i \cup X$, $\sigma \in \Sigma$ and $w \in \Omega^*$ we have $\Delta(q,
-	\sigma, w) = \Delta_i(q, \sigma, w)$.
+	\big[ (Q_i \cup X) \times (\Sigma_\epsilon \times \Omega^*) \times (Q_i
+	\cup X) \big]$ for $i \in \interval{1}{k}$. Then for $i \in
+	\interval{1}{k}$, $q \in Q_i \cup X$, $\sigma \in \Sigma_\epsilon$ and $w
+	\in \Omega^*$ we have $\Delta(q, \sigma, w) = \Delta_i(q, \sigma, w)$.
 \end{proposition}
 
 \begin{proof}
 	We have $p \in \Delta(q, \sigma, w) \implies \langle q, \sigma, w, p \rangle
-	\in \Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times (\Sigma \times
-	\Omega^*) \times (Q_i \cup X) \big] \implies \exists i \in
-	\interval{1}{k}(\langle q, \sigma, w, p \rangle \in \Delta \cap \big[ (Q_i
-	\cup X) \times (\Sigma \times \Omega^*) \times (Q_i \cup X) \big]) \implies
-	p \in \Delta_i(q, \sigma, w)$. Similarly, $p \in \Delta_i(q, \sigma, w)$ for
-	$i \in \interval{1}{k} \implies p \in \bigcup_{i=1}^k \Delta_i(q, \sigma, w)
-	\implies p \in \Delta(q, \sigma, w)$.
+	\in \Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times (\Sigma_\epsilon
+	\times \Omega^*) \times (Q_i \cup X) \big] \implies \langle q, \sigma, w, p
+	\rangle \in \Delta \cap \big[ (Q_i \cup X) \times (\Sigma_\epsilon \times
+	\Omega^*) \times (Q_i \cup X) \big] \implies p \in \Delta_i(q, \sigma, w)$.
+
+	Similarly, $p \in \Delta_i(q, \sigma, w) \implies p \in \bigcup_{i=1}^k
+	\Delta_i(q, \sigma, w) \implies p \in \Delta(q, \sigma, w)$.
 \end{proof}
 
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
 	be a $k$-separated finite-state transducer. Let $\Delta_i = \Delta \cap
-	\big[ (Q_i \cup X) \times (\Sigma \times \Omega^*) \times (Q_i \cup X)
-	\big]$ for $i \in \interval{1}{k}$. Then for $P \subseteq Q$,  $\sigma \in
-	\Sigma$ and $w \in \Omega^*$ we have $\hat{\Delta}(P, \{ \sigma \}, \{ w \})
-	= \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \{ \sigma \}, \{ w \})$ where $P_i =
-	P \cap (Q_i \cup X)$ for $i \in \interval{1}{k}$.
+	\big[ (Q_i \cup X) \times (\Sigma_\epsilon \times \Omega^*) \times (Q_i \cup
+	X) \big]$ for $i \in \interval{1}{k}$. Then for $P \subseteq Q$,  $\sigma
+	\in \Sigma_\epsilon$ and $w \in \Omega^*$ we have $\hat{\Delta}(P, \{
+	\sigma \}, \{ w \}) = \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \{ \sigma \}, \{
+	w \})$ where $P_i = P \cap (Q_i \cup X)$ for $i \in \interval{1}{k}$.
 \end{proposition}
 
 \begin{proof}
-	$\newline$
-	$\begin{aligned}
+	\begin{align*}
 		\hat{\Delta}(P, \{ \sigma \}, \{ w \})
-		&= \bigcup_{p \in P} \Delta(p, \sigma, w)
-		= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta(p, \sigma, w)
-		= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta_i(p, \sigma, w)\\
-		&= \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \{ \sigma \}, \{ w \})
-	\end{aligned}$
-	$\newline$
+		&= \bigcup_{p \in P} \Delta(p, \sigma, w)\\
+		&= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta(p, \sigma, w)\\
+		&= \bigcup_{i=1}^k \bigcup_{p \in P_i} \Delta_i(p, \sigma, w)
+		= \bigcup_{i=1}^k \hat{\Delta}_i(P_i, \{ \sigma \}, \{ w \})
+	\end{align*}
 \end{proof}
