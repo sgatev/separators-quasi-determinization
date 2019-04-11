@@ -107,10 +107,10 @@
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
 	\interval{1}{k}$. We construct the quasi-deterministic $k$-separated
-	finite-state automaton $\mathcal{A}'$ and the set of states $M$ inductively.
+	finite-state automaton $\mathcal{A}'$ and the set of states $R$ inductively.
 
 	\bigbreak
-	Let $M^{(0)} = \emptyset$. At the base of the construction is a
+	Let $R^{(0)} = \emptyset$. At the base of the construction is a
 	single-state quasi-deterministic $k$-separated finite-state automaton
 	\begin{align*}
 		\mathcal{A}'^{(1)} = \langle \Sigma, \vec{Q'^{(1)}}, 2^X, s,
@@ -123,12 +123,12 @@
 			\hat{C_\epsilon}(S) \cap P_2,
 			\ldots, \hat{C_\epsilon}(S) \cap P_k \rangle$;
 		\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$;
-		\item $M^{(1)} = \{ s \}$.
+		\item $R^{(1)} = \{ s \}$.
 	\end{itemize}
 
 	Assuming $\mathcal{A}'^{(n)} = \langle \Sigma, \vec{Q'^{(n)}}, 2^X, s,
 	\vec{F'^{(n)}}, \vec{\tau^{(n)}}, \vec{\rho^{(n)}}, \vec{\eta^{(n)}},
-	\eta_x^{(n)} \rangle$ and $M^{(n)}$ are already defined we construct a
+	\eta_x^{(n)} \rangle$ and $R^{(n)}$ are defined we construct a
 	quasi-deterministic $k$-separated finite-state automaton
 	\begin{align*}
 		\mathcal{A}'^{(n+1)} = \langle \Sigma,
@@ -138,29 +138,30 @@
 	where
 
 	\begin{itemize}
-		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid q \in M^{(n)}
-			\setminus M^{(n-1)} \land q^i \cap F \neq \emptyset \}$ for
-			$i \in \interval{1}{k}$;
+		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
+			R^{(n)} \setminus R^{(n-1)}(q^i \cap F \neq \emptyset) \}$
+			for $i \in \interval{1}{k}$;
 		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
 			\hat{C_\epsilon}(\hat{\Delta}(q^i, \{ \sigma \})) \cap P_i
-			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma
+			\rangle \mid q \in R^{(n)} \setminus R^{(n-1)} \land \sigma
 			\in \Sigma\}$ for $i \in \interval{1}{k}$;
 		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
 			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
 		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
 			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-			\rangle \mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma
+			\rangle \mid q \in R^{(n)} \setminus R^{(n-1)} \land \sigma
 			\in \Sigma \}$;
 		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
 			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
 			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
-			\mid q \in M^{(n)} \setminus M^{(n-1)} \land \sigma \in
+			\mid q \in R^{(n)} \setminus R^{(n-1)} \land \sigma \in
 			\Sigma \}$ for $i \in \interval{1}{k}$;
 		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)}) \cup
 			Rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$;
-		\item $M^{(n+1)} = M^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid q
-			\in M^{(n)} \setminus M^{(n-1)} \land \sigma \in \Sigma \}$.
+		\item $R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid
+			\exists q \in R^{(n)} \setminus R^{(n-1)} \exists \sigma \in
+			\Sigma \}$.
 	\end{itemize}
 \end{construction}
 
@@ -168,71 +169,18 @@
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
 	\interval{1}{k}$. Let $\mathcal{A}'^{(n)}$ be the quasi-deterministic
-	$k$-separated finite-state automaton and let $M^{(n)}$ be the set of states
-	derived from $\mathcal{A}$ by applying Construction \ref{conctruction_1} for
-	$n \in \mathbb{N}$. There exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such
-	that $M^{(n)} = M^{(n+1)}$ and $\mathcal{A}^{(n)} = \mathcal{A}^{(n+1)}$.
+	$k$-separated finite-state automaton and let $R^{(n)}$ be the set of states
+	derived from $\mathcal{A}$ by applying Construction \ref{conctruction_1}.
+	There exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(i)} =
+	R^{(i+1)}$ and $\mathcal{A}^{(i)} = \mathcal{A}^{(i+1)}$ for $i \geq n$.
 \end{lemma}
 
 \begin{proof}
-	For $n \in \mathbb{N}$ we have $M^{(n)} \subseteq M^{(n+1)} \subseteq
+	For $n \in \mathbb{N}$ we have $R^{(n)} \subseteq R^{(n+1)} \subseteq
 	\prod_{i=1}^k{2^{P_i}}$. Therefore, there exists $n \leq
-	|\prod_{i=1}^k{2^{P_i}}|$ such that $M^{(n)} = M^{(n+1)}$. In that case,
+	|\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(n)} = R^{(n+1)}$. In that case,
 	$\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$. For the smallest such $n$ we
-	declare $M = M^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n)}$.
-\end{proof}
-
-\begin{lemma}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $\mathcal{A}' = \langle \Sigma,
-	\vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x
-	\rangle$ be the quasi-deterministic $k$-separated finite-state automaton
-	and let $M$ be the set of states derived from $\mathcal{A}$ by applying
-	Construction \ref{conctruction_1}. Then $q^i \in Q_i'$ for $q \in M$ and
-	$i \in \interval{1}{k}$.
-\end{lemma}
-
-\begin{proof}
-	We prove the statement by induction on Construction \ref{conctruction_1}.
-
-	\begin{enumerate}
-		\item We have $M^{(1)} = \{ s \}$ and $s^i \in Q_i'^{(1)}$ for $i
-			\in \interval{1}{k}$;
-		\item Let $q^i \in Q_i'^{(n)}$ for $q \in M^{(n)}$ and $i \in
-			\interval{1}{k}$. We have
-			\begin{align*}
-				M^{(n+1)} &= M^{(n)} \cup \{
-				\delta^{(n+1)}(q, \sigma) \mid q \in M^{(n)}
-				\setminus M^{(n-1)} \land \sigma \in \Sigma \}\\
-				&= M^{(n)} \cup \begin{aligned}[t]
-					\{ &\langle \delta_1^{(n+1)}(q, \sigma),
-					\delta_2^{(n+1)}(q, \sigma), \ldots,
-					\delta_k^{(n+1)}(q, \sigma) \rangle \mid\\
-					&q \in M^{(n)} \setminus M^{(n-1)}
-					\land \sigma \in \Sigma \}
-				\end{aligned}\\
-				&= M^{(n)} \cup \begin{aligned}[t]
-					\{ &\langle
-					\eta_1^{(n+1)}(\tau_1^{(n+1)}(q^1, \sigma),
-					\delta_x^{(n+1)}(q, \sigma)),\\
-					&\eta_2^{(n+1)}(\tau_2^{(n+1)}(q^2, \sigma),
-					\delta_x^{(n+1)}(q, \sigma)),\\
-					&\ldots,\\
-					&\eta_k^{(n+1)}(\tau_k^{(n+1)}(q^k, \sigma),
-					\delta_x^{(n+1)}(q, \sigma)) \rangle \mid\\
-					&q \in M^{(n)} \setminus M^{(n-1)}
-					\land \sigma \in \Sigma \}
-				\end{aligned}
-			\end{align*}
-			Also
-			\begin{align*}
-				Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)})
-				\cup Rng(\eta_i^{(n+1)})
-			\end{align*}
-			for $i \in \interval{1}{k}$. Therefore, $q^i
-			\in Q_i'^{(n+1)}$ for $q \in M^{(n+1)}$ and $i \in
-			\interval{1}{k}$.
-	\end{enumerate}
+	declare $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n)}$.
 \end{proof}
 
 \begin{theorem}
@@ -240,17 +188,15 @@
 	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
 	\interval{1}{k}$. Let $\mathcal{A}' = \langle \Sigma, \vec{Q'}, 2^X, s,
 	\vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x \rangle$ be the
-	quasi-deterministic $k$-separated finite-state automaton and $M$ be the set
-	of states derived from $\mathcal{A}$ by applying Construction
-	\ref{conctruction_1}. Then $\mathcal{L}(\mathcal{A'}) =
-	\mathcal{L}(\mathcal{A})$.
+	quasi-deterministic $k$-separated finite-state automaton derived from
+	$\mathcal{A}$ by applying Construction \ref{conctruction_1}. Then
+	$\mathcal{L}(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
 \end{theorem}
 
 \begin{proof}
 	\bigbreak
 	We show that every successful path in $\mathcal{A}$ is also a successful
-	path in $\mathcal{A'}$ by induction on the sequence of transitions that
-	constitutes the path.
+	path in $\mathcal{A'}$ by induction on the length of the path.
 
 	Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
 	\ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ be a successful path in
@@ -262,10 +208,10 @@
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
 	Therefore, $q_{i_1} \in C_\epsilon(q_1) \subseteq \hat{C_\epsilon}(S) =
-	\bigcup_{j=1}^k{\hat{C_\epsilon}(S) \cap P_j} = \bigcup_{j=1}^k{p_1^j}$.
+	\bigcup_{r=1}^k{\hat{C_\epsilon}(S) \cap P_r} = \bigcup_{r=1}^k{p_1^r}$.
 
 	Let $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_h-1})$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$ for
+	\sigma_{i_h-1})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
 	$h \in \interval{2}{l}$.
 	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
@@ -315,13 +261,12 @@
 	Let $\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3 \rangle,
 	\ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ be a successful path in
 	$\mathcal{A'}$.
-	There exists $i \in \interval{1}{k}$ such that $p_n^i \in F_i'$ and thus
-	$p_n^i \cap F \neq \emptyset$. Therefore, there exists $q_n \in p_n^i$ such
+	There exists $j \in \interval{1}{k}$ such that $p_n^j \in F_j'$ and thus
+	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in p_n^j$ such
 	that $q_n \in F$.
 
-	Let $p_i = \langle p_i^1, p_i^2, \ldots, p_i^k \rangle$ and let there be
-	$j \in \interval{1}{k}$ and $q_i \in Q$ such that $q_i \in p_i^j$ for $i \in
-	\interval{2}{n}$. We have
+	Let there be $j \in \interval{1}{k}$ and $q_i \in Q$ such that $q_i \in
+	p_i^j$ for $i \in \interval{2}{n}$. We have
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
 		&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^j, \{ \sigma_{i-1}
