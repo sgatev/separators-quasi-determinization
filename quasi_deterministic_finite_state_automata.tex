@@ -7,17 +7,17 @@
 		\langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau}, \vec{\rho},
 		\vec{\eta}, \eta_x \rangle
 	\end{align*}
-	where $k \in \mathbb{N}$, $\Sigma$ is an alphabet, $Q_i$ is a set of
-	quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty separator set
+	where $k \in \mathbb{N}$, $k > 1$, $\Sigma$ is an alphabet, $Q_i$ is a set
+	of quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty separator set
 	such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$ and $\forall i,
-	j \in \interval{1}{k}(i \neq j \implies Q_i \cap Q_j \subseteq X)$, $s \in
+	j \in \interval{1}{k}(i \neq j \implies Q_i \cap Q_j = X)$, $s \in
 	\prod_{i=1}^k{Q_i}$ is a start state, $F_i \subseteq Q_i$ is a set of final
 	quasi-states for $i \in \interval{1}{k}$, $\tau_i : Q_i \times \Sigma
 	\rightarrow Q_i$ is a component quasi-transition function for $i \in
 	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reduction
 	function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow
 	Q_i$ is a component extension function for $i \in \interval{1}{k}$ and
-	$\eta_x : \prod_{i=1}^k{X} \rightarrow X$ is a separator extension function.
+	$\eta_x : X^k \rightarrow X$ is a separator extension function.
 \end{definition}
 
 \begin{remark}
@@ -35,9 +35,8 @@
 	$\delta_x : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow X$ is defined as
 	\begin{align*}
 		\delta_x(q, \sigma) = \eta_x(\rho_1(\tau_1(q^1, \sigma)),
-		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma)))
+		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
 	\end{align*}
-	for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -50,8 +49,7 @@
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
 		\sigma))
 	\end{align*}
-	for $i \in \interval{1}{k}$, $q \in \prod_{j=1}^k{Q_j}$ and $\sigma \in
-	\Sigma$.
+	for $i \in \interval{1}{k}$.
 \end{definition}
 
 \begin{definition}
@@ -62,9 +60,8 @@
 	as
 	\begin{align*}
 		\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q,
-		\sigma), \ldots, \delta_k(q, \sigma) \rangle
+		\sigma), \ldots, \delta_k(q, \sigma) \rangle.
 	\end{align*}
-	for $q \in \prod_{i=1}^k{Q_i}$ and $\sigma \in \Sigma$.
 \end{definition}
 
 \begin{definition}

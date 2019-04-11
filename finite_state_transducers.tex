@@ -7,8 +7,8 @@
 	\end{align*}
 	where $\Sigma$ and $\Omega$ are alphabets, $Q$ is a finite set of states,
 	$S \subseteq Q$ is a set of start states, $F \subseteq Q$ is a set of final
-	states and $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \rightarrow
-	2^Q$ is a function of transitions and outputs.
+	states and $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \times Q$ is
+	a relation of transitions and outputs.
 \end{definition}
 
 \begin{definition}
@@ -22,21 +22,21 @@
 	where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in
 	\interval{1}{n-1}(\sigma_i \in \Sigma_\epsilon)$, $\forall i \in
 	\interval{1}{n-1}(w_i \in \Omega^*)$ and $\forall i \in
-	\interval{1}{n-1}(q_{i+1} \in \Delta(q_i, \sigma_i, w_i))$. The path $\pi$
-	is successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the
-	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
-	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$ over
-	$\Omega$.
+	\interval{1}{n-1}(\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta)$.
+	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
+	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	over $\Sigma$. The output of the path $\pi$ is the word $w_1 w_2 \ldots
+	w_{n-1}$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The generalized function of transitions and outputs
-	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \rightarrow 2^Q$ is defined
-	inductively as the least function such that $\Delta^*(q, \epsilon, \epsilon)
-	= \{ q \}$ for $q \in Q$ and $\Delta^*(q, w\sigma, uv) = \Delta(\Delta^*(
-	q, w, u), \sigma, v)$ for $q \in Q$, $w \in \Sigma^*$, $\sigma \in
-	\Sigma_\epsilon$ and $u, v \in \Omega^*$.
+	finite-state transducer. The generalized relation of transitions and outputs
+	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined
+	inductively as the least relation such that $\langle q, \epsilon, \epsilon,
+	q \rangle \in \Delta^*$ for $q \in Q$ and $\langle q', w\sigma, uv, q'''
+	\rangle \in \Delta^*$ for $\langle q', w, u, q'' \rangle \in \Delta^*$ and
+	$\langle q'', \sigma, v, q''' \rangle \in \Delta$.
 \end{definition}
 
 \begin{definition}
@@ -45,8 +45,8 @@
 	of labels and outputs of successful paths
 	\begin{align*}
 		\mathcal{R}(\mathcal{T}) = \{ \langle u, v \rangle \in \Sigma^*
-		\times \Omega^* \mid \hat{\Delta}^* (S, \{ u \}, \{ v \}) \cap F
-		\neq \emptyset \}.
+		\times \Omega^* \mid \exists s \in S \exists f \in F (\langle s, u,
+		v, f \rangle \in \Delta^*) \}.
 	\end{align*}
 \end{definition}
 

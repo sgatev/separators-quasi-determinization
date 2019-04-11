@@ -7,8 +7,7 @@
 	\end{align*}
 	where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $S \subseteq
 	Q$ is a set of start states, $F \subseteq Q$ is a set of final states and
-	$\Delta : Q \times \Sigma_\epsilon \rightarrow 2^Q$ is a function of
-	transitions.
+	$\Delta : Q \times \Sigma_\epsilon \times Q$ is a relation of transitions.
 \end{definition}
 
 \begin{definition}
@@ -20,26 +19,28 @@
 	\end{align*}
 	where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in
 	\interval{1}{n-1}(\sigma_i \in \Sigma_\epsilon)$ and $\forall i
-	\in \interval{1}{n-1}(q_{i+1} \in \Delta(q_i, \sigma_i))$. The path $\pi$ is
-	successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the path
-	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
+	\in \interval{1}{n-1}(\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta)$.
+	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
+	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	over $\Sigma$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The generalized function of transitions
-	$\Delta^* : Q \times \Sigma^* \rightarrow 2^Q$ is defined inductively as
-	the least function such that $\Delta^*(q, \epsilon) = \{ q \}$ for $q \in Q$
-	and $\Delta^*(q, w\sigma) = \Delta(\Delta^*(q, w), \sigma)$ for $q \in Q$,
-	$w \in \Sigma^*$, $\sigma \in \Sigma_\epsilon$.
+	finite-state automaton. The generalized relation of transitions $\Delta^* :
+	Q \times \Sigma^* \times Q$ is defined inductively as the least relation
+	such that $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$ and
+	$\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle q', w, q''
+	\rangle \in \Delta^*$ and $\langle q'', \sigma, q''' \rangle \in \Delta$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The $\epsilon$-closure function $C_\epsilon : Q
-	\rightarrow 2^Q$ is defined as
+	finite-state automaton. The $\epsilon$-closure of a state is the function
+	$C_\epsilon : Q \rightarrow 2^Q$ defined as
 	\begin{align*}
-		C_\epsilon(q) = \{ p \in Q \mid p \in \Delta^*(q, \epsilon) \}.
+		C_\epsilon(q) = \{ p \in Q \mid \langle q, \epsilon, p \rangle \in
+		\Delta^* \}.
 	\end{align*}
 \end{definition}
 
@@ -49,7 +50,8 @@
 	successful paths
 	\begin{align*}
 		\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid
-		\hat{\Delta}^*(S, \{ w \}) \cap F \neq \emptyset \}.
+		\exists s \in S \exists f \in F (\langle s, w, f \rangle \in
+		\Delta^*) \}.
 	\end{align*}
 \end{definition}
 

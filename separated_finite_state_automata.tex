@@ -27,8 +27,12 @@
 			&\bigcup_{i=1}^k (X \times \Sigma_\epsilon \times Q_i) \cup
 			(Q_i \times \Sigma_\epsilon \times X) \cup\\
 			&(X \times \Sigma_\epsilon \times X)
-		\end{aligned}\\
-		&\subseteq \begin{aligned}[t]
+		\end{aligned}
+	\end{align*}
+	However, $Q_i \times \Sigma_\epsilon \times Q_j = \emptyset$ for $i \neq j$.
+	Therefore,
+	\begin{align*}
+		\Delta &\subseteq \begin{aligned}[t]
 			\bigcup_{i=1}^k &(Q_i \times \Sigma_\epsilon \times Q_i)
 			\cup (X \times \Sigma_\epsilon \times Q_i) \cup\\
 			&(Q_i \times \Sigma_\epsilon \times X) \cup (X \times
@@ -46,20 +50,20 @@
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\Delta_i = \Delta \cap \big[ (Q_i
 	\cup X) \times \Sigma_\epsilon \times (Q_i \cup X) \big]$ for $i \in
-	\interval{1}{k}$. Then for $i \in \interval{1}{k}$, $q \in Q_i \cup X$ and
-	$\sigma \in \Sigma_\epsilon$ we have $\Delta(q, \sigma) = \Delta_i(q,
-	\sigma)$.
+	\interval{1}{k}$. Then $\Delta(q, \sigma) = \Delta_i(q, \sigma)$ for $i \in
+	\interval{1}{k}$, $q \in Q_i \cup X$ and $\sigma \in \Sigma_\epsilon$.
 \end{proposition}
 
 \begin{proof}
-	We have $p \in \Delta(q, \sigma) \implies \langle q, \sigma, p \rangle \in
-	\Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon
-	\times (Q_i \cup X) \big] \implies \langle q, \sigma, p \rangle \in \Delta
-	\cap \big[ (Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X) \big]
-	\implies p \in \Delta_i(q, \sigma)$.
+	We have $\langle q, \sigma, p \rangle \in \Delta \implies \langle q, \sigma,
+	p \rangle \in \Delta \cap \big[ \bigcup_{i=1}^k (Q_i \cup X) \times
+	\Sigma_\epsilon \times (Q_i \cup X) \big] \implies \langle q, \sigma, p
+	\rangle \in \Delta \cap \big[ (Q_i \cup X) \times \Sigma_\epsilon \times
+	(Q_i \cup X) \big] \implies \langle q, \sigma, p \rangle \in \Delta_i$.
 
-	Similarly, $p \in \Delta_i(q, \sigma) \implies p \in \bigcup_{i=1}^k
-	\Delta_i(q, \sigma) \implies p \in \Delta(q, \sigma)$.
+	Similarly, $\langle q, \sigma, p \rangle \in \Delta_i \implies \langle q,
+	\sigma, p \rangle \in \bigcup_{i=1}^k \Delta_i \implies \langle q, \sigma,
+	p \rangle \in \Delta$.
 \end{proof}
 
 \begin{proposition}
