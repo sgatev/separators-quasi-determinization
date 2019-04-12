@@ -134,22 +134,22 @@
 	\begin{itemize}
 		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
 			R_n(q^i \cap F \neq \emptyset) \}$ for $i \in
-			\interval{1}{k}$;
+			\interval{1}{k}$,
 		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
 			\hat{C_\epsilon}(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i
 			\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma\}$
-			for $i \in \interval{1}{k}$;
+			for $i \in \interval{1}{k}$,
 		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 			\rangle \mid q \in rng(\tau_i^{(n+1)}) \setminus
-			rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
+			rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$,
 		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
 			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-			\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma \}$;
+			\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma \}$,
 		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
 			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
 			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
 			\mid \exists q \in R_n \exists \sigma \in \Sigma \}$ for
-			$i \in \interval{1}{k}$;
+			$i \in \interval{1}{k}$,
 		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 			rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$,
 	\end{itemize}
@@ -157,7 +157,7 @@
 	\delta^{(n+1)}(q, \sigma) \mid \exists q \in R_n \exists \sigma \in \Sigma
 	\}$.
 
-	First we show that the construction described above terminates.  For all
+	First we show that the construction described above terminates. For all
 	$n \in \mathbb{N}$ we have $R^{(n)} \subseteq R^{(n+1)} \subseteq
 	\prod_{i=1}^k{2^{P_i}}$. Therefore, there exists $n \leq
 	|\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(n)} = R^{(n+1)}$. In that case,
