@@ -149,7 +149,7 @@
 	We construct the quasi-subsequential $k$-separated finite-state transducer
 	$\mathcal{T}'$ and the set of states $R$ inductively.
 	Let $R^{(0)} = \emptyset$, $R^{(1)} = \{ s \}$ and $\mathcal{T}'^{(1)} =
-	\langle \Sigma, \Omega, \vec{Q'}^{(1)}, 2^X, s, \vec{\emptyset},
+	\langle \Sigma, \Omega, \vec{Q'^{(1)}}, 2^X, s, \vec{\emptyset},
 	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \emptyset,
 	\vec{\emptyset}, \vec{\emptyset} \rangle$ where
 	\begin{itemize}
@@ -171,6 +171,14 @@
 		\rangle \in q}{\bigwedge_{\langle p', \sigma, v, p'' \rangle \in
 		\Delta}{uv}}
 	\end{align*}
+	for $i \in \interval{1}{k}$. We define the quasi-state successor function
+	$succ_i^{(n)} : Q_i^{(n)} \times \Sigma \rightarrow 2^{P_i \times
+	\Omega^*}$ as
+	\begin{align*}
+		succ_i^{(n)}(q, \sigma) = \bigcup_{\langle p', u \rangle \in q}{
+		\bigcup_{\langle p', \sigma, v, p'' \rangle \in \Delta}{ \langle
+		p'', \lambda_i^{ \wedge (n)}(q, \sigma)^{-1}uv \rangle}}
+	\end{align*}
 	for $i \in \interval{1}{k}$. We construct the quasi-subsequential
 	$k$-separated finite-state transducer
 	$\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega, \vec{Q'}^{(n+1)},
@@ -181,11 +189,12 @@
 		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
 			R_n \exists \langle p, w \rangle \in q^i (
 			p \in F) \}$ for $i \in \interval{1}{k}$,
-		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \bigcup_{q \in R_n}{\bigcup_{\sigma
-		\in \Sigma}{
-		\bigcup_{\langle p', u \rangle \in q}{
-		\bigcup_{\langle p', \sigma, v, p'' \rangle \in \Delta}{ \langle
-		p'', \lambda_i^{ \wedge (n)}(q, \sigma)^{-1}uv \rangle}}}}$ for $i \in \interval{1}{k}$,
+		\item $\psi_i^{(n+1)} = \psi_i^{(n)} \cup \{ \langle q^i, w \rangle
+			\mid \exists q \in R_n \exists \langle p, w \rangle \in q^i
+			(p \in F)\}$ for $i \in \interval{1}{k}$,
+		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
+			succ_i^{(n)}(q^i, \sigma) \rangle \mid \exists q \in R_n
+			\exists \sigma \in \Sigma \}$ for $i \in \interval{1}{k}$,
 		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q, \langle
 			p, w \rangle \rangle \mid \exists q \in rng(\tau_i^{(n+1)})
 			\setminus rng(\tau_i^{(n)}) \exists \langle p, w \rangle \in
