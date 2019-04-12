@@ -56,6 +56,12 @@
 \end{definition}
 
 \begin{definition}
+	A functional finite-state transducer $\mathcal{T}$ is has the bounded
+	variation property if and only if $\mathcal{R}(\mathcal{T})$ has the
+	bounded variation property.
+\end{definition}
+
+\begin{definition}
 	The graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
 	is the triple
@@ -72,18 +78,18 @@
 \begin{definition}
 	A subsequential finite-state transducer $\mathcal{T}$ is a tuple
 	\begin{align*}
-		\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle
+		\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Psi \rangle
 	\end{align*}
 	where $\Sigma$ and $\Omega$ are alphabets, $Q$ is a finite set of states,
 	$s \in Q$ is a start state, $F \subseteq Q$ is a set of final states,
 	$\delta : Q \times \Sigma \rightarrow Q$ is a transition function, $\lambda
 	: Q \times \Sigma \rightarrow \Omega^*$ is a transition output function and
-	$\Phi : F \rightarrow \Omega^*$ is a final state output function.
+	$\Psi : F \rightarrow \Omega^*$ is a final state output function.
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a subsequential finite-state transducer $\mathcal{T} =
-	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi \rangle$ is a
+	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Psi \rangle$ is a
 	non-empty sequence of transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
@@ -91,18 +97,17 @@
 		\rangle
 	\end{align*}
 	where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in
-	\interval{1}{n-1}(\sigma_i \in \Sigma)$, $\forall i \in
-	\interval{1}{n-1}(w_i \in \Omega^*)$, $\forall i \in \interval{1}{n-1}
-	(q_{i+1} = \delta(q_i, \sigma_i))$ and $\forall i \in \interval{1}{n-1}
-	(w_i = \lambda(q_i, \sigma_i))$. The path $\pi$ is successful if and only
-	if $q_1 \in S$ and $q_n \in F$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$. The
-	output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1} \Phi(q_n)$
+	\interval{1}{n-1}(\sigma_i \in \Sigma)$, $\forall i \in \interval{1}{n-1}
+	(w_i = \lambda(q_i, \sigma_i))$ and $\forall i \in \interval{1}{n-1}
+	(q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is successful if and
+	only if $q_1 \in S$ and $q_n \in F$. The label of the path $\pi$ is the
+	word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
+	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1} \Psi(q_n)$
 	over $\Omega$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Psi
 	\rangle$ be a subsequential finite-state transducer. The generalized
 	function of transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is
 	defined inductively as the least function such that $\delta^*(q, \epsilon)
@@ -111,7 +116,7 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Psi
 	\rangle$ be a subsequential finite-state transducer. The generalized
 	function of transition outputs $\lambda^* : Q \times \Sigma^* \rightarrow
 	\Omega^*$ is defined inductively as the least function such that
@@ -122,10 +127,10 @@
 
 \begin{definition}
 	The relation recognized by a subsequential finite-state transducer
-	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Phi
+	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \Psi
 	\rangle$ is the set of all pairs of labels and outputs of successful paths
 	\begin{align*}
-		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(w)\Phi(f) \rangle
+		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(w)\Psi(f) \rangle
 		\in \Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) =
 		f) \}.
 	\end{align*}
@@ -133,8 +138,8 @@
 
 \begin{theorem}[Mohri \cite{M96}]\label{t_choffrut_mohri}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	functional finite-state transducer. We can construct a subsequential
-	finite-state transducer $\mathcal{T'} = \langle \Sigma, \Omega, Q', s', F',
-	\delta, \lambda, \Phi \rangle$ such that $\mathcal{R}(\mathcal{T'}) =
+	functional finite-state transducer and let $\mathcal{R}(\mathcal{T})$ have
+	the bounded variation property. There exists a subsequential finite-state
+	transducer $\mathcal{T'}$ such that $\mathcal{R}(\mathcal{T'}) =
 	\mathcal{R}(\mathcal{T})$.
 \end{theorem}

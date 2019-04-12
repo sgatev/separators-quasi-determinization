@@ -11,6 +11,17 @@
 \end{definition}
 
 \begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	finite-state automaton. The function of transitions $\Delta_f : Q \times
+	\Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is
+	defined as
+	\begin{align*}
+		\Delta_f(q, \sigma) = \{ p \in Q \mid \langle q, \sigma, p \rangle
+		\in \Delta \}.
+	\end{align*}
+\end{definition}
+
+\begin{definition}
 	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle
 	\Sigma, Q, S, F, \Delta \rangle$ is a non-empty sequence of transitions
 	\begin{align*}

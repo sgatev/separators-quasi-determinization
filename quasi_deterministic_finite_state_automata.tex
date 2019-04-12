@@ -42,8 +42,8 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The component tansition functions
-	$\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ are defined
+	$k$-separated finite-state automaton. The component tansition function
+	$\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ is defined
 	as
 	\begin{align*}
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
@@ -99,129 +99,105 @@
 	successful paths
 	\begin{align*}
 		\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \exists i \in
-		\interval{1}{k}(\delta^*(s, w)^i \in F^i \}.
+		\interval{1}{k}(\delta^*(s, w)^i \in F_i \}.
 	\end{align*}
 \end{definition}
-
-\begin{construction}\label{conctruction_1}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
-	\interval{1}{k}$. We construct the quasi-deterministic $k$-separated
-	finite-state automaton $\mathcal{A}'$ and the set of states $R$ inductively.
-
-	\bigbreak
-	Let $R^{(0)} = \emptyset$. At the base of the construction is a
-	single-state quasi-deterministic $k$-separated finite-state automaton
-	\begin{align*}
-		\mathcal{A}'^{(1)} = \langle \Sigma, \vec{Q'^{(1)}}, 2^X, s,
-		\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
-		\emptyset \rangle
-	\end{align*}
-	where
-	\begin{itemize}
-		\item $s = \langle \hat{C_\epsilon}(S) \cap P_1,
-			\hat{C_\epsilon}(S) \cap P_2,
-			\ldots, \hat{C_\epsilon}(S) \cap P_k \rangle$;
-		\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$;
-		\item $R^{(1)} = \{ s \}$.
-	\end{itemize}
-
-	Assuming $\mathcal{A}'^{(n)} = \langle \Sigma, \vec{Q'^{(n)}}, 2^X, s,
-	\vec{F'^{(n)}}, \vec{\tau^{(n)}}, \vec{\rho^{(n)}}, \vec{\eta^{(n)}},
-	\eta_x^{(n)} \rangle$ and $R^{(n)}$ are defined we construct a
-	quasi-deterministic $k$-separated finite-state automaton
-	\begin{align*}
-		\mathcal{A}'^{(n+1)} = \langle \Sigma,
-		\vec{Q'^{(n+1)}}, 2^X, s, \vec{F'^{(n+1)}}, \vec{\tau^{(n+1)}},
-		\vec{\rho^{(n+1)}}, \vec{\eta^{(n+1)}}, \eta_x^{(n+1)} \rangle
-	\end{align*}
-	where
-
-	\begin{itemize}
-		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
-			R^{(n)} \setminus R^{(n-1)}(q^i \cap F \neq \emptyset) \}$
-			for $i \in \interval{1}{k}$;
-		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-			\hat{C_\epsilon}(\hat{\Delta}(q^i, \{ \sigma \})) \cap P_i
-			\rangle \mid q \in R^{(n)} \setminus R^{(n-1)} \land \sigma
-			\in \Sigma\}$ for $i \in \interval{1}{k}$;
-		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
-			\rangle \mid q \in Rng(\tau_i^{(n+1)}) \setminus
-			Rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
-		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
-			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-			\rangle \mid q \in R^{(n)} \setminus R^{(n-1)} \land \sigma
-			\in \Sigma \}$;
-		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
-			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
-			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
-			\mid q \in R^{(n)} \setminus R^{(n-1)} \land \sigma \in
-			\Sigma \}$ for $i \in \interval{1}{k}$;
-		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup Rng(\tau_i^{(n+1)}) \cup
-			Rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$;
-		\item $R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid
-			\exists q \in R^{(n)} \setminus R^{(n-1)} \exists \sigma \in
-			\Sigma \}$.
-	\end{itemize}
-\end{construction}
-
-\begin{lemma}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
-	\interval{1}{k}$. Let $\mathcal{A}'^{(n)}$ be the quasi-deterministic
-	$k$-separated finite-state automaton and let $R^{(n)}$ be the set of states
-	derived from $\mathcal{A}$ by applying Construction \ref{conctruction_1}.
-	There exists $n \leq |\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(i)} =
-	R^{(i+1)}$ and $\mathcal{A}^{(i)} = \mathcal{A}^{(i+1)}$ for $i \geq n$.
-\end{lemma}
-
-\begin{proof}
-	For $n \in \mathbb{N}$ we have $R^{(n)} \subseteq R^{(n+1)} \subseteq
-	\prod_{i=1}^k{2^{P_i}}$. Therefore, there exists $n \leq
-	|\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(n)} = R^{(n+1)}$. In that case,
-	$\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$. For the smallest such $n$ we
-	declare $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n)}$.
-\end{proof}
 
 \begin{theorem}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton and let $P_i = Q_i \cup X$ for $i \in
-	\interval{1}{k}$. Let $\mathcal{A}' = \langle \Sigma, \vec{Q'}, 2^X, s,
-	\vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x \rangle$ be the
-	quasi-deterministic $k$-separated finite-state automaton derived from
-	$\mathcal{A}$ by applying Construction \ref{conctruction_1}. Then
-	$\mathcal{L}(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
+	\interval{1}{k}$. There exists a quasi-deterministic $k$-separated
+	finite-state automaton $\mathcal{A}'$ such that $\mathcal{L}(\mathcal{A'})
+	= \mathcal{L}(\mathcal{A})$.
 \end{theorem}
 
 \begin{proof}
-	\bigbreak
+	We construct the quasi-deterministic $k$-separated finite-state automaton
+	$\mathcal{A}'$ and the set of states $R$ inductively.
+	Let $R^{(0)} = \emptyset$, $R^{(1)} = \{ s \}$ and $\mathcal{A}'^{(1)} =
+	\langle \Sigma, \vec{Q'}^{(1)}, 2^X, s, \vec{\emptyset}, \vec{\emptyset},
+	\vec{\emptyset}, \vec{\emptyset}, \emptyset \rangle$ where
+	\begin{itemize}
+		\item $s = \langle \hat{C_\epsilon}(S) \cap P_1,
+			\hat{C_\epsilon}(S) \cap P_2,
+			\ldots, \hat{C_\epsilon}(S) \cap P_k \rangle$;
+		\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$.
+	\end{itemize}
+	Let us assume that $\mathcal{A}'^{(n)} = \langle \Sigma, \vec{Q'}^{(n)},
+	2^X, s, \vec{F'}^{(n)}, \vec{\tau}^{(n)}, \vec{\rho}^{(n)},
+	\vec{\eta}^{(n)}, \eta_x^{(n)} \rangle$ and $R^{(n)}$ are constructed. The
+	set of states introduced at step $n$ is $R_n = R^{(n)} \setminus R^{(n-1)}$.
+	We construct the quasi-deterministic $k$-separated finite-state automaton
+	$\mathcal{A}'^{(n+1)} = \langle \Sigma, \vec{Q'^{(n+1)}}, 2^X, s,
+	\vec{F'^{(n+1)}}, \vec{\tau^{(n+1)}}, \vec{\rho^{(n+1)}},
+	\vec{\eta^{(n+1)}}, \eta_x^{(n+1)} \rangle$ where
+	\begin{itemize}
+		\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
+			R_n(q^i \cap F \neq \emptyset) \}$ for $i \in
+			\interval{1}{k}$;
+		\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
+			\hat{C_\epsilon}(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i
+			\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma\}$
+			for $i \in \interval{1}{k}$;
+		\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
+			\rangle \mid q \in rng(\tau_i^{(n+1)}) \setminus
+			rng(\tau_i^{(n)}) \}$ for $i \in \interval{1}{k}$;
+		\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
+			\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
+			\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma \}$;
+		\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
+			(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
+			(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
+			\mid \exists q \in R_n \exists \sigma \in \Sigma \}$ for
+			$i \in \interval{1}{k}$;
+		\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
+			rng(\eta_i^{(n+1)})$ for $i \in \interval{1}{k}$,
+	\end{itemize}
+	along with the set of states $R^{(n+1)} = R^{(n)} \cup \{
+	\delta^{(n+1)}(q, \sigma) \mid \exists q \in R_n \exists \sigma \in \Sigma
+	\}$.
+
+	First we show that the construction described above terminates.  For all
+	$n \in \mathbb{N}$ we have $R^{(n)} \subseteq R^{(n+1)} \subseteq
+	\prod_{i=1}^k{2^{P_i}}$. Therefore, there exists $n \leq
+	|\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(n)} = R^{(n+1)}$. In that case,
+	$R_{n+1} = \emptyset$ and $F_i'^{(n+2)} = F_i'^{(n+1)}$, $\tau_i^{(n+2)} =
+	\tau_i^{(n+1)}$, $\rho_i^{(n+2)} = \rho_i^{(n+1)}$, $\eta_x^{(n+2)} =
+	\eta_x^{(n+1)}$, $\eta_i^{(n+2)} = \eta_i^{(n+1)}$, $Q_i'^{(n+2)} =
+	Q_i'^{(n+1)}$ for $i \in \interval{1}{k}$. Therefore, $\mathcal{A}'^{(n+2)}
+	= \mathcal{A}'^{(n+1)}$. Also, $R^{(n+2)} = R^{(n+1)}$. It follows that
+	$R^{(i)} = R^{(i+1)}$ and $\mathcal{A}^{(i)} = \mathcal{A}^{(i+1)}$ for all
+	$i > n$. For the smallest such $n$ we declare $R = R^{(n)}$ and
+	$\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
+
 	We show that every successful path in $\mathcal{A}$ is also a successful
 	path in $\mathcal{A'}$ by induction on the length of the path.
-
-	Let $\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
-	\ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle$ be a successful path in
+	Let
+	\begin{align*}
+		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
+		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+	\end{align*}
+	be a successful path in
 	$\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2,
 	\ldots, n-1 \}$ be a set of indexes for $l \in \interval{1}{n-1}$ such that
 	$\sigma_{i_j} \in \Sigma$ for $j \in \interval{1}{l}$ and $h < j$ if $i_h <
 	i_j$ for $h, j \in \interval{1}{l}$.
-
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
 	Therefore, $q_{i_1} \in C_\epsilon(q_1) \subseteq \hat{C_\epsilon}(S) =
 	\bigcup_{r=1}^k{\hat{C_\epsilon}(S) \cap P_r} = \bigcup_{r=1}^k{p_1^r}$.
-
-	Let $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_h-1})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
 	$h \in \interval{2}{l}$.
 	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
 	\begin{align*}
 		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
-		&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_h^j, \{
+		&= \big[ \hat{C_\epsilon}(\hat{\Delta}_f(p_h^j, \{
 		\sigma_{i_h} \})) \cap P_j \big] \cup
-		\big[ \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
+		\big[ \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}_f
 		(p_h^r, \{ \sigma_{i_h} \})) \cap X} \big]\\
-		&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}
+		&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}_f
 		(p_h^r, \{ \sigma_{i_h} \})) \cap P_j}
 	\end{align*}
 	for $j \in \interval{1}{k}$.
@@ -229,77 +205,80 @@
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
 	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
 	\begin{align*}
-		q_{i_{h+1}} \in \hat{C_\epsilon}(\Delta(q_{i_h}, \sigma_{i_h}))
+		q_{i_{h+1}} \in \hat{C_\epsilon}(\Delta_f(q_{i_h}, \sigma_{i_h}))
 		&\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(
-		\hat{\Delta}(p_h^r, \{ \sigma_{i_h} \}))}\\
+		\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))}\\
 		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-		\hat{C_\epsilon}(\hat{\Delta}(p_h^r, \{
+		\hat{C_\epsilon}(\hat{\Delta}_f(p_h^r, \{
 		\sigma_{i_h} \})) \cap P_j}}
 		= \bigcup_{j=1}^k{p_{h+1}^j}.
 	\end{align*}
 	Otherwise, $h = l$ and if $n - i_l > 2$ then $\sigma_j = \epsilon$ for $j
 	\in \interval{i_l+1}{n-1}$. Therefore,
 	\begin{align*}
-		q_n \in \hat{C_\epsilon}(\Delta(q_{i_l}, \sigma_{i_l}))
+		q_n \in \hat{C_\epsilon}(\Delta_f(q_{i_l}, \sigma_{i_l}))
 		&\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(
-		\hat{\Delta}(p_l^r, \{ \sigma_{i_l} \}))}\\
+		\hat{\Delta}_f(p_l^r, \{ \sigma_{i_l} \}))}\\
 		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-		\hat{C_\epsilon}(\hat{\Delta}(p_l^r, \{
+		\hat{C_\epsilon}(\hat{\Delta}_f(p_l^r, \{
 		\sigma_{i_l} \})) \cap P_j}}
 		= \bigcup_{j=1}^k{p_{l+1}^j}.
 	\end{align*}
-
 	We have $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$. Therefore,
 	$p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$ for some $j
-	\in \interval{1}{k}$. Therefore, $\langle p_1, \sigma_{i_1}, p_2 \rangle$,
-	$\langle p_2, \sigma_{i_2}, p_3 \rangle$, $\ldots$, $\langle p_l,
-	\sigma_{i_l}, p_{l+1} \rangle$ is a successful path in $\mathcal{A'}$.
+	\in \interval{1}{k}$. Therefore,
+	\begin{align*}
+		\langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2, \sigma_{i_2},
+		p_3 \rangle, \ldots, \langle p_l, \sigma_{i_l}, p_{l+1} \rangle
+	\end{align*}
+	is a successful path in $\mathcal{A'}$.
 
 	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
 	successful path in $\mathcal{A}$.
-
-	Let $\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3 \rangle,
-	\ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle$ be a successful path in
-	$\mathcal{A'}$.
+	Let
+	\begin{align*}
+		\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3
+		\rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle
+	\end{align*}
+	be a successful path in $\mathcal{A'}$.
 	There exists $j \in \interval{1}{k}$ such that $p_n^j \in F_j'$ and thus
 	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in p_n^j$ such
 	that $q_n \in F$.
-
-	Let there be $j \in \interval{1}{k}$ and $q_i \in Q$ such that $q_i \in
-	p_i^j$ for $i \in \interval{2}{n}$. We have
+	Let us assume there is $j \in \interval{1}{k}$ and $q_i \in Q$ such that
+	$q_i \in p_i^j$ for $i \in \interval{2}{n}$. We have
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
-		&= \big[ \hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^j, \{ \sigma_{i-1}
+		&= \big[ \hat{C_\epsilon}(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
 		\})) \cap P_j \big] \cup \big[ \bigcup_{r=1}^k{\hat{C_\epsilon}(
-		\hat{\Delta} (p_{i-1}^r, \{ \sigma_{i-1} \})) \cap X} \big]\\
-		&= \bigcup_{r=1}^k{\hat{C_\epsilon}(\hat{\Delta}(p_{i-1}^r, \{
+		\hat{\Delta}_f (p_{i-1}^r, \{ \sigma_{i-1} \})) \cap X} \big]\\
+		&= \bigcup_{r=1}^k{\hat{C_\epsilon}(\hat{\Delta}_f(p_{i-1}^r, \{
 		\sigma_{i-1} \})) \cap P_j}.
 	\end{align*}
 	Also, $q_i \in p_i^j \implies |p_i^j| > 0$. Then there exists $r \in
-	\interval{1}{k}$ such that $q_i \in \hat{C_\epsilon}(\hat{\Delta}
+	\interval{1}{k}$ such that $q_i \in \hat{C_\epsilon}(\hat{\Delta}_f
 	(p_{i-1}^r, \{ \sigma_{i-1} \})) \cap P_j$ and thus $|p_{i-1}^r| > 0$.
 	Therefore, there exists $q_{i-1} \in Q$ such that $q_{i-1} \in p_{i-1}^r$.
-	Moreover, since $q_i \in \hat{C_\epsilon}(\hat{\Delta}
+	Moreover, since $q_i \in \hat{C_\epsilon}(\hat{\Delta}_f
 	(p_{i-1}^r, \{ \sigma_{i-1} \}))$ there exists $l_{i-1} > 0$ and
 	$q_{i-1, h} \in Q$ for $h \in \interval{1}{l_{i-1}}$ such that
-	$\langle q_{i-1}, \sigma_{i-1}, q_{i-1, 1} \rangle \in \Delta$,
-	$\langle q_{i-1, h}, \epsilon, q_{i-1, h+1} \rangle \in \Delta$ for $h \in
+	$\langle q_{i-1}, \sigma_{i-1}, q_{i-1, 1} \rangle \in \Delta_f$,
+	$\langle q_{i-1, h}, \epsilon, q_{i-1, h+1} \rangle \in \Delta_f$ for $h \in
 	\interval{1}{l_{i-1}-1}$ and $q_{i-1, l_{i-1}} = q_i$. Specifically, in
 	case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i \rangle \in
-	\Delta$.
-
+	\Delta_f$.
 	There exists $j \in \interval{1}{k}$ and $q_1 \in Q$ such that $q_1 \in
-	p_1^j$ and thus $q_1 \in S$. Therefore, $\langle q_1, \sigma_1, q_{1,1}
-	\rangle$, $\langle q_{1,1}, \epsilon, q_{1,2} \rangle$, $\ldots$,
-	$\langle q_{1,l_1-1}, \epsilon, q_2 \rangle$,
-	$\langle q_2, \sigma_2, q_{2,1} \rangle$,
-	$\langle q_{2,1}, \epsilon, q_{2,2} \rangle$,
-	$\ldots$,
-	$\langle q_{2,l_2-1}, \epsilon, q_3 \rangle$,
-	$\ldots$,
-	$\langle q_{n-1}, \sigma_{n-1}, q_{n-1,1} \rangle$,
-	$\langle q_{n-1,1}, \epsilon, q_{n-1,2} \rangle$,
-	$\ldots$,
-	$\langle q_{n-1,l_{n-1}-1}, \epsilon, q_n \rangle$ is a
-	successful path in $\mathcal{A}$.
+	p_1^j$ and thus $q_1 \in S$. Therefore
+	\begin{align*}
+		&\langle q_1, \sigma_1, q_{1,1} \rangle, \langle q_{1,1}, \epsilon,
+		q_{1,2} \rangle, \ldots, \langle q_{1,l_1-1}, \epsilon, q_2
+		\rangle,\\
+		&\langle q_2, \sigma_2, q_{2,1} \rangle, \langle q_{2,1}, \epsilon,
+		q_{2,2} \rangle, \ldots, \langle q_{2,l_2-1}, \epsilon, q_3
+		\rangle,\\
+		&\ldots,\\
+		&\langle q_{n-1}, \sigma_{n-1}, q_{n-1,1} \rangle, \langle
+		q_{n-1,1}, \epsilon, q_{n-1,2} \rangle, \ldots, \langle
+		q_{n-1,l_{n-1}-1}, \epsilon, q_n \rangle
+	\end{align*}
+	is a successful path in $\mathcal{A}$.
 \end{proof}

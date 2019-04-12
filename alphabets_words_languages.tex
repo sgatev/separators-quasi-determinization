@@ -7,7 +7,7 @@
 \begin{definition}
 	A word $w$ of length $n \in \mathbb{N}$ over an alphabet $\Sigma$ is
 	a tuple $\langle \sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ where
-	$\forall i \in \interval{1}{n}(\sigma_i \in \Sigma)$. The notation
+	$\sigma_i \in \Sigma$ for $i \in \interval{1}{n}$. The notation
 	$\sigma_1\sigma_2\ldots\sigma_n$ is preferred over $\langle \sigma_1,
 	\sigma_2, \ldots, \sigma_n \rangle$ for words. The length of the word
 	$w$ is denoted by $|w|$.
@@ -24,9 +24,9 @@
 
 \begin{definition}
 	Let $\Sigma$ be an alphabet. We use $\Sigma^n = \Sigma^{n-1} \times \Sigma$
-	to denote the set of all words of length $n$ over $\Sigma$ where $\Sigma^0
-	= \{ \epsilon \}$. We use $\Sigma^* = \bigcup_{i = 0}^{\infty} \Sigma^i$ to
-	denote the set of all words over $\Sigma$.
+	for $n \in \mathbb{N}$ to denote the set of all words of length $n$ over
+	$\Sigma$ where $\Sigma^0 = \{ \epsilon \}$. We use $\Sigma^* = \bigcup_{i =
+	0}^{\infty} \Sigma^i$ to denote the set of all words over $\Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -47,8 +47,8 @@
 \end{definition}
 
 \begin{definition}
-	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is prefix of
-	$w$ if and only if $\exists v \in \Sigma^* (w = uv)$. It follows that
+	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is a prefix of
+	$w$ if and only if $w = uv$ for some $v \in \Sigma^*$. It follows that
 	$\epsilon$ is a prefix of every word. We use $Pref(w) = \{ u \in \Sigma^*
 	\mid \exists v \in \Sigma^* (w = uv) \}$ to denote the set of all prefixes
 	of the word $w$.
@@ -61,13 +61,29 @@
 \end{definition}
 
 \begin{definition}
-	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ is the word
+	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ for $n \in
+	\mathbb{N}$ is the word
 	\begin{align*}
 		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
 		|u|}.
 	\end{align*}
 	We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to
 	indicate the longest common prefix of words.
+\end{definition}
+
+\begin{definition}
+	Let $u$ and $v$ be words over an alphabet $\Sigma$. The sequential distance
+	of $u$ and $v$ is defined as
+	\begin{align*}
+		d_S(u, v) = |u| + |v| - 2|u \wedge v|.
+	\end{align*}
+\end{definition}
+
+\begin{definition}
+	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
+	\rightarrow \Omega^*$ has the bounded variation property if and only if
+	$\forall k \geq 0 \exists K \geq 0 \forall u, v \in dom(f) (d_S(u, v) \leq k
+	\implies d_S(f(u), f(v)) \leq K)$.
 \end{definition}
 
 \begin{definition}

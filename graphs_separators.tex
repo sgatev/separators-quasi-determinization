@@ -7,25 +7,44 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{G} = \langle V, L, E \rangle$ be a graph. The set $X
-	\subseteq V$ is a separator in $\mathcal{G}$ if and only if there exists a
-	partition $P^V = \{ X, V_1, V_2, \ldots, V_n \}$ such that $\forall i, j
-	\in \interval{1}{n} (i \neq j \implies E \cap (V_i \times L \times V_j) =
-	\emptyset)$. We write $V_X = \{ V_1, V_2, \ldots, V_n \}$ to denote the
-	partition of $V$ induced by $X$.
+	Let $\mathcal{G} = \langle V, L, E \rangle$ be a graph. The set $X \subseteq
+	V$ is a separator in $\mathcal{G}$ if and only if there exists a partition
+	$P^V = \{ X, V_1, V_2, \ldots, V_n \}$ for $n \in \mathbb{N}$ such that
+	$\forall i, j \in \interval{1}{n} (i \neq j \implies E \cap (V_i \times L
+	\times V_j) = \emptyset)$. We write $V_X = \{ V_1, V_2, \ldots, V_n \}$ to
+	denote the partition of $V$ induced by $X$.
 \end{definition}
 
 \begin{definition}
 	A graph $\mathcal{G} = \langle V, L, E \rangle$ is planar if and only if
-	there exists an injective function $f_v : V \rightarrow \mathbb{R}^2$ that
-	maps vertices of the graph to distinct points in the real plane and an
-	injective function $f_e$ that maps edges of the graph to simple curves in
-	the real plane such that curves intersect only at points in $Rng(f_v)$.
+	there exists an injective function $f_v$ that maps vertices of the graph to
+	distinct points in the real plane and an injective function $f_e$ that maps
+	edges of the graph to simple curves in the real plane such that curves
+	intersect only at points in $rng(f_v)$.
 \end{definition}
 
-\begin{theorem}[Lipton, Tarjan \cite{LT79}]
-	Let $\mathcal{G} = \langle V, L, E \rangle$ be a planar graph. We can
-	efficiently find a separator $X$ in $\mathcal{G}$ such that $V_X = \{ V_1,
-	V_2 \}$, $|V_1| \leq \frac{2}{3} \times |V|$, $|V_2| \leq \frac{2}{3}
-	\times |V|$ and $|X| \leq 2 \sqrt{2} \sqrt{|V|}$.
+\begin{theorem}[Lipton, Tarjan \cite{LT77}]
+	Let $\mathcal{G} = \langle V, L, E \rangle$ be a planar graph. There exists
+	a separator $X$ in $\mathcal{G}$ such that
+	\begin{itemize}
+		\item $V_X = \{ V_1, V_2 \}$,
+		\item $|V_1| \leq \frac{2}{3} \times |V|$,
+		\item $|V_2| \leq \frac{2}{3} \times |V|$,
+		\item $|X| \leq 2 \sqrt{2} \sqrt{|V|}$.
+	\end{itemize}
+	Moreover, there exists an algorithm that finds $X$ in $\mathcal{O}(|V|)$
+	time.
+\end{theorem}
+
+\begin{theorem}[Lipton, Tarjan, \cite{LT80}]
+	Let $\mathcal{G} = \langle V, L, E \rangle$ be a planar graph and let
+	$n \in \interval{1}{|V|}$. There exists a separator $X$ in $\mathcal{G}$
+	such that
+	\begin{itemize}
+		\item $V_X = \{ V_1, V_2, \ldots, V_k \}$ for $k \in \mathbb{N}$,
+		\item $|X| \in \mathcal{O}(\sqrt{\frac{|V|^2}{n}})$,
+		\item $|V_i| \leq n$ for $i \in \interval{1}{k}$.
+	\end{itemize}
+	Moreover, there exists an algorithm that finds $X$ in
+	$\mathcal{O}(|V|\log{|V|})$ time.
 \end{theorem}
