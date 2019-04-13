@@ -40,6 +40,14 @@
 \end{definition}
 
 \begin{definition}
+	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
+	\Delta \rangle$ is trimmed if and only if for each state $q \in Q$ there
+	exist $s \in S$, $f \in F$, $w', w'' \in \Sigma^*$ and $v', v'' \in
+	\Omega^*$ such that $\langle s, w', v', q \rangle \in \Delta^*$ and
+	$\langle q, w'', v'', f \rangle \in \Delta^*$.
+\end{definition}
+
+\begin{definition}
 	The relation recognized by a finite-state transducer $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all pairs
 	of labels and outputs of successful paths
