@@ -3,11 +3,12 @@
 \begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
 	\rangle$ is $k$-separated for $k \in \mathbb{N}$ if and only if there
-	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{A} = \langle Q,
-	\Sigma_\epsilon, \Delta \rangle$ inducing a partition $Q_X = \{ Q_1, Q_2,
-	\ldots, Q_k \}$. We write $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F,
-	\Delta \rangle$ to denote the $k$-separated finite-state automaton
-	$\mathcal{A}$.
+	exists a separator $X$ in the graph $\mathcal{G}_\mathcal{A}$ inducing a
+	partition $Q_X = \{ Q_1, Q_2, \ldots, Q_k \}$. The $k$-separated
+	finite-state automaton $\mathcal{A}$ is denoted by
+	\begin{align*}
+		\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle.
+	\end{align*}
 \end{definition}
 
 \begin{proposition}

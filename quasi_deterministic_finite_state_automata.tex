@@ -7,8 +7,8 @@
 		\langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau}, \vec{\rho},
 		\vec{\eta}, \eta_x \rangle
 	\end{align*}
-	where $k \in \mathbb{N}$, $k > 1$, $\Sigma$ is an alphabet, $Q_i$ is a set
-	of quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty separator set
+	where $k > 1$, $\Sigma$ is an alphabet, $Q_i$ is a set of quasi-states for
+	$i \in \interval{1}{k}$, $X$ is a non-empty separator set
 	such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$ and $\forall i,
 	j \in \interval{1}{k}(i \neq j \implies Q_i \cap Q_j = X)$, $s \in
 	\prod_{i=1}^k{Q_i}$ is a start state, $F_i \subseteq Q_i$ is a set of final
@@ -73,12 +73,12 @@
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where $\forall i \in \interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall
-	i \in \interval{1}{n-1} (\sigma_i \in \Sigma)$ and $\forall i \in
-	\interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
-	successful if and only if $q_1 = s$ and $\exists i \in \interval{1}{k}
-	(q_n^i \in F^i)$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
+	where $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \interval{1}{n}$, $\sigma_i
+	\in \Sigma$ for $i \in \interval{1}{n-1}$ and $q_{i+1} = \delta(q_i,
+	\sigma_i)$ for $i \in \interval{1}{n-1}$. The path $\pi$ is successful if
+	and only if $q_1 = s$ and $q_n^j \in F_j$ for some $j \in \interval{1}{k}$.
+	The label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	of length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -87,9 +87,12 @@
 	$k$-separated finite-state automaton. The generalized function of
 	transitions $\delta^* : \prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow
 	\prod_{i=1}^k{Q_i}$ is defined inductively as the least function such that
-	$\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$ and $\delta^*(q,
-	w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in \prod_{i=1}^k{Q_i}$,
-	$w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	\begin{itemize}
+		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
+		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
+			$q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma
+			\in \Sigma$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -103,10 +106,9 @@
 	\end{align*}
 \end{definition}
 
-We now describe a construction that given a $k$-separated finite-state automaton
-$\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ produces a
-quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}'$ such that
-$\mathcal{L}(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
+We now describe a construction that produces a quasi-deterministic $k$-separated
+finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
+$\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$.
 
 Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
 quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}'$ and the set
@@ -120,9 +122,9 @@ of states $R$ inductively. Let
 \end{align*}
 where
 \begin{itemize}
-	\item $s = \langle \hat{C_\epsilon}(S) \cap P_1,
-		\hat{C_\epsilon}(S) \cap P_2,
-		\ldots, \hat{C_\epsilon}(S) \cap P_k \rangle$;
+	\item $s = \langle \hat{\Delta}_\epsilon(S) \cap P_1,
+		\hat{\Delta}_\epsilon(S) \cap P_2, \ldots,
+		\hat{\Delta}_\epsilon(S) \cap P_k \rangle$,
 	\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$.
 \end{itemize}
 Let us assume that $\mathcal{A}'^{(n)}$ and $R^{(n)}$ are constructed. The set of
@@ -141,7 +143,7 @@ where
 	\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
 		R_n(q^i \cap F \neq \emptyset) \}$,
 	\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-		\hat{C_\epsilon}(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i
+		\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i
 		\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma\}$,
 	\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 		\rangle \mid q \in rng(\tau_i^{(n+1)}) \setminus
@@ -175,7 +177,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 \end{lemma}
 
 \begin{proof}
-	For all $i \in \mathbb{N}$ we have $R^{(i)} \subseteq R^{(i+1)} \subseteq
+	For $i \in \mathbb{N}$ we have $R^{(i)} \subseteq R^{(i+1)} \subseteq
 	\prod_{j=1}^k{2^{P_j}}$. Therefore, there exists $n \leq
 	|\prod_{j=1}^k{2^{P_j}}|$ such that $R^{(n)} = R^{(n+1)}$ and thus $R_{n+1}
 	= \emptyset$. In that case, $\mathcal{A}'^{(n+2)} = \mathcal{A}'^{(n+1)}$
