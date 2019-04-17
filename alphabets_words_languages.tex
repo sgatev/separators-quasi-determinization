@@ -25,8 +25,8 @@
 \begin{definition}
 	Let $\Sigma$ be an alphabet. We use $\Sigma^n = \Sigma^{n-1} \times \Sigma$
 	for $n \in \mathbb{N}$ to denote the set of all words of length $n$ over
-	$\Sigma$ where $\Sigma^0 = \{ \epsilon \}$. We use $\Sigma^* = \bigcup_{i =
-	0}^{\infty} \Sigma^i$ to denote the set of all words over $\Sigma$.
+	$\Sigma$ where $\Sigma^0 = \{ \epsilon \}$. We write $\Sigma^* = \bigcup_{i
+	= 0}^{\infty} \Sigma^i$ for the set of all words over $\Sigma$.
 \end{definition}
 
 \begin{definition}
@@ -43,15 +43,17 @@
 	\cdot w = w$ for any word $w$. Concatenation of words is an associative
 	operation. That is, $u \cdot (v \cdot w) = (u \cdot v) \cdot w$ for all
 	words $u$, $v$ and $w$. Thus, we shall from now on write $w'w''$ instead of
-	$w' \cdot w''$.
+	$w' \cdot w''$ without causing ambiguity.
 \end{definition}
 
 \begin{definition}
 	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is a prefix of
 	$w$ if and only if $w = uv$ for some $v \in \Sigma^*$. It follows that
-	$\epsilon$ is a prefix of every word. We use $Pref(w) = \{ u \in \Sigma^*
-	\mid \exists v \in \Sigma^* (w = uv) \}$ to denote the set of all prefixes
-	of the word $w$.
+	$\epsilon$ is a prefix of every word. The set of all prefixes of the word
+	$w$ is denoted by
+	\begin{align*}
+		Pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
+	\end{align*}
 \end{definition}
 
 \begin{definition}
@@ -72,39 +74,38 @@
 \end{definition}
 
 \begin{definition}
-	Let $u$ and $v$ be words over an alphabet $\Sigma$. The sequential distance
-	of $u$ and $v$ is defined as
+	Sequential distance of words over an alphabet $\Sigma$ is the function
+	$d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$ defined as
 	\begin{align*}
-		d_S(u, v) = |u| + |v| - 2|u \wedge v|.
+		d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
 	\end{align*}
 \end{definition}
 
 \begin{definition}
 	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
-	\rightarrow \Omega^*$ has the bounded variation property if and only if
-	$\forall k \geq 0 \exists K \geq 0 \forall u, v \in dom(f) (d_S(u, v) \leq k
-	\implies d_S(f(u), f(v)) \leq K)$.
+	\rightarrow \Omega^*$ has bounded variation if and only if
+	\begin{align*}
+		\forall k \geq 0 \exists K \geq 0 \forall u, v \in dom(f)
+		(d_S(u, v) \leq k \implies d_S(f(u), f(v)) \leq K).
+	\end{align*}
 \end{definition}
 
 \begin{definition}
-	A language $L$ over an alphabet $\Sigma$ is a subset $L \subseteq \Sigma^*$.
+	A language $L$ over an alphabet $\Sigma$ is a subset
+	\begin{align*}
+		L \subseteq \Sigma^*.
+	\end{align*}
 \end{definition}
 
 \begin{definition}
-	A language $L$ over an alphabet $\Sigma$ is regular if and only if it can be
-	constructed inductively as follows
-	\begin{enumerate}
-		\item $\emptyset$ is a regular language over $\Sigma$;
-		\item If $\sigma \in \Sigma_\epsilon$ then $\{ \sigma \}$
-			is a regular language over $\Sigma$;
-		\item If $L'$ and $L''$ are regular languages over $\Sigma$ then
-			\begin{itemize}
-				\item $L' \hat{\cdot} L''$ is a regular language
-					over $\Sigma$;
-				\item $L' \cup L''$ is a regular language over
-					$\Sigma$;
-				\item $L'^*$ is a regular language over $\Sigma$;
-			\end{itemize}
-		\item There are no other regular languages over $\Sigma$.
-	\end{enumerate}
+	A language $L$ over an alphabet $\Sigma$ is regular if and only if it is
+	equal to any of the following
+	\begin{itemize}
+		\item $\emptyset$,
+		\item $\{ \sigma \}$ for $\sigma \in \Sigma_\epsilon$,
+		\item $L' \hat{\cdot} L''$ where $L'$ and $L''$ are regular
+			languages,
+		\item $L' \cup L''$ where $L'$ and $L''$ are regular languages,
+		\item $L'^*$ where $L'$ is a regular language.
+	\end{itemize}
 \end{definition}

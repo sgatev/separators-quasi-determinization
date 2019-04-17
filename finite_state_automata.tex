@@ -28,30 +28,33 @@
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in
-	\interval{1}{n-1}(\sigma_i \in \Sigma_\epsilon)$ and $\forall i
-	\in \interval{1}{n-1}(\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta)$.
-	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
-	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
-	over $\Sigma$.
+	where $q_i \in Q$ for $i \in \interval{1}{n}$, $\sigma_i \in
+	\Sigma_\epsilon$ for $i \in \interval{1}{n-1}$ and $\langle q_i, \sigma_i,
+	q_{i+1} \rangle \in \Delta$ for $i \in \interval{1}{n-1}$. The path $\pi$
+	is successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the
+	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton. The generalized relation of transitions $\Delta^* :
 	Q \times \Sigma^* \times Q$ is defined inductively as the least relation
-	such that $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$ and
-	$\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle q', w, q''
-	\rangle \in \Delta^*$ and $\langle q'', \sigma, q''' \rangle \in \Delta$.
+	such that
+	\begin{itemize}
+		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
+		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
+			q', w, q'' \rangle \in \Delta^*$ and $\langle q'', \sigma,
+			q''' \rangle \in \Delta$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The $\epsilon$-closure of a state is the function
-	$C_\epsilon : Q \rightarrow 2^Q$ defined as
+	finite-state automaton. The $\epsilon$-closure of a state in $\mathcal{A}$
+	is the function $\Delta_\epsilon : Q \rightarrow 2^Q$ defined as
 	\begin{align*}
-		C_\epsilon(q) = \{ p \in Q \mid \langle q, \epsilon, p \rangle \in
-		\Delta^* \}.
+		\Delta_\epsilon(q) = \{ p \in Q \mid \langle q, \epsilon, p \rangle
+			\in \Delta^* \}.
 	\end{align*}
 \end{definition}
 
@@ -98,21 +101,23 @@
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where $\forall i \in \interval{1}{n}(q_i \in Q)$, $\forall i \in
-	\interval{1}{n-1}(\sigma_i \in \Sigma)$ and $\forall i \in
-	\interval{1}{n-1}(q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$ is
-	successful if and only if $q_1 = s$ and $q_n \in F$. The label of the path
-	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over
-	$\Sigma$.
+	where $q_i \in Q$ for $i \in \interval{1}{n}$, $\sigma_i \in \Sigma$ for
+	$i \in \interval{1}{n-1}$ and $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
+	\interval{1}{n-1}$. The path $\pi$ is successful if and only if $q_1 = s$
+	and $q_n \in F$. The label of the path $\pi$ is the word
+	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ be a
 	deterministic finite-state automaton. The generalized function of
 	transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined
-	inductively as the least function such that $\delta^*(q, \epsilon) = q$ for
-	$q \in Q$ and $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
-	$q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	inductively as the least function such that
+	\begin{itemize}
+		\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
+		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
+		$q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -125,9 +130,8 @@
 	\end{align*}
 \end{definition}
 
-\begin{theorem}[Rabin, Scott \cite{RS59}]\label{t_rabin_scott}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. We can construct a deterministic finite-state
-	automaton $\mathcal{A'} = \langle Q', \Sigma, s', F', \delta \rangle$
-	such that $\mathcal{L}(\mathcal{A'}) = \mathcal{L}(\mathcal{A})$.
+\begin{theorem}[Rabin, Scott, see \cite{RS59}]\label{t_rabin_scott}
+	Let $\mathcal{A}$ be a finite-state automaton. There exists a deterministic
+	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}(\mathcal{A'})
+	= \mathcal{L}(\mathcal{A})$.
 \end{theorem}
