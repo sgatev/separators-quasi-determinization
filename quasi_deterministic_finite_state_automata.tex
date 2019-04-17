@@ -134,9 +134,9 @@ states introduced at step $n$ is
 \end{align*}
 We construct the quasi-deterministic $k$-separated finite-state automaton
 \begin{align*}
-	\mathcal{A}'^{(n+1)} = \langle \Sigma, \vec{Q'^{(n+1)}}, 2^X, s,
-	\vec{F'^{(n+1)}}, \vec{\tau^{(n+1)}}, \vec{\rho^{(n+1)}},
-	\vec{\eta^{(n+1)}}, \eta_x^{(n+1)} \rangle
+	\mathcal{A'}^{(n+1)} = \langle \Sigma, \vec{Q'}^{(n+1)}, 2^X, s,
+	\vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
+	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)} \rangle
 \end{align*}
 where
 \begin{itemize}
@@ -211,8 +211,9 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h, j \in \interval{1}{l}$.
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
-	Therefore, $q_{i_1} \in C_\epsilon(q_1) \subseteq \hat{C_\epsilon}(S) =
-	\bigcup_{r=1}^k{\hat{C_\epsilon}(S) \cap P_r} = \bigcup_{r=1}^k{p_1^r}$.
+	Therefore, $q_{i_1} \in \Delta_\epsilon(q_1)
+	\subseteq \hat{\Delta}_\epsilon(S) =
+	\bigcup_{r=1}^k{\hat{\Delta}_\epsilon(S) \cap P_r} = \bigcup_{r=1}^k{p_1^r}$.
 	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_h-1})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
 	$h \in \interval{2}{l}$.
@@ -220,11 +221,11 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
 	\begin{align*}
 		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
-		&= \big[ \hat{C_\epsilon}(\hat{\Delta}_f(p_h^j, \{
+		&= \big[ \hat{\Delta}_\epsilon(\hat{\Delta}_f(p_h^j, \{
 		\sigma_{i_h} \})) \cap P_j \big] \cup
-		\big[ \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}_f
+		\big[ \bigcup_{r = 1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f
 		(p_h^r, \{ \sigma_{i_h} \})) \cap X} \big]\\
-		&= \bigcup_{r = 1}^k{\hat{C_\epsilon}(\hat{\Delta}_f
+		&= \bigcup_{r = 1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f
 		(p_h^r, \{ \sigma_{i_h} \})) \cap P_j}
 	\end{align*}
 	for $j \in \interval{1}{k}$.
@@ -232,22 +233,22 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
 	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
 	\begin{align*}
-		q_{i_{h+1}} \in \hat{C_\epsilon}(\Delta_f(q_{i_h}, \sigma_{i_h}))
-		&\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(
+		q_{i_{h+1}} \in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h}, \sigma_{i_h}))
+		&\subseteq \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
 		\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))}\\
 		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-		\hat{C_\epsilon}(\hat{\Delta}_f(p_h^r, \{
+		\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_h^r, \{
 		\sigma_{i_h} \})) \cap P_j}}
 		= \bigcup_{j=1}^k{p_{h+1}^j}.
 	\end{align*}
 	Otherwise, $h = l$ and if $n - i_l > 2$ then $\sigma_j = \epsilon$ for $j
 	\in \interval{i_l+1}{n-1}$. Therefore,
 	\begin{align*}
-		q_n \in \hat{C_\epsilon}(\Delta_f(q_{i_l}, \sigma_{i_l}))
-		&\subseteq \bigcup_{r=1}^k{\hat{C_\epsilon}(
+		q_n \in \hat{\Delta}_\epsilon(\Delta_f(q_{i_l}, \sigma_{i_l}))
+		&\subseteq \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
 		\hat{\Delta}_f(p_l^r, \{ \sigma_{i_l} \}))}\\
 		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-		\hat{C_\epsilon}(\hat{\Delta}_f(p_l^r, \{
+		\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_l^r, \{
 		\sigma_{i_l} \})) \cap P_j}}
 		= \bigcup_{j=1}^k{p_{l+1}^j}.
 	\end{align*}
@@ -275,17 +276,17 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	$q_i \in p_i^j$ for $i \in \interval{2}{n}$. We have
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
-		&= \big[ \hat{C_\epsilon}(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
-		\})) \cap P_j \big] \cup \big[ \bigcup_{r=1}^k{\hat{C_\epsilon}(
+		&= \big[ \hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
+		\})) \cap P_j \big] \cup \big[ \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
 		\hat{\Delta}_f (p_{i-1}^r, \{ \sigma_{i-1} \})) \cap X} \big]\\
-		&= \bigcup_{r=1}^k{\hat{C_\epsilon}(\hat{\Delta}_f(p_{i-1}^r, \{
+		&= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^r, \{
 		\sigma_{i-1} \})) \cap P_j}.
 	\end{align*}
 	Also, $q_i \in p_i^j \implies |p_i^j| > 0$. Then there exists $r \in
-	\interval{1}{k}$ such that $q_i \in \hat{C_\epsilon}(\hat{\Delta}_f
+	\interval{1}{k}$ such that $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}_f
 	(p_{i-1}^r, \{ \sigma_{i-1} \})) \cap P_j$ and thus $|p_{i-1}^r| > 0$.
 	Therefore, there exists $q_{i-1} \in Q$ such that $q_{i-1} \in p_{i-1}^r$.
-	Moreover, since $q_i \in \hat{C_\epsilon}(\hat{\Delta}_f
+	Moreover, since $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}_f
 	(p_{i-1}^r, \{ \sigma_{i-1} \}))$ there exists $l_{i-1} > 0$ and
 	$q_{i-1, h} \in Q$ for $h \in \interval{1}{l_{i-1}}$ such that
 	$\langle q_{i-1}, \sigma_{i-1}, q_{i-1, 1} \rangle \in \Delta_f$,
@@ -311,21 +312,23 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 \end{proof}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)}$ and $R^{(i)}$
-	be respectively the quasi-deterministic $k$-separa\-ted finite-state
-	automaton and the set of states derived from $\mathcal{A}$ by applying the
-	construction described above for $i > 0$. Let $q^j \in dom(\tau_j^{(i)})$
-	for all $q \in R_i$ and $j \in \interval{1}{k}$. Let $\eta_x^{(i+1)}(q) \in
-	rng(\eta_x^{(i)})$ for all $q \in R_i$. Then $\mathcal{A'}^{(i+1)} =
-	\mathcal{A'}^{(i)}$.
+	Let $\mathcal{A}$ be a $k$-separated finite-state automaton. Let
+	$\mathcal{A'}^{(i)} = \langle \Sigma, \vec{Q'}^{(i)}, 2^X, s,
+	\vec{F'}^{(i)}, \vec{\tau}^{(i)}, \vec{\rho}^{(i)}, \vec{\eta}^{(i)},
+	\eta_x^{(i)} \rangle$ and $R^{(i)}$ be respectively the quasi-deterministic
+	$k$-separa\-ted finite-state automaton and the set of states derived from
+	$\mathcal{A}$ by applying the construction described above for $i > 0$. Let
+	$q^j \in dom(\tau_j^{(i)})$ for all $q \in R_i$ and $j \in \interval{1}{k}$.
+	Let $\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for all $q \in R_i$. Then
+	$\mathcal{A'}^{(i+1)} = \mathcal{A'}^{(i)}$ and $R^{(i+1)} = R^{(i)}$.
 \end{proposition}
 
 \begin{proof}
-	For every $q \in R_i$ we have $q^j \in dom(\tau_j^{(i)})$
-	for all $j \in \interval{1}{k}$. Therefore, $F_j'^{(i+1)} = F_j'^{(i)}$,
-	$\tau_j^{(i+1)} = \tau_j^{(i)}$ and $\rho_j^{(i+1)} = \rho_j^{(i)}$. Also,
-	$\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for all $q \in R_i$. Therefore,
-	$\eta_j^{(i+1)} = \eta_j^{(i)}$ for all $j \in \interval{1}{k}$. Therefore,
-	$Q'^{(i+1)} = Q'^{(i)}$ and so $\mathcal{A'}^{(i+1)} = \mathcal{A'}^{(i)}$.
+	Since $q^j \in dom(\tau_j^{(i)})$ for all $q \in R_i$ and $j \in
+	\interval{1}{k}$ then $F_j'^{(i+1)} = F_j'^{(i)}$, $\tau_j^{(i+1)} =
+	\tau_j^{(i)}$ and $\rho_j^{(i+1)} = \rho_j^{(i)}$. Also, $\eta_j^{(i+1)} =
+	\eta_j^{(i)}$ for all $j \in \interval{1}{k}$ bacause $\eta_x^{(i+1)}(q)
+	\in rng(\eta_x^{(i)})$ for all $q \in R_i$. Therefore,  $Q'^{(i+1)} =
+	Q'^{(i)}$. It follows that $\mathcal{A'}^{(i+1)} = \mathcal{A'}^{(i)}$ and
+	$R^{(i+1)} = R^{(i)}$.
 \end{proof}
