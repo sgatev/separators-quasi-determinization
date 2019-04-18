@@ -301,6 +301,8 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\Delta_\epsilon(q_1) \in \hat{\Delta}_\epsilon(S)$.
 
 	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_h-1})$ and $\lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_h-1}) = \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_h-1})$ for $h \in \interval{2}{l}$.
 	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
@@ -348,8 +350,14 @@ for $i \in \interval{1}{k}$, along with the set of states
 		L^\wedge = \bigwedge_{\langle q_{i_h}, \sigma_{i_h}, u, p' \rangle
 		\in \Delta}{\bigwedge_{\langle p'', v \rangle \in
 		\Delta_\epsilon(p')}{ uv }}\\
-		\langle q_{i_{h+1}}, ? \rangle \in \{ \langle p'', L^{\wedge -1}uv
-		\rangle \mid \exists \langle q_{i_h}, \sigma_{i_h}, u, p' \rangle
-		\in \Delta \exists \langle p'', v \rangle \in \Delta_\epsilon(p') \}
+		\langle q_{i_{h+1}},
+		\Delta_\wedge(\sigma_1\sigma_2\ldots\sigma_{i_h})^{-1}
+		w_1 w_2 \ldots w_{i_h}
+		\rangle \in
+		\begin{aligned}[t]
+		\{ &\langle p'', L^{\wedge -1}uv \rangle \mid\\
+		&\exists \langle q_{i_h}, \sigma_{i_h}, u, p' \rangle \in \Delta\\
+		&\exists \langle p'', v \rangle \in \Delta_\epsilon(p') \}
+		\end{aligned}
 	\end{align*}
 \end{proof}
