@@ -4,15 +4,14 @@
 	A regular expression $\mathcal{R}$ over an alphabet $\Sigma$ such that
 	$\Sigma \cap \{ \varnothing, (, ), ., +, * \} = \emptyset$ is a word over
 	$\Sigma \cup \{ \varnothing, (, ), ., +, * \}$ denoting a regular language
-	$\mathcal{L}(\mathcal{R})$ over $\Sigma$. A regular expression and the
-	regular language it denotes are defined inductively as follows
+	$\mathcal{L}(\mathcal{R})$ over $\Sigma$ defined by induction:
 	\begin{enumerate}
 		\item $\varnothing$ is a regular expression over $\Sigma$
 			denoting the regular language $\emptyset$;
-		\item If $\sigma \in \Sigma_\epsilon$ then $\sigma$ is a regular
+		\item if $\sigma \in \Sigma_\epsilon$ then $\sigma$ is a regular
 			expression over $\Sigma$ denoting the regular language $\{
 			\sigma \}$;
-		\item If $\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions
+		\item if $\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions
 			over $\Sigma$ denoting the regular languages $\mathcal{L}
 			(\mathcal{R}')$ and $\mathcal{L}(\mathcal{R}'')$
 			respectively then
@@ -30,12 +29,12 @@
 					regular language $\mathcal{L}
 					(\mathcal{R}')^*$;
 			\end{itemize}
-		\item There are no other regular expressions over $\Sigma$.
+		\item there are no other regular expressions over $\Sigma$.
 	\end{enumerate}
 \end{definition}
 
-\begin{theorem}[Thompson \cite{T68}]\label{t_thompson}
-	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. We can
-	construct a finite-state automaton $\mathcal{A}$ such that $\mathcal{L}
-	(\mathcal{A}) = \mathcal{L}(\mathcal{R})$.
+\begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
+	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. There
+	exists a finite-state automaton $\mathcal{A}$ such that
+	$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$.
 \end{theorem}

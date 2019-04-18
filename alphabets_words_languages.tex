@@ -97,15 +97,16 @@
 	\end{align*}
 \end{definition}
 
-%\begin{definition}
-%	A language $L$ over an alphabet $\Sigma$ is regular if and only if it is
-%	equal to any of the following
-%	\begin{itemize}
-%		\item $\emptyset$,
-%		\item $\{ \sigma \}$ for $\sigma \in \Sigma_\epsilon$,
-%		\item $L' \hat{\cdot} L''$ where $L'$ and $L''$ are regular
-%			languages,
-%		\item $L' \cup L''$ where $L'$ and $L''$ are regular languages,
-%		\item $L'^*$ where $L'$ is a regular language.
-%	\end{itemize}
-%\end{definition}
+\begin{definition}
+	The class of regular languages over an alphabet $\Sigma$ is defined by
+	induction:
+	\begin{enumerate}
+		\item $\emptyset$ is a regular language over $\Sigma$;
+		\item if $\sigma \in \Sigma_\epsilon$ then $\{ \sigma \}$ is a
+			regular language over $\Sigma$;
+		\item if $L'$ and $L''$ are regular languages over $\Sigma$ then
+			$L' \hat{\cdot} L''$, $L' \cup L''$ and $L'^*$ are regular
+			languages over $\Sigma$;
+		\item there are no other regular languages over $\Sigma$.
+	\end{enumerate}
+\end{definition}
