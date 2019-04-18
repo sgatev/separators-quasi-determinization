@@ -7,21 +7,20 @@
 		\langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 		\vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi} \rangle
 	\end{align*}
-	where $k \in \mathbb{N}$, $k > 1$, $\Sigma$ and $\Omega$ are alphabets,
-	$Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$, $X$ is a
-	non-empty separator set such that $\forall i \in \interval{1}{k} (X
-	\subseteq Q_i)$ and $\forall i, j \in \interval{1}{k}(i \neq j \implies Q_i
-	\cap Q_j = X)$, $s \in \prod_{i=1}^k{Q_i}$ is a start state, $F_i \subseteq
-	Q_i$ is a set of final quasi-states for $i \in \interval{1}{k}$, $\tau_i :
-	Q_i \times \Sigma \rightarrow Q_i$ is a component quasi-transition function
-	for $i \in \interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component
-	reduction function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X
-	\rightarrow Q_i$ is a component extension function for $i \in
-	\interval{1}{k}$, $\eta_x : X^k \rightarrow X$ is a separator
-	extension function, $\lambda_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a
-	component quasi-output function for $i \in \interval{1}{k}$ and $\psi_i :
-	Q_i \rightarrow \Omega^*$ is a final quasi-state output function for $i \in
-	\interval{1}{k}$.
+	where $k > 1$, $\Sigma$ and $\Omega$ are alphabets, $Q_i$ is a set of
+	quasi-states for $i \in \interval{1}{k}$, $X$ is a non-empty separator set
+	such that $\forall i \in \interval{1}{k} (X \subseteq Q_i)$ and $\forall i,
+	j \in \interval{1}{k}(i \neq j \implies Q_i \cap Q_j = X)$, $s \in
+	\prod_{i=1}^k{Q_i}$ is a start state, $F_i \subseteq Q_i$ is a set of final
+	quasi-states for $i \in \interval{1}{k}$, $\tau_i : Q_i \times \Sigma
+	\rightarrow Q_i$ is a component quasi-transition function for $i \in
+	\interval{1}{k}$, $\rho_i : Q_i \rightarrow X$ is a component reduction
+	function for $i \in \interval{1}{k}$, $\eta_i : Q_i \times X \rightarrow
+	Q_i$ is a component extension function for $i \in \interval{1}{k}$, $\eta_x
+	: X^k \rightarrow X$ is a separator extension function, $\lambda_i : Q_i
+	\times \Sigma \rightarrow \Omega^*$ is a component quasi-output function for
+	$i \in \interval{1}{k}$ and $\psi_i : Q_i \rightarrow \Omega^*$ is a final
+	quasi-state output function for $i \in \interval{1}{k}$.
 \end{definition}
 
 \begin{remark}
@@ -90,15 +89,14 @@
 		w_2, q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1},
 		q_n \rangle
 	\end{align*}
-	where $\forall i \in \interval{1}{n}(q_i \in \prod_{j=1}^k{Q_j})$, $\forall
-	i \in \interval{1}{n-1} (\sigma_i \in \Sigma)$, $\forall i \in
-	\interval{1}{n-1} (w_i = \lambda(q_i, \sigma_i))$ and $\forall
-	i \in \interval{1}{n-1} (q_{i+1} = \delta(q_i, \sigma_i))$. The path $\pi$
-	is successful if and only if $q_1 = s$ and $\exists j \in \interval{1}{k}
-	(q_n^j \in F_j)$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
-	The output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}
-	\psi_j(q_n^j)$ over $\Omega$.
+	where $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \interval{1}{n}$, $\sigma_i
+	\in \Sigma$ for $i \in \interval{1}{n-1}$, $w_i = \lambda(q_i, \sigma_i)$
+	for $i \in \interval{1}{n-1}$ and $q_{i+1} = \delta(q_i, \sigma_i)$ for
+	$i \in \interval{1}{n-1}$. The path $\pi$ is successful if and only if $q_1
+	= s$ and $q_n^j \in F_j$ for some $j \in \interval{1}{k}$. The label of the
+	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$
+	over $\Sigma$. The output of the path $\pi$ is the word $w_1 w_2 \ldots
+	w_{n-1} \psi_j(q_n^j)$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
@@ -107,10 +105,13 @@
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The generalized function of transitions $\delta^* : \prod_{i=1}^k{Q_i}
 	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined inductively as
-	the least function such that $\delta^*(q, \epsilon) = q$ for $q \in
-	\prod_{i=1}^k{Q_i}$ and $\delta^*(q, w\sigma) = \delta(\delta^*(q, w),
-	\sigma)$ for $q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma \in
-	\Sigma$.
+	the least function such that
+	\begin{itemize}
+		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
+		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
+			$q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma
+			\in \Sigma$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -119,10 +120,14 @@
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The generalized function of transition outputs $\lambda^* :
 	\prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow \Omega^*$ is defined
-	inductively as the least function such that $\lambda^*(q, \epsilon) =
-	\epsilon$ for $q \in \prod_{i=1}^k{Q_i}$ and $\lambda^*(q, w\sigma) =
-	\lambda^*(q, w)\lambda (\delta^*(q, w), \sigma)$ for $q \in
-	\prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	inductively as the least function such that
+	\begin{itemize}
+		\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in
+			\prod_{i=1}^k{Q_i}$,
+		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w)\lambda(\delta^*(q,
+			w), \sigma)$ for $q \in \prod_{i=1}^k{Q_i}$, $w \in
+			\Sigma^*$ and $\sigma \in \Sigma$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -131,17 +136,15 @@
 	s, \vec{F}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda},
 	\vec{\psi} \rangle$ is the set of all labels and outputs of successful paths
 	\begin{align*}
-		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(s, w) \cdot
+		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(s, w)
 		\psi_j(\delta^*(s, w)^j) \rangle \mid \exists
 		j \in \interval{1}{k}(\delta^*(s, w)^j \in F_j) \}.
 	\end{align*}
 \end{definition}
 
-We now describe a construction that given a functional $k$-separated finite-state
-transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
-such that $\mathcal{R}(\mathcal{T})$ has the bounded variation property produces a
-quasi-subsequential $k$-separated finite-state transducer $\mathcal{T'}$ such that
-$\mathcal{R}(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
+We now describe a construction that produces a quasi-subsequential $k$-separated
+finite-state transducer $\mathcal{T'}$ from a $k$-separated finite-state transducer
+$\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$.
 
 Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
 quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}'$ and the set
@@ -155,10 +158,9 @@ of states $R$ inductively. Let
 \end{align*}
 where
 \begin{itemize}
-	\item $s = \langle (\hat{C_\epsilon}(S) \cap P_1) \times \{
-		\epsilon \}, (\hat{C_\epsilon}(S) \cap P_2) \times \{
-		\epsilon \}, \ldots, (\hat{C_\epsilon}(S) \cap P_k) \times
-		\{ \epsilon \} \rangle$,
+	\item $s = \langle s^1, s^2, \ldots, s^k \rangle$ where $s^i = \{
+		\langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in P_i
+		\}$ for $i \in \interval{1}{k}$,
 	\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$.
 \end{itemize}
 Let us assume that $\mathcal{T}'^{(n)}$ and $R^{(n)}$ are constructed. The set of
@@ -167,18 +169,21 @@ states introduced at step $n$ is
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
 We define the longest common component tansition output function
-$\lambda_i^{\wedge (n)} : Q_i^{(n)} \times \Sigma \rightarrow \Omega^*$ as
+$\lambda_i^{\wedge (n)} : Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ as
 \begin{align*}
-	\lambda_i^{\wedge}(q, \sigma) = \bigwedge_{\langle p', u
+	\lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge_{\langle p', u
 	\rangle \in q}{\bigwedge_{\langle p', \sigma, v, p'' \rangle \in
 	\Delta}{uv}}
 \end{align*}
 for $i \in \interval{1}{k}$. We define the quasi-state successor function
-$succ_i^{(n)} : P_i^{(n)} \times \Sigma \rightarrow 2^{P_i \times \Omega^*}$ as
+$succ_i^{(n)} : Q_i'^{(n)} \times \Sigma \rightarrow 2^{P_i \times \Omega^*}$ as
 \begin{align*}
-	succ_i^{(n)}(q, \sigma) = \bigcup_{\langle p', u \rangle \in q}{
-	\bigcup_{\langle p', \sigma, v, p'' \rangle \in \Delta}{ \langle
-	p'', \lambda_i^{ \wedge (n)}(q, \sigma)^{-1}uv \rangle}}
+	succ_i^{(n)}(q, \sigma) = \begin{aligned}[t]
+	\{ &\langle p''', \lambda_i^{ \wedge (n)}(q, \sigma)^{-1}uvw \rangle \mid\\
+	&\exists \langle p', u \rangle \in q\\
+	&\exists \langle p', \sigma, v, p'' \rangle \in \Delta\\
+	&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')(p''' \in P_i) \}
+	\end{aligned}
 \end{align*}
 for $i \in \interval{1}{k}$. We construct the quasi-subsequential
 $k$-separated finite-state transducer
@@ -199,17 +204,19 @@ where
 	\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
 		succ_i^{(n)}(q^i, \sigma) \rangle \mid \exists q \in R_n
 		\exists \sigma \in \Sigma \}$,
-	\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q, \langle
-		p, w \rangle \rangle \mid \exists q \in rng(\tau_i^{(n+1)})
-		\setminus rng(\tau_i^{(n)}) \exists \langle p, w \rangle \in
-		q (p \in X) \}$,
+	\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \begin{aligned}[t]
+		\{ \langle q, \langle p, w \rangle \rangle \mid &\exists q \in
+		rng(\tau_i^{(n+1)}) \setminus rng(\tau_i^{(n)})\\
+		&\exists \langle p, w \rangle \in q (p \in X) \},
+		\end{aligned}$
 	\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
 		\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
 		\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma \}$,
-	\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \{ \langle \tau_i^{(n+1)}
-		(q^i, \sigma), \eta_x^{(n+1)}(q), \tau_i^{(n+1)}
-		(q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
-		\mid \exists q \in R_n \exists \sigma \in \Sigma \}$,
+	\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \begin{aligned}[t]
+		\{ &\langle \tau_i^{(n+1)} (q^i, \sigma), \eta_x^{(n+1)}(q),
+		\tau_i^{(n+1)} (q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle \mid\\
+		&\exists q \in R_n \exists \sigma \in \Sigma \},
+		\end{aligned}$
 	\item $\lambda_i^{(n+1)} = \lambda_i^{(n)} \cup \{ \langle q^i,
 		\sigma, \lambda_i^{\wedge (n)}(q^i, \sigma) \rangle \mid
 		\exists q \in R_n \exists \sigma \in \Sigma \}$,
@@ -225,12 +232,12 @@ for $i \in \interval{1}{k}$, along with the set of states
 \begin{lemma}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
 	be a trimmed functional $k$-separated finite-state transducer such that
-	$\mathcal{R}(\mathcal{T})$ has the bounded variation property. Let
-	$\mathcal{T'}^{(i)}$ and $R^{(i)}$ be respectively the quasi-subsequential
-	$k$-separated finite-state transducer and the set of states derived from
-	$\mathcal{T}$ by applying the construction described above for $i > 0$.
-	There exists $n \in \mathbb{N}$ such that $R^{(i)} = R^{(i+1)}$ and
-	$\mathcal{T'}^{(i)} = \mathcal{T'}^{(i+1)}$ for all $i > n$.
+	$\mathcal{R}(\mathcal{T})$ has bounded variation. Let $\mathcal{T'}^{(i)}$
+	and $R^{(i)}$ be respectively the quasi-subsequential $k$-separated
+	finite-state transducer and the set of states derived from $\mathcal{T}$ by
+	applying the construction described above for $i > 0$. There exists $n \in
+	\mathbb{N}$ such that $R^{(i)} = R^{(i+1)}$ and $\mathcal{T'}^{(i)} =
+	\mathcal{T'}^{(i+1)}$ for all $i > n$.
 \end{lemma}
 
 \begin{proof}
@@ -245,32 +252,31 @@ for $i \in \interval{1}{k}$, along with the set of states
 	paths exist because $\mathcal{T}$ is trimmed. Let $W = \max_{q \in
 	Q}{|w_q|}$ and $V = \max_{q \in Q}{|V_q|}$. $\mathcal{R}(\mathcal{T})$ has
 	the bounded variation property, therefore, for $k = 2W$ there exist $K \geq
-	0$ such that $d_S(w', w''') \leq k \implies d_S(\mathcal{R}(\mathcal{T})(w'),
-	\mathcal{R}(\mathcal{T})(w'')) \leq K$. For some $i > 0$ there exists
-	$q_i \in R_i$ such that for some $j \in \interval{1}{k}$ there is
-	$\langle p', u' \rangle \in q_i^j$ where $|u'| > K + V$. Also, by
-	construction, there exists $w \in \Sigma^*$ such that $q_i =
-	\delta^{(i)*}(s, w)$. Since $u' \neq \epsilon$, it follows that there exists
-	$\langle p'', u'' \rangle \in q_i^j$ such that $u' \wedge u'' = \epsilon$.
-	Therefore, there exist $s', s'' \in S$  such that $\langle s', w,
+	0$ such that $d_\Sigma(w', w''') \leq k \implies
+	d_\Sigma(\mathcal{R}(\mathcal{T})(w'), \mathcal{R}(\mathcal{T})(w'')) \leq
+	K$. For some $i > 0$ there exists $q_i \in R_i$ such that for some $j \in
+	\interval{1}{k}$ there is $\langle p', u' \rangle \in q_i^j$ where $|u'| >
+	K + V$. Also, by construction, there exists $w \in \Sigma^*$ such that $q_i
+	= \delta^{(i)*}(s, w)$. Since $u' \neq \epsilon$, it follows that there
+	exists $\langle p'', u'' \rangle \in q_i^j$ such that $u' \wedge u'' =
+	\epsilon$. Therefore, there exist $s', s'' \in S$  such that $\langle s', w,
 	\lambda^{(i)*}(s, w)u', p' \rangle \in \Delta^*$ and $\langle s'', w,
 	\lambda^{(i)*}(s, w)u'', p'' \rangle \in \Delta^*$. Moreover, we have
-	$\langle p', w_{p'}, v_{p'}, f_{p'} \rangle \in \Delta^*$ and
-	$\langle p'', w_{p''}, v_{p''}, f_{p''} \rangle \in \Delta^*$. We have
-	$d_S(ww_{p'}, ww_{p''}) \leq |w_{p'}| + |w_{p''}| \leq 2W = k$. If $u'' =
-	\epsilon$ then $d_S(\lambda^{(i)*}(s, w)u'v', \lambda^{(i)*}(s, w)u''v'') =
-	d_S(u'v', v'') \geq (K + V + |v'|) - V \geq K$. Otherwise,
-	$d_S(\lambda^{(i)*}(s, w)u'v', \lambda^{(i)*}(s, w)u''v'') = |u'| + |v'| +
-	|u''| + |v''| > |u'| > K + V > K$. This contradicts the precondition that
-	$\mathcal{R}(\mathcal{T})$ has the bounded variation property. Therefore,
-	there exist $n \in \mathbb{N}$ such that $R^{(i)} = R^{(i+1)}$ and
-	$\mathcal{T'}^{(i)} = \mathcal{T'}^{(i+1)}$ for all $i > n$.
+	$\langle p', w_{p'}, v_{p'}, f_{p'} \rangle \in \Delta^*$ and $\langle p'',
+	w_{p''}, v_{p''}, f_{p''} \rangle \in \Delta^*$. We have $d_\Sigma(ww_{p'},
+	ww_{p''}) \leq |w_{p'}| + |w_{p''}| \leq 2W = k$. If $u'' = \epsilon$ then
+	$d_\Sigma(\lambda^{(i)*}(s, w)u'v', \lambda^{(i)*}(s, w)u''v'') =
+	d_\Sigma(u'v', v'') \geq (K + V + |v'|) - V \geq K$. Otherwise,
+	$d_\Sigma(\lambda^{(i)*}(s, w)u'v', \lambda^{(i)*}(s, w)u''v'') = |u'| +
+	|v'| + |u''| + |v''| > |u'| > K + V > K$. This contradicts the precondition
+	that $\mathcal{R}(\mathcal{T})$ has the bounded variation property.
+	Therefore, there exist $n \in \mathbb{N}$ such that $R^{(i)} = R^{(i+1)}$
+	and $\mathcal{T'}^{(i)} = \mathcal{T'}^{(i+1)}$ for all $i > n$.
 \end{proof}
 
 \begin{theorem}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
-	be a trimmed functional $k$-separated finite-state transducer such that
-	$\mathcal{R}(\mathcal{T})$ has the bounded variation property. Let
+	Let $\mathcal{T}$ be a trimmed functional $k$-separated finite-state
+	transducer such that $\mathcal{R}(\mathcal{T})$ has bounded variation. Let
 	$\mathcal{T'}$ be the quasi-subsequential $k$-separated finite-state
 	transducer derived from $\mathcal{T}$ by applying the construction described
 	above. Then $\mathcal{R}(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
@@ -291,6 +297,59 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h, j \in \interval{1}{l}$.
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
-	Therefore, $q_{i_1} \in C_\epsilon(q_1) \subseteq \hat{C_\epsilon}(S) =
-	\bigcup_{r=1}^k{\hat{C_\epsilon}(S) \cap P_r} = \bigcup_{r=1}^k{p_1^r}$.
+	Therefore, $\langle q_{i_1}, w_1 w_2 \ldots w_{i_1} \rangle \in
+	\Delta_\epsilon(q_1) \in \hat{\Delta}_\epsilon(S)$.
+
+	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_h-1})$ for $h \in \interval{2}{l}$.
+	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
+	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
+	\begin{align*}
+		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
+		&= \begin{aligned}[t]
+			&\begin{aligned}[t] \{
+			&\langle p''', \lambda_j^{\wedge}(p_h^j,
+			\sigma_{i_h})^{-1}uvw \rangle \mid\\
+			&\exists \langle p', u \rangle \in p_h^j\\
+			&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+			\Delta\\
+			&\exists \langle p''', w \rangle \in
+			\Delta_\epsilon(p'')(p''' \in P_j) \} \cup
+			\end{aligned}\\
+			&\bigcup_{r = 1}^k{
+			\begin{aligned}[t] \{
+			&\langle p''', \lambda_r^{\wedge}(p_h^r,
+			\sigma_{i_h})^{-1}uvw \rangle \mid\\
+			&\exists \langle p', u \rangle \in p_h^r\\
+			&\exists \langle p', \sigma_{i_h}, v, p''
+			\rangle \in \Delta\\
+			&\exists \langle p''', w \rangle \in
+			\Delta_\epsilon(p'')(p''' \in P_r) \}
+			\end{aligned}
+			}
+		\end{aligned}\\
+		&= \bigcup_{r = 1}^k{
+		\begin{aligned}[t] \{
+		&\langle p''', \lambda_r^{\wedge}(p_h^r,
+		\sigma_{i_h})^{-1}uvw \rangle \mid\\
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p''
+		\rangle \in \Delta\\
+		&\exists \langle p''', w \rangle \in
+		\Delta_\epsilon(p'')(p''' \in P_j) \}
+		\end{aligned}
+		}
+	\end{align*}
+	for $j \in \interval{1}{k}$.
+	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
+	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
+	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
+	\begin{align*}
+		L^\wedge = \bigwedge_{\langle q_{i_h}, \sigma_{i_h}, u, p' \rangle
+		\in \Delta}{\bigwedge_{\langle p'', v \rangle \in
+		\Delta_\epsilon(p')}{ uv }}\\
+		\langle q_{i_{h+1}}, ? \rangle \in \{ \langle p'', L^{\wedge -1}uv
+		\rangle \mid \exists \langle q_{i_h}, \sigma_{i_h}, u, p' \rangle
+		\in \Delta \exists \langle p'', v \rangle \in \Delta_\epsilon(p') \}
+	\end{align*}
 \end{proof}

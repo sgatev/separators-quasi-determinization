@@ -50,11 +50,11 @@
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The $\epsilon$-closure of a state in $\mathcal{A}$
+	finite-state automaton. The $\epsilon$-closure of a state of $\mathcal{A}$
 	is the function $\Delta_\epsilon : Q \rightarrow 2^Q$ defined as
 	\begin{align*}
-		\Delta_\epsilon(q) = \{ p \in Q \mid \langle q, \epsilon, p \rangle
-			\in \Delta^* \}.
+		\Delta_\epsilon(q) = \{ p \in Q \mid \exists \langle q, \epsilon, p
+			\rangle \in \Delta^* \}.
 	\end{align*}
 \end{definition}
 

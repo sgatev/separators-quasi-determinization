@@ -43,6 +43,18 @@
 \end{definition}
 
 \begin{definition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
+	finite-state transducer. The $\epsilon$-closure of a state of $\mathcal{T}$
+	is the function $\Delta_\epsilon : Q \rightarrow 2^{Q \times \Omega^*}$
+	defined as
+	\begin{align*}
+		\Delta_\epsilon(q) = \{ \langle p, u \rangle \in Q \times \Omega^*
+			\mid \exists \langle q, \epsilon, u, p \rangle \in \Delta^*
+			\}.
+	\end{align*}
+\end{definition}
+
+\begin{definition}
 	The relation recognized by a finite-state transducer $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all pairs
 	of labels and outputs of successful paths
@@ -70,12 +82,6 @@
 \begin{definition}
 	A finite-state transducer $\mathcal{T}$ is functional if and only if
 	$\mathcal{R}(\mathcal{T})$ is a function.
-\end{definition}
-
-\begin{definition}
-	A functional finite-state transducer $\mathcal{T}$ has the bounded
-	variation property if and only if $\mathcal{R}(\mathcal{T})$ has bounded
-	variation.
 \end{definition}
 
 \begin{definition}
