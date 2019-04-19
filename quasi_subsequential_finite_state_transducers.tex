@@ -130,6 +130,41 @@
 	\end{itemize}
 \end{definition}
 
+\begin{proposition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
+	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
+	\rangle$ be a quasi-subsequential $k$-separated finite-state transducer.
+	Let $q', q'' \in Q$, $\sigma_i \in \Sigma$ for $i \in \interval{1}{n}$ and
+	$q'' = \delta^*(q', \sigma_1 \sigma_2 \ldots \sigma_{n-1})$. Then
+	\begin{align*}
+		\lambda(q'', \sigma_n)^{-1} \lambda^*(q', \sigma_1 \sigma_2 \ldots
+		\sigma_{n-1})^{-1} w = \lambda^*(q', \sigma_1 \sigma_2 \ldots
+		\sigma_n)^{-1} w
+	\end{align*}
+	for every $w \in \Omega^*$.
+\end{proposition}
+
+\begin{proof}
+	We prove the statement by induction on $n$.
+	Let $n = 1$. Then $\sigma_1 \sigma_2 \ldots \sigma_{n-1} = \epsilon$ and
+	thus $q'' = \delta^*(q', \epsilon) = q'$. Therefore,
+	\begin{align*}
+		\lambda(q'', \sigma_1)^{-1} \lambda^*(q', \epsilon)^{-1} w =
+		\lambda(q', \sigma_1)^{-1} = \lambda^*(q', \sigma_1)^{-1}.
+	\end{align*}
+	Let us assume that the statement holds for $n > 0$. Then
+	\begin{align*}
+		&\lambda(q'', \sigma_{n+1})^{-1} \lambda^*(q', \sigma_1 \sigma_2
+		\ldots \sigma_n)^{-1} w =\\
+		&(\lambda^*(q', \sigma_1 \sigma_2 \ldots \sigma_n) \lambda(q'',
+		\sigma_{n+1}))^{-1} w =\\
+		&(\lambda^*(q', \sigma_1 \sigma_2 \ldots \sigma_n)
+		\lambda(\delta^*(q', \sigma_1 \sigma_2 \ldots \sigma_n),
+		\sigma_{n+1}))^{-1} w =\\
+		&\lambda^*(q', \sigma_1 \sigma_2 \ldots \sigma_{n+1})^{-1} w.
+	\end{align*}
+\end{proof}
+
 \begin{definition}
 	The relation recognized by a quasi-subsequential $k$-separat\-ed
 	finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X,
@@ -351,52 +386,56 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\begin{align*}
 		\langle q_{i_{h+1}}, w_{i_h} w_{i_h+1} \ldots w_{i_{h+1}-1} \rangle
 		\in \{
-		&\langle p''', vw \rangle \mid\\
+		\langle p''', vw \rangle \mid
 		&\exists \langle q_{i_h}, \sigma_{i_h}, v, p'' \rangle \in
 		\Delta\\
 		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
 	\end{align*}
 	By the inductive hypothesis we have
-	\begin{align*}
-		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
-		\sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle
-		\in \bigcup_{r=1}^k \{
-		&\langle p''', uvw \rangle \mid\\
+	\begin{gather*}
+		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1}
+		\sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots
+		w_{i_{h+1}-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', uvw \rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
-		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
-		\Delta\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in \Delta\\
 		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
-	\end{align*}
-	and
-	\begin{align*}
+		\end{aligned}
+	\end{gather*}
+	Substituting the left-hand side further we get
+	\begin{gather*}
 		\langle q_{i_{h+1}}, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-		\sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle
-		\in \bigcup_{r=1}^k \{
-		&\langle p''', uvw \rangle \mid\\
+		\sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', uvw \rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
 		\Delta\\
 		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
-	\end{align*}
-	This means that
-	\begin{align*}
+		\end{aligned}
+	\end{gather*}
+	Removing the common output prefix we get
+	\begin{gather*}
 		\langle q_{i_{h+1}}, \lambda(p_h, \sigma_{i_h})^{-1} \lambda(p_1,
 		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1} w_1 w_2
-		\ldots w_{i_{h+1}-1} \rangle \in \bigcup_{r=1}^k \{
-		&\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
-		\rangle \mid\\
+		\ldots w_{i_{h+1}-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
 		\Delta\\
 		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
-	\end{align*}
+		\end{aligned}
+	\end{gather*}
 	Which equals	
 	\begin{align*}
 		\langle q_{i_{h+1}}, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
 		\bigcup_{j=1}^k p_{h+1}^j.
 	\end{align*}
-	Therefore	
+	Substituting the left-hand side we derive
 	\begin{align*}
 		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
