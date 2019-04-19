@@ -301,9 +301,11 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\Delta_\epsilon(q_1) \in \hat{\Delta}_\epsilon(S)$.
 
 	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_h-1})$ and $\lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_h-1}) = \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_h-1})$ for $h \in \interval{2}{l}$.
+	\sigma_{i_{h-1}})$, $\lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_{h-1}}) = \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_{h-1}})$ and $\langle q_{i_h}, \Delta_\wedge(\sigma_{i_1}
+	\sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1}w_1 w_2 \ldots w_{i_h-1} \rangle
+	\in \bigcup_{r=1}^k{p_h^r}$ for $h \in \interval{2}{l}$.
 	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
 	\begin{align*}
@@ -347,17 +349,57 @@ for $i \in \interval{1}{k}$, along with the set of states
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
 	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
 	\begin{align*}
-		L^\wedge = \bigwedge_{\langle q_{i_h}, \sigma_{i_h}, u, p' \rangle
-		\in \Delta}{\bigwedge_{\langle p'', v \rangle \in
-		\Delta_\epsilon(p')}{ uv }}\\
-		\langle q_{i_{h+1}},
-		\Delta_\wedge(\sigma_1\sigma_2\ldots\sigma_{i_h})^{-1}
-		w_1 w_2 \ldots w_{i_h}
-		\rangle \in
-		\begin{aligned}[t]
-		\{ &\langle p'', L^{\wedge -1}uv \rangle \mid\\
-		&\exists \langle q_{i_h}, \sigma_{i_h}, u, p' \rangle \in \Delta\\
-		&\exists \langle p'', v \rangle \in \Delta_\epsilon(p') \}
-		\end{aligned}
+		\langle q_{i_{h+1}}, w_{i_h} w_{i_h+1} \ldots w_{i_{h+1}-1} \rangle
+		\in \{
+		&\langle p''', vw \rangle \mid\\
+		&\exists \langle q_{i_h}, \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+	\end{align*}
+	By the inductive hypothesis we have
+	\begin{align*}
+		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle
+		\in \bigcup_{r=1}^k \{
+		&\langle p''', uvw \rangle \mid\\
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+	\end{align*}
+	and
+	\begin{align*}
+		\langle q_{i_{h+1}}, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle
+		\in \bigcup_{r=1}^k \{
+		&\langle p''', uvw \rangle \mid\\
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+	\end{align*}
+	This means that
+	\begin{align*}
+		\langle q_{i_{h+1}}, \lambda(p_h, \sigma_{i_h})^{-1} \lambda(p_1,
+		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1} w_1 w_2
+		\ldots w_{i_{h+1}-1} \rangle \in \bigcup_{r=1}^k \{
+		&\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\rangle \mid\\
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+	\end{align*}
+	Which equals	
+	\begin{align*}
+		\langle q_{i_{h+1}}, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
+		\bigcup_{j=1}^k p_{h+1}^j.
+	\end{align*}
+	Therefore	
+	\begin{align*}
+		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
+		\bigcup_{j=1}^k p_{h+1}^j.
 	\end{align*}
 \end{proof}
