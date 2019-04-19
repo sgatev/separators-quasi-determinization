@@ -130,7 +130,7 @@
 	\end{itemize}
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{p_lambda_derivative}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subsequential $k$-separated finite-state transducer.
@@ -318,15 +318,21 @@ for $i \in \interval{1}{k}$, along with the set of states
 \end{theorem}
 
 \begin{proof}
-	We show that every successful path in $\mathcal{T}$ is also a successful
-	path in $\mathcal{T'}$ by induction on the length of the path.
-	Let
+	We show that every pair of words recognized by $\mathcal{T}$ are also
+	recognized by $\mathcal{T'}$ by induction on the length of the successful
+	path. Let
+	\begin{align*}
+		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
+		w_{n-1} \rangle \in \mathcal{R}(\mathcal{T})
+	\end{align*}
+	for some $n \in \mathbb{N}$. Let
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
-	be a successful path in $\mathcal{T}$. Let $I = \{ i_1, i_2, \ldots, i_l \}
+	be a successful path in $\mathcal{T}$. Since $\mathcal{T}$ is functional
+	this path is unique. Let $I = \{ i_1, i_2, \ldots, i_l \}
 	\subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
 	\interval{1}{n-1}$ such that $\sigma_{i_j} \in \Sigma$ for $j \in
 	\interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h, j \in \interval{1}{l}$.
@@ -429,16 +435,164 @@ for $i \in \interval{1}{k}$, along with the set of states
 		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
 		\end{aligned}
 	\end{gather*}
-	Which equals	
-	\begin{align*}
+	By proposition \ref{p_lambda_derivative} we get
+	\begin{gather*}
 		\langle q_{i_{h+1}}, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
-		\bigcup_{j=1}^k p_{h+1}^j.
-	\end{align*}
+		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}.
+	\end{gather*}
 	Substituting the left-hand side we derive
-	\begin{align*}
+	\begin{gather*}
+		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}.
+	\end{gather*}
+	Factorizing	
+	\begin{gather*}
+		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+		\bigcup_{j=1}^k \bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_h^r\\
+		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')
+		(p''' \in P_j) \}.
+		\end{aligned}.
+	\end{gather*}
+	Finally
+	\begin{gather*}
 		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
 		\bigcup_{j=1}^k p_{h+1}^j.
+	\end{gather*}
+	Otherwise, $h = l$ and if $n - i_l > 2$ then $\sigma_j = \epsilon$ for $j
+	\in \interval{i_l+1}{n-1}$. Therefore,
+	\begin{align*}
+		\langle q_n, w_{i_l} w_{i_l+1} \ldots w_{n-1} \rangle \in \{
+		\langle p''', vw \rangle \mid
+		&\exists \langle q_{i_l}, \sigma_{i_l}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+	\end{align*}
+	By the inductive hypothesis we have
+	\begin{gather*}
+		\langle q_n, \Delta_\wedge(\sigma_{i_1}
+		\sigma_{i_2} \ldots \sigma_{i_{l-1}})^{-1} w_1 w_2 \ldots
+		w_{n-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', uvw \rangle \mid
+		&\exists \langle p', u \rangle \in p_l^r\\
+		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in \Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}
+	\end{gather*}
+	Substituting the left-hand side further we get
+	\begin{gather*}
+		\langle q_n, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_{l-1}})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', uvw \rangle \mid
+		&\exists \langle p', u \rangle \in p_l^r\\
+		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}
+	\end{gather*}
+	Removing the common output prefix we get
+	\begin{gather*}
+		\langle q_n, \lambda(p_l, \sigma_{i_l})^{-1} \lambda(p_1,
+		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{l-1}})^{-1} w_1 w_2
+		\ldots w_{n-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_l^r\\
+		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}
+	\end{gather*}
+	By proposition \ref{p_lambda_derivative} we get
+	\begin{gather*}
+		\langle q_n, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_l^r\\
+		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}.
+	\end{gather*}
+	Substituting the left-hand side we derive
+	\begin{gather*}
+		\langle q_n, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
+		\bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_l^r\\
+		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'') \}.
+		\end{aligned}.
+	\end{gather*}
+	Factorizing	
+	\begin{gather*}
+		\langle q_n, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
+		\bigcup_{j=1}^k \bigcup_{r=1}^k \begin{aligned}[t] \{
+		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\rangle \mid
+		&\exists \langle p', u \rangle \in p_l^r\\
+		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
+		\Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')
+		(p''' \in P_j) \}.
+		\end{aligned}.
+	\end{gather*}
+	Finally
+	\begin{gather*}
+		\langle q_n, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in
+		\bigcup_{j=1}^k p_{l+1}^j.
+	\end{gather*}
+	We have $\langle q_n, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in
+	\bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$. Therefore,
+	$p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$ for some $j
+	\in \interval{1}{k}$. Moreover,
+	\begin{align*}
+		\psi_j(p_{l+1}^j)
+		&= \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1}\\
+		&= \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l})^{-1}
+		w_1 w_2 \ldots w_{n-1}.
+	\end{align*}
+	Therefore,
+	\begin{align*}
+		&\langle \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l}, \lambda(p_1,
+		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l}) \lambda(p_1,
+		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l})^{-1}
+		w_1 w_2 \ldots w_{n-1} \rangle =\\
+		&\langle \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l}, w_1 w_2
+		\ldots w_{n-1} \rangle \in \mathcal{R}(\mathcal{T'}).
 	\end{align*}
 \end{proof}
