@@ -35,7 +35,7 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
-	The separator tansition function $\delta_x : \prod_{i=1}^k{Q_i} \times
+	The separator transition function $\delta_x : \prod_{i=1}^k{Q_i} \times
 	\Sigma \rightarrow X$ is defined as
 	\begin{align*}
 		\delta_x(q, \sigma) = \eta_x(\rho_1(\tau_1(q^1, \sigma)),
@@ -47,7 +47,7 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
-	The component tansition function $\delta_i : \prod_{j=1}^k{Q_j} \times
+	The component transition function $\delta_i : \prod_{j=1}^k{Q_j} \times
 	\Sigma \rightarrow Q_i$ is defined as
 	\begin{align*}
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
@@ -60,7 +60,7 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
-	The tansition function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma
+	The transition function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma
 	\rightarrow \prod_{i=1}^k{Q_i}$ is defined as
 	\begin{align*}
 		\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q,
@@ -72,7 +72,7 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
-	The tansition output function $\lambda : \prod_{i=1}^k{Q_i} \times \Sigma
+	The transition output function $\lambda : \prod_{i=1}^k{Q_i} \times \Sigma
 	\rightarrow \Omega^*$ is defined as
 	\begin{align*}
 		\lambda(q, \sigma) = \bigwedge_{i=1}^k{\lambda_i(q^i, \sigma)}.
@@ -203,7 +203,7 @@ states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
-We define the longest common component tansition output function
+We define the longest common component transition output function
 $\lambda_i^{\wedge (n)} : Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ as
 \begin{align*}
 	\lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge_{\langle p', u
@@ -318,14 +318,14 @@ for $i \in \interval{1}{k}$, along with the set of states
 \end{theorem}
 
 \begin{proof}
-	We show that every pair of words recognized by $\mathcal{T}$ are also
-	recognized by $\mathcal{T'}$ by induction on the length of the successful
-	path. Let
+	We show that every pair of words recognized by $\mathcal{T}$ is also
+	recognized by $\mathcal{T'}$ by induction on the length of successful paths.
+	Let
 	\begin{align*}
 		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
 		w_{n-1} \rangle \in \mathcal{R}(\mathcal{T})
 	\end{align*}
-	for some $n \in \mathbb{N}$. Let
+	for $n \in \mathbb{N}$. Let
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
@@ -335,14 +335,16 @@ for $i \in \interval{1}{k}$, along with the set of states
 	this path is unique. Let $I = \{ i_1, i_2, \ldots, i_l \}
 	\subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
 	\interval{1}{n-1}$ such that $\sigma_{i_j} \in \Sigma$ for $j \in
-	\interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h, j \in \interval{1}{l}$.
+	\interval{1}{l}$ and $i_h < i_j$ if $h < j$ for $h, j \in \interval{1}{l}$.
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
-	Therefore, $\langle q_{i_1}, w_1 w_2 \ldots w_{i_1} \rangle \in
-	\Delta_\epsilon(q_1) \in \hat{\Delta}_\epsilon(S)$.
+	Therefore, $\langle q_{i_1}, w_1 w_2 \ldots w_{i_1-1} \rangle \in
+	\Delta_\epsilon(q_1) \subseteq \hat{\Delta}_\epsilon(S) = \bigcup_{r=1}^k
+	\{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in P_r \} =
+	\bigcup_{r=1}^k p_1^r$.
 
-	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_{h-1}})$, $\lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	Let us assume that $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_{h-1}})$, $\lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}}) = \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}})$ and $\langle q_{i_h}, \Delta_\wedge(\sigma_{i_1}
 	\sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1}w_1 w_2 \ldots w_{i_h-1} \rangle
@@ -594,5 +596,97 @@ for $i \in \interval{1}{k}$, along with the set of states
 		w_1 w_2 \ldots w_{n-1} \rangle =\\
 		&\langle \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l}, w_1 w_2
 		\ldots w_{n-1} \rangle \in \mathcal{R}(\mathcal{T'}).
+	\end{align*}
+
+	Similarly, we show that every pair of words recognized by $\mathcal{T'}$
+	is also recognized by $\mathcal{T}$. Let
+	\begin{align*}
+		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
+		w_{n-1} w_n \rangle \in \mathcal{R}(\mathcal{T'})
+	\end{align*}
+	for $n \in \mathbb{N}$. Let
+	\begin{align*}
+		\langle p_1, \sigma_1, w_1, p_2 \rangle, \langle p_2, \sigma_2, w_2,
+		p_3 \rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, w_{n-1}, p_n
+		\rangle
+	\end{align*}
+	be a successful path in $\mathcal{T'}$. There exists $j \in \interval{1}{k}$
+	such that $p_n^j \in F_j'$ and $w_n = \psi_j(p_n^j)$. Therefore, there
+	exists $\langle q_n, u_n \rangle \in p_n^j$ such that $q_n \in F$ and $u_n
+	= w_n$. Let us assume there exist $j \in \interval{1}{k}$, $q_i \in Q$ and
+	$u_i, v_i \in \Omega^*$ such that $\langle q_i, u_i \rangle \in p_i^j$,
+	$u_i v_i = w_i u_{i+1}$ and $\langle q_i, \sigma_i, v_i, q_{i+1} \rangle
+	\in \Delta^*$ for $i \in \interval{1}{n-1}$. We have
+	\begin{align*}
+		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
+		&= \begin{aligned}[t]
+			&\begin{aligned}[t] \{
+			&\langle p''', \lambda_j^{\wedge}(p_{i-1}^j,
+			\sigma_{i-1})^{-1}uvw \rangle \mid\\
+			&\exists \langle p', u \rangle \in p_{i-1}^j\\
+			&\exists \langle p', \sigma_{i-1}, v, p'' \rangle \in
+			\Delta\\
+			&\exists \langle p''', w \rangle \in
+			\Delta_\epsilon(p'')(p''' \in P_j) \} \cup
+			\end{aligned}\\
+			&\bigcup_{r = 1}^k{
+			\begin{aligned}[t] \{
+			&\langle p''', \lambda_r^{\wedge}(p_{i-1}^r,
+			\sigma_{i-1})^{-1}uvw \rangle \mid\\
+			&\exists \langle p', u \rangle \in p_{i-1}^r\\
+			&\exists \langle p', \sigma_{i-1}, v, p''
+			\rangle \in \Delta\\
+			&\exists \langle p''', w \rangle \in
+			\Delta_\epsilon(p'')(p''' \in P_r) \}
+			\end{aligned}
+			}
+		\end{aligned}\\
+		&= \bigcup_{r = 1}^k{
+		\begin{aligned}[t] \{
+				&\langle p''', \lambda_r^{\wedge}(p_{i-1}^r,
+		\sigma_{i-1})^{-1}uvw \rangle \mid\\
+		&\exists \langle p', u \rangle \in p_{i-1}^r\\
+		&\exists \langle p', \sigma_{i-1}, v, p''
+		\rangle \in \Delta\\
+		&\exists \langle p''', w \rangle \in
+		\Delta_\epsilon(p'')(p''' \in P_j) \}.
+		\end{aligned}
+		}
+	\end{align*}
+	Since $\langle q_i, u_i \rangle \in p_i^j$ then $|p_i^j| > 0$. Then there
+	exists $r \in \interval{1}{k}$ such that
+	\begin{align*}
+		\langle q_i, u_i \rangle \in \{ &\langle p''',
+		\lambda_r^{\wedge}(p_{i-1}^r,
+		\sigma_{i-1})^{-1}uvw \rangle \mid\\
+		&\exists \langle p', u \rangle \in p_{i-1}^r\\
+		&\exists \langle p', \sigma_{i-1}, v, p'' \rangle \in \Delta\\
+		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')
+		(p''' \in P_j) \}
+	\end{align*}
+	and thus $|p_{i-1}^r| > 0$. Therefore, there exist $q_{i-1} \in Q$ and
+	$u_{i-1} \in \Omega^*$ such that $\langle q_{i-1}, u_{i-1} \rangle \in
+	p_{i-1}^r$.
+	Moreover, there exists $v_{i-1} \in \Omega^*$ such that $\langle q_{i-1},
+	\sigma_{i-1}, v_{i-1}, q_i \rangle \in \Delta^*$ and $u_i =
+	\lambda_r^{\wedge}(p_{i-1}^r, \sigma_{i-1})^{-1}u_{i-1}v_{i-1}$. Thus,
+	$u_{i-1} v_{i-1} = \lambda_r^{\wedge}(p_{i-1}^r, \sigma_{i-1})u_i =
+	w_{i-1}u_i$.
+	We have $v_i = u_i^{-1} w_i u_{i+1}$ for $i \in \interval{1}{n-1}$ and
+	$u_n = w_n$. Therefore,
+	\begin{align*}
+		v_1 v_2 \ldots v_{n-1}
+		&= u_1^{-1} w_1 u_2 u_2^{-1} w_2 u_3 \ldots u_{n-1}^{-1} w_{n-1}
+		u_n\\
+		&= u_1^{-1} w_1 w_2 \ldots w_{n-1} u_n\\
+		&= u_1^{-1} w_1 w_2 \ldots w_n.
+	\end{align*}
+	By definition there exists $q_0 \in S$ such that $\langle q_0, u_1 \rangle
+	\in s = p_1$ and thus $\langle q_0, \epsilon, u_1, q_1 \rangle \in \Delta^*$.
+	Therefore, $\langle q_0, \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2
+	\ldots w_n, q_n \rangle \in \Delta^*$ and
+	\begin{align*}
+		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
+		w_{n-1} w_n \rangle \in \mathcal{R}(\mathcal{T}).
 	\end{align*}
 \end{proof}
