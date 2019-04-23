@@ -1,11 +1,11 @@
 \subsection{Separated finite-state transducers}
 
 \begin{definition}
-	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S,
-	F, \Delta \rangle$ is $k$-separated for $k \in \mathbb{N}$ if and
-	only if there exists a separator $X$ in the graph $\mathcal{G}_\mathcal{T}$
-	inducing a partition $Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. The $k$-separated
-	finite-state transducer $\mathcal{T}$ is denoted by
+	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
+	\Delta \rangle$ is $k$-separated for $k > 1$ if and only if there exists a
+	separator $X$ in the graph $\mathcal{G}_\mathcal{T}$ inducing a partition
+	$Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. The $k$-separated finite-state
+	transducer $\mathcal{T}$ is denoted by
 	\begin{align*}
 		\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta
 		\rangle.
@@ -35,7 +35,8 @@
 		\end{aligned}
 	\end{flalign*}
 	However, $\Delta \cap (Q_i \times (\Sigma_\epsilon \times \Omega^*)
-	\times Q_j) = \emptyset$ for $i \neq j$. Therefore,
+	\times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$.
+	Therefore,
 	\begin{flalign*}
 		\Delta &\subseteq \begin{aligned}[t]
 		&\bigcup_{i=1}^k (Q_i \times (\Sigma_\epsilon \times \Omega^*)

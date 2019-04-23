@@ -137,17 +137,17 @@ of states $R$ inductively. Let
 \end{align*}
 where
 \begin{itemize}
-	\item $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$ for $i \in \interval{1}{k}$,
-	\item $Q_i'^{(1)} = \{ s^i \}$ for $i \in \interval{1}{k}$.
+	\item $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$,
+	\item $Q_i'^{(1)} = \{ s^i \}$
 \end{itemize}
-Let us assume that $\mathcal{A}'^{(n)}$ and $R^{(n)}$ are constructed. The set of
-states introduced at step $n$ is
+for $i \in \interval{1}{k}$. Let us assume that $\mathcal{A}'^{(n)}$ and $R^{(n)}$
+are constructed. The set of states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
 We construct the quasi-deterministic $k$-separated finite-state automaton
 \begin{align*}
-	\mathcal{A'}^{(n+1)} = \langle \Sigma, \vec{Q'}^{(n+1)}, 2^X, s,
+	\mathcal{A'}^{(n+1)} = \langle \Sigma, \vec{Q'}^{(n+1)}, 2^X, \vec{s},
 	\vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
 	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)} \rangle
 \end{align*}

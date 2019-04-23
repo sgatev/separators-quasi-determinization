@@ -9,10 +9,11 @@
 	\end{align*}
 	where
 	\begin{itemize}
-		\item $k > 1$ is the number of components,
+		\item $k > 1$ is a number of components,
 		\item $\Sigma$ and $\Omega$ are respectively input and output
 			alphabets,
-		\item $Q_i$ is a set of quasi-states for $i \in \interval{1}{k}$,
+		\item $Q_i$ is a finite set of quasi-states for $i \in
+			\interval{1}{k}$,
 		\item $X$ is a non-empty separator set such that $X \subseteq Q_i$
 			for $i \in \interval{1}{k}$ and $Q_i \cap Q_j = X$ if $i
 			\neq j$ for $i, j \in \interval{1}{k}$,
@@ -48,8 +49,8 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
-	The separator transition function $\delta_x : \prod_{i=1}^k{Q_i} \times
-	\Sigma \rightarrow X$ is defined as
+	The separator state transition function $\delta_x : \prod_{i=1}^k{Q_i}
+	\times \Sigma \rightarrow X$ is defined as
 	\begin{align*}
 		\delta_x(q, \sigma) = \eta_x(\rho_1(\tau_1(q^1, \sigma)),
 		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
@@ -207,7 +208,7 @@ states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
-We define the longest common component transition output function
+We define the longest common quasi-state transition output function
 $\lambda_i^{\wedge (n)} : Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ as
 \begin{align*}
 	\lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge_{\langle p', u
@@ -228,7 +229,7 @@ for $i \in \interval{1}{k}$. We construct the quasi-subsequential
 $k$-separated finite-state transducer
 \begin{align*}
 	\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega, \vec{Q'}^{(n+1)},
-	2^X, s, \vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
+	2^X, \vec{s}, \vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
 	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)}, \vec{\lambda}^{(n+1)},
 	\vec{\psi}^{(n+1)} \rangle
 \end{align*}
