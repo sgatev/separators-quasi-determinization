@@ -5,16 +5,22 @@
 	\begin{align*}
 		\langle \Sigma, Q, S, F, \Delta \rangle
 	\end{align*}
-	where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $S \subseteq
-	Q$ is a set of start states, $F \subseteq Q$ is a set of final states and
-	$\Delta : Q \times \Sigma_\epsilon \times Q$ is a relation of transitions.
+	where
+	\begin{itemize}
+		\item $\Sigma$ is an alphabet,
+		\item $Q$ is a finite set of states,
+		\item $S \subseteq Q$ is a set of start states,
+		\item $F \subseteq Q$ is a set of final states,
+		\item $\Delta : Q \times \Sigma_\epsilon \times Q$ is a relation of
+			state transitions.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The function of transitions $\Delta_f : Q \times
-	\Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is
-	defined as
+	finite-state automaton. The state transition function $\Delta_f : Q \times
+	\Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is defined
+	as
 	\begin{align*}
 		\Delta_f(q, \sigma) = \{ p \in Q \mid \langle q, \sigma, p \rangle
 		\in \Delta \}.
@@ -23,23 +29,28 @@
 
 \begin{definition}
 	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle
-	\Sigma, Q, S, F, \Delta \rangle$ is a non-empty sequence of transitions
+	\Sigma, Q, S, F, \Delta \rangle$ is a non-empty sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where $q_i \in Q$ for $i \in \interval{1}{n}$, $\sigma_i \in
-	\Sigma_\epsilon$ for $i \in \interval{1}{n-1}$ and $\langle q_i, \sigma_i,
-	q_{i+1} \rangle \in \Delta$ for $i \in \interval{1}{n-1}$. The path $\pi$
-	is successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the
-	path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
+	where
+	\begin{itemize}
+		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
+		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \interval{1}{n-1}$,
+		\item $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i \in
+			\interval{1}{n-1}$.
+	\end{itemize}
+	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
+	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	over $\Sigma$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The generalized relation of transitions $\Delta^* :
-	Q \times \Sigma^* \times Q$ is defined inductively as the least relation
-	such that
+	finite-state automaton. The generalized relation of state transitions
+	$\Delta^* : Q \times \Sigma^* \times Q$ is defined inductively as the least
+	relation such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
 		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
@@ -88,29 +99,40 @@
 	\begin{align*}
 		\langle \Sigma, Q, s, F, \delta \rangle
 	\end{align*}
-	where $\Sigma$ is an alphabet, $Q$ is a finite set of states, $s \in Q$ is
-	a start state, $F \subseteq Q$ is a set of final states and $\delta : Q
-	\times \Sigma \rightarrow Q$ is a function of transitions.
+	where
+	\begin{itemize}
+		\item $\Sigma$ is an alphabet,
+		\item $Q$ is a finite set of states,
+		\item $s \in Q$ is a start state,
+		\item $F \subseteq Q$ is a set of final states,
+		\item $\delta : Q \times \Sigma \rightarrow Q$ is a function of
+			state transitions.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a deterministic finite-state automaton $\mathcal{A} =
 	\langle \Sigma, Q, s, F, \delta \rangle$ is a non-empty sequence of
-	transitions
+	state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where $q_i \in Q$ for $i \in \interval{1}{n}$, $\sigma_i \in \Sigma$ for
-	$i \in \interval{1}{n-1}$ and $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-	\interval{1}{n-1}$. The path $\pi$ is successful if and only if $q_1 = s$
-	and $q_n \in F$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
+	where
+	\begin{itemize}
+		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
+		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
+		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
+			\interval{1}{n-1}$.
+	\end{itemize}
+	The path $\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$. The
+	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of
+	length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ be a
-	deterministic finite-state automaton. The generalized function of
+	deterministic finite-state automaton. The generalized function of state
 	transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined
 	inductively as the least function such that
 	\begin{itemize}

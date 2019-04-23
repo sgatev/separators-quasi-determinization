@@ -5,33 +5,45 @@
 	\begin{align*}
 		\langle \Sigma, \Omega, Q, S, F, \Delta \rangle
 	\end{align*}
-	where $\Sigma$ and $\Omega$ are alphabets, $Q$ is a finite set of states,
-	$S \subseteq Q$ is a set of start states, $F \subseteq Q$ is a set of final
-	states and $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \times Q$ is
-	a relation of transitions and outputs.
+	where
+	\begin{itemize}
+		\item $\Sigma$ and $\Omega$ are respectively input and output
+			alphabets,
+		\item $Q$ is a finite set of states,
+		\item $S \subseteq Q$ is a set of start states,
+		\item $F \subseteq Q$ is a set of final states,
+		\item $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \times
+			Q$ is a relation of state transitions and outputs.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a finite-state transducer $\mathcal{T} = \langle \Sigma,
-	\Omega, Q, S, F, \Delta \rangle$ is a non-empty sequence of transitions
+	\Omega, Q, S, F, \Delta \rangle$ is a non-empty sequence of state
+	transitions and outputs
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
-	where $q_i \in Q$ for $i \in \interval{1}{n}$, $\sigma_i \in
-	\Sigma_\epsilon$ for $i \in \interval{1}{n-1}$, $w_i \in \Omega^*$ for
-	$i \in \interval{1}{n-1}$ and $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle
-	\in \Delta$ for $i \in \interval{1}{n-1}$. The path $\pi$ is successful if
-	and only if $q_1 \in S$ and $q_n \in F$. The label of the path $\pi$ is the
-	word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$. The output of the
-	path $\pi$ is the word $w_1 w_2 \ldots w_{n-1}$ over $\Omega$.
+	where
+	\begin{itemize}
+		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
+		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \interval{1}{n-1}$,
+		\item $w_i \in \Omega^*$ for $i \in \interval{1}{n-1}$,
+		\item $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta$ for
+			$i \in \interval{1}{n-1}$.
+	\end{itemize}
+	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
+	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
+	over $\Sigma$. The output of the path $\pi$ is the word $w_1 w_2
+	\ldots w_{n-1}$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The generalized relation of transitions and outputs
-	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined
+	finite-state transducer. The generalized relation of state transitions and
+	outputs $\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined
 	inductively as the least relation such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, \epsilon, q \rangle \in \Delta^*$ for
@@ -113,37 +125,50 @@
 	\begin{align*}
 		\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle
 	\end{align*}
-	where $\Sigma$ and $\Omega$ are alphabets, $Q$ is a finite set of states,
-	$s \in Q$ is a start state, $F \subseteq Q$ is a set of final states,
-	$\delta : Q \times \Sigma \rightarrow Q$ is a transition function, $\lambda
-	: Q \times \Sigma \rightarrow \Omega^*$ is a transition output function and
-	$\psi : F \rightarrow \Omega^*$ is a final state output function.
+	where
+	\begin{itemize}
+		\item $\Sigma$ and $\Omega$ are respectively input and output
+			alphabets,
+		\item $Q$ is a finite set of states,
+		\item $s \in Q$ is a start state, $F \subseteq Q$ is a set of final
+			states,
+		\item $\delta : Q \times \Sigma \rightarrow Q$ is a state transition
+			function,
+		\item $\lambda : Q \times \Sigma \rightarrow \Omega^*$ is a
+			state transition output function,
+		\item $\psi : F \rightarrow \Omega^*$ is a final state output
+			function.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	A path $\pi$ in a subsequential finite-state transducer $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is a
-	non-empty sequence of transitions
+	non-empty sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
-	where $q_i \in Q$ for $i \in \interval{1}{n}$, $\sigma_i \in \Sigma$ for
-	$i \in \interval{1}{n-1}$, $w_i = \lambda(q_i, \sigma_i)$ for $i \in
-	\interval{1}{n-1}$ and $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-	\interval{1}{n-1}$. The path $\pi$ is successful if and only if $q_1 = s$
-	and $q_n \in F$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$. The
-	output of the path $\pi$ is the word $w_1 w_2 \ldots w_{n-1} \psi(q_n)$
-	over $\Omega$.
+	where
+	\begin{itemize}
+		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
+		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
+		\item $w_i = \lambda(q_i, \sigma_i)$ for $i \in \interval{1}{n-1}$,
+		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
+			\interval{1}{n-1}$.
+	\end{itemize}
+	The path $\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$. The
+	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of
+	length $n-1$ over $\Sigma$. The output of the path $\pi$ is the word $w_1
+	w_2 \ldots w_{n-1} \psi(q_n)$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
 	\rangle$ be a subsequential finite-state transducer. The generalized
-	function of transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is
-	defined inductively as the least function such that
+	function of state transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$
+	is defined inductively as the least function such that
 	\begin{itemize}
 		\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
 		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
@@ -154,8 +179,8 @@
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
 	\rangle$ be a subsequential finite-state transducer. The generalized
-	function of transition outputs $\lambda^* : Q \times \Sigma^* \rightarrow
-	\Omega^*$ is defined inductively as the least function such that
+	function of state transition outputs $\lambda^* : Q \times \Sigma^*
+	\rightarrow \Omega^*$ is defined inductively as the least function such that
 	\begin{itemize}
 		\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
 		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \lambda(\delta^*(q,
