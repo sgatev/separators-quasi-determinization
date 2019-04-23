@@ -211,11 +211,11 @@ $\lambda_i^{\wedge (n)} : Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ as
 	\Delta}{uv}}
 \end{align*}
 for $i \in \interval{1}{k}$. We define the quasi-state successor function
-$succ_i^{(n)} : Q_i'^{(n)} \times \Sigma \rightarrow 2^{P_i \times \Omega^*}$ as
+$succ_i^{(n)} : Q'^{(n)} \times \Sigma \rightarrow 2^{P_i \times \Omega^*}$ as
 \begin{align*}
 	succ_i^{(n)}(q, \sigma) = \begin{aligned}[t]
-	\{ &\langle p''', \lambda_i^{ \wedge (n)}(q, \sigma)^{-1}uvw \rangle \mid\\
-	&\exists \langle p', u \rangle \in q\\
+	\{ &\langle p''', \lambda(q, \sigma)^{-1}uvw \rangle \mid\\
+	&\exists \langle p', u \rangle \in q^i\\
 	&\exists \langle p', \sigma, v, p'' \rangle \in \Delta\\
 	&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')(p''' \in P_i) \}
 	\end{aligned}
@@ -236,6 +236,9 @@ where
 	\item $\psi_i^{(n+1)} = \psi_i^{(n)} \cup \{ \langle q^i, w \rangle
 		\mid \exists q \in R_n \exists \langle p, w \rangle \in q^i
 		(p \in F)\}$,
+	\item $\lambda_i^{(n+1)} = \lambda_i^{(n)} \cup \{ \langle q^i,
+		\sigma, \lambda_i^{\wedge (n)}(q^i, \sigma) \rangle \mid
+		\exists q \in R_n \exists \sigma \in \Sigma \}$,
 	\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
 		succ_i^{(n)}(q^i, \sigma) \rangle \mid \exists q \in R_n
 		\exists \sigma \in \Sigma \}$,
@@ -252,9 +255,6 @@ where
 		\tau_i^{(n+1)} (q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle \mid\\
 		&\exists q \in R_n \exists \sigma \in \Sigma \},
 		\end{aligned}$
-	\item $\lambda_i^{(n+1)} = \lambda_i^{(n)} \cup \{ \langle q^i,
-		\sigma, \lambda_i^{\wedge (n)}(q^i, \sigma) \rangle \mid
-		\exists q \in R_n \exists \sigma \in \Sigma \}$,
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
@@ -355,7 +355,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
 		&= \begin{aligned}[t]
 			&\begin{aligned}[t] \{
-			&\langle p''', \lambda_j^{\wedge}(p_h^j,
+			&\langle p''', \lambda(p_h,
 			\sigma_{i_h})^{-1}uvw \rangle \mid\\
 			&\exists \langle p', u \rangle \in p_h^j\\
 			&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
@@ -365,7 +365,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 			\end{aligned}\\
 			&\bigcup_{r = 1}^k{
 			\begin{aligned}[t] \{
-			&\langle p''', \lambda_r^{\wedge}(p_h^r,
+			&\langle p''', \lambda(p_h,
 			\sigma_{i_h})^{-1}uvw \rangle \mid\\
 			&\exists \langle p', u \rangle \in p_h^r\\
 			&\exists \langle p', \sigma_{i_h}, v, p''
@@ -377,7 +377,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\end{aligned}\\
 		&= \bigcup_{r = 1}^k{
 		\begin{aligned}[t] \{
-		&\langle p''', \lambda_r^{\wedge}(p_h^r,
+		&\langle p''', \lambda(p_h,
 		\sigma_{i_h})^{-1}uvw \rangle \mid\\
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p''
@@ -429,7 +429,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1} w_1 w_2
 		\ldots w_{i_{h+1}-1} \rangle \in\\
 		\bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\langle p''', \lambda(p_h, \sigma_{i_h})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
@@ -442,7 +442,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\langle q_{i_{h+1}}, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
 		\bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\langle p''', \lambda(p_h, \sigma_{i_h})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
@@ -455,7 +455,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
 		\bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\langle p''', \lambda(p_h, \sigma_{i_h})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
@@ -468,7 +468,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
 		\bigcup_{j=1}^k \bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_h^r, \sigma_{i_h})^{-1} uvw
+		\langle p''', \lambda(p_h^r, \sigma_{i_h})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_h^r\\
 		&\exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
@@ -522,7 +522,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{l-1}})^{-1} w_1 w_2
 		\ldots w_{n-1} \rangle \in\\
 		\bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\langle p''', \lambda(p_l, \sigma_{i_l})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_l^r\\
 		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
@@ -535,7 +535,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\langle q_n, \lambda(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
 		\bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\langle p''', \lambda(p_l, \sigma_{i_l})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_l^r\\
 		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
@@ -548,7 +548,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\langle q_n, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
 		\bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\langle p''', \lambda(p_l, \sigma_{i_l})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_l^r\\
 		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
@@ -561,7 +561,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\langle q_n, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
 		\sigma_{i_l})^{-1} w_1 w_2 \ldots w_{n-1} \rangle \in\\
 		\bigcup_{j=1}^k \bigcup_{r=1}^k \begin{aligned}[t] \{
-		\langle p''', \lambda_r^\wedge(p_l^r, \sigma_{i_l})^{-1} uvw
+		\langle p''', \lambda(p_l, \sigma_{i_l})^{-1} uvw
 		\rangle \mid
 		&\exists \langle p', u \rangle \in p_l^r\\
 		&\exists \langle p', \sigma_{i_l}, v, p'' \rangle \in
@@ -621,8 +621,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
 		&= \begin{aligned}[t]
 			&\begin{aligned}[t] \{
-			&\langle p''', \lambda_j^{\wedge}(p_{i-1}^j,
-			\sigma_{i-1})^{-1}uvw \rangle \mid\\
+			&\langle p''', w_{i-1}^{-1}uvw \rangle \mid\\
 			&\exists \langle p', u \rangle \in p_{i-1}^j\\
 			&\exists \langle p', \sigma_{i-1}, v, p'' \rangle \in
 			\Delta\\
@@ -631,8 +630,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 			\end{aligned}\\
 			&\bigcup_{r = 1}^k{
 			\begin{aligned}[t] \{
-			&\langle p''', \lambda_r^{\wedge}(p_{i-1}^r,
-			\sigma_{i-1})^{-1}uvw \rangle \mid\\
+			&\langle p''', w_{i-1}^{-1}uvw \rangle \mid\\
 			&\exists \langle p', u \rangle \in p_{i-1}^r\\
 			&\exists \langle p', \sigma_{i-1}, v, p''
 			\rangle \in \Delta\\
@@ -643,8 +641,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\end{aligned}\\
 		&= \bigcup_{r = 1}^k{
 		\begin{aligned}[t] \{
-				&\langle p''', \lambda_r^{\wedge}(p_{i-1}^r,
-		\sigma_{i-1})^{-1}uvw \rangle \mid\\
+		&\langle p''', w_{i-1}^{-1}uvw \rangle \mid\\
 		&\exists \langle p', u \rangle \in p_{i-1}^r\\
 		&\exists \langle p', \sigma_{i-1}, v, p''
 		\rangle \in \Delta\\
@@ -657,8 +654,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 	exists $r \in \interval{1}{k}$ such that
 	\begin{align*}
 		\langle q_i, u_i \rangle \in \{ &\langle p''',
-		\lambda_r^{\wedge}(p_{i-1}^r,
-		\sigma_{i-1})^{-1}uvw \rangle \mid\\
+		w_{i-1}^{-1}uvw \rangle \mid\\
 		&\exists \langle p', u \rangle \in p_{i-1}^r\\
 		&\exists \langle p', \sigma_{i-1}, v, p'' \rangle \in \Delta\\
 		&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')
@@ -669,9 +665,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 	p_{i-1}^r$.
 	Moreover, there exists $v_{i-1} \in \Omega^*$ such that $\langle q_{i-1},
 	\sigma_{i-1}, v_{i-1}, q_i \rangle \in \Delta^*$ and $u_i =
-	\lambda_r^{\wedge}(p_{i-1}^r, \sigma_{i-1})^{-1}u_{i-1}v_{i-1}$. Thus,
-	$u_{i-1} v_{i-1} = \lambda_r^{\wedge}(p_{i-1}^r, \sigma_{i-1})u_i =
-	w_{i-1}u_i$.
+	w_{i-1}^{-1}u_{i-1}v_{i-1}$. Thus, $u_{i0} v_{i-1} = w_{i-1}u_i$.
 	We have $v_i = u_i^{-1} w_i u_{i+1}$ for $i \in \interval{1}{n-1}$ and
 	$u_n = w_n$. Therefore,
 	\begin{align*}
