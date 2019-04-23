@@ -55,8 +55,8 @@
 	\begin{itemize}
 		\item $S = \bigcup_{i=1}^n{S_i}$,
 		\item $|S_i| > 0$ for $i \in \interval{1}{n}$,
-		\item $S_i \cap S_j = \emptyset$ for $i, j \in \interval{1}{n}, i
-			\neq j$.
+		\item $S_i \cap S_j = \emptyset$ if $i \neq j$ for $i, j \in
+			\interval{1}{n}$.
 	\end{itemize}
 	We write $P^S$ to indicate that the set $P = \{ S_1, S_2, \ldots, S_n \}$
 	is a partition of the set $S$.
@@ -89,17 +89,15 @@
 
 \begin{definition}
 	A binary relation $R \subseteq X \times Y$ is a function if and only if
-	\begin{align*}
-		\forall \langle x', y' \rangle, \langle x'', y'' \rangle \in R
-		(y' \neq y'' \implies x' \neq x'').
-	\end{align*}
+	$x' \neq x''$ if $y' \neq y''$ for $\langle x', y' \rangle, \langle x'',
+	y'' \rangle \in R$.
 	We write $R : X \rightarrow Y$ to indicate that the relation $R \subseteq X
 	\times Y$ is a function and $R(x) = y$ in case $\langle x, y \rangle \in R$.
 \end{definition}
 
 \begin{definition}
-	Let $f: X \rightarrow Y$ be a function. The domain $dom(f)$ and range
-	$rng(f)$ of $f$ are the sets respectively defined as
+	Let $f: X \rightarrow Y$ be a function. The domain and range of $f$ are the
+	sets respectively defined as
 	\begin{align*}
 		dom(f) &= \{ x \in X \mid \exists y \in Y (f(x) = y) \},\\
 		rng(f) &= \{ y \in Y \mid \exists x \in X (f(x) = y) \}.
@@ -107,10 +105,8 @@
 \end{definition}
 
 \begin{definition}
-	A function $f: X \rightarrow Y$ is injective if and only if
-	\begin{align*}
-		\forall x', x'' \in dom(f) (x' \neq x'' \implies f(x') \neq f(x'')).
-	\end{align*}
+	A function $f: X \rightarrow Y$ is injective if and only if $f(x') \neq
+	f(x'')$ if $x' \neq x''$ for $x', x'' \in dom(f)$.
 \end{definition}
 
 \begin{definition}
@@ -124,9 +120,6 @@
 \begin{definition}
 	Let $f: \mathbb{N} \rightarrow \mathbb{R}$ and $g: \mathbb{N} \rightarrow
 	\mathbb{R}$ be functions. We shall write $f \in \mathcal{O}(g)$ if and only
-	if
-	\begin{align*}
-		\exists c > 0 \exists m \in \mathbb{N} \forall n > m
-		(|f(n)| \leq c|g(n)|).
-	\end{align*}
+	if there exist $c > 0$ and $m \in \mathbb{N}$ such that $|f(n)| \leq
+	c|g(n)|$ for every $n > m$.
 \end{definition}
