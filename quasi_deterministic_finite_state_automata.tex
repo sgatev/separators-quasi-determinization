@@ -210,9 +210,10 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 \end{theorem}
 
 \begin{proof}
-	We show that every successful path in $\mathcal{A}$ is also a successful
-	path in $\mathcal{A'}$ by induction on the length of the path.
-	Let
+	First we show that $\mathcal{L}_\mathcal{A} \subseteq
+	\mathcal{L}_\mathcal{A'}$.
+	Let $\sigma_1 \sigma_2 \ldots \sigma_{n-1} \in \mathcal{L}_\mathcal{A}$ for
+	$n > 0$ and let
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
@@ -220,7 +221,10 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	be a successful path in $\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \}
 	\subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
 	\interval{1}{n-1}$ such that $\sigma_{i_j} \in \Sigma$ for $j \in
-	\interval{1}{l}$ and $h < j$ if $i_h < i_j$ for $h, j \in \interval{1}{l}$.
+	\interval{1}{l}$ and $\sigma_j = \epsilon$ if $j \not\in I$. Also, let	
+	$i_h < i_j$ if $h < j$ for $h, j \in \interval{1}{l}$.
+	It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1
+	\sigma_2 \ldots \sigma_{n-1}$.
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
 	Therefore, $q_{i_1} \in \Delta_\epsilon(q_1)
@@ -271,11 +275,14 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		\langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2, \sigma_{i_2},
 		p_3 \rangle, \ldots, \langle p_l, \sigma_{i_l}, p_{l+1} \rangle
 	\end{align*}
-	is a successful path in $\mathcal{A'}$.
+	is a successful path in $\mathcal{A'}$ and thus $\sigma_{i_1} \sigma_{i_2}
+	\ldots \sigma_{i_l} = \sigma_1 \sigma_2 \ldots \sigma_{n-1} \in
+	\mathcal{L}_\mathcal{A'}$.
 
-	Similarly, we show that every successful path in $\mathcal{A'}$ is also a
-	successful path in $\mathcal{A}$.
-	Let
+	Similarly, we show that $\mathcal{L}_\mathcal{A'} \subseteq
+	\mathcal{L}_\mathcal{A}$.
+	Let $\sigma_1 \sigma_2 \ldots \sigma_{n-1} \in \mathcal{L}_\mathcal{A'}$ for
+	$n > 0$ and let
 	\begin{align*}
 		\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3
 		\rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle
@@ -307,7 +314,7 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i \rangle \in
 	\Delta$.
 	There exists $j \in \interval{1}{k}$ and $q_1 \in Q$ such that $q_1 \in
-	p_1^j$ and thus $q_1 \in S$. Therefore
+	p_1^j$ and thus $q_1 \in S$. Therefore,
 	\begin{align*}
 		&\langle q_1, \sigma_1, q_{1,1} \rangle, \langle q_{1,1}, \epsilon,
 		q_{1,2} \rangle, \ldots, \langle q_{1,l_1-1}, \epsilon, q_2
@@ -320,7 +327,8 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		q_{n-1,1}, \epsilon, q_{n-1,2} \rangle, \ldots, \langle
 		q_{n-1,l_{n-1}-1}, \epsilon, q_n \rangle
 	\end{align*}
-	is a successful path in $\mathcal{A}$.
+	is a successful path in $\mathcal{A}$ and thus $\sigma_1 \sigma_2 \ldots
+	\sigma_{n-1} \in \mathcal{L}_\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}
