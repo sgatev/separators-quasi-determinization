@@ -342,8 +342,8 @@ for $i \in \interval{1}{k}$, along with the set of states
 
 \begin{proof}
 	We show that every pair of words recognized by $\mathcal{T}$ is also
-	recognized by $\mathcal{T'}$ by induction on the length of successful paths.
-	Let
+	recognized by $\mathcal{T'}$ by induction on the length of a successful
+	path. Let
 	\begin{align*}
 		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
 		w_{n-1} \rangle \in \mathcal{F}_\mathcal{T}
@@ -361,11 +361,15 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\interval{1}{l}$ and $i_h < i_j$ if $h < j$ for $h, j \in \interval{1}{l}$.
 	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
 	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
-	Therefore, $\langle q_{i_1}, w_1 w_2 \ldots w_{i_1-1} \rangle \in
-	\Delta_\epsilon(q_1) \subseteq \hat{\Delta}_\epsilon(S) = \bigcup_{r=1}^k
-	\{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in P_r \} =
-	\bigcup_{r=1}^k p_1^r$.
-
+	Therefore,
+	\begin{align*}
+		\langle q_{i_1}, w_1 w_2 \ldots w_{i_1-1} \rangle
+		\in \Delta_\epsilon(q_1)
+		&\subseteq \hat{\Delta}_\epsilon(S)\\
+		&= \bigcup_{r=1}^k \{ \langle q, u \rangle \in
+		\hat{\Delta}_\epsilon(S) \mid q \in P_r \}\\
+		&= \bigcup_{r=1}^k p_1^r.
+	\end{align*}
 	Let us assume that $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}})$, $\lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}}) = \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
