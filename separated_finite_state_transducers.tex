@@ -4,8 +4,8 @@
 	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
 	\Delta \rangle$ is $k$-separated for $k > 1$ if and only if there exists a
 	separator $X$ in the graph $\mathcal{G}_\mathcal{T}$ inducing a partition
-	$Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. The $k$-separated finite-state
-	transducer $\mathcal{T}$ is denoted by
+	$Q_X = \{ Q_1, Q_2, \ldots, Q_k\}$. A $k$-separated finite-state transducer
+	$\mathcal{T}$ is denoted by
 	\begin{align*}
 		\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta
 		\rangle.
@@ -53,3 +53,9 @@
 		\Omega^*) \times (Q_i \cup X).
 	\end{flalign*}
 \end{proof}
+
+Based on this result we can modify the construction from theorem
+\ref{t_choffrut_mohri} to take advantage of the fact that the state transition
+function and the state transition output function of the resulting subsequential
+finite-state transducer could be represented as the union of $k$ functions with
+smaller domains.
