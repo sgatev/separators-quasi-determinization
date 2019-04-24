@@ -4,7 +4,7 @@
 	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$ and
 	let $\mathcal{A}$ be the finite-state automaton derived from $\mathcal{R}$
 	by applying the construction in Theorem $\ref{t_thompson}$ such that
-	$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$. Then $\mathcal{A}$
+	$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$. Then $\mathcal{A}$
 	is planar.
 \end{proposition}
 
@@ -30,7 +30,7 @@
 	\begin{case}[$\mathcal{R} = \emptyset$]
 		$\mathcal{A} = \langle \Sigma, \emptyset, \emptyset, \emptyset,
 		\emptyset \rangle$ is the finite-state automaton such that
-		$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$ according to
+		$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$ according to
 		Theorem $\ref{t_thompson}$. The embedding of the graph
 		$\mathcal{G}_{\mathcal{A}}$ in a square is presented in Figure
 		$\ref{fig:f_thompson_1}$.
@@ -51,8 +51,8 @@
 		$\sigma \in \Sigma_\epsilon$]
 		$\mathcal{A} = \langle \Sigma, \{ s, f \}, \{ s \}, \{ f \}, \{
 		\langle s, \sigma, f \rangle \} \rangle$ is the finite-state
-		automaton such that $\mathcal{L}(\mathcal{A}) =
-		\mathcal{L}(\mathcal{R})$ according to Theorem $\ref{t_thompson}$.
+		automaton such that $\mathcal{L}_\mathcal{A} =
+		\mathcal{L}_\mathcal{R}$ according to Theorem $\ref{t_thompson}$.
 		The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square
 		is presented in Figure $\ref{fig:f_thompson_2}$.
 
@@ -76,15 +76,15 @@
 		$\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions]
 		Let $\mathcal{A}' = \langle \Sigma, Q', \{ s' \}, \{ f' \}, \Delta'
 		\rangle$ be the finite-state automaton such that
-		$\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{R}')$ according to
+		$\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{R'}$ according to
 		Theorem $\ref{t_thompson}$. Let $\mathcal{A}'' = \langle \Sigma,
 		Q'', \{ s'' \}, \{ f'' \}, \Delta'' \rangle$ be the finite-state
-		automaton such that $\mathcal{L}(\mathcal{A}'') =
-		\mathcal{L}(\mathcal{R}'')$ according to Theorem $\ref{t_thompson}$.
+		automaton such that $\mathcal{L}_\mathcal{A''} =
+		\mathcal{L}_\mathcal{R''}$ according to Theorem $\ref{t_thompson}$.
 		Then $\mathcal{A} = \langle \Sigma, Q' \cup Q'', \{ s' \}, \{ f'' \},
 		\Delta' \cup \Delta'' \cup \{ \langle f', \epsilon, s'' \rangle \}
 		\rangle$ is the finite-state automaton such that
-		$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$ according to
+		$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$ according to
 		Theorem $\ref{t_thompson}$. The embedding of the graph
 		$\mathcal{G}_{\mathcal{A}}$ in a square is presented in Figure
 		$\ref{fig:f_thompson_3}$.
@@ -121,17 +121,17 @@
 		$\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions]
 		Let $\mathcal{A}' = \langle \Sigma, Q', \{ s' \}, \{ f' \}, \Delta'
 		\rangle$ be the finite-state automaton such that
-		$\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{R}')$ according to
+		$\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{R'}$ according to
 		Theorem $\ref{t_thompson}$. Let $\mathcal{A}'' = \langle \Sigma,
 		Q'', \{ s'' \}, \{ f'' \}, \Delta'' \rangle$ be the finite-state
-		automaton such that $\mathcal{L}(\mathcal{A}'') =
-		\mathcal{L}(\mathcal{R}'')$ according to Theorem $\ref{t_thompson}$.
+		automaton such that $\mathcal{L}_\mathcal{A''} =
+		\mathcal{L}_\mathcal{R''}$ according to Theorem $\ref{t_thompson}$.
 		Then $\mathcal{A} = \langle \Sigma, Q' \cup Q'' \cup \{ s, f\},
 		\{ s \}, \{ f \}, \Delta' \cup \Delta'' \cup \{ \langle s, \epsilon,
 		s' \rangle, \langle s, \epsilon, s'' \rangle, \langle f', \epsilon,
 		f \rangle, \langle f'', \epsilon, f \rangle \} \rangle$ is the
-		finite-state automaton such that $\mathcal{L}(\mathcal{A}) =
-		\mathcal{L}(\mathcal{R})$ according to Theorem $\ref{t_thompson}$.
+		finite-state automaton such that $\mathcal{L}_\mathcal{A} =
+		\mathcal{L}_\mathcal{R}$ according to Theorem $\ref{t_thompson}$.
 		The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square
 		is presented in Figure $\ref{fig:f_thompson_4}$.
 
@@ -177,13 +177,13 @@
 		expression]
 		Let $\mathcal{A}' = \langle \Sigma, Q', \{ s' \}, \{ f' \}, \Delta'
 		\rangle$ be the finite-state automaton such that
-		$\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{R}')$ according to
+		$\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{R'}$ according to
 		Theorem $\ref{t_thompson}$. Then $\mathcal{A} = \langle \Sigma, Q'
 		\cup \{ s, f \}, \{ s \}, \{ f \}, \Delta' \cup \{ \langle s,
 		\epsilon, s' \rangle, \langle f', \epsilon, f \rangle, \langle f',
 		\epsilon, s' \rangle, \langle s, \epsilon, f \rangle \} \rangle$ is
-		the finite-state automaton such that $\mathcal{L}(\mathcal{A}) =
-		\mathcal{L}(\mathcal{R})$ according to Theorem $\ref{t_thompson}$.
+		the finite-state automaton such that $\mathcal{L}_\mathcal{A} =
+		\mathcal{L}_\mathcal{R}$ according to Theorem $\ref{t_thompson}$.
 		The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square
 		is presented in Figure $\ref{fig:f_thompson_5}$.
 

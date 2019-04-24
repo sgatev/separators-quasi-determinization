@@ -4,7 +4,7 @@
 	A regular expression $\mathcal{R}$ over an alphabet $\Sigma$ such that
 	$\Sigma \cap \{ \varnothing, (, ), ., +, * \} = \emptyset$ is a word over
 	$\Sigma \cup \{ \varnothing, (, ), ., +, * \}$ denoting a regular language
-	$\mathcal{L}(\mathcal{R})$ over $\Sigma$ defined by induction:
+	$\mathcal{L}_\mathcal{R}$ over $\Sigma$ defined by induction:
 	\begin{enumerate}
 		\item $\varnothing$ is a regular expression over $\Sigma$
 			denoting the regular language $\emptyset$;
@@ -12,22 +12,23 @@
 			expression over $\Sigma$ denoting the regular language $\{
 			\sigma \}$;
 		\item if $\mathcal{R}_1$ and $\mathcal{R}_2$ are regular expressions
-			over $\Sigma$ denoting the regular languages $\mathcal{L}
-			(\mathcal{R}_1)$ and $\mathcal{L}(\mathcal{R}_2)$
-			respectively then
+			over $\Sigma$ denoting the regular languages
+			$\mathcal{L}_{\mathcal{R}_1}$ and
+			$\mathcal{L}_{\mathcal{R}_2}$ respectively then
 			\begin{itemize}
 				\item $(\mathcal{R}_1.\mathcal{R}_2)$ is a regular
 					expression over $\Sigma$ denoting the
-					regular language $\mathcal{L}(\mathcal{R}_1)
-					\hat{\cdot} \mathcal{L}(\mathcal{R}_2)$;
+					regular language
+					$\mathcal{L}_{\mathcal{R}_1} \hat{\cdot}
+					\mathcal{L}_{\mathcal{R}_2}$;
 				\item $(\mathcal{R}_1+\mathcal{R}_2)$ is a regular
 					expression over $\Sigma$ denoting the
-					regular language $\mathcal{L}(\mathcal{R}_1)
-					\cup \mathcal{L}(\mathcal{R}_2)$;
-				\item $(\mathcal{R}_1*)$ is a regular
-					expression over $\Sigma$ denoting the
-					regular language $\mathcal{L}
-					(\mathcal{R}_1)^*$;
+					regular language
+					$\mathcal{L}_{\mathcal{R}_1} \cup
+					\mathcal{L}_{\mathcal{R}_2}$;
+				\item $(\mathcal{R}_1*)$ is a regular expression
+					over $\Sigma$ denoting the regular language
+					$\mathcal{L}_{\mathcal{R}_1}^*$;
 			\end{itemize}
 		\item there are no other regular expressions over $\Sigma$.
 	\end{enumerate}
@@ -36,5 +37,5 @@
 \begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
 	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. There
 	exists a finite-state automaton $\mathcal{A}$ such that
-	$\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{R})$.
+	$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$.
 \end{theorem}

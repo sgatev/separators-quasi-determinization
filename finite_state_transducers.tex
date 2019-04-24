@@ -81,7 +81,7 @@
 	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all pairs
 	of labels and outputs of successful paths
 	\begin{align*}
-		\mathcal{R}(\mathcal{T}) = \{ \langle u, v \rangle \in \Sigma^*
+		\mathcal{R}_\mathcal{T} = \{ \langle u, v \rangle \in \Sigma^*
 		\times \Omega^* \mid \exists s \in S \exists f \in F (\langle s, u,
 		v, f \rangle \in \Delta^*) \}.
 	\end{align*}
@@ -97,13 +97,15 @@
 
 \begin{proposition}[see \cite{MS19}]
 	Let $\mathcal{T}$ be a finite-state transducer. There exists a trimmed
-	finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}(\mathcal{T})
-	= \mathcal{R}(\mathcal{T'})$.
+	finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}_\mathcal{T}
+	= \mathcal{R}_\mathcal{T'}$.
 \end{proposition}
 
 \begin{definition}
 	A finite-state transducer $\mathcal{T}$ is functional if and only if
-	$\mathcal{R}(\mathcal{T})$ is a function.
+	$\mathcal{R}_\mathcal{T}$ is a function. If $\mathcal{T}$ is a functional
+	finite-state transducer we shall write $\mathcal{F}_\mathcal{T}$ instead of
+	$\mathcal{R}_\mathcal{T}$.
 \end{definition}
 
 \begin{definition}
@@ -194,7 +196,7 @@
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
 	\rangle$ is the set of all pairs of labels and outputs of successful paths
 	\begin{align*}
-		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(w)\psi(f) \rangle
+		\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w)\psi(f) \rangle
 		\in \Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) =
 		f) \}.
 	\end{align*}
@@ -202,7 +204,7 @@
 
 \begin{theorem}[Mohri, see \cite{M96}]\label{t_choffrut_mohri}
 	Let $\mathcal{T}$ be a functional finite-state transducer and let
-	$\mathcal{R}(\mathcal{T})$ have bounded variation. There exists a
+	$\mathcal{F}_\mathcal{T}$ have bounded variation. There exists a
 	subsequential finite-state transducer $\mathcal{T'}$ such that
-	$\mathcal{R}(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
+	$\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$.
 \end{theorem}

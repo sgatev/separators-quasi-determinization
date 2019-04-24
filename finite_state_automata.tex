@@ -74,7 +74,7 @@
 	\langle \Sigma, Q, S, F, \Delta \rangle$ is the set of all labels of
 	successful paths
 	\begin{align*}
-		\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid
+		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid
 		\exists s \in S \exists f \in F (\langle s, w, f \rangle \in
 		\Delta^*) \}.
 	\end{align*}
@@ -147,13 +147,13 @@
 	$\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ is the set of all
 	labels of successful paths
 	\begin{align*}
-		\mathcal{L}(\mathcal{A}) = \{ w \in \Sigma^* \mid \delta^*(s, w)
-		\in F \}.
+		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \delta^*(s, w) \in
+		F \}.
 	\end{align*}
 \end{definition}
 
 \begin{theorem}[Rabin, Scott, see \cite{RS59}]\label{t_rabin_scott}
 	Let $\mathcal{A}$ be a finite-state automaton. There exists a deterministic
-	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}(\mathcal{A'})
-	= \mathcal{L}(\mathcal{A})$.
+	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}_\mathcal{A'}
+	= \mathcal{L}_\mathcal{A}$.
 \end{theorem}

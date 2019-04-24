@@ -178,7 +178,7 @@
 	s, \vec{F}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda},
 	\vec{\psi} \rangle$ is the set of all labels and outputs of successful paths
 	\begin{align*}
-		\mathcal{F}(\mathcal{T}) = \{ \langle w, \lambda^*(s, w)
+		\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(s, w)
 		\psi_j(\delta^*(s, w)^j) \rangle \mid \exists
 		j \in \interval{1}{k}(\delta^*(s, w)^j \in F_j) \}.
 	\end{align*}
@@ -187,7 +187,7 @@
 We now describe a construction that produces a quasi-subsequential $k$-separated
 finite-state transducer $\mathcal{T'}$ from a trimmed functional $k$-separated
 finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F,
-\Delta \rangle$ such that $\mathcal{R}(\mathcal{T})$ has bounded variation.
+\Delta \rangle$ such that $\mathcal{F}_\mathcal{T}$ has bounded variation.
 
 Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
 quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}'^{(n)}$ for
@@ -277,7 +277,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 \begin{lemma}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F, \Delta \rangle$
 	be a trimmed functional $k$-separated finite-state transducer such that
-	$\mathcal{R}(\mathcal{T})$ has bounded variation. Let $\mathcal{T'}^{(i)}$
+	$\mathcal{F}_\mathcal{T}$ has bounded variation. Let $\mathcal{T'}^{(i)}$
 	and $R^{(i)}$ be respectively the quasi-subsequential $k$-separated
 	finite-state transducer and the set of states derived from $\mathcal{T}$ by
 	applying the construction described above for $i > 0$. There exists $n \in
@@ -295,10 +295,10 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\emptyset$ for $i > 0$. Let us assign each state $q \in Q$ a path
 	$\langle q, w_q, v_q, f_q \rangle \in \Delta^*$ for some $f_q \in F$. Such
 	paths exist because $\mathcal{T}$ is trimmed. Let $W = \max_{q \in
-	Q}{|w_q|}$ and $V = \max_{q \in Q}{|v_q|}$. $\mathcal{R}(\mathcal{T})$ has
+	Q}{|w_q|}$ and $V = \max_{q \in Q}{|v_q|}$. $\mathcal{F}_\mathcal{T}$ has
 	bounded variation, therefore, for $k = 2W$ there exists $K \geq
 	0$ such that $d_\Sigma(w', w''') \leq k$ implies
-	$d_\Sigma(\mathcal{R}(\mathcal{T})(w'), \mathcal{R}(\mathcal{T})(w'')) \leq
+	$d_\Sigma(\mathcal{F}_\mathcal{T}(w'), \mathcal{F}_\mathcal{T}(w'')) \leq
 	K$ for every $w', w'' \in \Sigma^*$. Since $R_i \neq \emptyset$ for $i > 0$
 	and $Q$ is finite there exist $i > 0$, $q_i \in
 	R_i$, $j \in \interval{1}{k}$ and $\langle p', u' \rangle \in q_i^j$ such
@@ -326,7 +326,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 		&> K + V\\
 		&> K.
 	\end{align*}
-	This contradicts the precondition that $\mathcal{R}(\mathcal{T})$ has
+	This contradicts the precondition that $\mathcal{F}_\mathcal{T}$ has
 	bounded variation. Therefore, there exists $n \in \mathbb{N}$ such that
 	$R^{(i)} = R^{(i+1)}$ and $\mathcal{T'}^{(i)} = \mathcal{T'}^{(i+1)}$ for
 	$i > n$.
@@ -334,10 +334,10 @@ for $i \in \interval{1}{k}$, along with the set of states
 
 \begin{theorem}
 	Let $\mathcal{T}$ be a trimmed functional $k$-separated finite-state
-	transducer such that $\mathcal{R}(\mathcal{T})$ has bounded variation. Let
-	$\mathcal{T'}$ be the quasi-subsequential $k$-separated finite-state
+	transducer such that $\mathcal{F}_\mathcal{T}$ has bounded variation. Let
+	$\mathcal{T'}$ be the quasi-subsequen\-tial $k$-separated finite-state
 	transducer derived from $\mathcal{T}$ by applying the construction described
-	above. Then $\mathcal{R}(\mathcal{T'}) = \mathcal{R}(\mathcal{T})$.
+	above. Then $\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$.
 \end{theorem}
 
 \begin{proof}
@@ -346,7 +346,7 @@ for $i \in \interval{1}{k}$, along with the set of states
 	Let
 	\begin{align*}
 		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
-		w_{n-1} \rangle \in \mathcal{R}(\mathcal{T})
+		w_{n-1} \rangle \in \mathcal{F}_\mathcal{T}
 	\end{align*}
 	for $n \in \mathbb{N}$. Let
 	\begin{align*}
@@ -618,14 +618,14 @@ for $i \in \interval{1}{k}$, along with the set of states
 		\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l})^{-1}
 		w_1 w_2 \ldots w_{n-1} \rangle =\\
 		&\langle \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l}, w_1 w_2
-		\ldots w_{n-1} \rangle \in \mathcal{R}(\mathcal{T'}).
+		\ldots w_{n-1} \rangle \in \mathcal{F}_\mathcal{T'}.
 	\end{align*}
 
 	Similarly, we show that every pair of words recognized by $\mathcal{T'}$
 	is also recognized by $\mathcal{T}$. Let
 	\begin{align*}
 		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
-		w_{n-1} w_n \rangle \in \mathcal{R}(\mathcal{T'})
+		w_{n-1} w_n \rangle \in \mathcal{F}_\mathcal{T'}
 	\end{align*}
 	for $n \in \mathbb{N}$. Let
 	\begin{align*}
@@ -704,6 +704,6 @@ for $i \in \interval{1}{k}$, along with the set of states
 	\ldots w_n, q_n \rangle \in \Delta^*$ and
 	\begin{align*}
 		\langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
-		w_{n-1} w_n \rangle \in \mathcal{R}(\mathcal{T}).
+		w_{n-1} w_n \rangle \in \mathcal{F}_\mathcal{T}.
 	\end{align*}
 \end{proof}
