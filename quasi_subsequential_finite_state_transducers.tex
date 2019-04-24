@@ -4,7 +4,7 @@
 	A quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}$
 	is a tuple
 	\begin{align*}
-		\langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F}, \vec{\tau},
+		\langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 		\vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi} \rangle
 	\end{align*}
 	where
@@ -17,8 +17,7 @@
 		\item $X$ is a non-empty separator set such that $X \subseteq Q_i$
 			for $i \in \interval{1}{k}$ and $Q_i \cap Q_j = X$ if $i
 			\neq j$ for $i, j \in \interval{1}{k}$,
-		\item $s_i \in Q_i$ is a start quasi-state for $i \in
-			\interval{1}{k}$,
+		\item $s \in \prod_{i=1}^k Q_i$ is a start state,
 		\item $F_i \subseteq Q_i$ is a set of final quasi-states for $i \in
 			\interval{1}{k}$,
 		\item $\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a quasi-state
@@ -38,7 +37,7 @@
 \end{definition}
 
 \begin{remark}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	We use $q^j$ for $j \in \interval{1}{k}$ to denote the $j$-th element of $q
@@ -46,7 +45,7 @@
 \end{remark}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The separator state transition function $\delta_x : \prod_{i=1}^k{Q_i}
@@ -58,7 +57,7 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The quasi-state transition function $\delta_i : \prod_{j=1}^k{Q_j} \times
@@ -71,7 +70,7 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The state transition function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma
@@ -83,7 +82,7 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The state transition output function $\lambda : \prod_{i=1}^k{Q_i} \times
@@ -95,7 +94,7 @@
 
 \begin{definition}
 	A path $\pi$ in a quasi-subsequential $k$-separated finite-state
-	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s},
+	transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s,
 	\vec{F}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda},
 	\vec{\psi} \rangle$ is a non-empty sequence of transitions
 	\begin{align*}
@@ -119,7 +118,7 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The generalized state transition function $\delta^* : \prod_{i=1}^k{Q_i}
@@ -134,7 +133,7 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subse\-quential $k$-separated finite-state transducer.
 	The generalized state transition output function $\lambda^* :
@@ -150,7 +149,7 @@
 \end{definition}
 
 \begin{proposition}\label{p_lambda_derivative}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, \vec{s}, \vec{F},
+	Let $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, s, \vec{F},
 	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda}, \vec{\psi}
 	\rangle$ be a quasi-subsequential $k$-separated finite-state transducer.
 	Then
@@ -174,7 +173,7 @@
 \begin{definition}
 	The relation recognized by a quasi-subsequential $k$-separat\-ed
 	finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X,
-	\vec{s}, \vec{F}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda},
+	s, \vec{F}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x, \vec{\lambda},
 	\vec{\psi} \rangle$ is the set of all labels and outputs of successful paths
 	\begin{align*}
 		\mathcal{R}(\mathcal{T}) = \{ \langle w, \lambda^*(s, w)
@@ -191,7 +190,7 @@ Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
 quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}'$ and the set
 of states $R$ inductively. Let
 \begin{align*}
-	\mathcal{T}'^{(1)} &= \langle \Sigma, \Omega, \vec{Q'}^{(1)}, 2^X, \vec{s},
+	\mathcal{T}'^{(1)} &= \langle \Sigma, \Omega, \vec{Q'}^{(1)}, 2^X, s,
 	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
 	\emptyset, \vec{\emptyset}, \vec{\emptyset} \rangle,\\
 	R^{(0)} &= \emptyset,\\
@@ -229,7 +228,7 @@ for $i \in \interval{1}{k}$. We construct the quasi-subsequential
 $k$-separated finite-state transducer
 \begin{align*}
 	\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega, \vec{Q'}^{(n+1)},
-	2^X, \vec{s}, \vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
+	2^X, s, \vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
 	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)}, \vec{\lambda}^{(n+1)},
 	\vec{\psi}^{(n+1)} \rangle
 \end{align*}
