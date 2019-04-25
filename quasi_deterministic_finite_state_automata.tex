@@ -52,7 +52,7 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The quasi-state transition function
+	$k$-separated finite-state automaton. The state quasi-transition function
 	$\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ is defined
 	as
 	\begin{align*}
@@ -98,7 +98,7 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
 	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The generalized function of
+	$k$-separated finite-state automaton. The generalized function of state
 	transitions $\delta^* : \prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow
 	\prod_{i=1}^k{Q_i}$ is defined inductively as the least function such that
 	\begin{itemize}
@@ -120,9 +120,9 @@
 	\end{align*}
 \end{definition}
 
-We now describe a construction that produces a quasi-deterministic $k$-separated
-finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
-$\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$.
+We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
+finite-state automaton $\mathcal{A}'$ based on a $k$-separated finite-state
+automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$.
 
 Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
 quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}'$ and the set
@@ -131,7 +131,6 @@ of states $R$ inductively. Let
 	\mathcal{A}'^{(1)} &= \langle \Sigma, \vec{Q'}^{(1)}, 2^X, s,
 	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
 	\emptyset \rangle,\\
-	R^{(0)} &= \emptyset,\\
 	R^{(1)} &= \{ s \}
 \end{align*}
 where
@@ -144,11 +143,13 @@ are constructed. The set of states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
-We construct the quasi-deterministic $k$-separated finite-state automaton
+Let
 \begin{align*}
-	\mathcal{A'}^{(n+1)} = \langle \Sigma, \vec{Q'}^{(n+1)}, 2^X, s,
+	\mathcal{A'}^{(n+1)} &= \langle \Sigma, \vec{Q'}^{(n+1)}, 2^X, s,
 	\vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
-	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)} \rangle
+	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)} \rangle,\\
+	R^{(n+1)} &= R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
+	R_n \exists \sigma \in \Sigma \}
 \end{align*}
 where
 \begin{itemize}
@@ -172,11 +173,7 @@ where
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
-for $i \in \interval{1}{k}$, along with the set of states
-\begin{align*}
-	R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
-	R_n \exists \sigma \in \Sigma \}.
-\end{align*}
+for $i \in \interval{1}{k}$.
 
 \begin{lemma}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
@@ -185,32 +182,33 @@ for $i \in \interval{1}{k}$, along with the set of states
 	and the set of states derived from $\mathcal{A}$ by applying the
 	construction described above for $i > 0$. There exists $n \in \mathbb{N}$
 	such that $R^{(i)} = R^{(i+1)}$ and $\mathcal{A'}^{(i)} =
-	\mathcal{A'}^{(i+1)}$ for all $i > n$.
+	\mathcal{A'}^{(i+1)}$ for $i > n$.
 \end{lemma}
 
 \begin{proof}
-	For $i \in \mathbb{N}$ we have $R^{(i)} \subseteq R^{(i+1)} \subseteq
-	\prod_{j=1}^k{2^{P_j}}$. Therefore, there exists $n \leq
-	|\prod_{j=1}^k{2^{P_j}}|$ such that $R^{(n)} = R^{(n+1)}$ and thus $R_{n+1}
-	= \emptyset$. In that case, $\mathcal{A}'^{(n+2)} = \mathcal{A}'^{(n+1)}$
+	By construction, $R^{(i)} \subseteq R^{(i+1)} \subseteq
+	\prod_{j=1}^k{2^{P_j}}$ for $i > 0$. Therefore, there exists $n \leq
+	|\prod_{j=1}^k{2^{P_j}}|$ such that $R^{(n)}
+	= R^{(n+1)}$ and thus $R_{n+1} = \emptyset$. In that case,
+	$\mathcal{A}'^{(n+2)} = \mathcal{A}'^{(n+1)}$
 	and $R^{(n+2)} = R^{(n+1)}$. It follows that $R^{(i)} = R^{(i+1)}$ and
-	$\mathcal{A}^{(i)} = \mathcal{A}^{(i+1)}$ for all $i > n$.
+	$\mathcal{A}^{(i)} = \mathcal{A}^{(i+1)}$ for $i > n$.
 \end{proof}
 
 For the smallest $n \in \mathbb{N}$ such that $R^{(n)} = R^{(n+1)}$ and
-$\mathcal{A'}^{(n)} = \mathcal{A'}^{(n+1)}$ we declare $R = R^{(n)}$ and
+$\mathcal{A'}^{(n)} = \mathcal{A'}^{(n+1)}$ we define $R = R^{(n)}$ and
 $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 
-\begin{theorem}
+\begin{lemma}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton and let $\mathcal{A'}$ be the
 	quasi-deterministic $k$-separated finite-state automaton derived from
 	$\mathcal{A}$ by applying the construction described above. Then
 	$\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{A}$.
-\end{theorem}
+\end{lemma}
 
 \begin{proof}
-	First we show that $\mathcal{L}_\mathcal{A} \subseteq
+	First, we show that $\mathcal{L}_\mathcal{A} \subseteq
 	\mathcal{L}_\mathcal{A'}$.
 	Let $\sigma_1 \sigma_2 \ldots \sigma_{n-1} \in \mathcal{L}_\mathcal{A}$ for
 	$n > 0$ and let
@@ -234,7 +232,7 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
 	$h \in \interval{2}{l}$.
-	We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
+	Let $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
 	\begin{align*}
 		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
@@ -258,7 +256,7 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		\sigma_{i_h} \})) \cap P_j}}
 		= \bigcup_{j=1}^k{p_{h+1}^j}.
 	\end{align*}
-	Otherwise, $h = l$ and if $n - i_l > 2$ then $\sigma_j = \epsilon$ for $j
+	Otherwise, $h = l$ and if $n - i_l > 1$ then $\sigma_j = \epsilon$ for $j
 	\in \interval{i_l+1}{n-1}$. Therefore,
 	\begin{align*}
 		q_n \in \hat{\Delta}_\epsilon(\Delta_f(q_{i_l}, \sigma_{i_l}))
@@ -269,8 +267,9 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		\sigma_{i_l} \})) \cap P_j}}
 		= \bigcup_{j=1}^k{p_{l+1}^j}.
 	\end{align*}
-	We have $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$. Therefore,
-	$p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$ for some $j
+	It follows that $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$.
+	Therefore, $p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$
+	for some $j
 	\in \interval{1}{k}$. Therefore,
 	\begin{align*}
 		\langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2, \sigma_{i_2},
@@ -290,10 +289,11 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\end{align*}
 	be a successful path in $\mathcal{A'}$.
 	There exists $j \in \interval{1}{k}$ such that $p_n^j \in F_j'$ and thus
-	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in p_n^j$ such
-	that $q_n \in F$.
-	Let us assume there exist $j \in \interval{1}{k}$ and $q_i \in Q$ such that
-	$q_i \in p_i^j$ for $i \in \interval{2}{n}$. We have
+	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in F$.
+	Let us assume there exist $q_i \in Q$ and $j \in \interval{1}{k}$ such that
+	$q_i \in p_i^j$ for $i \in \interval{2}{n}$. By definition, $p_{i} =
+	\delta(p_{i-1}, \sigma_{i-1}) = \langle p_i^1, p_i^2, \ldots, p_i^k \rangle$
+	where
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
 		&= \big[ \hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
@@ -302,10 +302,9 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		&= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^r, \{
 		\sigma_{i-1} \})) \cap P_j}.
 	\end{align*}
-	Also, $q_i \in p_i^j$ implies $|p_i^j| > 0$. Then there exists $r \in
-	\interval{1}{k}$ such that $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}_f
-	(p_{i-1}^r, \{ \sigma_{i-1} \})) \cap P_j$ and thus $|p_{i-1}^r| > 0$.
-	Therefore, there exists $q_{i-1} \in Q$ such that $q_{i-1} \in p_{i-1}^r$.
+	Since $q_i \in p_i^j$ implies $|p_i^j| > 0$ there exists $r \in
+	\interval{1}{k}$ such that $|p_{i-1}^r| > 0$.
+	Therefore, there exists $q_{i-1} \in p_{i-1}^r$.
 	Moreover, since $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}
 	(p_{i-1}^r, \{ \sigma_{i-1} \}))$ there exists $l_{i-1} > 0$ and
 	$q_{i-1, h} \in Q$ for $h \in \interval{1}{l_{i-1}}$ such that
@@ -314,7 +313,7 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\interval{1}{l_{i-1}-1}$ and $q_{i-1, l_{i-1}} = q_i$. Specifically, in
 	case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i \rangle \in
 	\Delta$.
-	There exists $j \in \interval{1}{k}$ and $q_1 \in Q$ such that $q_1 \in
+	There exist $q_1 \in Q$ and $j \in \interval{1}{k}$ such that $q_1 \in
 	p_1^j$ and thus $q_1 \in S$. Therefore,
 	\begin{align*}
 		&\langle q_1, \sigma_1, q_{1,1} \rangle, \langle q_{1,1}, \epsilon,
@@ -332,30 +331,41 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\sigma_{n-1} \in \mathcal{L}_\mathcal{A}$.
 \end{proof}
 
-\begin{proposition}
-	Let $\mathcal{A}$ be a $k$-separated finite-state automaton. Let
-	$\mathcal{A'}^{(i)} = \langle \Sigma, \vec{Q'}^{(i)}, 2^X, s,
-	\vec{F'}^{(i)}, \vec{\tau}^{(i)}, \vec{\rho}^{(i)}, \vec{\eta}^{(i)},
-	\eta_x^{(i)} \rangle$ and $R^{(i)}$ be respectively the quasi-deterministic
-	$k$-separa\-ted finite-state automaton and the set of states derived from
-	$\mathcal{A}$ by applying the construction described above for $i > 0$. Let
-	$q^j \in dom(\tau_j^{(i)})$ for all $q \in R_i$ and $j \in \interval{1}{k}$.
-	Let $\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for all $q \in R_i$. Then
-	$\mathcal{A'}^{(i+1)} = \mathcal{A'}^{(i)}$ and $R^{(i+1)} = R^{(i)}$.
+\begin{theorem}
+	Let $\mathcal{A}$ be a $k$-separated finite-state automaton. There exists a
+	quasi-deterministic $k$-separated finite-state automaton $\mathcal{A'}$ such
+	that $\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{A}$.
+\end{theorem}
+
+\begin{proof}
+	Follows directly from the construction and the lemmas.
+\end{proof}
+
+\begin{proposition}\label{p_less_work}
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)} = \langle
+	\Sigma, \vec{Q'}^{(i)}, 2^X, s, \vec{F'}^{(i)}, \vec{\tau}^{(i)},
+	\vec{\rho}^{(i)}, \vec{\eta}^{(i)}, \eta_x^{(i)} \rangle$ and $R^{(i)}$ be
+	respectively the quasi-determi\-nistic $k$-separa\-ted finite-state
+	automaton and the set of states derived from $\mathcal{A}$ by applying the
+	construction described above for $i > 1$. Let $q^j \in dom(\tau_j^{(i)})$
+	for $q \in R_i$ and $j \in \interval{1}{k}$. Let $\eta_x^{(i+1)}(q) \in
+	rng(\eta_x^{(i)})$ for $q \in R_i$. Then $R^{(i+1)} = R^{(i)}$.
 \end{proposition}
 
 \begin{proof}
-	Since $q^j \in dom(\tau_j^{(i)})$ for all $q \in R_i$ and $j \in
-	\interval{1}{k}$ then $F_j'^{(i+1)} = F_j'^{(i)}$, $\tau_j^{(i+1)} =
-	\tau_j^{(i)}$ and $\rho_j^{(i+1)} = \rho_j^{(i)}$. Also, $\eta_j^{(i+1)} =
-	\eta_j^{(i)}$ for all $j \in \interval{1}{k}$ bacause $\eta_x^{(i+1)}(q)
-	\in rng(\eta_x^{(i)})$ for all $q \in R_i$. Therefore,  $Q'^{(i+1)} =
-	Q'^{(i)}$. It follows that $\mathcal{A'}^{(i+1)} = \mathcal{A'}^{(i)}$ and
-	$R^{(i+1)} = R^{(i)}$.
+	Since $q^j \in dom(\tau_j^{(i)})$ for $q \in R_i$ and $j \in
+	\interval{1}{k}$ then $\tau_j^{(i+1)} = \tau_j^{(i)}$ and $\rho_j^{(i+1)} =
+	\rho_j^{(i)}$. Also, $\eta_j^{(i+1)} = \eta_j^{(i)}$ for $j \in
+	\interval{1}{k}$ bacause $\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for $q
+	\in R_i$. Therefore, $\delta^{(i+1)}(q, \sigma) \in R^{(i)}$ for $q \in R_i$
+	and $\sigma \in \Sigma$ and thus $R^{(i+1)} = R^{(i)}$.
 \end{proof}
 
-This result makes it possible to design an efficient algorithm based on the
-construction described above.
+Based on the construction described above and proposition \ref{p_less_work} we can
+design a more efficient algorithm for quasi-determinization of finite-state automata.
+The main procedure is described in algorithm \ref{alg:quasi_det_sfsa}. We shall now
+prove its correctness and provide a runtime complexity bound.
 
 \begin{algorithm}
 \caption{Quasi-determinization of k-separated finite-state automaton}
