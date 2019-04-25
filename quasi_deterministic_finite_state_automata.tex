@@ -220,16 +220,17 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\end{align*}
 	be a successful path in $\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \}
 	\subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
-	\interval{1}{n-1}$ such that $\sigma_{i_j} \in \Sigma$ for $j \in
-	\interval{1}{l}$ and $\sigma_j = \epsilon$ if $j \not\in I$. Also, let	
-	$i_h < i_j$ if $h < j$ for $h, j \in \interval{1}{l}$.
-	It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1
-	\sigma_2 \ldots \sigma_{n-1}$.
-	Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
-	if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
-	Therefore, $q_{i_1} \in \Delta_\epsilon(q_1)
-	\subseteq \hat{\Delta}_\epsilon(S) =
-	\bigcup_{r=1}^k{\hat{\Delta}_\epsilon(S) \cap P_r} = \bigcup_{r=1}^k{p_1^r}$.
+	\interval{1}{n-1}$ such that $\sigma_i \in \Sigma$ if $i \in I$ and
+	$\sigma_i = \epsilon$ otherwise. Also, let $i_h < i_j$ if $h < j$ for $h, j
+	\in \interval{1}{l}$. It follows that $\sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_l} = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$. Let $p_1 = s$. We
+	have $\sigma_{i_1} \in \Sigma$ and if $i_1 > 1$ then $\sigma_j = \epsilon$
+	for $j \in \interval{1}{i_1-1}$. Therefore,
+	\begin{align*}
+		q_{i_1} \in \Delta_\epsilon(q_1) \subseteq \hat{\Delta}_\epsilon(S)
+		= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(S) \cap P_r} =
+		\bigcup_{r=1}^k{p_1^r}.
+	\end{align*}
 	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
 	$h \in \interval{2}{l}$.
@@ -291,7 +292,7 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	There exists $j \in \interval{1}{k}$ such that $p_n^j \in F_j'$ and thus
 	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in p_n^j$ such
 	that $q_n \in F$.
-	Let us assume there is $j \in \interval{1}{k}$ and $q_i \in Q$ such that
+	Let us assume there exist $j \in \interval{1}{k}$ and $q_i \in Q$ such that
 	$q_i \in p_i^j$ for $i \in \interval{2}{n}$. We have
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
@@ -301,7 +302,7 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		&= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^r, \{
 		\sigma_{i-1} \})) \cap P_j}.
 	\end{align*}
-	Also, $q_i \in p_i^j \implies |p_i^j| > 0$. Then there exists $r \in
+	Also, $q_i \in p_i^j$ implies $|p_i^j| > 0$. Then there exists $r \in
 	\interval{1}{k}$ such that $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}_f
 	(p_{i-1}^r, \{ \sigma_{i-1} \})) \cap P_j$ and thus $|p_{i-1}^r| > 0$.
 	Therefore, there exists $q_{i-1} \in Q$ such that $q_{i-1} \in p_{i-1}^r$.
@@ -352,3 +353,62 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	Q'^{(i)}$. It follows that $\mathcal{A'}^{(i+1)} = \mathcal{A'}^{(i)}$ and
 	$R^{(i+1)} = R^{(i)}$.
 \end{proof}
+
+\begin{algorithm}
+\caption{Quasi-determinization of k-separated finite-state automaton}
+\begin{algorithmic}[1]
+
+\Procedure{QuasiDetSFSA}{$k, \Sigma, \vec{Q}, X, S, F, \Delta$}
+\For {$i \in \interval{1}{k}$}
+  \State $P_i \gets Q_i \cup X$
+  \State $s_i \gets \hat{\Delta}_\epsilon(S) \cap P_i$
+  \State $Q_i' \gets \{ s_i \}$
+  \State $Visited_i \gets F_i' \gets \tau_i \gets \rho_i \gets \eta_i \gets
+  	\emptyset$
+\EndFor
+\State $Visited_x \gets \eta_x \gets \emptyset$
+\State $Next \gets \{ s \}$
+\While {$Next \neq \emptyset$}
+  \State $q \gets Extract(Next)$
+
+  \For {$i \in \interval{1}{k}$}
+    \If {$q_i \cap F \neq \emptyset$}
+      \State $F_i' \gets F_i' \cup \{ q_i \}$
+    \EndIf
+  \EndFor
+
+  \For {$\sigma \in \Sigma$}
+    \State $e \gets \emptyset$
+    \For {$i \in \interval{1}{k}$}
+      \State $t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \}))
+      	\cap P_i$
+      \State $Q_i' \gets Q_i' \cup \{ t_i \}$
+      \State $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i \rangle \}$
+      \State $r_i \gets t_i \cap X$
+      \State $\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle \}$
+      \State $e \gets e \cup r_i$
+      \State $Visited_i \gets Visited_i \cup \{ q_i \}$
+    \EndFor
+
+    \State $\eta_x \gets \eta_x \cup \{ \langle q, e \rangle \}$
+    \State $Visited_x \gets Visited_x \cup \{ e \}$
+
+    \For {$i \in \interval{1}{k}$}
+      \State $e_i \gets e \cup t_i$
+      \State $Q_i' \gets Q_i' \cup \{ e_i \}$
+      \State $\eta_i \gets \eta_i \cup \{ \langle t_i, e, e_i \rangle \}$
+    \EndFor
+
+    \If {$ \exists i \in \interval{1}{k}(e_i \not\in Visited_i)$ or $e \not\in
+  	Visited_x$}
+      \State $Next \gets Next \cup \{ \delta(q, \sigma) \}$
+    \EndIf
+  \EndFor
+\EndWhile
+
+\Return $\langle k, \Sigma, \vec{Q'}, s, \vec{F'}, \vec{\tau}, \vec{\rho},
+	\vec{\eta}, \eta_x \rangle$
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
