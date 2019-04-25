@@ -11,13 +11,14 @@
 	\end{align*}
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{p_small_delta}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $\Delta \subseteq \bigcup_{i=1}^k
 	(Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X)$.
 \end{proposition}
 
 \begin{proof}
+	By definition we have
 	\begin{flalign*}
 		\Delta &\subseteq Q \times \Sigma_\epsilon \times Q &\\
 		&= (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
@@ -30,8 +31,9 @@
 			&(X \times \Sigma_\epsilon \times X).
 		\end{aligned}
 	\end{flalign*}
-	However, $\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$
-	if $i \neq j$ for $i, j \in \interval{1}{k}$. Therefore,
+	However, since $\mathcal{A}$ is $k$-separated $\Delta \cap (Q_i \times
+	\Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in
+	\interval{1}{k}$. Therefore,
 	\begin{flalign*}
 		\Delta &\subseteq \begin{aligned}[t]
 			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
@@ -40,15 +42,24 @@
 			(Q_i \times \Sigma_\epsilon \times X) \cup\\
 			&(X \times \Sigma_\epsilon \times X)
 		\end{aligned} &\\
-		&= \bigcup_{i=1}^k \big[ (Q_i \cup X) \times \Sigma_\epsilon
-		\times Q_i \big] \cup \big[ (Q_i \cup X) \times \Sigma_\epsilon
-		\times X \big]\\
+		&= \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon
+		\times Q_i) \cup ((Q_i \cup X) \times \Sigma_\epsilon
+		\times X)\\
 		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times
 		(Q_i \cup X).
 	\end{flalign*}
 \end{proof}
 
-Based on this result we can modify the construction from theorem \ref{t_rabin_scott}
-to take advantage of the fact that the state transition function of the resulting
-deterministic finite-state automaton could be represented as the
-union of $k$ functions with smaller domains.
+We know that the states of a deterministic finite-state automaton $\mathcal{A'} =
+\langle \Sigma, Q', s, F', \delta \rangle$ derived by applying the construction from
+theorem \ref{t_rabin_scott} are subsets of the states of the source finite-state
+automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$. Thus, $|\delta|
+\leq |Q'| \times |\Sigma| = 2^{|Q|} \times |\Sigma|$. However, based on proposition
+\ref{p_small_delta}, if $\mathcal{A}$ is $k$-separated for $k > 1$ we could
+effectively simulate $p = \delta(q, \sigma)$ by decomposing a state $q \subseteq Q$
+into quasi-states $q_i \subseteq Q_i \cup X$ for $i \in \interval{1}{k}$, evaluating
+$p_i = \delta_i(q_i, \sigma)$ for each of the quasi-states and composing the results
+into a new state $p \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i \cup X|} < 2^{|Q|}$ the
+functions $\delta_i$ will be smaller than $\delta$ leading towards a more efficient
+representation of $\mathcal{A'}$. This insight motivates the constructions described
+below.
