@@ -435,30 +435,32 @@ prove its correctness and provide a runtime complexity bound.
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Algorithm \ref{alg:quasi_det_sfsa}
-	completes on input $\mathcal{A}$ in $\mathcal{O}(k|\Sigma|(2^{|X|} +
-	\sum_{i=1}^k |P_i|)(\sum_{i=1}^k |P_i|))$ time.
+	completes on input $\mathcal{A}$ in $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
+	\sum_{i=1}^k 2^{|Q_i|})$ time.
 \end{proposition}
 
 \begin{proof}
-	Line $2$ is executed once and requires at most $\mathcal{O}(\sum_{i=1}^k
-	|P_i|)$ work.
-	Lines $4-7$ are executed $k$ times and require at most
-	$\mathcal{O}(\sum_{i=1}^k |P_i|)$ work.
+	Based on proposition \ref{p_less_work} the condition at line 10 is true at
+	most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times.
+	Line $2$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
+	Lines $4-7$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
+	time.
 	Lines $8-9$ are executed once and require $\mathcal{O}(1)$ work.
-	Line $11$ is executed at most $k$ times and requires $\mathcal{O}(1)$ work.
-	Lines $13-14$ are executed at most $k (2^{|X|} + \sum_{i=1}^k |P_i|)$ times
-	and require at most
-	$\mathcal{O}(\sum_{i=1}^k |P_i|)$ work.
-	Line $16$ is executed at most $ (2^{|X|} + \sum_{i=1}^k |P_i|) |\Sigma|$
-	times and requires $\mathcal{O}(1)$ work.
-	Lines $18-24$ are executed at most $k (2^{|X|} + \sum_{i=1}^k |P_i|)
-	|\Sigma|$ times and require at most $\sum_{i=1}^k |P_i|$ work.
-	Lines $25-26$ are executed at most $ (2^{|X|} + \sum_{i=1}^k |P_i|)
-	|\Sigma|$ times and require $\mathcal{O}(1)$ work.
-	Lines $28-30$ are executed at most $k (2^{|X|} + \sum_{i=1}^k |P_i|)
-	|\Sigma|$ times and require $\mathcal{O}(1)$ work.
-	Lines $31-32$ are executed at most $ (2^{|X|} + \sum_{i=1}^k |P_i|)
-	|\Sigma|$ times and require $\mathcal{O}(k)$ work.
-	Therefore, the total running time of the algorithm is
-	$\mathcal{O}(k|\Sigma|(2^{|X|} + \sum_{i=1}^k |P_i|)(\sum_{i=1}^k |P_i|))$.
+	Line $11$ is executed at most $2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
+	times and requires $\mathcal{O}(1)$ time.
+	Lines $13-14$ are executed at most $k 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
+	times and require at most $\mathcal{O}(|Q|)$ time.
+	Line $16$ is executed at most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
+	times and requires $\mathcal{O}(1)$ time.
+	Lines $18-24$ are executed at most $k |\Sigma| 2^{|X|} (1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times and require at most $\mathcal{O}(|Q|)$ time.
+	Lines $25-26$ are executed at most $|\Sigma| 2^{|X|} (1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(1)$ time.
+	Lines $28-30$ are executed at most $k |\Sigma| 2^{|X|} (1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(1)$ time.
+	Lines $31-32$ are executed at most $|\Sigma| 2^{|X|} (1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(k)$ time.
+	Therefore, the total runtime complexity bound of the algorithm is
+	$\mathcal{O}(k |\Sigma| |Q| 2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$.
 \end{proof}
