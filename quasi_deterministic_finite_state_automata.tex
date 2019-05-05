@@ -430,10 +430,6 @@ prove its correctness and provide a runtime complexity bound.
 \end{algorithm}
 
 \begin{proposition}
-	Algorithm \ref{alg:quasi_det_sfsa} is correct.
-\end{proposition}
-
-\begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Algorithm \ref{alg:quasi_det_sfsa}
 	completes on input $\mathcal{A}$ in $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
@@ -441,9 +437,16 @@ prove its correctness and provide a runtime complexity bound.
 \end{proposition}
 
 \begin{proof}
+	The first time the condition at line 10 is executed $Next = \{ s \}$,
+	$Visited_x = \emptyset$ and $Visited_i = \emptyset$ for $i \in
+	\interval{1}{k}$. 
+
+	
 	Based on proposition \ref{p_less_work} the condition at line 10 is true at
 	most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
 	\sum_{i=1}^k 2^{|Q_i|})$ times.
+	Therefore, Algorithm \ref{alg:quasi_det_sfsa} completes on input
+	$\mathcal{A}$.
 	Line $2$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
 	Lines $4-7$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
 	time.
@@ -462,6 +465,41 @@ prove its correctness and provide a runtime complexity bound.
 	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(1)$ time.
 	Lines $31-32$ are executed at most $|\Sigma| 2^{|X|} (1 +
 	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(k)$ time.
-	Therefore, the total runtime complexity bound of the algorithm is
-	$\mathcal{O}(k |\Sigma| |Q| 2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$.
+	Therefore, the total runtime complexity bound for Algorithm
+	\ref{alg:quasi_det_sfsa} is $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
+	\sum_{i=1}^k 2^{|Q_i|})$.
+\end{proof}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Let $\mathcal{A}_c$ be the
+	quasi-deterministic $k$-separated finite-state automaton produced by
+	Algorithm \ref{alg:quasi_det_sfsa} on input $\mathcal{A}$. Then
+	$\mathcal{A}_c = \mathcal{A}'$.
+\end{proposition}
+
+\begin{proof}
+	The first time the condition at line 10 is executed $Next = \{ s \}$,
+	$\eta_x = \emptyset$, $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$ and $F_i' =
+	\tau_i = \rho_i = \eta_i = \emptyset$ for $i \in \interval{1}{k}$.
+	Therefore, $\langle \Sigma, \vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau},
+	\vec{\rho}, \vec{\eta}, \eta_x \rangle = \mathcal{A}'^{(1)}$ and $Next =
+	R_1$. Let us assume that after $n \geq 0$ iterations of the while loop
+	$\langle \Sigma, \vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho},
+	\vec{\eta}, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$.
+	Let $r = |Next|$. In each iteration of the loop a single element $q$ is
+	extracted from $Next$ in a first-in-first-out order and is then processed
+	at lines 12 through 32. The only time $F'$ is updated within the loop is at
+	line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq \emptyset$ for $i
+	\in \interval{1}{k}$. Therefore, after $n+r$ iterations of the while loop
+	$\vec{F'} = \vec{F'^{(n+r+1)}}$. The only time $\tau$ is updated within the
+	loop is at line 20 where $\langle q_i, \sigma,
+	\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i \rangle$
+	is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in \Sigma$.
+	Therefore, after $n+r$ iterations of the while loop $\vec{\tau} =
+	\vec{\tau^{(n+r+1)}}$. The only time $\rho$ is updated within the loop is at
+	line 22 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
+	\rangle$ is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in
+	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\vec{\rho} =
+	\vec{\rho^{(n+r+1)}}$.
 \end{proof}
