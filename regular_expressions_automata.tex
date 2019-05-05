@@ -60,14 +60,16 @@
 			\centering
 			\begin{tikzpicture}[on grid, auto, scale=0.5]
   				\draw[dotted] (-4, -4) rectangle (4, 4);
-  				\node[state, initial, fill=white, scale=0.75] (s) at (-4, 0) {$s$};
-  				\node[state, accepting, fill=white, scale=0.75] (f) at (4, 0) {$f$};
+  				\node[state, initial, fill=white, scale=0.75] (s) at
+					(-4, 0) {$s$};
+  				\node[state, accepting, fill=white, scale=0.75] (f)
+					at (4, 0) {$f$};
   				\path[->] (s) edge node {$\sigma$} (f);
 			\end{tikzpicture}
 			\caption{Square embedding of the graph corresponding to a
 				finite-state automaton that recognizes the language
 				of the regular expression $\mathcal{R} = \sigma$
-				where $\sigma \in \Sigma\cup\{\epsilon\}$.}
+				where $\sigma \in \Sigma_\epsilon$.}
 			\label{fig:f_thompson_2}
 		\end{figure}
 	\end{case}

@@ -489,17 +489,37 @@ prove its correctness and provide a runtime complexity bound.
 	\vec{\eta}, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$.
 	Let $r = |Next|$. In each iteration of the loop a single element $q$ is
 	extracted from $Next$ in a first-in-first-out order and is then processed
-	at lines 12 through 32. The only time $F'$ is updated within the loop is at
-	line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq \emptyset$ for $i
-	\in \interval{1}{k}$. Therefore, after $n+r$ iterations of the while loop
-	$\vec{F'} = \vec{F'^{(n+r+1)}}$. The only time $\tau$ is updated within the
-	loop is at line 20 where $\langle q_i, \sigma,
+	at lines 12 through 32. The only time $\vec{F'}$ is updated within the while
+	loop is at line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq
+	\emptyset$ for $i \in \interval{1}{k}$. Therefore, after $n+r$ iterations of
+	the while loop $\vec{F'} = \vec{F'}^{(n+r+1)}$. The only time $\tau$ is
+	updated within the while loop is at line 20 where $\langle q_i, \sigma,
 	\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i \rangle$
 	is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in \Sigma$.
 	Therefore, after $n+r$ iterations of the while loop $\vec{\tau} =
-	\vec{\tau^{(n+r+1)}}$. The only time $\rho$ is updated within the loop is at
-	line 22 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
+	\vec{\tau^{(n+r+1)}}$. The only time $\rho$ is updated within the while loop
+	is at line 22 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
 	\rangle$ is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in
 	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\vec{\rho} =
-	\vec{\rho^{(n+r+1)}}$.
+	\vec{\rho^{(n+r+1)}}$. At line 16 we have $e = \emptyset$. The value of $e$
+	is updated at line 23 where $\rho_i(\tau_i(q^i, \sigma))$ is added to it for
+	$i \in \interval{1}{k}$ and $\sigma \in \Sigma$. Therefore, at line 25 we
+	have $e = \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))$ for $\sigma \in
+	\Sigma$. The only time $\eta_x$ is updated within the while loop is at line
+	25 where $\langle q, e \rangle$ is added to it. Therefore, after $n+r$
+	iterations of the while loop $\eta_x = \eta_x^{(n+r+1)}$. The only time
+	$\vec{eta}$ is updated within the while loop is at line 30 where $\langle
+	\tau_i(q^i, \sigma), \eta_x(q, \sigma), \tau_i(q^i, \sigma) \cup \eta_x(q,
+	\sigma) \rangle$ is added to it for $i \in \interval{1}{k}$ and $\sigma \in
+	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\vec{\eta} =
+	\vec{\eta}^{(n+r+1)}$. The only times $\vec{Q'}$ is updated within the while
+	loop is at line 19 where $\tau_i(q^i, \sigma)$ is added to it and at line
+	29 where $\tau_i(q^i, \sigma), \eta_x(q, \sigma)$ is added to it. Therefore,
+	after $n+r$ iterations of the while loop $\vec{Q'} = \vec{Q'}^{(n+r+1)}$.
+	Therefore, after $n+r$ iterations of the while loop $\langle \Sigma,
+	\vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x
+	\rangle = \mathcal{A}'^{(n+r+1)}$. The only time $Next$ is updated within
+	the while loop is at line 32 where $\delta(q, \sigma)$ is added to it for
+	$\sigma \in \Sigma$. Therefore, after $n+r$ iterations of the loop $Next =
+	R_{n+1}$.
 \end{proof}
