@@ -9,8 +9,8 @@
 	a tuple $\langle \sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ where
 	$\sigma_i \in \Sigma$ for $i \in \interval{1}{n}$. The notation
 	$\sigma_1\sigma_2\ldots\sigma_n$ is preferred over $\langle \sigma_1,
-	\sigma_2, \ldots, \sigma_n \rangle$ for words. The length of the word
-	$w$ is denoted by $|w|$.
+	\sigma_2, \ldots, \sigma_n \rangle$ for words. The length of a word $w$ is
+	denoted by $|w|$.
 \end{definition}
 
 \begin{definition}
@@ -36,21 +36,19 @@
 		w' \cdot w'' = \sigma_1' \ldots \sigma_n' \sigma_1'' \ldots
 		\sigma_m''
 	\end{align*}
-	where $w' = \sigma'_1\sigma'_2\ldots\sigma'_n$ is a word of length $n$ over
-	$\Sigma$ and $w'' = \sigma''_1\sigma''_2\ldots\sigma''_m$ is a word of
-	length $m$ over $\Sigma$. The concatenation $w' \cdot w''$ is a word of
-	length $n+m$ over $\Sigma$. It follows that $w \cdot \epsilon = \epsilon
-	\cdot w = w$ for any word $w$. Concatenation of words is an associative
-	operation. That is, $u \cdot (v \cdot w) = (u \cdot v) \cdot w$ for all
-	words $u$, $v$ and $w$. Thus, we shall from now on write $w'w''$ instead of
-	$w' \cdot w''$ without causing ambiguity.
+	where $w' = \sigma'_1\sigma'_2\ldots\sigma'_n$ and $w'' =
+	\sigma''_1\sigma''_2\ldots\sigma''_m$ are words over $\Sigma$. It follows
+	that $w \cdot \epsilon = \epsilon \cdot w = w$ for any word $w$.
+	Concatenation of words is associative, that is $u \cdot (v \cdot w) = (u
+	\cdot v) \cdot w$ for all words $u$, $v$ and $w$. Thus, we shall from now on
+	write $w'w''$ instead of $w' \cdot w''$ without causing ambiguity.
 \end{definition}
 
 \begin{definition}
-	Let $w$ be a word over an alphabet $\Sigma$. The word $u$ is a prefix of
-	$w$ if and only if $w = uv$ for some $v \in \Sigma^*$. It follows that
-	$\epsilon$ is a prefix of every word. The set of all prefixes of the word
-	$w$ is denoted by
+	Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a prefix of the
+	word $w \in \Sigma^*$ if and only if $w = uv$ for some $v \in \Sigma^*$. It
+	follows that $\epsilon$ is a prefix of every word. The set of all prefixes
+	of a word $w \in \Sigma^*$ is denoted by
 	\begin{align*}
 		Pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
 	\end{align*}
@@ -92,8 +90,8 @@
 \end{proof}
 
 \begin{definition}
-	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ for $n \in
-	\mathbb{N}$ is the word
+	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an
+	alphabet $\Sigma$ for $n \in \mathbb{N}$ is the word
 	\begin{align*}
 		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
 		|u|}.
@@ -102,45 +100,26 @@
 	indicate the longest common prefix of words.
 \end{definition}
 
-\begin{definition}
-	Sequential distance of words over an alphabet $\Sigma$ is the function
-	$d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$ defined as
-	\begin{align*}
-		d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
-	\end{align*}
-\end{definition}
+%\begin{definition}
+%	Sequential distance of words over an alphabet $\Sigma$ is the function
+%	$d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$ defined as
+%	\begin{align*}
+%		d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
+%	\end{align*}
+%\end{definition}
 
-\begin{definition}
-	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
-	\rightarrow \Omega^*$ has bounded variation if and only if
-	\begin{align*}
-		\forall k \geq 0 \; \exists K \geq 0 \; \forall u, v \in dom(f)
-		(d_\Sigma(u, v) \leq k \implies d_\Omega(f(u), f(v)) \leq K).
-	\end{align*}
-\end{definition}
+%\begin{definition}
+%	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
+%	\rightarrow \Omega^*$ has bounded variation if and only if
+%	\begin{align*}
+%		\forall k \geq 0 \; \exists K \geq 0 \; \forall u, v \in dom(f)
+%		(d_\Sigma(u, v) \leq k \implies d_\Omega(f(u), f(v)) \leq K).
+%	\end{align*}
+%\end{definition}
 
 \begin{definition}
 	A language $L$ over an alphabet $\Sigma$ is a subset
 	\begin{align*}
 		L \subseteq \Sigma^*.
 	\end{align*}
-\end{definition}
-
-\begin{definition}
-	The class of regular languages over an alphabet $\Sigma$ is defined by
-	induction
-	\begin{enumerate}
-		\item $\emptyset$ is a regular language over $\Sigma$;
-		\item if $\sigma \in \Sigma_\epsilon$ then $\{ \sigma \}$ is a
-			regular language over $\Sigma$,
-		\item if $L_1$ and $L_2$ are regular languages over $\Sigma$ then
-			\begin{itemize}
-				\item $L_1 \hat{\cdot} L_2$ is a regular language
-					over $\Sigma$,
-				\item $L_1 \cup L_2$ is a regular language over
-					$\Sigma$,
-				\item $L_1^*$ is a regular language over $\Sigma$,
-			\end{itemize}
-		\item there are no other regular languages over $\Sigma$.
-	\end{enumerate}
 \end{definition}

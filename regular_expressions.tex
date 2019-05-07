@@ -1,37 +1,36 @@
 \subsection{Regular expressions}
 
 \begin{definition}
-	A regular expression $\mathcal{R}$ over an alphabet $\Sigma$ such that
-	$\Sigma \cap \{ \varnothing, (, ), ., +, * \} = \emptyset$ is a word over
-	$\Sigma \cup \{ \varnothing, (, ), ., +, * \}$ denoting a regular language
-	$\mathcal{L}_\mathcal{R}$ over $\Sigma$ defined by induction:
+	Let $\Sigma$ be an alphabet such that $\Sigma \cap \{ \varnothing, (, ), .,
+	+, * \} = \emptyset$. The class of regular expressions over $\Sigma$ and the
+	languages they denote is defined recursively as the least set such that
 	\begin{enumerate}
-		\item $\varnothing$ is a regular expression over $\Sigma$
-			denoting the regular language $\emptyset$,
+		\item $\varnothing$ is a regular expression denoting the language
+			$\emptyset$,
 		\item if $\sigma \in \Sigma_\epsilon$ then $\sigma$ is a regular
-			expression over $\Sigma$ denoting the regular language $\{
-			\sigma \}$,
+			expression denoting the language $\{ \sigma \}$,
 		\item if $\mathcal{R}_1$ and $\mathcal{R}_2$ are regular expressions
-			over $\Sigma$ denoting the regular languages
-			$\mathcal{L}_{\mathcal{R}_1}$ and
-			$\mathcal{L}_{\mathcal{R}_2}$ respectively then
+			denoting the languages $\mathcal{L}_{\mathcal{R}_1}$
+			and $\mathcal{L}_{\mathcal{R}_2}$ respectively then
 			\begin{itemize}
 				\item $(\mathcal{R}_1.\mathcal{R}_2)$ is a regular
-					expression over $\Sigma$ denoting the
-					regular language
+					expression denoting the language
 					$\mathcal{L}_{\mathcal{R}_1} \hat{\cdot}
 					\mathcal{L}_{\mathcal{R}_2}$,
 				\item $(\mathcal{R}_1+\mathcal{R}_2)$ is a regular
-					expression over $\Sigma$ denoting the
-					regular language
+					expression denoting the language
 					$\mathcal{L}_{\mathcal{R}_1} \cup
 					\mathcal{L}_{\mathcal{R}_2}$,
 				\item $(\mathcal{R}_1*)$ is a regular expression
-					over $\Sigma$ denoting the regular language
-					$\mathcal{L}_{\mathcal{R}_1}^*$,
+					denoting the language
+					$\mathcal{L}_{\mathcal{R}_1}^*$.
 			\end{itemize}
-		\item there are no other regular expressions over $\Sigma$.
 	\end{enumerate}
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. We
+	write $\mathcal{L}_\mathcal{R}$ for the language denoted by $\mathcal{R}$.
 \end{definition}
 
 \begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}

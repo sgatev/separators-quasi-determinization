@@ -49,7 +49,7 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton. The generalized relation of state transitions
-	$\Delta^* : Q \times \Sigma^* \times Q$ is defined inductively as the least
+	$\Delta^* : Q \times \Sigma^* \times Q$ is defined recursively as the least
 	relation such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
@@ -87,8 +87,8 @@
 	\begin{align*}
 		\langle Q, E \rangle
 	\end{align*}
-	where $E = \{ \langle q', q'' \rangle \in Q \times Q \mid \exists \langle
-	q', \sigma, q'' \rangle \in \Delta \}$.
+	where $E = \{ \langle q', q'' \rangle, \langle q'', q' \rangle \in Q \times
+	Q \mid \exists \langle q', \sigma, q'' \rangle \in \Delta \}$.
 \end{definition}
 
 \begin{definition}
@@ -131,7 +131,7 @@
 	Let $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ be a
 	deterministic finite-state automaton. The generalized function of state
 	transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined
-	inductively as the least function such that
+	recursively as the least function such that
 	\begin{itemize}
 		\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
 		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
