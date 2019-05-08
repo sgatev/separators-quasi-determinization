@@ -3,7 +3,7 @@
 In this subsection, we show that finite-state automata derived from regular
 expressions by applying the construction described in Theorem \ref{t_thompson}
 are separated. We first prove that the graphs corresponding to Thompson finite-state
-automata are planar. As a result, the algorithm described in Theorem
+automata are planar. As a consequence, the algorithm described in Theorem
 \ref{t_lipton_tarjan} could be applied to a Thompson finite-state automaton
 $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ to find a separator of size
 $\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We then present an algorithm,
@@ -18,28 +18,33 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 \end{proposition}
 
 \begin{proof}
-	We show by induction on the construction of the finite-state automaton
-	$\mathcal{A}$ that its corresponding graph $\mathcal{G}_{\mathcal{A}}$ can
-	be embedded in a square where
+	We show by induction on the construction of the Thompson finite-state
+	automaton $\mathcal{A}$ that its corresponding graph
+	$\mathcal{G}_{\mathcal{A}}$ can be embedded in a square so that the following
+	properties hold.
 	\begin{enumerate}
-		\item the vertex corresponding to the single start state of
+		\item Only the vertex corresponding to the single start state of
 			$\mathcal{A}$ is mapped to a point that lies on the left
 			side of the square,
-		\item the vertex corresponding to the single final state of
+		\item only the vertex corresponding to the single final state of
 			$\mathcal{A}$ is mapped to a point that lies on the right
 			side of the square,
 		\item the vertices corresponding to all other states of $\mathcal{A}$
 			are mapped to points that lie properly inside the square,
 		\item edges that correspond to transitions of $\mathcal{A}$ are
-			mapped to curves that lie properly inside the square,
+			mapped to simple curves that lie properly inside the square,
 		\item curves intersect only at points corresponding to vertices of
 			$\mathcal{G}_{\mathcal{A}}$.
 	\end{enumerate}
 
 	\begin{case}[$\mathcal{R} = \emptyset$]
-		Then $\mathcal{A}$ is a Type 1 Thompson finite-state automaton. The
+		$\mathcal{A}$ is a Type 1 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_1}$.
+		presented in Figure $\ref{fig:f_thompson_1}$. There are only two
+		vertices and no edges in $\mathcal{G}_{\mathcal{A}}$. Properties 1
+		and 2 hold for $\mathcal{G}_{\mathcal{A}}$ by construction.
+		Properties 3, 4 and 5 hold for $\mathcal{G}_{\mathcal{A}}$ trivially.
+		Therefore, $\mathcal{G}_{\mathcal{A}}$ is planar.
 
 		\begin{figure}[!h]
 			\centering
@@ -57,11 +62,14 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		\end{figure}
 	\end{case}
 
-	\begin{case}[$\mathcal{R} = \sigma$ where
-		$\sigma \in \Sigma_\epsilon$]
-		Then $\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
+	\begin{case}[$\mathcal{R} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
+		$\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_2}$.
+		presented in Figure $\ref{fig:f_thompson_2}$. There are only two
+		vertices and a single edge in $\mathcal{G}_{\mathcal{A}}$. Properties
+		1, 2, 4 and 5 hold for $\mathcal{G}_{\mathcal{A}}$ by construction.
+		Property 3 holds for $\mathcal{G}_{\mathcal{A}}$ trivially.
+		Therefore, $\mathcal{G}_{\mathcal{A}}$ is planar.
 
 		\begin{figure}[!h]
 			\centering
@@ -83,9 +91,19 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		$\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions]
 		Let $\mathcal{A}'$ and $\mathcal{A}''$ be the Thompson finite-state
 		automata constructed from $\mathcal{R}'$ and $\mathcal{R}''$
-		respectively. Then $\mathcal{A}$ is a Type 3 Thompson finite-state
+		respectively. Let properties 1 through 5 hold for
+		$\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Then
+		$\mathcal{A}$ is a Type 3 Thompson finite-state
 		automaton. The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in
-		a square is presented in Figure $\ref{fig:f_thompson_3}$.
+		a square is presented in Figure $\ref{fig:f_thompson_3}$. Properties
+		1 and 2 hold for the vertices corresponding to the start and final
+		states of $\mathcal{A}$ by construction. It is easy to see that
+		property 3 holds for the other vertices of $\mathcal{G}_\mathcal{A}$
+		and property 4 holds for the edge that connects $f'$ and $s''$.
+		Since property 4 holds for $\mathcal{G}_\mathcal{A'}$ and
+		$\mathcal{G}_\mathcal{A''}$, and the only additional edge in
+		$\mathcal{G}_\mathcal{A}$ is mapped properly outside the two
+		subgraphs then property 5 holds for $\mathcal{G}_\mathcal{A}$.
 
 		\begin{figure}[!h]
 			\centering
@@ -119,9 +137,11 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		$\mathcal{R}'$ and $\mathcal{R}''$ are regular expressions]
 		Let $\mathcal{A}'$ and $\mathcal{A}''$ be the Thompson finite-state
 		automata constructed from $\mathcal{R}'$ and $\mathcal{R}''$
-		respectively. Then $\mathcal{A}$ is a Type 4 Thompson finite-state
-		automaton. The embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in
-		a square is presented in Figure $\ref{fig:f_thompson_4}$.
+		respectively. Let properties 1 through 5 hold for
+		$\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Then
+		$\mathcal{A}$ is a Type 4 Thompson finite-state automaton. The
+		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
+		presented in Figure $\ref{fig:f_thompson_4}$.
 
 		\begin{figure}[!h]
 			\centering
@@ -162,10 +182,22 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 	\begin{case}[$\mathcal{R} = \mathcal{R}'*$ where $\mathcal{R}'$ is a regular
 		expression]
 		Let $\mathcal{A}'$ be the Thompson finite-state automaton
-		constructed from $\mathcal{R}'$. Then $\mathcal{A}$ is a Type 5
-		Thompson finite-state automaton. The embedding of the graph
+		constructed from $\mathcal{R}'$. Let properties 1 through 5 hold for
+		$\mathcal{G}_\mathcal{A'}$. Then $\mathcal{A}$ is a Type 5 Thompson
+		finite-state automaton. The embedding of the graph
 		$\mathcal{G}_{\mathcal{A}}$ in a square is presented in Figure
-		$\ref{fig:f_thompson_5}$.
+		$\ref{fig:f_thompson_5}$. Properties 1 and 2 hold for the vertices
+		corresponding to the start and final states of $\mathcal{A}$ by
+		construction. Since properties 1, 2 and 3 hold for
+		$\mathcal{G}_\mathcal{A'}$ then property 3 holds for
+		$\mathcal{G}_\mathcal{A}$. Also, since property 4 holds for 
+		$\mathcal{G}_\mathcal{A'}$ and the edges connecting vertices
+		$s$, $s'$, $f$ and $f'$ lie properly inside the square then property
+		4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, since the new
+		edges are mapped properly outside the square embedding of 
+		$\mathcal{G}_\mathcal{A'}$ and none of them intersect at points that 
+		are not corresponding to vertices then property 5 holds for
+		$\mathcal{G}_\mathcal{A}$.
 
 		\begin{figure}[!h]
 			\centering
@@ -196,12 +228,12 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 			\label{fig:f_thompson_5}
 		\end{figure}
 	\end{case}
-
-	It follows that $\mathcal{G}_{\mathcal{A}}$ is planar.
 \end{proof}
 
 We now describe an algorithm that finds a separator of constant size in a Thompson
-finite-state automaton.
+finite-state automaton. The main procedure is described in Algorithm
+\ref{alg:thompson_separator}. We shall now prove its correctness, show that the
+separator is of constant size and provide a runtime complexity bound.
 
 \SetAlgoNoLine
 \begin{algorithm}[H]
