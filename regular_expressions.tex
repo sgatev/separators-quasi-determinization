@@ -3,7 +3,8 @@
 \begin{definition}
 	Let $\Sigma$ be an alphabet such that $\Sigma \cap \{ \varnothing, (, ), .,
 	+, * \} = \emptyset$. The class of regular expressions over $\Sigma$ and the
-	languages they denote is defined recursively as the least set such that
+	languages they denote is defined recursively as the least subset of
+	$(\Sigma \cup \{ \varnothing, (, ), ., +, * \})^*$ such that
 	\begin{enumerate}
 		\item $\varnothing$ is a regular expression denoting the language
 			$\emptyset$,
@@ -34,7 +35,55 @@
 \end{definition}
 
 \begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
-	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. There
-	exists a finite-state automaton $\mathcal{A}$ such that
-	$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$.
+	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. A
+	finite-state automaton $\mathcal{A}$ such that $\mathcal{L}_\mathcal{A} =
+	\mathcal{L}_\mathcal{R}$ can be constructed from $\mathcal{R}$ recursively
+	as follows.
+	\begin{enumerate}
+		\item If $\mathcal{R} = \varnothing$ then $\mathcal{A} = \langle
+			\Sigma, \{ s, f \}, \{ s \}, \{ f \}, \emptyset \rangle$ is
+			the Type 1 Thompson finite-state automaton constructed from
+			$\mathcal{R}$,
+		\item if $\mathcal{R} = \sigma$ for $\sigma \in \Sigma_\epsilon$
+			then $\mathcal{A} = \langle \Sigma, \{ s, f \}, \{ s \}, \{
+			f \}, \{ \langle s, \sigma, f \rangle \} \rangle$ is the Type
+			2 Thompson finite-state automaton constructed from
+			$\mathcal{R}$,
+		\item if $\mathcal{A}' = \langle \Sigma, Q', S', F', \Delta'
+			\rangle$ and $\mathcal{A}'' = \langle \Sigma, Q'', S'', F'',
+			\Delta'' \rangle$ are Thompson finite-state automata
+			constructed from $\mathcal{R}'$ and $\mathcal{R}''$
+			respectively then
+			\begin{itemize}
+				\item $\mathcal{A} = \langle \Sigma, Q' \cup Q'',
+					S', F'', \Delta \rangle$ is the Type 3
+					Thompson finite-state automaton constructed
+					from $(\mathcal{R}'.\mathcal{R}'')$ where
+					$\Delta = \Delta' \cup \Delta'' \cup \{
+					\langle f', \epsilon, s'' \rangle \mid
+					\exists f' \in F' \; \exists s'' \in S'' \}$,
+				\item $\mathcal{A} = \langle \Sigma, Q' \cup Q''
+					\cup \{ s, f \}, \{ s \}, \{ f \},
+					\Delta \rangle$ is the Type 4 Thompson
+					finite-state automaton constructed from
+					$(\mathcal{R}'+\mathcal{R}'')$ where 
+					$\Delta = \Delta' \cup \Delta'' \cup \{$
+					$\langle s, \epsilon, s' \rangle$,
+					$\langle s, \epsilon, s'' \rangle$,
+					$\langle f', \epsilon, f \rangle$,
+					$\langle f'', \epsilon, f \rangle \mid
+					\exists s' \in S' \; \exists s'' \in S'' \;
+					\exists f' \in F' \; \exists f'' \in F'' \}$,
+				\item $\mathcal{A} = \langle \Sigma, Q' \cup \{ s,
+					f \}, \{ s \}, \{ f \}, \Delta \rangle$
+					is the Type 5 Thompson finite-state automaton
+					constructed from $(\mathcal{R}'*)$ where 
+					$\Delta = \Delta' \cup \{$
+					$\langle s, \epsilon, s' \rangle$,
+					$\langle s, \epsilon, f \rangle$,
+					$\langle f', \epsilon, f \rangle$,
+					$\langle f', \epsilon, s' \rangle \mid
+					\exists s' \in S' \; \exists f' \in F' \}$.
+			\end{itemize}
+	\end{enumerate}
 \end{theorem}

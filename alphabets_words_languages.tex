@@ -44,61 +44,61 @@
 	write $w'w''$ instead of $w' \cdot w''$ without causing ambiguity.
 \end{definition}
 
-\begin{definition}
-	Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a prefix of the
-	word $w \in \Sigma^*$ if and only if $w = uv$ for some $v \in \Sigma^*$. It
-	follows that $\epsilon$ is a prefix of every word. The set of all prefixes
-	of a word $w \in \Sigma^*$ is denoted by
-	\begin{align*}
-		Pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
-	\end{align*}
-\end{definition}
+%\begin{definition}
+%	Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a prefix of the
+%	word $w \in \Sigma^*$ if and only if $w = uv$ for some $v \in \Sigma^*$. It
+%	follows that $\epsilon$ is a prefix of every word. The set of all prefixes
+%	of a word $w \in \Sigma^*$ is denoted by
+%	\begin{align*}
+%		Pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
+%	\end{align*}
+%\end{definition}
 
-\begin{definition}
-	Let $w = uv$ be a word over an alphabet $\Sigma$. We use $u^{-1}w$ to denote
-	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
-	$\epsilon^{-1}w = w$ for any word $w$.
-\end{definition}
+%\begin{definition}
+%	Let $w = uv$ be a word over an alphabet $\Sigma$. We use $u^{-1}w$ to denote
+%	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
+%	$\epsilon^{-1}w = w$ for any word $w$.
+%\end{definition}
 
-\begin{proposition}
-	Let $u$ and $v$ be words over an alphabet $\Sigma$. Then
-	\begin{align*}
-		v^{-1}u^{-1}w = (uv)^{-1}w
-	\end{align*}
-	for every $w \in \Sigma^*$.
-\end{proposition}
+%\begin{proposition}
+%	Let $u$ and $v$ be words over an alphabet $\Sigma$. Then
+%	\begin{align*}
+%		v^{-1}u^{-1}w = (uv)^{-1}w
+%	\end{align*}
+%	for every $w \in \Sigma^*$.
+%\end{proposition}
 
-\begin{proof}
-	We prove the statement by induction on $v$. Let $v = \epsilon$. Then
-	\begin{align*}
-		v^{-1}u^{-1}w
-		&= \epsilon^{-1}u^{-1}w\\
-		&= u^{-1}w\\
-		&= (u\epsilon)^{-1}w\\
-		&= (uv)^{-1}w.
-	\end{align*}
-	Let us assume that the statement holds for $v' \in \Sigma^*$. Let $v = v'a$
-	where $a \in \Sigma$. Then
-	\begin{align*}
-		v^{-1}u^{-1}w
-		&= (v'a)^{-1}u^{-1}w\\
-		&= a^{-1}v'^{-1}u^{-1}w\\
-		&= a^{-1}(uv')^{-1}w\\
-		&= (uv'a)^{-1}w\\
-		&= (uv)^{-1}w.
-	\end{align*}
-\end{proof}
+%\begin{proof}
+%	We prove the statement by induction on $v$. Let $v = \epsilon$. Then
+%	\begin{align*}
+%		v^{-1}u^{-1}w
+%		&= \epsilon^{-1}u^{-1}w\\
+%		&= u^{-1}w\\
+%		&= (u\epsilon)^{-1}w\\
+%		&= (uv)^{-1}w.
+%	\end{align*}
+%	Let us assume that the statement holds for $v' \in \Sigma^*$. Let $v = v'a$
+%	where $a \in \Sigma$. Then
+%	\begin{align*}
+%		v^{-1}u^{-1}w
+%		&= (v'a)^{-1}u^{-1}w\\
+%		&= a^{-1}v'^{-1}u^{-1}w\\
+%		&= a^{-1}(uv')^{-1}w\\
+%		&= (uv'a)^{-1}w\\
+%		&= (uv)^{-1}w.
+%	\end{align*}
+%\end{proof}
 
-\begin{definition}
-	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an
-	alphabet $\Sigma$ for $n \in \mathbb{N}$ is the word
-	\begin{align*}
-		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
-		|u|}.
-	\end{align*}
-	We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to
-	indicate the longest common prefix of words.
-\end{definition}
+%\begin{definition}
+%	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an
+%	alphabet $\Sigma$ for $n \in \mathbb{N}$ is the word
+%	\begin{align*}
+%		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
+%		|u|}.
+%	\end{align*}
+%	We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to
+%	indicate the longest common prefix of words.
+%\end{definition}
 
 %\begin{definition}
 %	Sequential distance of words over an alphabet $\Sigma$ is the function

@@ -22,8 +22,8 @@
 	\Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is defined
 	as
 	\begin{align*}
-		\Delta_f(q, \sigma) = \{ p \in Q \mid \langle q, \sigma, p \rangle
-		\in \Delta \}.
+		\Delta_f(q', \sigma) = \{ q'' \in Q \mid \langle q', \sigma, q''
+		\rangle \in \Delta \}.
 	\end{align*}
 \end{definition}
 
@@ -64,7 +64,7 @@
 	finite-state automaton. The $\epsilon$-closure of a state of $\mathcal{A}$
 	is the function $\Delta_\epsilon : Q \rightarrow 2^Q$ defined as
 	\begin{align*}
-		\Delta_\epsilon(q) = \{ p \in Q \mid \exists \langle q, \epsilon, p
+		\Delta_\epsilon(q') = \{ q'' \in Q \mid \langle q', \epsilon, q''
 			\rangle \in \Delta^* \}.
 	\end{align*}
 \end{definition}
@@ -88,7 +88,8 @@
 		\langle Q, E \rangle
 	\end{align*}
 	where $E = \{ \langle q', q'' \rangle, \langle q'', q' \rangle \in Q \times
-	Q \mid \exists \langle q', \sigma, q'' \rangle \in \Delta \}$.
+	Q \mid \exists \sigma \in \Sigma_\epsilon(\langle q', \sigma, q'' \rangle
+	\in \Delta) \}$.
 \end{definition}
 
 \begin{definition}
