@@ -368,65 +368,70 @@ design a more efficient algorithm for quasi-determinization of finite-state auto
 The main procedure is described in algorithm \ref{alg:quasi_det_sfsa}. We shall now
 prove its correctness and provide a runtime complexity bound.
 
-\begin{algorithm}
-\caption{Quasi-determinization of k-separated finite-state automaton}
+\SetAlgoNoLine
+\begin{algorithm}[H]
+\caption{Quasi-determinization of a k-separated finite-state automaton}
 \label{alg:quasi_det_sfsa}
-\begin{algorithmic}[1]
 
-\Procedure{QuasiDetSFSA}{$k, \Sigma, \vec{Q}, X, S, F, \Delta$}
-\State $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$
-\For {$i \in \interval{1}{k}$}
-  \State $P_i \gets Q_i \cup X$
-  \State $s_i \gets S_\epsilon \cap P_i$
-  \State $Q_i' \gets \{ s_i \}$
-  \State $Visited_i \gets F_i' \gets \tau_i \gets \rho_i \gets \eta_i \gets
-  	\emptyset$
-\EndFor
-\State $Visited_x \gets \eta_x \gets \emptyset$
-\State $Next \gets \{ s \}$
-\While {$Next \neq \emptyset$}
-  \State $q \gets Extract(Next)$
+\DontPrintSemicolon
+\KwIn{$k, \mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$}
+\KwOut{$\langle \Sigma, \vec{Q'}, s, \vec{F'}, \vec{\tau}, \vec{\rho},
+	\vec{\eta}, \eta_x \rangle$}
 
-  \For {$i \in \interval{1}{k}$}
-    \If {$q_i \cap F \neq \emptyset$}
-      \State $F_i' \gets F_i' \cup \{ q_i \}$
-    \EndIf
-  \EndFor
+$S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
 
-  \For {$\sigma \in \Sigma$}
-    \State $e \gets \emptyset$
-    \For {$i \in \interval{1}{k}$}
-      \State $t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \}))
-      	\cap P_i$
-      \State $Q_i' \gets Q_i' \cup \{ t_i \}$
-      \State $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i \rangle \}$
-      \State $r_i \gets t_i \cap X$
-      \State $\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle \}$
-      \State $e \gets e \cup r_i$
-      \State $Visited_i \gets Visited_i \cup \{ q_i \}$
-    \EndFor
+\For {$i \in \interval{1}{k}$} {
+  $P_i \gets Q_i \cup X$\;
+  $s_i \gets S_\epsilon \cap P_i$\;
+  $Q_i' \gets \{ s_i \}$\;
+  $Visited_i \gets F_i' \gets \tau_i \gets \rho_i \gets \eta_i \gets
+  	\emptyset$\;
+}
 
-    \State $\eta_x \gets \eta_x \cup \{ \langle q, e \rangle \}$
-    \State $Visited_x \gets Visited_x \cup \{ e \}$
+$Visited_x \gets \eta_x \gets \emptyset$\;
+$Next \gets \{ s \}$\;
 
-    \For {$i \in \interval{1}{k}$}
-      \State $e_i \gets e \cup t_i$
-      \State $Q_i' \gets Q_i' \cup \{ e_i \}$
-      \State $\eta_i \gets \eta_i \cup \{ \langle t_i, e, e_i \rangle \}$
-    \EndFor
+\While {$Next \neq \emptyset$} {
+	$q \gets Extract(Next)$\;
+	\For {$i \in \interval{1}{k}$} {
+		\If {$q_i \cap F \neq \emptyset$} {
+      			$F_i' \gets F_i' \cup \{ q_i \}$\;
+		}
+	} 
 
-    \If {$ \exists i \in \interval{1}{k}(e_i \not\in Visited_i)$ or $e \not\in
-  	Visited_x$}
-      \State $Next \gets Next \cup \{ \delta(q, \sigma) \}$
-    \EndIf
-  \EndFor
-\EndWhile
+	\For {$\sigma \in \Sigma$} {
+		$e \gets \emptyset$\;
+		\For {$i \in \interval{1}{k}$} {
+      			$t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{
+				\sigma \})) \cap P_i$\;
+      			$Q_i' \gets Q_i' \cup \{ t_i \}$\;
+      			$\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i
+			\rangle \}$\;
+      			$r_i \gets t_i \cap X$\;
+      			$\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle \}$\;
+      			$e \gets e \cup r_i$\;
+      			$Visited_i \gets Visited_i \cup \{ q_i \}$\;
+		}
 
-\Return $\langle k, \Sigma, \vec{Q'}, s, \vec{F'}, \vec{\tau}, \vec{\rho},
+		$\eta_x \gets \eta_x \cup \{ \langle q, e \rangle \}$\;
+    		$Visited_x \gets Visited_x \cup \{ e \}$\;
+
+		\For {$i \in \interval{1}{k}$} {
+      			$e_i \gets e \cup t_i$\;
+      			$Q_i' \gets Q_i' \cup \{ e_i \}$\;
+      			$\eta_i \gets \eta_i \cup \{ \langle t_i, e, e_i \rangle
+			\}$\;
+    		}
+
+    		\If {$ \exists i \in \interval{1}{k}(e_i \not\in Visited_i)$ or $e
+			\not\in Visited_x$} {
+      			$Next \gets Next \cup \{ \delta(q, \sigma) \}$\;
+		} 
+	}
+}
+
+\Return $\langle \Sigma, \vec{Q'}, s, \vec{F'}, \vec{\tau}, \vec{\rho},
 	\vec{\eta}, \eta_x \rangle$
-\EndProcedure
-
-\end{algorithmic}
 \end{algorithm}
 
 \begin{proposition}
