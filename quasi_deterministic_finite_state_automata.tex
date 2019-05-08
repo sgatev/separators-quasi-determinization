@@ -4,27 +4,30 @@
 	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
 	is a tuple
 	\begin{align*}
-		\langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-		\vec{\rho}, \vec{\eta}, \eta_x \rangle
+		\langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
 	\end{align*}
 	where
 	\begin{itemize}
 		\item $k > 1$ is a number of components,
 		\item $\Sigma$ is an alphabet,
-		\item $Q_i$ is a finite set of quasi-states for $i \in
-			\interval{1}{k}$,
+		\item $Q = \langle Q_1, Q_2, \ldots, Q_k \rangle$ and $Q_i$ is a
+			finite set of quasi-states for $i \in \interval{1}{k}$,
 		\item $X$ is a non-empty separator set such that $X \subseteq Q_i$
 			for $i \in \interval{1}{k}$ and $Q_i \cap Q_j = X$ if $i
 			\neq j$ for $i, j \in \interval{1}{k}$,
 		\item $s \in \prod_{i=1}^k Q_i$ is a start state,
-		\item $F_i \subseteq Q_i$ is a set of final quasi-states for $i \in
+		\item $F = \langle F_1, F_2, \ldots, F_k \rangle$ and $F_i \subseteq
+			Q_i$ is a set of final quasi-states for $i \in
 			\interval{1}{k}$,
-		\item $\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a quasi-state
+		\item $\tau = \langle \tau_1, \tau_2, \ldots, \tau_k \rangle$ and
+			$\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a quasi-state
 			quasi-transition function for $i \in \interval{1}{k}$,
-		\item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
+		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ and
+			$\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
 			function such that $dom(\rho_i) = rng(\tau_i)$ for $i \in
 			\interval{1}{k}$,
-		\item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
+		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ and
+			$\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
 			extension function for $i \in \interval{1}{k}$,
 		\item $\eta_x : X^k \rightarrow X$ is a separator extension
 			function.
@@ -32,17 +35,17 @@
 \end{definition}
 
 \begin{remark}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. We write $q^j$ for $j \in
-	\interval{1}{k}$ to denote the $j$-th element of $q \in \prod_{i=1}^k{Q_i}$.
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. We
+	write $q^j$ for $j \in \interval{1}{k}$ to denote the $j$-th element of $q
+	\in \prod_{i=1}^k{Q_i}$.
 \end{remark}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The separator state transition function
-	$\delta_x : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow X$ is defined as
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	separator state transition function $\delta_x : \prod_{i=1}^k{Q_i} \times
+	\Sigma \rightarrow X$ is defined as
 	\begin{align*}
 		\delta_x(q, \sigma) = \eta_x(\rho_1(\tau_1(q^1, \sigma)),
 		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
@@ -50,11 +53,10 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The state quasi-transition function
-	$\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ is defined
-	as
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	state quasi-transition function $\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma
+	\rightarrow Q_i$ is defined as
 	\begin{align*}
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
 		\sigma))
@@ -63,11 +65,10 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The state transition function $\delta :
-	\prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \prod_{i=1}^k{Q_i}$ is defined
-	as
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	state transition function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma
+	\rightarrow \prod_{i=1}^k{Q_i}$ is defined as
 	\begin{align*}
 		\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q,
 		\sigma), \ldots, \delta_k(q, \sigma) \rangle.
@@ -76,9 +77,8 @@
 
 \begin{definition}
 	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
-	$\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ is a non-empty sequence of state
-	transitions
+	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
+	is a non-empty sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
@@ -96,11 +96,11 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle$ be a quasi-deterministic
-	$k$-separated finite-state automaton. The generalized function of state
-	transitions $\delta^* : \prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow
-	\prod_{i=1}^k{Q_i}$ is defined inductively as the least function such that
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	generalized function of state transitions $\delta^* : \prod_{i=1}^k{Q_i}
+	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined recursively as
+	the least function such that
 	\begin{itemize}
 		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
 		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
@@ -111,9 +111,8 @@
 
 \begin{definition}
 	The language recognized by a quasi-deterministic $k$-separa\-ted finite-state
-	automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, s, \vec{F},
-	\vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x \rangle$ is the set of all labels
-	of successful paths
+	automaton $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ is the set of all labels of successful paths
 	\begin{align*}
 		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists i \in
 		\interval{1}{k}(\delta^*(s, w)^i \in F_i \}.
@@ -122,22 +121,22 @@
 
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ based on a $k$-separated finite-state
-automaton $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$.
+automaton $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$.
 
 Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
 quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}'$ and the set
 of states $R$ inductively. Let
 \begin{align*}
-	\mathcal{A}'^{(1)} &= \langle \Sigma, \vec{Q'}^{(1)}, 2^X, s,
-	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
-	\emptyset \rangle,\\
+	\mathcal{A}'^{(1)} &= \langle \Sigma, Q'^{(1)}, 2^X, s,
+	F'^{(1)}, \tau^{(1)}, \rho^{(1)}, \eta^{(1)}, \emptyset \rangle,\\
 	R^{(0)} &= \emptyset,\\
 	R^{(1)} &= \{ s \}
 \end{align*}
 where
 \begin{itemize}
 	\item $s^i = \hat{\Delta}_\epsilon(S) \cap P_i$,
-	\item $Q_i'^{(1)} = \{ s^i \}$
+	\item $Q_i'^{(1)} = \{ s^i \}$,
+	\item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} = \emptyset$
 \end{itemize}
 for $i \in \interval{1}{k}$. Let us assume that $\mathcal{A}'^{(n)}$ and $R^{(n)}$
 are constructed. The set of states introduced at step $n$ is
@@ -146,11 +145,10 @@ are constructed. The set of states introduced at step $n$ is
 \end{align*}
 Let
 \begin{align*}
-	\mathcal{A'}^{(n+1)} &= \langle \Sigma, \vec{Q'}^{(n+1)}, 2^X, s,
-	\vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)}, \vec{\rho}^{(n+1)},
-	\vec{\eta}^{(n+1)}, \eta_x^{(n+1)} \rangle,\\
+	\mathcal{A'}^{(n+1)} &= \langle \Sigma, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
+	\tau^{(n+1)}, \rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)} \rangle,\\
 	R^{(n+1)} &= R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
-	R_n \exists \sigma \in \Sigma \}
+	R_n \; \exists \sigma \in \Sigma \}
 \end{align*}
 where
 \begin{itemize}
@@ -158,26 +156,25 @@ where
 		R_n(q^i \cap F \neq \emptyset) \}$,
 	\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
 		\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i
-		\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma\}$,
+		\rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma\}$,
 	\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
-		\rangle \mid q \in rng(\tau_i^{(n+1)}) \setminus
+		\rangle \mid \exists q \in rng(\tau_i^{(n+1)}) \setminus
 		rng(\tau_i^{(n)}) \}$,
-	\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
-		\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-		\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma \}$,
 	\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \begin{aligned}[t]
 		\{ &\langle \tau_i^{(n+1)} (q^i, \sigma), \eta_x^{(n+1)}(q),
 		\tau_i^{(n+1)} (q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
 		\mid\\
-		&\exists q \in R_n \exists \sigma \in \Sigma \},
+		&\exists q \in R_n \; \exists \sigma \in \Sigma \},
 		\end{aligned}$
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
-for $i \in \interval{1}{k}$.
+for $i \in \interval{1}{k}$ and $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
+\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma)) \rangle \mid \exists q
+\in R_n \; \exists \sigma \in \Sigma \}$.
 
-\begin{lemma}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+\begin{lemma}\label{l_quasidet_1}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)}$ and $R^{(i)}$
 	be respectively the quasi-deterministic $k$-separated finite-state automaton
 	and the set of states derived from $\mathcal{A}$ by applying the
@@ -200,8 +197,8 @@ For the smallest $n \in \mathbb{N}$ such that $R^{(n)} = R^{(n+1)}$ and
 $\mathcal{A'}^{(n)} = \mathcal{A'}^{(n+1)}$ we define $R = R^{(n)}$ and
 $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 
-\begin{lemma}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+\begin{lemma}\label{l_quasidet_2}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton and let $\mathcal{A'}$ be the
 	quasi-deterministic $k$-separated finite-state automaton derived from
 	$\mathcal{A}$ by applying the construction described above. Then
@@ -339,19 +336,20 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 \end{theorem}
 
 \begin{proof}
-	Follows directly from the construction and the lemmas.
+	Follows directly from the construction described above and Lemmas
+	\ref{l_quasidet_1} and \ref{l_quasidet_2}.
 \end{proof}
 
 \begin{proposition}\label{p_less_work}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)} = \langle
-	\Sigma, \vec{Q'}^{(i)}, 2^X, s, \vec{F'}^{(i)}, \vec{\tau}^{(i)},
-	\vec{\rho}^{(i)}, \vec{\eta}^{(i)}, \eta_x^{(i)} \rangle$ and $R^{(i)}$ be
-	respectively the quasi-determi\-nistic $k$-separa\-ted finite-state
-	automaton and the set of states derived from $\mathcal{A}$ by applying the
-	construction described above for $i > 1$. Let $q^j \in dom(\tau_j^{(i)})$
-	for $q \in R_i$ and $j \in \interval{1}{k}$. Let $\eta_x^{(i+1)}(q) \in
-	rng(\eta_x^{(i)})$ for $q \in R_i$. Then $R^{(i+1)} = R^{(i)}$.
+	\Sigma, Q'^{(i)}, 2^X, s, F'^{(i)}, \tau^{(i)}, \rho^{(i)}, \eta^{(i)},
+	\eta_x^{(i)} \rangle$ and $R^{(i)}$ be respectively the quasi-deterministic
+	$k$-separated finite-state automaton and the set of states derived from
+	$\mathcal{A}$ by applying the construction described above for $i > 1$. Let
+	$q^j \in dom(\tau_j^{(i)})$ for $q \in R_i$ and $j \in \interval{1}{k}$. Let
+	$\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for $q \in R_i$. Then $R^{(i+1)} =
+	R^{(i)}$.
 \end{proposition}
 
 \begin{proof}
@@ -363,9 +361,9 @@ $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	and $\sigma \in \Sigma$ and thus $R^{(i+1)} = R^{(i)}$.
 \end{proof}
 
-Based on the construction described above and proposition \ref{p_less_work} we can
+Based on the construction described above and Proposition \ref{p_less_work} we can
 design a more efficient algorithm for quasi-determinization of finite-state automata.
-The main procedure is described in algorithm \ref{alg:quasi_det_sfsa}. We shall now
+The main procedure is described in Algorithm \ref{alg:quasi_det_sfsa}. We shall now
 prove its correctness and provide a runtime complexity bound.
 
 \SetAlgoNoLine
@@ -375,8 +373,7 @@ prove its correctness and provide a runtime complexity bound.
 
 \DontPrintSemicolon
 \KwIn{$k, \mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$}
-\KwOut{$\langle \Sigma, \vec{Q'}, s, \vec{F'}, \vec{\tau}, \vec{\rho},
-	\vec{\eta}, \eta_x \rangle$}
+\KwOut{$\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$}
 
 $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
 
@@ -430,12 +427,11 @@ $Next \gets \{ s \}$\;
 	}
 }
 
-\Return $\langle \Sigma, \vec{Q'}, s, \vec{F'}, \vec{\tau}, \vec{\rho},
-	\vec{\eta}, \eta_x \rangle$
+\Return $\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$
 \end{algorithm}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Algorithm \ref{alg:quasi_det_sfsa}
 	completes on input $\mathcal{A}$ in $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
 	\sum_{i=1}^k 2^{|Q_i|})$ time.
@@ -444,39 +440,33 @@ $Next \gets \{ s \}$\;
 \begin{proof}
 	The first time the condition at line 10 is executed $Next = \{ s \}$,
 	$Visited_x = \emptyset$ and $Visited_i = \emptyset$ for $i \in
-	\interval{1}{k}$. 
-
-	
-	Based on proposition \ref{p_less_work} the condition at line 10 is true at
-	most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
-	\sum_{i=1}^k 2^{|Q_i|})$ times.
-	Therefore, Algorithm \ref{alg:quasi_det_sfsa} completes on input
-	$\mathcal{A}$.
-	Line $2$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
-	Lines $4-7$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
-	time.
-	Lines $8-9$ are executed once and require $\mathcal{O}(1)$ work.
-	Line $11$ is executed at most $2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
-	times and requires $\mathcal{O}(1)$ time.
-	Lines $13-14$ are executed at most $k 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
-	times and require at most $\mathcal{O}(|Q|)$ time.
-	Line $16$ is executed at most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
-	times and requires $\mathcal{O}(1)$ time.
-	Lines $18-24$ are executed at most $k |\Sigma| 2^{|X|} (1 +
-	\sum_{i=1}^k 2^{|Q_i|})$ times and require at most $\mathcal{O}(|Q|)$ time.
-	Lines $25-26$ are executed at most $|\Sigma| 2^{|X|} (1 +
-	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(1)$ time.
-	Lines $28-30$ are executed at most $k |\Sigma| 2^{|X|} (1 +
-	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(1)$ time.
-	Lines $31-32$ are executed at most $|\Sigma| 2^{|X|} (1 +
-	\sum_{i=1}^k 2^{|Q_i|})$ times and require $\mathcal{O}(k)$ time.
-	Therefore, the total runtime complexity bound for Algorithm
-	\ref{alg:quasi_det_sfsa} is $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
-	\sum_{i=1}^k 2^{|Q_i|})$.
+	\interval{1}{k}$. Based on Proposition \ref{p_less_work} the condition at
+	line 10 is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1
+	+ \sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, Algorithm
+	\ref{alg:quasi_det_sfsa} completes on input $\mathcal{A}$.
+	Line $1$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
+	Lines $3-6$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
+	time per iteration. Lines $8-9$ are executed once and require
+	$\mathcal{O}(1)$ time. Line $11$ is executed at most $2^{|X|} (1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times and requires $\mathcal{O}(1)$ time per
+	iteration. Lines $13-15$ are executed at most $k 2^{|X|} (1 + \sum_{i=1}^k
+	2^{|Q_i|})$ times and require at most $\mathcal{O}(|Q|)$ time per iteration.
+	Line $18$ is executed at most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
+	times and requires $\mathcal{O}(1)$ time per iteration. Lines $20-26$ are
+	executed at most $k |\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and
+	require at most $\mathcal{O}(|Q|)$ time per iteration. Lines $28-29$ are
+	executed at most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and
+	require $\mathcal{O}(1)$ time per iteration. Lines $31-33$ are executed at
+	most $k |\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and require at
+	most $\mathcal{O}(|Q|)$ time per iteration. Lines $35-37$ are executed at
+	most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and require
+	$\mathcal{O}(k)$ time per iteration. Therefore, the total runtime complexity
+	bound for Algorithm \ref{alg:quasi_det_sfsa} is $\mathcal{O}(k |\Sigma| |Q|
+	2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$.
 \end{proof}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, \vec{Q}, X, S, F, \Delta \rangle$ be a
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A}_c$ be the
 	quasi-deterministic $k$-separated finite-state automaton produced by
 	Algorithm \ref{alg:quasi_det_sfsa} on input $\mathcal{A}$. Then
@@ -487,44 +477,42 @@ $Next \gets \{ s \}$\;
 	The first time the condition at line 10 is executed $Next = \{ s \}$,
 	$\eta_x = \emptyset$, $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$ and $F_i' =
 	\tau_i = \rho_i = \eta_i = \emptyset$ for $i \in \interval{1}{k}$.
-	Therefore, $\langle \Sigma, \vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau},
-	\vec{\rho}, \vec{\eta}, \eta_x \rangle = \mathcal{A}'^{(1)}$ and $Next =
-	R_1$. Let us assume that after $n \geq 0$ iterations of the while loop
-	$\langle \Sigma, \vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho},
-	\vec{\eta}, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$.
+	Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle
+	= \mathcal{A}'^{(1)}$ and $Next = R_1$. Let us assume that after $n \geq 0$
+	iterations of the while loop $\langle \Sigma, Q', 2^X, s, F', \tau, \rho,
+	\eta, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$.
 	Let $r = |Next|$. In each iteration of the loop a single element $q$ is
 	extracted from $Next$ in a first-in-first-out order and is then processed
-	at lines 12 through 32. The only time $\vec{F'}$ is updated within the while
+	at lines 12 through 32. The only time $F'$ is updated within the while
 	loop is at line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq
 	\emptyset$ for $i \in \interval{1}{k}$. Therefore, after $n+r$ iterations of
-	the while loop $\vec{F'} = \vec{F'}^{(n+r+1)}$. The only time $\tau$ is
-	updated within the while loop is at line 20 where $\langle q_i, \sigma,
+	the while loop $F' = F'^{(n+r+1)}$. The only time $\tau$ is updated within
+	the while loop is at line 20 where $\langle q_i, \sigma,
 	\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i \rangle$
 	is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in \Sigma$.
-	Therefore, after $n+r$ iterations of the while loop $\vec{\tau} =
-	\vec{\tau^{(n+r+1)}}$. The only time $\rho$ is updated within the while loop
+	Therefore, after $n+r$ iterations of the while loop $\tau =
+	\tau^{(n+r+1)}$. The only time $\rho$ is updated within the while loop
 	is at line 22 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
 	\rangle$ is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in
-	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\vec{\rho} =
-	\vec{\rho^{(n+r+1)}}$. At line 16 we have $e = \emptyset$. The value of $e$
+	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\rho =
+	\rho^{(n+r+1)}$. At line 16 we have $e = \emptyset$. The value of $e$
 	is updated at line 23 where $\rho_i(\tau_i(q^i, \sigma))$ is added to it for
 	$i \in \interval{1}{k}$ and $\sigma \in \Sigma$. Therefore, at line 25 we
 	have $e = \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))$ for $\sigma \in
 	\Sigma$. The only time $\eta_x$ is updated within the while loop is at line
 	25 where $\langle q, e \rangle$ is added to it. Therefore, after $n+r$
 	iterations of the while loop $\eta_x = \eta_x^{(n+r+1)}$. The only time
-	$\vec{eta}$ is updated within the while loop is at line 30 where $\langle
+	$\eta$ is updated within the while loop is at line 30 where $\langle
 	\tau_i(q^i, \sigma), \eta_x(q, \sigma), \tau_i(q^i, \sigma) \cup \eta_x(q,
 	\sigma) \rangle$ is added to it for $i \in \interval{1}{k}$ and $\sigma \in
-	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\vec{\eta} =
-	\vec{\eta}^{(n+r+1)}$. The only times $\vec{Q'}$ is updated within the while
+	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\eta =
+	\eta^{(n+r+1)}$. The only times $Q'$ is updated within the while
 	loop is at line 19 where $\tau_i(q^i, \sigma)$ is added to it and at line
 	29 where $\tau_i(q^i, \sigma), \eta_x(q, \sigma)$ is added to it. Therefore,
-	after $n+r$ iterations of the while loop $\vec{Q'} = \vec{Q'}^{(n+r+1)}$.
+	after $n+r$ iterations of the while loop $Q' = Q'^{(n+r+1)}$.
 	Therefore, after $n+r$ iterations of the while loop $\langle \Sigma,
-	\vec{Q'}, 2^X, s, \vec{F'}, \vec{\tau}, \vec{\rho}, \vec{\eta}, \eta_x
-	\rangle = \mathcal{A}'^{(n+r+1)}$. The only time $Next$ is updated within
-	the while loop is at line 32 where $\delta(q, \sigma)$ is added to it for
-	$\sigma \in \Sigma$. Therefore, after $n+r$ iterations of the loop $Next =
-	R_{n+1}$.
+	Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle = \mathcal{A}'^{(n+r+1)}$.
+	The only time $Next$ is updated within the while loop is at line 32 where
+	$\delta(q, \sigma)$ is added to it for $\sigma \in \Sigma$. Therefore, after
+	$n+r$ iterations of the loop $Next = R_{n+1}$.
 \end{proof}
