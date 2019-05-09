@@ -337,31 +337,32 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\ref{l_quasidet_1} and \ref{l_quasidet_2}.
 \end{proof}
 
-\begin{proposition}\label{p_less_work}
+\begin{proposition}\label{p_quasidet_auto_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)} = \langle
 	\Sigma, Q'^{(i)}, 2^X, s, F'^{(i)}, \tau^{(i)}, \rho^{(i)}, \eta^{(i)},
 	\eta_x^{(i)} \rangle$ and $R^{(i)}$ be respectively the quasi-deterministic
 	$k$-separated finite-state automaton and the set of states derived from
 	$\mathcal{A}$ by applying the construction described above for $i > 1$. Let
-	$q^j \in dom(\tau_j^{(i)})$ for $q \in R_i$ and $j \in \interval{1}{k}$. Let
-	$\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for $q \in R_i$. Then $R^{(i+1)} =
-	R^{(i)}$.
+	$\langle q^j, \sigma \rangle \in dom(\tau_j^{(i)})$ for $q \in R_i$, $j \in
+	\interval{1}{k}$ and $\sigma \in \Sigma$. Let $\eta_x^{(i+1)}(q) \in
+	rng(\eta_x^{(i)})$ for $q \in R_i$. Then $R^{(i+1)} = R^{(i)}$.
 \end{proposition}
 
 \begin{proof}
-	Since $q^j \in dom(\tau_j^{(i)})$ for $q \in R_i$ and $j \in
-	\interval{1}{k}$ then $\tau_j^{(i+1)} = \tau_j^{(i)}$ and $\rho_j^{(i+1)} =
-	\rho_j^{(i)}$. Also, $\eta_j^{(i+1)} = \eta_j^{(i)}$ for $j \in
-	\interval{1}{k}$ because $\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for $q
-	\in R_i$. Therefore, $\delta^{(i+1)}(q, \sigma) \in R^{(i)}$ for $q \in R_i$
-	and $\sigma \in \Sigma$, and thus $R^{(i+1)} = R^{(i)}$.
+	Since $\langle q^j, \sigma \rangle\in dom(\tau_j^{(i)})$ for $q \in R_i$, $j
+	\in \interval{1}{k}$ and $\sigma \in \Sigma$ then $\tau_j^{(i+1)} =
+	\tau_j^{(i)}$ and thus $\rho_j^{(i+1)} = \rho_j^{(i)}$. Also,
+	$\eta_j^{(i+1)} = \eta_j^{(i)}$ for $j \in \interval{1}{k}$ because
+	$\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for $q \in R_i$. Therefore,
+	$\delta^{(i+1)}(q, \sigma) \in R^{(i)}$ for $q \in R_i$ and $\sigma \in
+	\Sigma$, and thus $R^{(i+1)} = R^{(i)}$.
 \end{proof}
 
-Based on the construction described above and Proposition \ref{p_less_work} we can
-design a more efficient algorithm for quasi-determinization of finite-state automata.
-The main procedure is described in Algorithm \ref{alg:quasi_det_sfsa}. We shall now
-prove its correctness and provide a runtime complexity bound.
+Based on the construction described above and Proposition \ref{p_quasidet_auto_1} we
+can design a more efficient algorithm for quasi-determinization of finite-state
+automata. The main procedure is described in Algorithm \ref{alg:quasi_det_sfsa}. We
+shall now prove its correctness and provide a runtime complexity bound.
 
 \SetAlgoNoLine
 \begin{algorithm}[H]
@@ -404,7 +405,8 @@ $Next \gets \{ s \}$\;
       			$r_i \gets t_i \cap X$\;
       			$\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle \}$\;
       			$e \gets e \cup r_i$\;
-      			$Visited_i \gets Visited_i \cup \{ q_i \}$\;
+			$Visited_i \gets Visited_i \cup \{ \langle q_i, \sigma
+				\rangle\}$\;
 		}
 
 		$\eta_x \gets \eta_x \cup \{ \langle q, e \rangle \}$\;
@@ -417,8 +419,8 @@ $Next \gets \{ s \}$\;
 			\}$\;
     		}
 
-    		\If {$ \exists i \in \interval{1}{k}(e_i \not\in Visited_i)$ or $e
-			\not\in Visited_x$} {
+		\If {$\exists i \in \interval{1}{k}(\langle e_i, \sigma \rangle
+			\not\in Visited_i)$ or $e \not\in Visited_x$} {
       			$Next \gets Next \cup \{ \delta(q, \sigma) \}$\;
 		} 
 	}
@@ -426,6 +428,28 @@ $Next \gets \{ s \}$\;
 
 \Return $\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$
 \end{algorithm}
+
+\begin{proposition}\label{p_quasidet_auto_2}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Then $Visited_x = rng(\eta_x)$ and
+	$Visited_i = dom(\tau_i)$ for $i \in \interval{1}{k}$ during the execution
+	of Algorithm \ref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
+\end{proposition}
+
+\begin{proof}
+	The first time the condition at line 10 is executed $Visited_x = rng(\eta_x)
+	= \emptyset$ and $Visited_i = dom(\tau_i)$ for $i \in \interval{1}{k}$ for
+	$i \in \interval{1}{k}$. The only time $Visited_x$ and $\eta_x$ are modified
+	inside the while loop is at lines 28 and 29. If $Visited_x = rng(\eta_x)$
+	before the execution of line 28 then $Visited_x = rng(\eta_x)$ after the
+	execution of line 29. The only time $Visited_i$ and $\tau_i$ are modified
+	inside the while loop for $i \in \interval{1}{k}$ is at lines 22 and 26.
+	If $Visited_i = dom(\tau_i)$ before the execution of line 22 then $Visited_i
+	= dom(\tau_i)$ after the execution of line 26 for $i \in \interval{1}{k}$.
+	Therefore, $Visited_x = rng(\eta_x)$ and $Visited_i = dom(\tau_i)$ for $i
+	\in \interval{1}{k}$ during the execution of Algorithm
+	\ref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
+\end{proof}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
@@ -437,7 +461,14 @@ $Next \gets \{ s \}$\;
 \begin{proof}
 	The first time the condition at line 10 is executed $Next = \{ s \}$,
 	$Visited_x = \emptyset$ and $Visited_i = \emptyset$ for $i \in
-	\interval{1}{k}$. Based on Proposition \ref{p_less_work} the condition at
+	\interval{1}{k}$. The only time $Next$ is modified inside the while loop is
+	at line 36 where $\delta(q, \sigma)$ is added to $Next$ for $q \in Next$ and
+	$\sigma \in \Sigma$ only if $e_i \not\in Visited_i$ for $i \in
+	\interval{1}{k}$ and $e \not\in Visited_x$. By construction, $e_i \in
+	rng(\eta_i)$ and thus $e_i = \delta_i(q, \sigma)$ for $i \in
+	\interval{1}{k}$. Based on Proposition \ref{p_quasidet_auto_2}.
+	
+	Therefore, based on Proposition \ref{p_quasidet_auto_1} the condition at
 	line 10 is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1
 	+ \sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, Algorithm
 	\ref{alg:quasi_det_sfsa} completes on input $\mathcal{A}$.
