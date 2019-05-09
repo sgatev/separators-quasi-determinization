@@ -333,8 +333,7 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 \end{theorem}
 
 \begin{proof}
-	Follows directly from the construction described above and Lemmas
-	\ref{l_quasidet_1} and \ref{l_quasidet_2}.
+	Follows directly from Lemmas \ref{l_quasidet_1} and \ref{l_quasidet_2}.
 \end{proof}
 
 \begin{proposition}\label{p_quasidet_auto_1}
@@ -465,8 +464,8 @@ $Next \gets \{ s \}$\;
 	at line 36 where $\delta(q, \sigma)$ is added to $Next$ for $q \in Next$ and
 	$\sigma \in \Sigma$. However, this happens only if $\langle e_i, \sigma
 	\rangle \not\in Visited_i$ for $i \in \interval{1}{k}$ and $e \not\in
-	Visited_x$. By construction, $e_i = \delta_i(q, \sigma) =
-	\delta(q, \sigma)^i$. Therefore, based on Propositions
+	Visited_x$. By construction, $e = \delta_x(q, \sigma)$ and $e_i =
+	\delta_i(q, \sigma) = \delta(q, \sigma)^i$. Therefore, based on Propositions
 	\ref{p_quasidet_auto_1} and \ref{p_quasidet_auto_2} the condition at line 10
 	is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
 	\sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, Algorithm
