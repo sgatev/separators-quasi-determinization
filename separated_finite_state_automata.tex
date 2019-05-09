@@ -1,12 +1,18 @@
 \subsection{Separated finite-state automata}
 
 \begin{definition}
+	The set $X \subseteq Q$ is a separator in a finite-state automaton
+	$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there
+	exists a partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such that
+	$\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq
+	j$ for $i, j \in \interval{1}{k}$.
+\end{definition}
+
+\begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is $k$-separated for $k > 1$ if and only if there exists a state
-	separator subset $X \subseteq Q$ inducing a partition $P_Q = \{ X, Q_1, Q_2,
-	\ldots, Q_k \}$ such that $\Delta \cap (Q_i \times \Sigma_\epsilon \times
-	Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$. The
-	$k$-separated finite-state automaton $\mathcal{A}$ is denoted by
+	\rangle$ is $k$-separated for $k > 1$ if and only if there exists a
+	separator $X \subseteq Q$ inducing a partition $P_Q = \{ X, Q_1, \ldots, Q_k
+	\}$. The $k$-separated finite-state automaton $\mathcal{A}$ is denoted by
 	\begin{align*}
 		\mathcal{A} = \langle \Sigma, Q', X, S, F, \Delta \rangle
 	\end{align*}
@@ -16,16 +22,16 @@
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton and let $X$ be a separator in
-	$\mathcal{G}_\mathcal{A} = \langle Q, E \rangle$ inducing a partition $P_Q =
-	\{ X, Q_1, Q_2, \ldots, Q_k \}$. Then $\mathcal{A}$ is $k$-separated.
+	$\mathcal{G}_\mathcal{A} = \langle Q, E \rangle$. Then $X$ is a separator
+	in $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
 	Since $X$ is a separator in $\mathcal{G}_\mathcal{A}$ then $E \cap (Q_i
 	\times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$. Thus,
-	$\Delta \cap (Q_i \times
-	\Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in
-	\interval{1}{k}$. Therefore, $\mathcal{A}$ is $k$-separated.
+	$\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq
+	j$ for $i, j \in \interval{1}{k}$. Therefore, $X$ is a separator in
+	$\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}\label{p_small_delta}
@@ -67,21 +73,22 @@
 \end{proof}
 
 We know that the states of a deterministic finite-state automaton $\mathcal{A'} =
-\langle \Sigma, Q', s, F', \delta \rangle$ derived by applying the construction from
-Theorem \ref{t_rabin_scott} are subsets of the states of the source finite-state
-automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$. Thus, $|\delta|
-\leq |Q'| \times |\Sigma| = 2^{|Q|} \times |\Sigma|$. In fact, the worst-case bound
-is reached for some finite-state automata (Figure \ref{fig:f_worst_case_det}).
-However, based on Proposition \ref{p_small_delta}, if $\mathcal{A}$ is $k$-separated
-for $k > 1$ we could effectively simulate $p = \delta(q, \sigma)$ by decomposing the
-state transition function $\delta$ into functions $\delta_i : (Q_i \cup X) \times
-\Sigma \rightarrow (Q_i \cup X)$ for $i \in \interval{1}{k}$ and the state $q
-\subseteq Q$ into quasi-states $q_i \subseteq Q_i \cup X$ for $i \in
-\interval{1}{k}$, evaluating $p_i = \delta_i(q_i, \sigma)$ for each of the
-quasi-states and composing the results into the new state $p = \bigcup_{i=1}^k q_i
-\subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the functions $\delta_i$
-will be smaller than $\delta$ leading towards a more efficient representation of
-$\mathcal{A'}$. This insight motivates the constructions described below.
+\langle \Sigma, Q', s, F', \delta \rangle$ derived by applying the construction
+described in Theorem \ref{t_rabin_scott} are subsets of the states of the source
+finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$.
+Thus, $|\delta| \leq |Q'| \times |\Sigma| = 2^{|Q|} \times |\Sigma|$. In fact, the
+worst-case bound is reached for some finite-state automata (Figure
+\ref{fig:f_worst_case_det}). However, based on Proposition \ref{p_small_delta}, if
+$\mathcal{A}$ is $k$-separated for $k > 1$ we could effectively simulate $p =
+\delta(q, \sigma)$ by decomposing the state transition function $\delta$ into
+functions $\delta_i : (Q_i \cup X) \times \Sigma \rightarrow (Q_i \cup X)$ for $i
+\in \interval{1}{k}$ and the state $q \subseteq Q$ into quasi-states $q_i \subseteq
+Q_i \cup X$ for $i \in \interval{1}{k}$, evaluating $p_i = \delta_i(q_i, \sigma)$
+for each of the quasi-states and composing the results into the new state $p =
+\bigcup_{i=1}^k q_i \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the
+functions $\delta_i$ will be smaller than $\delta$ leading towards a more efficient
+representation of $\mathcal{A'}$. This insight motivates the construction described
+below.
 
 \begin{figure}[!h]
 	\centering
@@ -103,7 +110,7 @@ $\mathcal{A'}$. This insight motivates the constructions described below.
 		\path[->] (s3) edge node {$0,1$} (s4);
 		\path[->] (s4) edge [dashed] node {} (sn);
 	\end{tikzpicture}
-	\caption{Finite-state automaton with $n$ states that produces a
+	\caption{Finite-state automaton with $n$ states that results in a
 		deterministic finite-state automaton with $2^n$ states when
 		applying the construction from Theorem \ref{t_rabin_scott}.}
 	\label{fig:f_worst_case_det}
