@@ -27,10 +27,11 @@
 \end{proposition}
 
 \begin{proof}
-	Since $X$ is a separator in $\mathcal{G}_\mathcal{A}$ then $E \cap (Q_i
-	\times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$. Thus,
-	$\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq
-	j$ for $i, j \in \interval{1}{k}$. Therefore, $X$ is a separator in
+	Since $X$ is a separator in $\mathcal{G}_\mathcal{A}$ there exists a
+	partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such that $E \cap
+	(Q_i \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$.
+	Thus, $\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if
+	$i \neq j$ for $i, j \in \interval{1}{k}$. Therefore, $X$ is a separator in
 	$\mathcal{A}$.
 \end{proof}
 
@@ -81,14 +82,14 @@ worst-case bound is reached for some finite-state automata (Figure
 \ref{fig:f_worst_case_det}). However, based on Proposition \ref{p_small_delta}, if
 $\mathcal{A}$ is $k$-separated for $k > 1$ we could effectively simulate $p =
 \delta(q, \sigma)$ by decomposing the state transition function $\delta$ into
-functions $\delta_i : (Q_i \cup X) \times \Sigma \rightarrow (Q_i \cup X)$ for $i
-\in \interval{1}{k}$ and the state $q \subseteq Q$ into quasi-states $q_i \subseteq
-Q_i \cup X$ for $i \in \interval{1}{k}$, evaluating $p_i = \delta_i(q_i, \sigma)$
-for each of the quasi-states and composing the results into the new state $p =
-\bigcup_{i=1}^k q_i \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the
-functions $\delta_i$ will be smaller than $\delta$ leading towards a more efficient
-representation of $\mathcal{A'}$. This insight motivates the construction described
-below.
+functions $\delta_i : 2^{(Q_i \cup X)} \times \Sigma \rightarrow 2^{(Q_i \cup X)}$
+for $i \in \interval{1}{k}$ and the state $q \subseteq Q$ into quasi-states $q_i
+\subseteq Q_i \cup X$ for $i \in \interval{1}{k}$, evaluating $p_i = \delta_i(q_i,
+\sigma)$ for each of the quasi-states and composing the results into the new state
+$p = \bigcup_{i=1}^k q_i \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$
+the functions $\delta_i$ will be smaller than $\delta$ leading towards a more
+efficient representation of $\mathcal{A'}$. This insight motivates the construction
+described below.
 
 \begin{figure}[!h]
 	\centering

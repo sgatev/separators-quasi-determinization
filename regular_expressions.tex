@@ -3,8 +3,8 @@
 \begin{definition}
 	Let $\Sigma$ be an alphabet such that $\Sigma \cap \{ \varnothing, (, ), .,
 	+, * \} = \emptyset$. The class of regular expressions over $\Sigma$ and the
-	languages they denote is defined recursively as the least subset of
-	$(\Sigma \cup \{ \varnothing, (, ), ., +, * \})^*$ such that
+	languages they denote is defined as the least subset of $(\Sigma \cup \{
+	\varnothing, (, ), ., +, * \})^*$ such that
 	\begin{enumerate}
 		\item $\varnothing$ is a regular expression denoting the language
 			$\emptyset$,
@@ -37,8 +37,7 @@
 \begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
 	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. A
 	finite-state automaton $\mathcal{A}$ such that $\mathcal{L}_\mathcal{A} =
-	\mathcal{L}_\mathcal{R}$ can be constructed from $\mathcal{R}$ recursively
-	as follows.
+	\mathcal{L}_\mathcal{R}$ can be constructed from $\mathcal{R}$ as follows.
 	\begin{enumerate}
 		\item If $\mathcal{R} = \varnothing$ then $\mathcal{A} = \langle
 			\Sigma, \{ s, f \}, \{ s \}, \{ f \}, \emptyset \rangle$ is
@@ -51,7 +50,7 @@
 			$\mathcal{R}$,
 		\item if $\mathcal{A}' = \langle \Sigma, Q', S', F', \Delta'
 			\rangle$ and $\mathcal{A}'' = \langle \Sigma, Q'', S'', F'',
-			\Delta'' \rangle$ are Thompson finite-state automata
+			\Delta'' \rangle$ are the Thompson finite-state automata
 			constructed from $\mathcal{R}'$ and $\mathcal{R}''$
 			respectively then
 			\begin{itemize}
