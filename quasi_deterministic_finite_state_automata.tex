@@ -505,41 +505,45 @@ $Next \gets \{ s \}$\;
 	$\eta_x = \emptyset$, $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$ and $F_i' =
 	\tau_i = \rho_i = \eta_i = \emptyset$ for $i \in \interval{1}{k}$.
 	Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle
-	= \mathcal{A}'^{(1)}$ and $Next = R_1$. Let us assume that after $n \geq 0$
+	= \mathcal{A}'^{(1)}$ and $Next = R_1$. Let us assume that after $n > 0$
 	iterations of the while loop $\langle \Sigma, Q', 2^X, s, F', \tau, \rho,
-	\eta, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$.
-	Let $r = |Next|$. In each iteration of the loop a single element $q$ is
+	\eta, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$. Let
+	$r = |Next|$. At each iteration of the while loop a single element $q$ is
 	extracted from $Next$ in a first-in-first-out order and is then processed
-	at lines 12 through 32. The only time $F'$ is updated within the while
+	at lines 12 through 38. The only time $F'$ is updated within the while
 	loop is at line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq
 	\emptyset$ for $i \in \interval{1}{k}$. Therefore, after $n+r$ iterations of
 	the while loop $F' = F'^{(n+r+1)}$. The only time $\tau$ is updated within
-	the while loop is at line 20 where $\langle q_i, \sigma,
+	the while loop is at line 22 where $\langle q_i, \sigma,
 	\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i \rangle$
 	is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in \Sigma$.
 	Therefore, after $n+r$ iterations of the while loop $\tau =
 	\tau^{(n+r+1)}$. The only time $\rho$ is updated within the while loop
-	is at line 22 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
-	\rangle$ is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in
+	is at line 24 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
+	\rangle$ is added to $\rho_i$ for $i \in \interval{1}{k}$ and $\sigma \in
 	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\rho =
-	\rho^{(n+r+1)}$. At line 16 we have $e = \emptyset$. The value of $e$
-	is updated at line 23 where $\rho_i(\tau_i(q^i, \sigma))$ is added to it for
-	$i \in \interval{1}{k}$ and $\sigma \in \Sigma$. Therefore, at line 25 we
+	\rho^{(n+r+1)}$. At line 18 we have $e = \emptyset$. The value of $e$
+	is updated at line 25 where $\rho_i(\tau_i(q^i, \sigma))$ is added to it for
+	$i \in \interval{1}{k}$ and $\sigma \in \Sigma$. Therefore, at line 28 we
 	have $e = \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))$ for $\sigma \in
 	\Sigma$. The only time $\eta_x$ is updated within the while loop is at line
-	25 where $\langle q, e \rangle$ is added to it. Therefore, after $n+r$
+	28 where $\langle q, e \rangle$ is added to it. Therefore, after $n+r$
 	iterations of the while loop $\eta_x = \eta_x^{(n+r+1)}$. The only time
-	$\eta$ is updated within the while loop is at line 30 where $\langle
+	$\eta$ is updated within the while loop is at line 33 where $\langle
 	\tau_i(q^i, \sigma), \eta_x(q, \sigma), \tau_i(q^i, \sigma) \cup \eta_x(q,
 	\sigma) \rangle$ is added to it for $i \in \interval{1}{k}$ and $\sigma \in
 	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\eta =
 	\eta^{(n+r+1)}$. The only times $Q'$ is updated within the while
-	loop is at line 19 where $\tau_i(q^i, \sigma)$ is added to it and at line
-	29 where $\tau_i(q^i, \sigma), \eta_x(q, \sigma)$ is added to it. Therefore,
+	loop is at line 21 where $\tau_i(q^i, \sigma)$ is added to it and at line
+	32 where $\tau_i(q^i, \sigma), \eta_x(q, \sigma)$ is added to it. Therefore,
 	after $n+r$ iterations of the while loop $Q' = Q'^{(n+r+1)}$.
 	Therefore, after $n+r$ iterations of the while loop $\langle \Sigma,
 	Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle = \mathcal{A}'^{(n+r+1)}$.
 	The only time $Next$ is updated within the while loop is at line 32 where
 	$\delta(q, \sigma)$ is added to it for $\sigma \in \Sigma$. Therefore, after
-	$n+r$ iterations of the loop $Next = R_{n+1}$.
+	$n+r$ iterations of the while loop $\langle \Sigma, Q', 2^X, s, F', \tau,
+	\rho, \eta, \eta_x \rangle = \mathcal{A}'^{(n+r+1)}$ and $Next = R_{n+r+1}$.
+	Moreover, the condition at line 10 is false for iterations $n+1$ through
+	$n+r$. Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x
+	\rangle = \mathcal{A}'$ at line 40.
 \end{proof}

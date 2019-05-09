@@ -87,3 +87,22 @@
 			\end{itemize}
 	\end{enumerate}
 \end{theorem}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+	finite-state automaton. Then $|S| = |F| = 1$.
+\end{proposition}
+
+\begin{proof}
+	We prove that $|S| = |F| = 1$ by induction on the construction of the
+	Thompson finite-state automaton.
+
+	\begin{case}[$\mathcal{A}$ is Type 1, 2, 4 or 5]
+		$|S| = |\{ s \}| = 1$ and $|F| = |\{ f \}| = 1$ by construction.
+	\end{case}
+
+	\begin{case}[$\mathcal{A}$ is Type 3]
+		$|S| = |S'| = 1$ and $|F| = |F'| = 1$ by the inductive hypothesis
+		for $\mathcal{A'}$ and $\mathcal{A''}$.
+	\end{case}
+\end{proof}
