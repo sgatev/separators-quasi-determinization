@@ -463,14 +463,13 @@ $Next \gets \{ s \}$\;
 	$Visited_x = \emptyset$ and $Visited_i = \emptyset$ for $i \in
 	\interval{1}{k}$. The only time $Next$ is modified inside the while loop is
 	at line 36 where $\delta(q, \sigma)$ is added to $Next$ for $q \in Next$ and
-	$\sigma \in \Sigma$ only if $e_i \not\in Visited_i$ for $i \in
-	\interval{1}{k}$ and $e \not\in Visited_x$. By construction, $e_i \in
-	rng(\eta_i)$ and thus $e_i = \delta_i(q, \sigma)$ for $i \in
-	\interval{1}{k}$. Based on Proposition \ref{p_quasidet_auto_2}.
-	
-	Therefore, based on Proposition \ref{p_quasidet_auto_1} the condition at
-	line 10 is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1
-	+ \sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, Algorithm
+	$\sigma \in \Sigma$. However, this happens only if $\langle e_i, \sigma
+	\rangle \not\in Visited_i$ for $i \in \interval{1}{k}$ and $e \not\in
+	Visited_x$. By construction, $e_i = \delta_i(q, \sigma) =
+	\delta(q, \sigma)^i$. Therefore, based on Propositions
+	\ref{p_quasidet_auto_1} and \ref{p_quasidet_auto_2} the condition at line 10
+	is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
+	\sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, Algorithm
 	\ref{alg:quasi_det_sfsa} completes on input $\mathcal{A}$.
 	Line $1$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
 	Lines $3-6$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
