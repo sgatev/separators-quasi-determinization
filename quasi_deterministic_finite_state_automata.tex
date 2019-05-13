@@ -343,25 +343,29 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\eta_x^{(i)} \rangle$ and $R^{(i)}$ be respectively the quasi-deterministic
 	$k$-separated finite-state automaton and the set of states derived from
 	$\mathcal{A}$ by applying the construction described above for $i > 1$. Let
-	$\langle q^j, \sigma \rangle \in dom(\tau_j^{(i)})$ for $q \in R_i$, $j \in
-	\interval{1}{k}$ and $\sigma \in \Sigma$. Let $\eta_x^{(i+1)}(q) \in
-	rng(\eta_x^{(i)})$ for $q \in R_i$. Then $R^{(i+1)} = R^{(i)}$.
+	\begin{enumerate}
+		\item $\langle q^j, \sigma \rangle \in dom(\tau_j^{(i)})$,
+		\item $\langle x_1, x_2, \ldots, x_k \rangle \in dom(\eta_x^{(i)})$
+			where $x_j = \rho_j^{(i)}(\tau_j^{(i)}(q_j, \sigma))$,
+		\item $\langle t_j, x \rangle \in dom(\eta_j^{(i)})$ where $t_j =
+			\tau_j^{(i)}(q_j, \sigma)$ and $x = \delta_x^{(i)}(q,
+			\sigma)$
+	\end{enumerate}
+	for $j \in \interval{1}{k}$, $q \in R_i$ and $\sigma \in \Sigma$. Then
+	$R^{(i+1)} = R^{(i)}$.
 \end{proposition}
 
 \begin{proof}
-	Since $\langle q^j, \sigma \rangle\in dom(\tau_j^{(i)})$ for $q \in R_i$, $j
-	\in \interval{1}{k}$ and $\sigma \in \Sigma$ then $\tau_j^{(i+1)} =
-	\tau_j^{(i)}$ and thus $\rho_j^{(i+1)} = \rho_j^{(i)}$. Also,
-	$\eta_j^{(i+1)} = \eta_j^{(i)}$ for $j \in \interval{1}{k}$ because
-	$\eta_x^{(i+1)}(q) \in rng(\eta_x^{(i)})$ for $q \in R_i$. Therefore,
-	$\delta^{(i+1)}(q, \sigma) \in R^{(i)}$ for $q \in R_i$ and $\sigma \in
-	\Sigma$, and thus $R^{(i+1)} = R^{(i)}$.
+	From 1 follows that $\tau_j^{(i+1)} = \tau_j^{(i)}$ and thus $\rho_j^{(i+1)}
+	= \rho_j^{(i)}$. From 2 follows that $\eta_x^{(i+1)} = \eta_x^{(i)}$. From
+	3 follows that $\eta_j^{(i+1)} = \eta_j^{(i)}$ for $j \in \interval{1}{k}$.
+	Therefore, $\delta^{(i+1)}(q, \sigma) \in R^{(i)}$ for $q \in R_i$ and
+	$\sigma \in \Sigma$, and thus $R^{(i+1)} = R^{(i)}$.
 \end{proof}
 
-Based on the construction described above and Proposition \ref{p_quasidet_auto_1} we
-can design a more efficient algorithm for quasi-determinization of finite-state
-automata. The main procedure is described in Algorithm \ref{alg:quasi_det_sfsa}. We
-shall now prove its correctness and provide a runtime complexity bound.
+The construction described above and Proposition \ref{p_quasidet_auto_1} inspire
+Algorithm \ref{alg:quasi_det_sfsa} for quasi-determinization of finite-state
+automata. We shall now prove its correctness and provide a runtime complexity bound.
 
 \SetAlgoNoLine
 \begin{algorithm}[H]
@@ -378,14 +382,18 @@ $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
   $P_i \gets Q_i \cup X$\;
   $s_i \gets S_\epsilon \cap P_i$\;
   $Q_i' \gets \{ s_i \}$\;
-  $Visited_i \gets F_i' \gets \tau_i \gets \rho_i \gets \eta_i \gets
-  	\emptyset$\;
+  $F_i' \gets \emptyset$, $\tau_i \gets \emptyset$, $\tau_i^c \gets \emptyset$,
+  $\rho_i \gets \emptyset$, $\eta_i \gets \emptyset$, $\eta_i^c \gets \emptyset$\;
 }
+$\eta_x \gets \emptyset$, $\eta_x^c \gets \emptyset$\;
 
-$Visited_x \gets \eta_x \gets \emptyset$\;
 $Next \gets \{ s \}$\;
+$Visited \gets \emptyset$\;
 
-\While {$Next \neq \emptyset$} {
+\While {$Next \neq \emptyset$ or $\tau_i^c \neq \tau_i$ or
+	$\eta^c \neq \eta$ or $\eta_x^c \neq \eta_x$} {
+      	$\tau \gets \tau^c$, $\eta \gets \eta^c$, $\eta_x \gets \eta_x^c$\;
+
 	$q \gets Extract(Next)$\;
 	\For {$i \in \interval{1}{k}$} {
 		\If {$q_i \cap F \neq \emptyset$} {
@@ -398,29 +406,26 @@ $Next \gets \{ s \}$\;
 		\For {$i \in \interval{1}{k}$} {
       			$t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{
 				\sigma \})) \cap P_i$\;
-      			$Q_i' \gets Q_i' \cup \{ t_i \}$\;
-      			$\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i
+			$\tau_i^c \gets \tau_i^c \cup \{ \langle q_i, \sigma, t_i
 			\rangle \}$\;
+      			$Q_i' \gets Q_i' \cup \{ t_i \}$\;
       			$r_i \gets t_i \cap X$\;
-      			$\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle \}$\;
+      			$\rho_i^c \gets \rho_i^c \cup \{ \langle t_i, r_i \rangle
+			\}$\;
       			$e \gets e \cup r_i$\;
-			$Visited_i \gets Visited_i \cup \{ \langle q_i, \sigma
-				\rangle\}$\;
 		}
 
-		$\eta_x \gets \eta_x \cup \{ \langle q, e \rangle \}$\;
-    		$Visited_x \gets Visited_x \cup \{ e \}$\;
+		$\eta_x^c \gets \eta_x^c \cup \{ \langle q, e \rangle \}$\;
 
 		\For {$i \in \interval{1}{k}$} {
-      			$e_i \gets e \cup t_i$\;
+      			$e_i \gets t_i \cup e$\;
       			$Q_i' \gets Q_i' \cup \{ e_i \}$\;
-      			$\eta_i \gets \eta_i \cup \{ \langle t_i, e, e_i \rangle
+      			$\eta_i^c \gets \eta_i^c \cup \{ \langle t_i, e, e_i \rangle
 			\}$\;
     		}
 
-		\If {$\exists i \in \interval{1}{k}(\langle e_i, \sigma \rangle
-			\not\in Visited_i)$ or $e \not\in Visited_x$} {
-      			$Next \gets Next \cup \{ \delta(q, \sigma) \}$\;
+		\If {$\delta^c(q, \sigma) \not\in Visited$} {
+      			$Next \gets Next \cup \{ \delta^c(q, \sigma) \}$\;
 		} 
 	}
 }
