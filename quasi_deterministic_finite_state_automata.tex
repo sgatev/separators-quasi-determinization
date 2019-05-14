@@ -171,6 +171,38 @@ for $i \in \interval{1}{k}$ and $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q
 \bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma)) \rangle \mid \exists q
 \in R_n \; \exists \sigma \in \Sigma \}$.
 
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)}$ be the
+	quasi-deterministic $k$-separated finite-state automaton derived from
+	$\mathcal{A}$ by applying the construction described above for $n > 0$. Then
+	$\tau_i, \rho_i, \eta_i$ for $i \in \interval{1}{k}$ and $\eta_x$ are
+	functions.
+\end{proposition}
+
+\begin{proof}
+	Since $\hat{\Delta}_\epsilon$ is a function then $\tau_i$ is also a function
+	for $i \in \interval{1}{k}$.
+\end{proof}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)}$ be the
+	quasi-deterministic $k$-separated finite-state automaton derived from
+	$\mathcal{A}$ by applying the construction described above for $n > 0$. Then
+	$dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $i \in \interval{1}{k}$.
+\end{proposition}
+
+\begin{proof}
+	We prove that $dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $n > 0$ and $i \in
+	\interval{1}{k}$ by induction on $n$. We have $\rho_i^{(1)} = \tau_i^{(1)} =
+	\emptyset$ for $i \in \interval{1}{k}$. Let us assume that $dom(\rho_i^{(n)})
+	= rng(\tau_i^{(n)})$ for $n > 0$ and $i \in \interval{1}{k}$. Then
+	$dom(\rho_i^{(n+1)}) = dom(\rho_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
+	rng(\tau_i^{(n)})) = rng(\tau_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
+	rng(\tau_i^{(n)})) = rng(\tau_i^{(n+1)})$.
+\end{proof}
+
 \begin{lemma}\label{l_quasidet_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)}$ and $R^{(i)}$
@@ -373,7 +405,7 @@ automata. We shall now prove its correctness and provide a runtime complexity bo
 \label{alg:quasi_det_sfsa}
 
 \DontPrintSemicolon
-\KwIn{$k, \mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$}
+\KwIn{$\langle \Sigma, Q, X, S, F, \Delta \rangle$}
 \KwOut{$\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$}
 
 $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
@@ -382,17 +414,15 @@ $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
   $P_i \gets Q_i \cup X$\;
   $s_i \gets S_\epsilon \cap P_i$\;
   $Q_i' \gets \{ s_i \}$\;
-  $F_i' \gets \emptyset$, $\tau_i \gets \emptyset$, $\tau_i^c \gets \emptyset$,
-  $\rho_i \gets \emptyset$, $\eta_i \gets \emptyset$, $\eta_i^c \gets \emptyset$\;
+  $F_i' \gets \emptyset$, $\tau_i \gets \emptyset$, $\rho_i \gets \emptyset$,
+  $\eta_i \gets \emptyset$\;
 }
-$\eta_x \gets \emptyset$, $\eta_x^c \gets \emptyset$\;
+$\eta_x \gets \emptyset$\;
 
-$Next \gets \{ s \}$\;
-$Visited \gets \emptyset$\;
+$Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 
-\While {$Next \neq \emptyset$ or $\tau_i^c \neq \tau_i$ or
-	$\eta^c \neq \eta$ or $\eta_x^c \neq \eta_x$} {
-      	$\tau \gets \tau^c$, $\eta \gets \eta^c$, $\eta_x \gets \eta_x^c$\;
+\While {$Next \neq \emptyset$ and $Updated$} {
+	$Updated \gets False$\;
 
 	$q \gets Extract(Next)$\;
 	\For {$i \in \interval{1}{k}$} {
@@ -402,30 +432,35 @@ $Visited \gets \emptyset$\;
 	} 
 
 	\For {$\sigma \in \Sigma$} {
-		$e \gets \emptyset$\;
+		$e_x \gets \emptyset$\;
 		\For {$i \in \interval{1}{k}$} {
-      			$t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{
-				\sigma \})) \cap P_i$\;
-			$\tau_i^c \gets \tau_i^c \cup \{ \langle q_i, \sigma, t_i
+      			$t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{
+			\sigma \})) \cap P_i$\;
+			$Updated \gets Updated$ or $\langle q_i, \sigma \rangle \in
+			dom(\tau_i)$\;
+			$\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i
 			\rangle \}$\;
       			$Q_i' \gets Q_i' \cup \{ t_i \}$\;
       			$r_i \gets t_i \cap X$\;
-      			$\rho_i^c \gets \rho_i^c \cup \{ \langle t_i, r_i \rangle
+      			$\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle
 			\}$\;
-      			$e \gets e \cup r_i$\;
+      			$e_x \gets e_x \cup r_i$\;
 		}
 
-		$\eta_x^c \gets \eta_x^c \cup \{ \langle q, e \rangle \}$\;
+		$Updated \gets Updated$ or $q \in dom(\eta_x)$\;
+		$\eta_x \gets \eta_x \cup \{ \langle q, e_x \rangle \}$\;
 
 		\For {$i \in \interval{1}{k}$} {
-      			$e_i \gets t_i \cup e$\;
+      			$e_i \gets t_i \cup e_x$\;
       			$Q_i' \gets Q_i' \cup \{ e_i \}$\;
-      			$\eta_i^c \gets \eta_i^c \cup \{ \langle t_i, e, e_i \rangle
-			\}$\;
+			$Updated \gets Updated$ or $\langle t_i, e_x \rangle \in
+			dom(\eta_i)$\;
+      			$\eta_i \gets \eta_i \cup \{ \langle t_i, e_x, e_i
+			\rangle \}$\;
     		}
 
-		\If {$\delta^c(q, \sigma) \not\in Visited$} {
-      			$Next \gets Next \cup \{ \delta^c(q, \sigma) \}$\;
+		\If {$\delta(q, \sigma) \not\in Visited$} {
+      			$Next \gets Next \cup \{ \delta(q, \sigma) \}$\;
 		} 
 	}
 }
