@@ -29,7 +29,7 @@
 		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ and
 			$\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
 			extension function for $i \in \interval{1}{k}$,
-		\item $\eta_x : X^k \rightarrow X$ is a separator extension
+		\item $\eta_x : X \times X \rightarrow X$ is a separator extension
 			function.
 	\end{itemize}
 \end{definition}
@@ -44,10 +44,22 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	iterated separator extension functions $\eta_x^i : X^i \rightarrow X$ are
+	defined as the least functions such that
+	\begin{itemize}
+		\item $\eta_x^1(x) = x$,
+		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
+			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \interval{2}{k}$.
+	\end{itemize}
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
 	separator state transition function $\delta_x : \prod_{i=1}^k{Q_i} \times
 	\Sigma \rightarrow X$ is defined as
 	\begin{align*}
-		\delta_x(q, \sigma) = \eta_x(\rho_1(\tau_1(q^1, \sigma)),
+		\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
 		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
 	\end{align*}
 \end{definition}
@@ -167,9 +179,13 @@ where
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
-for $i \in \interval{1}{k}$ and $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
-\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma)) \rangle \mid \exists q
-\in R_n \; \exists \sigma \in \Sigma \}$.
+for $i \in \interval{1}{k}$ and
+\begin{align*}
+\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ &\langle \eta_x^{i (n)}(q^1, q^2, \ldots, q^i),
+\rho_i^{(n+1)}(\tau_i^{(n+1)}(q^{i+1}, \sigma)) \rangle \mid\\
+&\exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \interval{1}{k-1}
+\}.
+\end{align*}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
@@ -181,8 +197,14 @@ for $i \in \interval{1}{k}$ and $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q
 \end{proposition}
 
 \begin{proof}
-	Since $\hat{\Delta}_\epsilon$ is a function then $\tau_i$ is also a function
-	for $i \in \interval{1}{k}$.
+	Since $\hat{\Delta}_\epsilon$ is a function then $\tau_i^{(n)}$ is also a
+	function for $n > 0$ and $i \in \interval{1}{k}$. By construction,
+	$\rho_i^{(n)}$ is a function for $n > 0$ and $i \in \interval{1}{k}$. Since
+	$\tau_i^{(n)}$ and $\rho_i^{(n)}$ are functions for $n > 0$ and $i \in
+	\interval{1}{k}$ then $\eta_x^{(n)}$ is also a function for $n > 0$. Since
+	$\tau_i^{(n)}$ is a function for $n > 0$ and $i \in \interval{1}{k}$, and
+	$\eta_x^{(n)}$ is a function for $n > 0$ then $\eta_i^{(n)}$ is also a
+	function for $n > 0$ and $i \in \interval{1}{k}$.
 \end{proof}
 
 \begin{proposition}
@@ -370,29 +392,18 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 
 \begin{proposition}\label{p_quasidet_auto_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)} = \langle
-	\Sigma, Q'^{(i)}, 2^X, s, F'^{(i)}, \tau^{(i)}, \rho^{(i)}, \eta^{(i)},
-	\eta_x^{(i)} \rangle$ and $R^{(i)}$ be respectively the quasi-deterministic
+	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)} = \langle
+	\Sigma, Q'^{(n)}, 2^X, s, F'^{(n)}, \tau^{(n)}, \rho^{(n)}, \eta^{(n)},
+	\eta_x^{(n)} \rangle$ and $R^{(n)}$ be respectively the quasi-deterministic
 	$k$-separated finite-state automaton and the set of states derived from
-	$\mathcal{A}$ by applying the construction described above for $i > 1$. Let
-	\begin{enumerate}
-		\item $\langle q^j, \sigma \rangle \in dom(\tau_j^{(i)})$,
-		\item $\langle x_1, x_2, \ldots, x_k \rangle \in dom(\eta_x^{(i)})$
-			where $x_j = \rho_j^{(i)}(\tau_j^{(i)}(q_j, \sigma))$,
-		\item $\langle t_j, x \rangle \in dom(\eta_j^{(i)})$ where $t_j =
-			\tau_j^{(i)}(q_j, \sigma)$ and $x = \delta_x^{(i)}(q,
-			\sigma)$
-	\end{enumerate}
-	for $j \in \interval{1}{k}$, $q \in R_i$ and $\sigma \in \Sigma$. Then
-	$R^{(i+1)} = R^{(i)}$.
+	$\mathcal{A}$ by applying the construction described above for $n > 0$. Let
+	$dom(\eta_x^{(n)}) = dom(\eta_x^{(n+1)})$, $dom(\tau_i^{(n)}) =
+	dom(\tau_i^{(n+1)})$ and $dom(\eta_i^{(n)}) = dom(\eta_i^{(n+1)})$ for $i
+	\in \interval{1}{k}$, $q \in R_n$ and $\sigma \in \Sigma$. Then $R^{(n+1)} =
+	R^{(n)}$.
 \end{proposition}
 
 \begin{proof}
-	From 1 follows that $\tau_j^{(i+1)} = \tau_j^{(i)}$ and thus $\rho_j^{(i+1)}
-	= \rho_j^{(i)}$. From 2 follows that $\eta_x^{(i+1)} = \eta_x^{(i)}$. From
-	3 follows that $\eta_j^{(i+1)} = \eta_j^{(i)}$ for $j \in \interval{1}{k}$.
-	Therefore, $\delta^{(i+1)}(q, \sigma) \in R^{(i)}$ for $q \in R_i$ and
-	$\sigma \in \Sigma$, and thus $R^{(i+1)} = R^{(i)}$.
 \end{proof}
 
 The construction described above and Proposition \ref{p_quasidet_auto_1} inspire
