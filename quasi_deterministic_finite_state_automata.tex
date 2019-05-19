@@ -6,22 +6,11 @@
 	\begin{align*}
 		\langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
 	\end{align*}
-	for $k > 1$ where
+	where
 	\begin{itemize}
-		\item $\Sigma$ is an alphabet,
-		\item $Q = \langle Q_1, Q_2, \ldots, Q_k \rangle$ and $Q_i$ is a
-			finite set of quasi-states for $i \in \interval{1}{k}$,
-		\item $X$ is a non-empty separator set such that $X \subseteq Q_i$
-			for $i \in \interval{1}{k}$ and $Q_i \cap Q_j = X$ if $i
-			\neq j$ for $i, j \in \interval{1}{k}$,
-		\item $s = \langle s_1, s_2, \ldots, s_k \rangle$ and $s_i$ is a
-			start quasi-state for $i \in \interval{1}{k}$,
-		\item $F = \langle F_1, F_2, \ldots, F_k \rangle$ and $F_i \subseteq
-			Q_i$ is a set of final quasi-states for $i \in
+		\item $\langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
+			deterministic finite-state automaton for $i \in
 			\interval{1}{k}$,
-		\item $\tau = \langle \tau_1, \tau_2, \ldots, \tau_k \rangle$ and
-			$\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a quasi-state
-			quasi-transition function for $i \in \interval{1}{k}$,
 		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ and
 			$\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
 			function such that $dom(\rho_i) = rng(\tau_i)$ for $i \in
@@ -49,8 +38,9 @@
 	\begin{itemize}
 		\item $\eta_x^1(x) = x$,
 		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
-			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \interval{2}{k}$.
+			x_2, \ldots, x_{i-1}), x_i)$
 	\end{itemize}
+	for $i \in \interval{2}{k}$.
 \end{definition}
 
 \begin{definition}
@@ -88,26 +78,6 @@
 \end{definition}
 
 \begin{definition}
-	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
-	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
-	is a non-empty sequence of state transitions
-	\begin{align*}
-		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
-		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-	\end{align*}
-	where
-	\begin{itemize}
-		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \interval{1}{n}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
-		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-			\interval{1}{n-1}$.
-	\end{itemize}
-	The path $\pi$ is successful if and only if $q_1 = s$ and $q_n^j \in F_j$
-	for some $j \in \interval{1}{k}$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
-\end{definition}
-
-\begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
 	generalized function of state transitions $\delta^* : \prod_{i=1}^k{Q_i}
@@ -122,6 +92,28 @@
 \end{definition}
 
 \begin{definition}
+	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
+	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
+	is a sequence of state transitions
+	\begin{align*}
+		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
+		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+	\end{align*}
+	where
+	\begin{itemize}
+		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \interval{1}{n}$,
+		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
+		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
+			\interval{1}{n-1}$.
+	\end{itemize}
+	The starting state of the path $\pi$ is $q_1$. The ending state of the path
+	$\pi$ is $q_n$. The path $\pi$ is successful if and only if $q_1 = s$ and
+	$q_n^j \in F_j$ for some $j \in \interval{1}{k}$. The label of the path
+	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over
+	$\Sigma$.
+\end{definition}
+
+\begin{definition}
 	The language recognized by a quasi-deterministic $k$-separa\-ted finite-state
 	automaton $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ is the set of all labels of successful paths
@@ -130,6 +122,41 @@
 		\interval{1}{k}(\delta^*(s, w)^i \in F_i \}.
 	\end{align*}
 \end{definition}
+
+\SetAlgoNoLine
+\begin{algorithm}[H]
+\caption{Traversal of a quasi-deterministic k-separated finite-state automaton}
+\label{alg:qdfsa_traversal}
+
+\DontPrintSemicolon
+\KwIn{$\langle \Sigma, Q, s, F, \tau, \rho, \eta, \eta_x \rangle,
+	w=\sigma_1\sigma_2\ldots\sigma_n$}
+\KwOut{$\mathbb{B}$}
+
+$q \gets s$\;
+
+\For {$\sigma \in w$} {
+  \For {$i \in \interval{1}{k}$} {
+    $t_i \gets \tau_i(q_i, \sigma)$\;
+    $r_i \gets \rho_i(t_i)$\;
+  }
+  $e \gets r_1$\;
+  \For {$i \in \interval{2}{k}$} {
+    $e \gets \eta_x(e, r_i)$\;
+  }
+  \For {$i \in \interval{2}{k}$} {
+    $q_i \gets \eta_i(t_i, e)$\;
+  }
+}
+
+\For {$i \in \interval{2}{k}$} {
+  \If {$q_i \in F_i$} {
+	  \Return $True$\;
+  }
+}
+
+\Return $False$
+\end{algorithm}
 
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
@@ -165,15 +192,15 @@ where
 	\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
 		R_n(q^i \cap F \neq \emptyset) \}$,
 	\item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-		\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i
-		\rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma\}$,
+		\hat{\Delta}_\epsilon^i(\hat{\Delta}_f(q^i, \{ \sigma \})) \rangle
+		\mid \exists q \in R_n \; \exists \sigma \in \Sigma\}$,
 	\item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{ \langle q,  q \cap X
 		\rangle \mid \exists q \in rng(\tau_i^{(n+1)}) \setminus
 		rng(\tau_i^{(n)}) \}$,
 	\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \begin{aligned}[t]
-		\{ &\langle \tau_i^{(n+1)} (q^i, \sigma), \eta_x^{(n+1)}(q),
-		\tau_i^{(n+1)} (q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle
-		\mid\\
+		\{ &\langle \tau_i^{(n+1)}(q^i, \sigma), \eta_x^{(n+1)}(q),
+		\tau_i^{(n+1)} (q^i, \sigma) \cup \hat{\Delta}_\epsilon^i(
+		\eta_x^{(n+1)}(q)) \rangle \mid\\
 		&\exists q \in R_n \; \exists \sigma \in \Sigma \},
 		\end{aligned}$
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
@@ -285,25 +312,31 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
 	\begin{align*}
 		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
-		&= \big[ \hat{\Delta}_\epsilon(\hat{\Delta}_f(p_h^j, \{
-		\sigma_{i_h} \})) \cap P_j \big] \cup
-		\big[ \bigcup_{r = 1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f
-		(p_h^r, \{ \sigma_{i_h} \})) \cap X} \big]\\
-		&= \bigcup_{r = 1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f
-		(p_h^r, \{ \sigma_{i_h} \})) \cap P_j}
+		&= \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^j, \{
+		\sigma_{i_h} \})) \cup \bigcup_{r=1}^k \hat{\Delta}_\epsilon^j(
+		\hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p_h^r, \{
+		\sigma_{i_h} \})) \cap X)
 	\end{align*}
 	for $j \in \interval{1}{k}$.
 	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
 	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
 	\begin{align*}
-		q_{i_{h+1}} \in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h}, \sigma_{i_h}))
+		q_{i_{h+1}} &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h},
+		\sigma_{i_h}))\\
 		&\subseteq \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
 		\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))}\\
-		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-		\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_h^r, \{
-		\sigma_{i_h} \})) \cap P_j}}
-		= \bigcup_{j=1}^k{p_{h+1}^j}.
+		&= \bigcup_{j=1}^k \bigcup_{r=1}^k
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^r, \{
+		\sigma_{i_h} \}))\\
+		&= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(
+		p_h^j, \{ \sigma_{i_h} \})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))
+		\big]\\
+		&= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(
+		p_h^j, \{ \sigma_{i_h} \})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
+		(p_h^r, \{\sigma_{i_h} \})) \cap X) \big]
 	\end{align*}
 	Otherwise, $h = l$ and if $n - i_l > 1$ then $\sigma_j = \epsilon$ for $j
 	\in \interval{i_l+1}{n-1}$. Therefore,

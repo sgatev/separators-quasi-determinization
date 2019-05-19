@@ -18,18 +18,20 @@
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The state transition function $\Delta_f : Q \times
-	\Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is defined
-	as
-	\begin{align*}
-		\Delta_f(q', \sigma) = \{ q'' \in Q \mid \langle q', \sigma, q''
-		\rangle \in \Delta \}.
-	\end{align*}
+	finite-state automaton. The generalized relation of state transitions
+	$\Delta^* : Q \times \Sigma^* \times Q$ is defined as the least set such
+	that
+	\begin{itemize}
+		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
+		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
+			q', w, q'' \rangle \in \Delta^*$ and $\langle q'', \sigma,
+			q''' \rangle \in \Delta$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
-	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle
-	\Sigma, Q, S, F, \Delta \rangle$ is a non-empty sequence of state transitions
+	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle \Sigma, Q,
+	S, F, \Delta \rangle$ is a sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
@@ -41,27 +43,34 @@
 		\item $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i \in
 			\interval{1}{n-1}$.
 	\end{itemize}
-	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
-	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
-	over $\Sigma$.
+	The starting state of the path $\pi$ is $q_1$. The ending state of the path
+	$\pi$ is $q_n$. The path $\pi$ is successful if and only if $q_1 \in S$ and
+	$q_n \in F$. The label of the path $\pi$ is the word
+	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
+\end{definition}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	finite-state automaton. There exists a path with label $w \in \Sigma^*$
+	starting from state $q' \in Q$ and ending in state $q'' \in Q$ in
+	$\mathcal{A}$ if and only if $\langle q', w, q'' \rangle \in \Delta^*$.
+\end{proposition}
+
+\begin{definition}
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	finite-state automaton. The state transition function $\Delta_f : Q \times
+	\Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is defined
+	as
+	\begin{align*}
+		\Delta_f(q', \sigma) = \{ q'' \in Q \mid \langle q', \sigma, q''
+		\rangle \in \Delta \}.
+	\end{align*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The generalized relation of state transitions
-	$\Delta^* : Q \times \Sigma^* \times Q$ is defined as the least set such that
-	\begin{itemize}
-		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
-		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
-			q', w, q'' \rangle \in \Delta^*$ and $\langle q'', \sigma,
-			q''' \rangle \in \Delta$.
-	\end{itemize}
-\end{definition}
-
-\begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The $\epsilon$-closure of a state of $\mathcal{A}$
-	is the function $\Delta_\epsilon : Q \rightarrow 2^Q$ defined as
+	finite-state automaton. The state $\epsilon$-closure function
+	$\Delta_\epsilon : Q \rightarrow 2^Q$ is defined as
 	\begin{align*}
 		\Delta_\epsilon(q') = \{ q'' \in Q \mid \langle q', \epsilon, q''
 			\rangle \in \Delta^* \}.
@@ -92,61 +101,13 @@
 \end{definition}
 
 \begin{definition}
-	A deterministic finite-state automaton $\mathcal{A}$ is a tuple
+	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
+	\rangle$ is deterministic if and only if $S = \{ s \}$ and  $\Delta$ is the
+	graph of a function $\delta : Q \times \Sigma \rightarrow Q$. We shall write
 	\begin{align*}
-		\langle \Sigma, Q, s, F, \delta \rangle
+		\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle
 	\end{align*}
-	where
-	\begin{itemize}
-		\item $\Sigma$ is an alphabet,
-		\item $Q$ is a finite set of states,
-		\item $s \in Q$ is a start state,
-		\item $F \subseteq Q$ is a set of final states,
-		\item $\delta : Q \times \Sigma \rightarrow Q$ is a function of
-			state transitions.
-	\end{itemize}
-\end{definition}
-
-\begin{definition}
-	A path $\pi$ in a deterministic finite-state automaton $\mathcal{A} =
-	\langle \Sigma, Q, s, F, \delta \rangle$ is a non-empty sequence of
-	state transitions
-	\begin{align*}
-		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
-		\rangle \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-	\end{align*}
-	where
-	\begin{itemize}
-		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
-		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-			\interval{1}{n-1}$.
-	\end{itemize}
-	The path $\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$. The
-	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of
-	length $n-1$ over $\Sigma$.
-\end{definition}
-
-\begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ be a
-	deterministic finite-state automaton. The generalized function of state
-	transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined as the
-	least function such that
-	\begin{itemize}
-		\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
-		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
-		$q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
-	\end{itemize}
-\end{definition}
-
-\begin{definition}
-	The language recognized by a deterministic finite-state automaton
-	$\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ is the set of all
-	labels of successful paths
-	\begin{align*}
-		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \delta^*(s, w) \in
-		F \}.
-	\end{align*}
+	in case the finite-state automaton $\mathcal{A}$ is deterministic.
 \end{definition}
 
 \begin{theorem}[Rabin, Scott, see \cite{RS59}]\label{t_rabin_scott}
