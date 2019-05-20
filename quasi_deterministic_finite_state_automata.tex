@@ -38,9 +38,8 @@
 	\begin{itemize}
 		\item $\eta_x^1(x) = x$,
 		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
-			x_2, \ldots, x_{i-1}), x_i)$
+			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \interval{2}{k}$.
 	\end{itemize}
-	for $i \in \interval{2}{k}$.
 \end{definition}
 
 \begin{definition}
@@ -113,16 +112,42 @@
 	$\Sigma$.
 \end{definition}
 
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton.
+	There exists a path with label $w \in \Sigma^*$ starting from state $q' \in
+	\prod_{i=1}^k{Q_i}$ and ending in state $q'' \in \prod_{i=1}^k{Q_i}$ in
+	$\mathcal{A}$ if and only if $\delta^*(q', w) = q''$.
+\end{proposition}
+
+\begin{proof}
+	We prove the statement by induction on the length of the label $w \in
+	\Sigma^*$. If $|w| = 0$, then $w = \epsilon$. Let $\pi$ be a path with label
+	$\epsilon$ starting from state $q'$ and ending in state $q''$. By
+	definition, only trivial paths are labeled with $\epsilon$. Therefore, $q' =
+	q''$ and by definition $\delta^*(q', \epsilon) = q'$. A similar argument
+	follows in the other direction. Otherwise, if $|w| > 0$ then $w = w'\sigma$
+	for $w' \in \Sigma^*$ and $\sigma \in \Sigma$. Let $\pi$ be a path with
+	label $w$ starting from state $q'$ and ending in state $q''$. Then there
+	exist $q''' \in \prod_{i=1}^k{Q_i}$ and a path with label $w'$ starting from
+	state $q'$ and ending in state $q'''$. Furthermore, $\delta(q''', \sigma) =
+	q''$ by definition. By the inductive hypothesis $\delta^*(q', w') = q'''$.
+	Therefore, by definition $\delta^*(q', w) = \delta^*(q', w'\sigma) =
+	\delta(\delta^*(q', w'), \sigma) = \delta(q''', \sigma) = q''$. Again, a
+	similar argument could be followed in the other direction.
+\end{proof}
+
 \begin{definition}
 	The language recognized by a quasi-deterministic $k$-separa\-ted finite-state
 	automaton $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ is the set of all labels of successful paths
 	\begin{align*}
 		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists i \in
-		\interval{1}{k}(\delta^*(s, w)^i \in F_i \}.
+		\interval{1}{k}(\delta^*(s, w)^i \in F_i) \}.
 	\end{align*}
 \end{definition}
 
+\iffalse
 \SetAlgoNoLine
 \begin{algorithm}[H]
 \caption{Traversal of a quasi-deterministic k-separated finite-state automaton}
@@ -157,6 +182,7 @@ $q \gets s$\;
 
 \Return $False$
 \end{algorithm}
+\fi
 
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
@@ -310,23 +336,13 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	$h \in \interval{2}{l}$.
 	Let $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
-	\begin{align*}
-		p_{h+1}^j &= \delta_j(p_h, \sigma_{i_h})\\
-		&= \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^j, \{
-		\sigma_{i_h} \})) \cup \bigcup_{r=1}^k \hat{\Delta}_\epsilon^j(
-		\hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p_h^r, \{
-		\sigma_{i_h} \})) \cap X)
-	\end{align*}
-	for $j \in \interval{1}{k}$.
+	$p_{h+1}^j = \delta_j(p_h, \sigma_{i_h})$ for $j \in \interval{1}{k}$.
 	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
 	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
 	\begin{align*}
 		q_{i_{h+1}} &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h},
-		\sigma_{i_h}))\\
-		&\subseteq \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
-		\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))}\\
-		&= \bigcup_{j=1}^k \bigcup_{r=1}^k
+		\sigma_{i_h})) = \bigcup_{j=1}^k \bigcup_{r=1}^k
 		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^r, \{
 		\sigma_{i_h} \}))\\
 		&= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(
@@ -334,9 +350,11 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))
 		\big]\\
 		&= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(
-		p_h^j, \{ \sigma_{i_h} \})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k
+		p_h^j, \{ \sigma_{i_h} \})) \cup \bigcup_{r=1}^k
 		\hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
-		(p_h^r, \{\sigma_{i_h} \})) \cap X) \big]
+		(p_h^r, \{\sigma_{i_h} \})) \cap X) \big]\\
+		&= \bigcup_{j=1}^k \delta_j(p_h, \sigma_{i_h})
+		= \bigcup_{j=1}^k p_{h+1}^j.
 	\end{align*}
 	Otherwise, $h = l$ and if $n - i_l > 1$ then $\sigma_j = \epsilon$ for $j
 	\in \interval{i_l+1}{n-1}$. Therefore,

@@ -30,23 +30,28 @@
 \end{definition}
 
 \begin{definition}
-	A path $\pi$ in a finite-state automaton $\mathcal{A} = \langle \Sigma, Q,
-	S, F, \Delta \rangle$ is a sequence of state transitions
+	A path in a finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F,
+	\Delta \rangle$ is either trivial or non-trivial. A trivial path $\pi$ in
+	$\mathcal{A}$ is associated with every state $q \in Q$. The length of the
+	path $\pi$ is $0$. The start state of the path $\pi$ is $q$. The end state
+	of the path $\pi$ is $q$. The path $\pi$ is succsessful if and only if $q
+	\in S \cap F$. The label of the path $\pi$ is $\epsilon$. A non-trivial
+	path $\pi$ in $\mathcal{A}$ is a finite sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where
+	for $n > 0$ where
 	\begin{itemize}
 		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
 		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \interval{1}{n-1}$,
 		\item $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i \in
 			\interval{1}{n-1}$.
 	\end{itemize}
-	The starting state of the path $\pi$ is $q_1$. The ending state of the path
-	$\pi$ is $q_n$. The path $\pi$ is successful if and only if $q_1 \in S$ and
-	$q_n \in F$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
+	The lenth of the path $\pi$ is $n$. The start state of the path $\pi$ is
+	$q_1$. The end state of the path $\pi$ is $q_n$. The path $\pi$ is
+	successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the path
+	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
 \end{definition}
 
 \begin{proposition}
@@ -95,9 +100,8 @@
 	\begin{align*}
 		\langle Q, E \rangle
 	\end{align*}
-	where $E = \{ \langle q', q'' \rangle, \langle q'', q' \rangle \in Q \times
-	Q \mid \exists \sigma \in \Sigma_\epsilon(\langle q', \sigma, q'' \rangle
-	\in \Delta) \}$.
+	where $E = \{ \{ q', q'' \} \mid \exists \langle q', \sigma, q'' \rangle \in
+	\Delta \}$.
 \end{definition}
 
 \begin{definition}

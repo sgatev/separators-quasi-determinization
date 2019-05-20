@@ -1,14 +1,15 @@
 \subsection{Graphs and separators}
 
 \begin{definition}
-	A directed graph $\mathcal{G}$ is a pair
+	A graph $\mathcal{G}$ is a pair
 	\begin{align*}
 		\langle V, E \rangle
 	\end{align*}
 	where
 	\begin{itemize}
 		\item $V$ is a finite set of vertices,
-		\item $E \subseteq V \times V$ is a relation of edges.
+		\item $E$ is a finite set of edges,
+		\item $e \subseteq V$ and $|e| = 2$ for $e \in E$.
 	\end{itemize}
 \end{definition}
 
@@ -23,8 +24,9 @@
 \begin{definition}
 	Let $\mathcal{G} = \langle V, E \rangle$ be a graph. The set $X \subseteq
 	V$ is a separator in $\mathcal{G}$ if and only if there exists a partition
-	$P_V = \{ X, V_1, \ldots, V_n \}$ for $n > 1$ such that $E \cap (V_i \times
-	V_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{n}$.
+	$P_V = \{ X, V_1, \ldots, V_n \}$ for $n > 1$ such that $E \cap \{ \{ v_i,
+	v_j \} \mid \exists v_i \in V_i \; \exists v_j \in V_j \} = \emptyset$ if $i
+	\neq j$ for $i, j \in \interval{1}{n}$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan, see \cite{LT77}]\label{t_lipton_tarjan}

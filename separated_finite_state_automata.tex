@@ -127,8 +127,8 @@
 		&= \{ q'' \in Q_i \cup X \mid \exists q' \in P (\langle q', \epsilon,
 		q'' \rangle \in \Delta^*) \}\\
 		&= \{ q''' \in Q_i \cup X \mid \exists q' \in P \; \exists q'' \in X
-		(\langle q', \epsilon, q'' \rangle \in \Delta^* \land \langle q'',
-		\epsilon, q''' \rangle \in \Delta^*) \}\\
+		(\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon, q'''
+		\rangle \in \Delta^*) \}\\
 		&= \{ q'' \in Q_i \cup X \mid \exists q' \in \hat{\Delta}_\epsilon(P)
 		\cap X (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
 		&= \hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(P) \cap X) \cap (Q_i
@@ -136,6 +136,34 @@
 		&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon(P) \cap (Q_j \cup
 		X) \cap X)\\
 		&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(P) \cap X).
+	\end{align*}
+\end{proof}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(\hat{
+	\Delta}_\epsilon^i(P) \cap X) \subseteq \hat{\Delta}_\epsilon^i(P)$ for $i
+	\in \interval{1}{k}$ and $P \subseteq Q_i \cup X$.
+\end{proposition}
+
+\begin{proof}
+	\begin{align*}
+		\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^i(P) \cap X)
+		&= \{ q'' \in Q_i \cup X \mid \exists q' \in
+		\hat{\Delta}_\epsilon^i(P) \cap X (\langle q', \epsilon, q'' \rangle
+		\in \Delta^*) \}\\
+		&\subseteq \{ q'' \in Q_i \cup X \mid \exists q' \in
+		\hat{\Delta}_\epsilon^i(P) (\langle q', \epsilon, q'' \rangle \in
+		\Delta^*) \}\\
+		&= \begin{aligned}[t]
+			\{ q''' \in Q_i \cup X \mid &\exists q' \in P \; \exists q''
+			\in (Q_i \cup X) (\\
+			&\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon,
+			q''' \rangle \in \Delta^*) \}
+		\end{aligned}\\
+		&= \{ q'' \in Q_i \cup X \mid \exists q' \in P (\langle q',
+		\epsilon, q'' \rangle \in \Delta^*) \}\\
+		&= \hat{\Delta}_\epsilon^i(P).
 	\end{align*}
 \end{proof}
 
