@@ -117,8 +117,16 @@
 %\end{definition}
 
 \begin{definition}
-	A language $L$ over an alphabet $\Sigma$ is a subset
+	A language $\mathcal{L}$ over an alphabet $\Sigma$ is a subset
 	\begin{align*}
-		L \subseteq \Sigma^*.
+		\mathcal{L} \subseteq \Sigma^*.
 	\end{align*}
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. The $n$-iterated
+	language induced by $\mathcal{L}$ is the set $\mathcal{L}^n =
+	\mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$ where $\mathcal{L}^0 = \{
+	\epsilon \}$. The iterated language induced by $\mathcal{L}$ is the set
+	$\mathcal{L}^* = \bigcup_{i = 0}^{\infty} \mathcal{L}^i$.
 \end{definition}

@@ -24,8 +24,8 @@
 	\begin{itemize}
 		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
 		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
-			q', w, q'' \rangle \in \Delta^*$ and $\langle q'', \sigma,
-			q''' \rangle \in \Delta$.
+			q', w, q'' \rangle, \langle q'', \sigma, q''' \rangle \in
+			\Delta$.
 	\end{itemize}
 \end{definition}
 
@@ -48,7 +48,7 @@
 		\item $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i \in
 			\interval{1}{n-1}$.
 	\end{itemize}
-	The lenth of the path $\pi$ is $n$. The start state of the path $\pi$ is
+	The length of the path $\pi$ is $n$. The start state of the path $\pi$ is
 	$q_1$. The end state of the path $\pi$ is $q_n$. The path $\pi$ is
 	successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the path
 	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
@@ -100,8 +100,8 @@
 	\begin{align*}
 		\langle Q, E \rangle
 	\end{align*}
-	where $E = \{ \{ q', q'' \} \mid \exists \langle q', \sigma, q'' \rangle \in
-	\Delta \}$.
+	where $E = \{ \{ q', q'' \} \mid \langle q', \sigma, q'' \rangle \in \Delta
+	\}$.
 \end{definition}
 
 \begin{definition}
