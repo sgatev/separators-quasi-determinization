@@ -14,7 +14,7 @@
 	separator $X \subseteq Q$ inducing a partition $P_Q = \{ X, Q_1, \ldots, Q_k
 	\}$. The $k$-separated finite-state automaton $\mathcal{A}$ is denoted by
 	\begin{align*}
-		\mathcal{A} = \langle \Sigma, Q', X, S, F, \Delta \rangle
+		\langle \Sigma, Q', X, S, F, \Delta \rangle
 	\end{align*}
 	where $Q' = \langle Q_1, Q_2, \ldots, Q_k \rangle$.
 \end{definition}
@@ -29,10 +29,10 @@
 \begin{proof}
 	Since $X$ is a separator in $\mathcal{G}_\mathcal{A}$ there exists a
 	partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such that $E \cap
-	(Q_i \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$.
-	Thus, $\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if
-	$i \neq j$ for $i, j \in \interval{1}{k}$. Therefore, $X$ is a separator in
-	$\mathcal{A}$.
+	\{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} =
+	\emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$. Thus, $\Delta \cap
+	(Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j
+	\in \interval{1}{k}$. Therefore, $X$ is a separator in $\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}\label{p_small_delta}
@@ -77,18 +77,24 @@
 	$k$-separated finite-state automaton. Let $\langle q', w, q'' \rangle \in
 	\Delta^*$ for $w \in \Sigma^*$, $q' \in Q_i \cup X$, $q'' \in Q_j \cup X$
 	where $i, j \in \interval{1}{k}$ and $i \neq j$. There exist $w', w'' \in
-	\Sigma^*$ and $x \in X$ such that $w = w'w''$, $\langle q', w', x \rangle
-	\in \Delta^*$ and $\langle x, w'', q'' \rangle \in \Delta^*$.
+	\Sigma^*$ and $x \in X$ such that $w = w'w''$ and $\langle q', w', x
+	\rangle, \langle x, w'', q'' \rangle \in \Delta^*$.
 \end{proposition}
 
 \begin{proof}
-	Since $\langle q', w, q'' \rangle \in \Delta^*$ there exists a path
+	Since $\langle q', w, q'' \rangle \in \Delta^*$ there exists a path $\pi$ in
+	$\mathcal{A}$ such that $q'$ is the start state of $\pi$, $q''$ is the end
+	state of $\pi$ and $w$ is the label of $\pi$. If the path $\pi$ is trivial
+	then $w = \epsilon$ and $q' = q''$. Since $Q_i \cap Q_j = \emptyset$ then
+	$q' \in X$. Therefore, the statement holds for $w' = w'' = \epsilon$.
+	Otherwise, if the path $\pi$ is non-trivial there exists a finite sequence
+	of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$ for $r \in
-	\interval{1}{n-1}$, $q_1 = q'$, $q_n = q''$ and $w =
+	for $n > 0$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$
+	for $r \in \interval{1}{n-1}$, $q_1 = q'$, $q_n = q''$ and $w =
 	\sigma_1\sigma_2\ldots\sigma_{n-1}$. Let us assume that $q_r \not\in X$ for
 	$r \in \interval{1}{n}$. It follows that $q_1 = q' \in Q_i$ and $q_n = q''
 	\in Q_j$. Since $i \neq j$ there exists $r \in \interval{1}{n-1}$ such that
@@ -97,9 +103,9 @@
 	However, this contradicts the assumption that $\mathcal{A}$ is
 	$k$-separated. Therefore, there exists $r \in \interval{1}{n}$ such that
 	$q_r \in X$. Let $w' = \sigma_1\sigma_2\ldots\sigma_{r-1}$ and $w'' =
-	\sigma_r\sigma_{r+1}\ldots\sigma_{n-1}$. It is easy to see that $w = w'w''$,
-	$\langle q_1, w', q_r \rangle \in \Delta^*$ and $\langle q_r, w'', q_n
-	\rangle \in \Delta^*$.
+	\sigma_r\sigma_{r+1}\ldots\sigma_{n-1}$. It is easy to see that $w = w'w''$
+	and $\langle q_1, w', q_r \rangle, \langle q_r, w'', q_n \rangle \in
+	\Delta^*$.
 \end{proof}
 
 \begin{definition}
@@ -116,74 +122,75 @@
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(P) =
-	\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(P) \cap X)$ if $i \neq j$
-	for $i, j \in \interval{1}{k}$ and $P \subseteq Q_j \cup X$.
+	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(\hat{
+	\Delta}_\epsilon^i(Q') \cap X) \subseteq \hat{\Delta}_\epsilon^i(Q')$ for $i
+	\in \interval{1}{k}$ and $Q' \subseteq Q_i \cup X$.
 \end{proposition}
 
 \begin{proof}
 	\begin{align*}
-		\hat{\Delta}_\epsilon^i(P)
-		&= \{ q'' \in Q_i \cup X \mid \exists q' \in P (\langle q', \epsilon,
-		q'' \rangle \in \Delta^*) \}\\
-		&= \{ q''' \in Q_i \cup X \mid \exists q' \in P \; \exists q'' \in X
-		(\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon, q'''
-		\rangle \in \Delta^*) \}\\
-		&= \{ q'' \in Q_i \cup X \mid \exists q' \in \hat{\Delta}_\epsilon(P)
-		\cap X (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
-		&= \hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(P) \cap X) \cap (Q_i
-		\cup X)\\
-		&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon(P) \cap (Q_j \cup
-		X) \cap X)\\
-		&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(P) \cap X).
+		\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^i(Q') \cap X)
+		&= \{ q'' \in Q_i \cup X \mid \exists q' \in
+		\hat{\Delta}_\epsilon^i(Q') \cap X (\langle q', \epsilon, q'' \rangle
+		\in \Delta^*) \}\\
+		&\subseteq \{ q'' \in Q_i \cup X \mid \exists q' \in
+		\hat{\Delta}_\epsilon^i(Q') (\langle q', \epsilon, q'' \rangle \in
+		\Delta^*) \}\\
+		&= \begin{aligned}[t]
+			\{ q''' \in Q_i \cup X \mid &\exists q' \in Q' \; \exists q''
+			\in (Q_i \cup X) (\\
+			&\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon,
+			q''' \rangle \in \Delta^*) \}
+		\end{aligned}\\
+		&= \{ q'' \in Q_i \cup X \mid \exists q' \in Q' (\langle q',
+		\epsilon, q'' \rangle \in \Delta^*) \}\\
+		&= \hat{\Delta}_\epsilon^i(Q').
 	\end{align*}
 \end{proof}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(\hat{
-	\Delta}_\epsilon^i(P) \cap X) \subseteq \hat{\Delta}_\epsilon^i(P)$ for $i
-	\in \interval{1}{k}$ and $P \subseteq Q_i \cup X$.
+	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(Q') =
+	\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X)$ if $i \neq j$
+	for $i, j \in \interval{1}{k}$ and $Q' \subseteq Q_j \cup X$.
 \end{proposition}
 
 \begin{proof}
 	\begin{align*}
-		\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^i(P) \cap X)
-		&= \{ q'' \in Q_i \cup X \mid \exists q' \in
-		\hat{\Delta}_\epsilon^i(P) \cap X (\langle q', \epsilon, q'' \rangle
-		\in \Delta^*) \}\\
-		&\subseteq \{ q'' \in Q_i \cup X \mid \exists q' \in
-		\hat{\Delta}_\epsilon^i(P) (\langle q', \epsilon, q'' \rangle \in
-		\Delta^*) \}\\
-		&= \begin{aligned}[t]
-			\{ q''' \in Q_i \cup X \mid &\exists q' \in P \; \exists q''
-			\in (Q_i \cup X) (\\
-			&\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon,
-			q''' \rangle \in \Delta^*) \}
-		\end{aligned}\\
-		&= \{ q'' \in Q_i \cup X \mid \exists q' \in P (\langle q',
+		\hat{\Delta}_\epsilon^i(Q')
+		&= \{ q'' \in Q_i \cup X \mid \exists q' \in Q' (\langle q',
 		\epsilon, q'' \rangle \in \Delta^*) \}\\
-		&= \hat{\Delta}_\epsilon^i(P).
+		&= \{ q''' \in Q_i \cup X \mid \exists q' \in Q' \; \exists q'' \in
+		X (\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon, q'''
+		\rangle \in \Delta^*) \}\\
+		&= \{ q'' \in Q_i \cup X \mid \exists q' \in
+		\hat{\Delta}_\epsilon(Q') \cap X (\langle q', \epsilon, q'' \rangle
+		\in \Delta^*) \}\\
+		&= \hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(Q') \cap X) \cap (Q_i
+		\cup X)\\
+		&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon(Q') \cap (Q_j \cup
+		X) \cap X)\\
+		&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X).
 	\end{align*}
 \end{proof}
 
-We know that the states of a deterministic finite-state automaton $\mathcal{A'} =
-\langle \Sigma, Q', s, F', \delta \rangle$ derived by applying the construction
-described in Theorem \ref{t_rabin_scott} are subsets of the states of the source
-finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$.
-Thus, $|\delta| \leq |Q'| \times |\Sigma| = 2^{|Q|} \times |\Sigma|$. In fact, the
-worst-case bound is attained for some finite-state automata (Figure
-\ref{fig:f_worst_case_det}). However, based on Proposition \ref{p_small_delta}, if
-$\mathcal{A}$ is $k$-separated for $k > 1$ we could effectively simulate $p =
-\delta(q, \sigma)$ by decomposing the state transition function $\delta$ into
-functions $\delta_i : 2^{(Q_i \cup X)} \times \Sigma \rightarrow 2^{(Q_i \cup X)}$
-for $i \in \interval{1}{k}$ and the state $q \subseteq Q$ into quasi-states $q_i
-\subseteq Q_i \cup X$ for $i \in \interval{1}{k}$, evaluating $p_i = \delta_i(q_i,
-\sigma)$ for each of the quasi-states and composing the results into the new state
-$p = \bigcup_{i=1}^k q_i \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$
-the functions $\delta_i$ will be smaller than $\delta$ leading towards a more
-efficient representation of $\mathcal{A'}$ while maintaining its deterministic
-behavior. This insight motivates the construction described below.
+The states of a deterministic finite-state automaton $\mathcal{A'} = \langle \Sigma,
+Q', s, F', \delta \rangle$ derived by applying the construction described in Theorem
+\ref{t_rabin_scott} are subsets of the states of the source finite-state automaton
+$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$. Thus, $|\delta| \leq |Q'|
+\times |\Sigma| = 2^{|Q|} \times |\Sigma|$. In fact, the worst-case bound is attained
+for some finite-state automata (Figure \ref{fig:f_worst_case_det}). However, based on
+Proposition \ref{p_small_delta}, if $\mathcal{A}$ is $k$-separated for $k > 1$ we
+could effectively simulate $p = \delta(q, \sigma)$ by decomposing the state
+transition function $\delta$ into functions $\delta_i : 2^{(Q_i \cup X)} \times
+\Sigma \rightarrow 2^{(Q_i \cup X)}$ for $i \in \interval{1}{k}$ and the state $q
+\subseteq Q$ into quasi-states $q_i \subseteq Q_i \cup X$ for $i \in
+\interval{1}{k}$, evaluating $p_i = \delta_i(q_i, \sigma)$ for each of the
+quasi-states and composing the results into the new state $p = \bigcup_{i=1}^k q_i
+\subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the functions $\delta_i$
+will be smaller than $\delta$ leading towards a more efficient representation of
+$\mathcal{A'}$ while maintaining its deterministic behavior. This insight motivates
+the construction described below.
 
 \begin{figure}[!h]
 	\centering
@@ -207,6 +214,6 @@ behavior. This insight motivates the construction described below.
 	\end{tikzpicture}
 	\caption{Finite-state automaton with $n$ states that results in a
 		deterministic finite-state automaton with $2^n$ states when
-		applying the construction from Theorem \ref{t_rabin_scott}.}
+		applying the construction described in Theorem \ref{t_rabin_scott}.}
 	\label{fig:f_worst_case_det}
 \end{figure}
