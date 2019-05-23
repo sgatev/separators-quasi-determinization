@@ -34,7 +34,7 @@
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
 	iterated separator extension functions $\eta_x^i : X^i \rightarrow X$ are
-	defined as the least functions such that
+	defined as the inclusion-wise least functions such that
 	\begin{itemize}
 		\item $\eta_x^1(x) = x$,
 		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
@@ -81,8 +81,8 @@
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
 	generalized function of state transitions $\delta^* : \prod_{i=1}^k{Q_i}
-	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined as the least
-	function such that
+	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined as the
+	inclusion-wise least function such that
 	\begin{itemize}
 		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
 		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for

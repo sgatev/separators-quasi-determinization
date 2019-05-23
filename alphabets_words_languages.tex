@@ -22,10 +22,10 @@
 \end{definition}
 
 \begin{definition}
-	Let $\Sigma$ be an alphabet. The set of all words of length $n$ over $\Sigma$
-	is denoted by $\Sigma^n = \Sigma^{n-1} \times \Sigma$ where $\Sigma^0 = \{
-	\epsilon \}$. The set of all words over $\Sigma$ is denoted by $\Sigma^* =
-	\bigcup_{i = 0}^{\infty} \Sigma^i$.
+	Let $\Sigma$ be an alphabet. The set of all words of length $0$ over
+	$\Sigma$ is $\Sigma^0 = \{ \epsilon \}$. The set of all words of length $n >
+	0$ over $\Sigma$ is $\Sigma^n = \Sigma^{n-1} \times \Sigma$. The set of all
+	words over $\Sigma$ is $\Sigma^* = \bigcup_{i = 0}^{\infty} \Sigma^i$.
 \end{definition}
 
 \begin{definition}
@@ -124,9 +124,10 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. The $n$-iterated
-	language induced by $\mathcal{L}$ is the set $\mathcal{L}^n =
-	\mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$ where $\mathcal{L}^0 = \{
-	\epsilon \}$. The iterated language induced by $\mathcal{L}$ is the set
-	$\mathcal{L}^* = \bigcup_{i = 0}^{\infty} \mathcal{L}^i$.
+	Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. The $0$-iterated
+	language induced by $\mathcal{L}$ is the set $\mathcal{L}^0 = \{ \epsilon
+	\}$. The $n$-iterated language induced by $\mathcal{L}$ is the set
+	$\mathcal{L}^n = \mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$ for $n > 0$. The
+	iterated language induced by $\mathcal{L}$ is the set $\mathcal{L}^* =
+	\bigcup_{i = 0}^{\infty} \mathcal{L}^i$.
 \end{definition}

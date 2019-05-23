@@ -19,13 +19,13 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton. The generalized relation of state transitions
-	$\Delta^* : Q \times \Sigma^* \times Q$ is defined as the least set such
-	that
+	$\Delta^* : Q \times \Sigma^* \times Q$ is defined as the inclusion-wise
+	least set such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
 		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
-			q', w, q'' \rangle, \langle q'', \sigma, q''' \rangle \in
-			\Delta$.
+			q', w, q'' \rangle \in \Delta^*$ and $\langle q'', \sigma,
+			q''' \rangle \in \Delta$.
 	\end{itemize}
 \end{definition}
 
@@ -101,8 +101,8 @@
 	\begin{align*}
 		\langle Q, E \rangle
 	\end{align*}
-	where $E = \{ \{ q', q'' \} \mid \langle q', \sigma, q'' \rangle \in \Delta
-	\}$.
+	where $E = \{ \{ q', q'' \} \mid \exists \langle q', \sigma, q'' \rangle \in
+	\Delta \}$.
 \end{definition}
 
 \begin{definition}
@@ -110,7 +110,7 @@
 	\rangle$ is deterministic if and only if $S = \{ s \}$ and  $\Delta$ is the
 	graph of a function $\delta : Q \times \Sigma \rightarrow Q$. We shall write
 	\begin{align*}
-		\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle
+		\langle \Sigma, Q, s, F, \delta \rangle
 	\end{align*}
 	in case the finite-state automaton $\mathcal{A}$ is deterministic.
 \end{definition}

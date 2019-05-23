@@ -14,25 +14,26 @@
 \end{definition}
 
 \begin{definition}
-	A graph $\mathcal{G} = \langle V, E \rangle$ is planar if and only if
-	there exists an injective function $f_v$ that maps vertices of the graph to
+	A graph $\mathcal{G} = \langle V, E \rangle$ is planar if and only if there
+	exist an injective function $f_v$ that maps vertices of the graph to
 	distinct points in the real plane and an injective function $f_e$ that maps
-	edges of the graph to simple curves in the real plane such that curves in
-	$rng(f_e)$ intersect only at points in $rng(f_v)$.
+	edges of the graph to simple curves in the real plane such that $f_e(\{ v',
+	v'' \})$ has end points $f_v(v')$ and $f_v(v'')$ for each edge $\{ v', v''
+	\} \in E$ and curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{G} = \langle V, E \rangle$ be a graph. The set $X \subseteq
-	V$ is a separator in $\mathcal{G}$ if and only if there exists a partition
-	$P_V = \{ X, V_1, \ldots, V_n \}$ for $n > 1$ such that $E \cap \{ \{ v',
-	v'' \} \mid \exists v' \in V_i \; \exists v'' \in V_j \} = \emptyset$ if $i
-	\neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
+	Let $\mathcal{G} = \langle V, E \rangle$ be a graph. The set $X \subseteq V$
+	is a separator in $\mathcal{G}$ if and only if there exists a partition $P_V
+	= \{ X, V_1, \ldots, V_n \}$ for $n > 1$ such that $E \cap \{ \{ v', v'' \}
+	\mid \exists v' \in V_i \; \exists v'' \in V_j \} = \emptyset$ if $i \neq j$
+	for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan, see \cite{LT77}]\label{t_lipton_tarjan}
-	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. There exist a
-	separator $X$ and a partition $P_V = \{ X, V_1, V_2 \}$ in $\mathcal{G}$
-	such that $|X| \leq 2 \sqrt{2} \sqrt{|V|}$ and $|V_i| \leq \frac{2}{3} |V|$
-	for $i \in \{ 1, 2 \}$. Furthermore, there exists an algorithm that
+	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. There exists a
+	separator $X$ in $\mathcal{G}$ inducing a partition $P_V = \{ X, V_1, V_2
+	\}$  such that $|X| \leq 2 \sqrt{2} \sqrt{|V|}$ and $|V_i| \leq \frac{2}{3}
+	|V|$ for $i \in \{ 1, 2 \}$. Furthermore, there exists an algorithm that
 	finds $P_V$ in $\mathcal{O}(|V|)$ time.
 \end{theorem}
