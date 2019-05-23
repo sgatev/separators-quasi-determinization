@@ -333,10 +333,10 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots, n-1 \}$. There exists a
 	successful path $\pi$ in $\mathcal{A}$ with label $w$. Let $q' \in P_i$ and
 	$q'' \in P_j$ be respectively the start and end state of $\pi$ for $i, j \in
-	\{ 1, 2, \ldots, k \}$. If $\pi$ is trivial then $q' = q'' \in S \cap F$ and
-	$i = j$. Thus, $q' \in \hat{\Delta}_\epsilon(S) \cap P_i$ and also $q' \in
-	F_i'$. Therefore, $w = \epsilon \in \mathcal{L}_\mathcal{A'}$. Otherwise, if
-	$\pi$ is non-trivial, then let
+	\{ 1, 2, \ldots, k \}$. If $\pi$ is trivial then $w = \epsilon$, $q' = q''
+	\in S \cap F$ and $i = j$. Thus, $q' \in \hat{\Delta}_\epsilon(S) \cap P_i$
+	and also $q' \in F_i'$. Therefore, $w = \epsilon \in
+	\mathcal{L}_\mathcal{A'}$. Otherwise, if $\pi$ is non-trivial, let
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
@@ -407,41 +407,51 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\mathcal{L}_\mathcal{A'}$.
 
 	Similarly, we show that $\mathcal{L}_\mathcal{A'} \subseteq
-	\mathcal{L}_\mathcal{A}$.
-	Let $\sigma_1 \sigma_2 \ldots \sigma_{n-1} \in \mathcal{L}_\mathcal{A'}$ for
-	$n > 0$ and let
+	\mathcal{L}_\mathcal{A}$. Let $w = \sigma_1 \sigma_2 \ldots \sigma_{n-1} \in
+	\mathcal{L}_\mathcal{A'}$ for $n > 0$ where $\sigma_i \in \Sigma$ for $i \in
+	\{ 1, 2, \ldots, n-1 \}$. There exists a successful path $\pi$ in
+	$\mathcal{A'}$ with label $w$. Let $p', p'' \in \prod_{i=1}^k 2^{P_i}$ be
+	respectively the start and end state of $\pi$. If $\pi$ is trivial then $w =
+	\epsilon$, $p' = p'' = s$ and $s^i \cap F_i' \neq \emptyset$ for some $i \in
+	\{ 1, 2, \ldots, k \}$. Therefore, $S \cap F \neq \emptyset$, and thus $w =
+	\epsilon \in \mathcal{L}_\mathcal{A}$. Otherwise, if $\pi$ is non-trivial,
+	let
 	\begin{align*}
 		\langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3
 		\rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle
 	\end{align*}
-	be a successful path in $\mathcal{A'}$.
-	There exists $j \in \{ 1, 2, \ldots, k \}$ such that $p_n^j \in F_j'$ and thus
-	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in F$.
-	Let us assume there exist $q_i \in Q$ and $j \in \{ 1, 2, \ldots, k \}$ such that
-	$q_i \in p_i^j$ for $i \in \{ 2, 3, \ldots, n \}$. By definition, $p_{i} =
-	\delta(p_{i-1}, \sigma_{i-1}) = \langle p_i^1, p_i^2, \ldots, p_i^k \rangle$
-	where
+	be the sequence of state transitions that constitutes $\pi$. Since $\pi$ is
+	successful there exists $j \in \{ 1, 2, \ldots, k \}$ such that $p_n^j \in
+	F_j'$, and thus $p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n
+	\in F$. Let us assume there exist $q_i \in Q$ and $j \in \{ 1, 2, \ldots, k
+	\}$ such that $q_i \in p_i^j$ for $i \in \{ 2, 3, \ldots, n \}$. By
+	definition, $p_{i} = \delta(p_{i-1}, \sigma_{i-1}) = \langle p_i^1, p_i^2,
+	\ldots, p_i^k \rangle$ where
 	\begin{align*}
 		p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
-		&= \big[ \hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
-		\})) \cap P_j \big] \cup \big[ \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
-		\hat{\Delta}_f (p_{i-1}^r, \{ \sigma_{i-1} \})) \cap X} \big]\\
-		&= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_{i-1}^r, \{
-		\sigma_{i-1} \})) \cap P_j}.
+		&= \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_{i-1}^j, \{
+		\sigma_{i-1} \})) \cup \bigcup_{r=1}^k{\hat{\Delta}_\epsilon^j(
+		\hat{\Delta}_\epsilon^r(\hat{\Delta}_f (p_{i-1}^r, \{ \sigma_{i-1}
+		\})) \cap X)}\\
+		&= \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
+		\})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k{
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_{i-1}^r, \{ \sigma_{i-1}
+		\}))}\\
+		&= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p_{i-1}^r,
+		\{ \sigma_{i-1} \}))}
 	\end{align*}
-	Since $q_i \in p_i^j$ implies $|p_i^j| > 0$ there exists $r \in
-	\{ 1, 2, \ldots, k \}$ such that $|p_{i-1}^r| > 0$.
-	Therefore, there exists $q_{i-1} \in p_{i-1}^r$.
-	Moreover, since $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}_f
-	(p_{i-1}^r, \{ \sigma_{i-1} \}))$ there exists $l_{i-1} > 0$ and
-	$q_{i-1, h} \in Q$ for $h \in \{ 1, 2, \ldots, l_{i-1} \}$ such that
-	$\langle q_{i-1}, \sigma_{i-1}, q_{i-1, 1} \rangle \in \Delta$,
-	$\langle q_{i-1, h}, \epsilon, q_{i-1, h+1} \rangle \in \Delta$ for $h \in
-	\{ 1, 2, \ldots, l_{i-1}-1 \}$ and $q_{i-1, l_{i-1}} = q_i$. Specifically, in
-	case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i \rangle \in
-	\Delta$.
-	There exist $q_1 \in Q$ and $j \in \{ 1, 2, \ldots, k \}$ such that $q_1 \in
-	p_1^j$ and thus $q_1 \in S$. Therefore,
+	Since $q_i \in p_i^j$ implies $p_i^j \neq \emptyset$, there exists $r \in \{
+	1, 2, \ldots, k \}$ such that $p_{i-1}^r \neq \emptyset$. Therefore, there
+	exists $q_{i-1} \in p_{i-1}^r$. Also, since $q_i \in
+	\hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p_{i-1}^r, \{ \sigma_{i-1} \}))$
+	there exist $l_{i-1} > 0$ and a sequence of states $q_{i-1, h} \in Q$ for $h
+	\in \{ 1, 2, \ldots, l_{i-1} \}$ such that $\langle q_{i-1}, \sigma_{i-1},
+	q_{i-1, 1} \rangle \in \Delta$, $\langle q_{i-1, h}, \epsilon, q_{i-1, h+1}
+	\rangle \in \Delta$ for $h \in \{ 1, 2, \ldots, l_{i-1}-1 \}$ and $q_{i-1,
+	l_{i-1}} = q_i$. Specifically, in case $l_{i-1} = 1$ we have $\langle
+	q_{i-1}, \sigma_{i-1}, q_i \rangle \in \Delta$. There exist $q_1 \in Q$ and
+	$j \in \{ 1, 2, \ldots, k \}$ such that $q_1 \in p_1^j$ and thus $q_1 \in
+	S$. Therefore,
 	\begin{align*}
 		&\langle q_1, \sigma_1, q_{1,1} \rangle, \langle q_{1,1}, \epsilon,
 		q_{1,2} \rangle, \ldots, \langle q_{1,l_1-1}, \epsilon, q_2
@@ -454,7 +464,7 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		q_{n-1,1}, \epsilon, q_{n-1,2} \rangle, \ldots, \langle
 		q_{n-1,l_{n-1}-1}, \epsilon, q_n \rangle
 	\end{align*}
-	is a successful path in $\mathcal{A}$ and thus $\sigma_1 \sigma_2 \ldots
+	is a successful path in $\mathcal{A}$ and thus $w = \sigma_1 \sigma_2 \ldots
 	\sigma_{n-1} \in \mathcal{L}_\mathcal{A}$.
 \end{proof}
 
