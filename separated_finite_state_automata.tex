@@ -5,7 +5,7 @@
 	$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there
 	exists a partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such that
 	$\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq
-	j$ for $i, j \in \interval{1}{k}$.
+	j$ for $i, j \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
@@ -30,9 +30,10 @@
 	Since $X$ is a separator in $\mathcal{G}_\mathcal{A}$ there exists a
 	partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such that $E \cap
 	\{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} =
-	\emptyset$ if $i \neq j$ for $i, j \in \interval{1}{k}$. Thus, $\Delta \cap
-	(Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j
-	\in \interval{1}{k}$. Therefore, $X$ is a separator in $\mathcal{A}$.
+	\emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta
+	\cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for
+	$i, j \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a separator in
+	$\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}\label{p_small_delta}
@@ -56,7 +57,7 @@
 	\end{flalign*}
 	Since $\mathcal{A}$ is $k$-separated then $\Delta \cap (Q_i \times
 	\Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in
-	\interval{1}{k}$. Therefore,
+	\{ 1, 2, \ldots, k \}$. Therefore,
 	\begin{flalign*}
 		\Delta &\subseteq \begin{aligned}[t]
 			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
@@ -76,8 +77,8 @@
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\langle q', w, q'' \rangle \in
 	\Delta^*$ for $w \in \Sigma^*$, $q' \in Q_i \cup X$, $q'' \in Q_j \cup X$
-	where $i, j \in \interval{1}{k}$ and $i \neq j$. There exist $w', w'' \in
-	\Sigma^*$ and $x \in X$ such that $w = w'w''$ and $\langle q', w', x
+	where $i, j \in \{ 1, 2, \ldots, k \}$ and $i \neq j$. There exist $w', w''
+	\in \Sigma^*$ and $x \in X$ such that $w = w'w''$ and $\langle q', w', x
 	\rangle, \langle x, w'', q'' \rangle \in \Delta^*$.
 \end{proposition}
 
@@ -94,15 +95,15 @@
 		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
 	for $n > 0$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$
-	for $r \in \interval{1}{n-1}$, $q_1 = q'$, $q_n = q''$ and $w =
+	for $r \in \{ 1, 2, \ldots, n-1 \}$, $q_1 = q'$, $q_n = q''$ and $w =
 	\sigma_1\sigma_2\ldots\sigma_{n-1}$. Let us assume that $q_r \not\in X$ for
-	$r \in \interval{1}{n}$. It follows that $q_1 = q' \in Q_i$ and $q_n = q''
-	\in Q_j$. Since $i \neq j$ there exists $r \in \interval{1}{n-1}$ such that
-	$\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$ and $q_r \in Q_{r'},
-	q_{r+1} \in Q_{r''}$ for $r', r'' \in \interval{1}{k}$ and $r' \neq r''$.
-	However, this contradicts the assumption that $\mathcal{A}$ is
-	$k$-separated. Therefore, there exists $r \in \interval{1}{n}$ such that
-	$q_r \in X$. Let $w' = \sigma_1\sigma_2\ldots\sigma_{r-1}$ and $w'' =
+	$r \in \{ 1, 2, \ldots, n \}$. It follows that $q_1 = q' \in Q_i$ and $q_n =
+	q'' \in Q_j$. Since $i \neq j$ there exists $r \in \{ 1, 2, \ldots, n-1 \}$
+	such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$ and $q_r \in
+	Q_{r'}, q_{r+1} \in Q_{r''}$ for $r', r'' \in \{ 1, 2, \ldots, k \}$ and $r'
+	\neq r''$. However, this contradicts the assumption that $\mathcal{A}$ is
+	$k$-separated. Therefore, there exists $r \in \{ 1, 2, \ldots, n \}$ such
+	that $q_r \in X$. Let $w' = \sigma_1\sigma_2\ldots\sigma_{r-1}$ and $w'' =
 	\sigma_r\sigma_{r+1}\ldots\sigma_{n-1}$. It is easy to see that $w = w'w''$
 	and $\langle q_1, w', q_r \rangle, \langle q_r, w'', q_n \rangle \in
 	\Delta^*$.
@@ -117,14 +118,14 @@
 		\Delta_\epsilon^i(q') = \{ q'' \in Q_i \cup X \mid \langle q',
 		\epsilon, q'' \rangle \in \Delta^* \}.
 	\end{align*}
-	for $i \in \interval{1}{k}$.
+	for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(\hat{
 	\Delta}_\epsilon^i(Q') \cap X) \subseteq \hat{\Delta}_\epsilon^i(Q')$ for $i
-	\in \interval{1}{k}$ and $Q' \subseteq Q_i \cup X$.
+	\in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq Q_i \cup X$.
 \end{proposition}
 
 \begin{proof}
@@ -152,7 +153,7 @@
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(Q') =
 	\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X)$ if $i \neq j$
-	for $i, j \in \interval{1}{k}$ and $Q' \subseteq Q_j \cup X$.
+	for $i, j \in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq Q_j \cup X$.
 \end{proposition}
 
 \begin{proof}
@@ -183,9 +184,9 @@ for some finite-state automata (Figure \ref{fig:f_worst_case_det}). However, bas
 Proposition \ref{p_small_delta}, if $\mathcal{A}$ is $k$-separated for $k > 1$ we
 could effectively simulate $p = \delta(q, \sigma)$ by decomposing the state
 transition function $\delta$ into functions $\delta_i : 2^{(Q_i \cup X)} \times
-\Sigma \rightarrow 2^{(Q_i \cup X)}$ for $i \in \interval{1}{k}$ and the state $q
-\subseteq Q$ into quasi-states $q_i \subseteq Q_i \cup X$ for $i \in
-\interval{1}{k}$, evaluating $p_i = \delta_i(q_i, \sigma)$ for each of the
+\Sigma \rightarrow 2^{(Q_i \cup X)}$ for $i \in \{ 1, 2, \ldots, k \}$ and the state
+$q \subseteq Q$ into quasi-states $q_i \subseteq Q_i \cup X$ for $i \in
+\{ 1, 2, \ldots, k \}$, evaluating $p_i = \delta_i(q_i, \sigma)$ for each of the
 quasi-states and composing the results into the new state $p = \bigcup_{i=1}^k q_i
 \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the functions $\delta_i$
 will be smaller than $\delta$ leading towards a more efficient representation of

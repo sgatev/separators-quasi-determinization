@@ -26,13 +26,13 @@
 	V$ is a separator in $\mathcal{G}$ if and only if there exists a partition
 	$P_V = \{ X, V_1, \ldots, V_n \}$ for $n > 1$ such that $E \cap \{ \{ v',
 	v'' \} \mid \exists v' \in V_i \; \exists v'' \in V_j \} = \emptyset$ if $i
-	\neq j$ for $i, j \in \interval{1}{n}$.
+	\neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan, see \cite{LT77}]\label{t_lipton_tarjan}
 	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. There exist a
 	separator $X$ and a partition $P_V = \{ X, V_1, V_2 \}$ in $\mathcal{G}$
 	such that $|X| \leq 2 \sqrt{2} \sqrt{|V|}$ and $|V_i| \leq \frac{2}{3} |V|$
-	for $i \in \interval{1}{2}$. Furthermore, there exists an algorithm that
+	for $i \in \{ 1, 2 \}$. Furthermore, there exists an algorithm that
 	finds $P_V$ in $\mathcal{O}(|V|)$ time.
 \end{theorem}

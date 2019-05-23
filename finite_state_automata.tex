@@ -43,12 +43,13 @@
 	\end{align*}
 	for $n > 0$ where
 	\begin{itemize}
-		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
-		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \interval{1}{n-1}$,
+		\item $q_i \in Q$ for $i \in \{ 1, 2, \ldots, n \}$,
+		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots,
+			n-1 \}$,
 		\item $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i \in
-			\interval{1}{n-1}$.
+			\{ 1, 2, \ldots, n-1 \}$.
 	\end{itemize}
-	The length of the path $\pi$ is $n$. The start state of the path $\pi$ is
+	The length of the path $\pi$ is $n-1$. The start state of the path $\pi$ is
 	$q_1$. The end state of the path $\pi$ is $q_n$. The path $\pi$ is
 	successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the path
 	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.

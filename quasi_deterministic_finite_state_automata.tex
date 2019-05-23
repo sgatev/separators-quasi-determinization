@@ -10,14 +10,14 @@
 	\begin{itemize}
 		\item $\langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
 			deterministic finite-state automaton for $i \in
-			\interval{1}{k}$,
+			\{ 1, 2, \ldots, k \}$,
 		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ and
 			$\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
 			function such that $dom(\rho_i) = rng(\tau_i)$ for $i \in
-			\interval{1}{k}$,
+			\{ 1, 2, \ldots, k \}$,
 		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ and
 			$\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
-			extension function for $i \in \interval{1}{k}$,
+			extension function for $i \in \{ 1, 2, \ldots, k \}$,
 		\item $\eta_x : X \times X \rightarrow X$ is a separator extension
 			function.
 	\end{itemize}
@@ -26,7 +26,7 @@
 \begin{remark}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. We
-	write $q^j$ for $j \in \interval{1}{k}$ to denote the $j$-th element of $q
+	write $q^j$ for $j \in \{ 1, 2, \ldots, k \}$ to denote the $j$-th element of $q
 	\in \prod_{i=1}^k{Q_i}$.
 \end{remark}
 
@@ -38,7 +38,8 @@
 	\begin{itemize}
 		\item $\eta_x^1(x) = x$,
 		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
-			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \interval{2}{k}$.
+			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k
+			\}$.
 	\end{itemize}
 \end{definition}
 
@@ -62,7 +63,7 @@
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
 		\sigma))
 	\end{align*}
-	for $i \in \interval{1}{k}$.
+	for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
@@ -91,25 +92,31 @@
 \end{definition}
 
 \begin{definition}
-	A path $\pi$ in a quasi-deterministic $k$-separated finite-state automaton
+	A path in a quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
-	is a sequence of state transitions
+	is either trivial or non-trivial. A trivial path $\pi$ in $\mathcal{A}$ is
+	associated with every state $q \in \prod_{i=1}^k{Q_i}$. The length of the
+	path $\pi$ is $0$. The start state of the path $\pi$ is $q$. The end state
+	of the path $\pi$ is $q$. The path $\pi$ is succsessful if and only if $q =
+	s$ and $q^j \in F_j$ for some $j \in \{ 1, 2, \ldots, k \}$. The label of the
+	path $\pi$ is $\epsilon$. A non-trivial path $\pi$ in $\mathcal{A}$ is a
+	finite sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	where
+	for $n > 0$ where
 	\begin{itemize}
-		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \interval{1}{n}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
+		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \{ 1, 2, \ldots, n \}$,
+		\item $\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
 		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-			\interval{1}{n-1}$.
+			\{ 1, 2, \ldots, n-1 \}$.
 	\end{itemize}
-	The starting state of the path $\pi$ is $q_1$. The ending state of the path
-	$\pi$ is $q_n$. The path $\pi$ is successful if and only if $q_1 = s$ and
-	$q_n^j \in F_j$ for some $j \in \interval{1}{k}$. The label of the path
-	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over
-	$\Sigma$.
+	The length of the path $\pi$ is $n-1$. The start state of the path $\pi$ is
+	$q_1$. The end state of the path $\pi$ is $q_n$. The path $\pi$ is
+	successful if and only if $q_1 = s$ and $q_n^j \in F_j$ for some $j \in \{
+	1, 2, \ldots, k \}$. The label of the path $\pi$ is the word
+	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
 \end{definition}
 
 \begin{proposition}
@@ -126,12 +133,12 @@
 	$\epsilon$ starting from state $q'$ and ending in state $q''$. By
 	definition, only trivial paths are labeled with $\epsilon$. Therefore, $q' =
 	q''$ and by definition $\delta^*(q', \epsilon) = q'$. A similar argument
-	follows in the other direction. Otherwise, if $|w| > 0$ then $w = w'\sigma$
+	follows in the other direction. Otherwise, if $|w| > 0$, then $w = w'\sigma$
 	for $w' \in \Sigma^*$ and $\sigma \in \Sigma$. Let $\pi$ be a path with
-	label $w$ starting from state $q'$ and ending in state $q''$. Then there
-	exist $q''' \in \prod_{i=1}^k{Q_i}$ and a path with label $w'$ starting from
-	state $q'$ and ending in state $q'''$. Furthermore, $\delta(q''', \sigma) =
-	q''$ by definition. By the inductive hypothesis $\delta^*(q', w') = q'''$.
+	label $w$ starting from state $q'$ and ending in state $q''$. There exist
+	$q''' \in \prod_{i=1}^k{Q_i}$ and a path with label $w'$ starting from state
+	$q'$ and ending in state $q'''$. Furthermore, $\delta(q''', \sigma) = q''$
+	by definition. By the inductive hypothesis $\delta^*(q', w') = q'''$.
 	Therefore, by definition $\delta^*(q', w) = \delta^*(q', w'\sigma) =
 	\delta(\delta^*(q', w'), \sigma) = \delta(q''', \sigma) = q''$. Again, a
 	similar argument could be followed in the other direction.
@@ -143,7 +150,7 @@
 	\rangle$ is the set of all labels of successful paths
 	\begin{align*}
 		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists i \in
-		\interval{1}{k}(\delta^*(s, w)^i \in F_i) \}.
+		\{ 1, 2, \ldots, k \}(\delta^*(s, w)^i \in F_i) \}.
 	\end{align*}
 \end{definition}
 
@@ -161,20 +168,20 @@
 $q \gets s$\;
 
 \For {$\sigma \in w$} {
-  \For {$i \in \interval{1}{k}$} {
+  \For {$i \in \{ 1, 2, \ldots, k \}$} {
     $t_i \gets \tau_i(q_i, \sigma)$\;
     $r_i \gets \rho_i(t_i)$\;
   }
   $e \gets r_1$\;
-  \For {$i \in \interval{2}{k}$} {
+  \For {$i \in \{ 2, 3, \ldots, k \}$} {
     $e \gets \eta_x(e, r_i)$\;
   }
-  \For {$i \in \interval{2}{k}$} {
+  \For {$i \in \{ 2, 3, \ldots, k \}$} {
     $q_i \gets \eta_i(t_i, e)$\;
   }
 }
 
-\For {$i \in \interval{2}{k}$} {
+\For {$i \in \{ 2, 3, \ldots, k \}$} {
   \If {$q_i \in F_i$} {
 	  \Return $True$\;
   }
@@ -187,7 +194,7 @@ $q \gets s$\;
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
 $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$. Let $P_i = Q_i \cup X$
-for $i \in \interval{1}{k}$. We construct the quasi-deterministic $k$-separated
+for $i \in \{ 1, 2, \ldots, k \}$. We construct the quasi-deterministic $k$-separated
 finite-state automaton $\mathcal{A}'$ and the set of states $R$ by induction. Let
 \begin{align*}
 	\mathcal{A}'^{(1)} &= \langle \Sigma, Q'^{(1)}, 2^X, s,
@@ -201,8 +208,8 @@ where
 	\item $Q_i'^{(1)} = \{ s^i \}$,
 	\item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} = \emptyset$
 \end{itemize}
-for $i \in \interval{1}{k}$. Let us assume that $\mathcal{A}'^{(n)}$ and $R^{(n)}$
-are constructed. The set of states introduced at step $n$ is
+for $i \in \{ 1, 2, \ldots, k \}$. Let us assume that $\mathcal{A}'^{(n)}$ and
+$R^{(n)}$ are constructed for $n > 0$. The set of states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
@@ -232,12 +239,12 @@ where
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
-for $i \in \interval{1}{k}$ and
+for $i \in \{ 1, 2, \ldots, k \}$ and
 \begin{align*}
 \eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ &\langle \eta_x^{i (n)}(q^1, q^2, \ldots, q^i),
 \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^{i+1}, \sigma)) \rangle \mid\\
-&\exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \interval{1}{k-1}
-\}.
+&\exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \{ 1, 2, \ldots,
+k-1 \} \}.
 \end{align*}
 
 \begin{proposition}
@@ -245,19 +252,19 @@ for $i \in \interval{1}{k}$ and
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)}$ be the
 	quasi-deterministic $k$-separated finite-state automaton derived from
 	$\mathcal{A}$ by applying the construction described above for $n > 0$. Then
-	$\tau_i, \rho_i, \eta_i$ for $i \in \interval{1}{k}$ and $\eta_x$ are
+	$\tau_i, \rho_i, \eta_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $\eta_x$ are
 	functions.
 \end{proposition}
 
 \begin{proof}
 	Since $\hat{\Delta}_\epsilon$ is a function then $\tau_i^{(n)}$ is also a
-	function for $n > 0$ and $i \in \interval{1}{k}$. By construction,
-	$\rho_i^{(n)}$ is a function for $n > 0$ and $i \in \interval{1}{k}$. Since
+	function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. By construction,
+	$\rho_i^{(n)}$ is a function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. Since
 	$\tau_i^{(n)}$ and $\rho_i^{(n)}$ are functions for $n > 0$ and $i \in
-	\interval{1}{k}$ then $\eta_x^{(n)}$ is also a function for $n > 0$. Since
-	$\tau_i^{(n)}$ is a function for $n > 0$ and $i \in \interval{1}{k}$, and
+	\{ 1, 2, \ldots, k \}$ then $\eta_x^{(n)}$ is also a function for $n > 0$. Since
+	$\tau_i^{(n)}$ is a function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$, and
 	$\eta_x^{(n)}$ is a function for $n > 0$ then $\eta_i^{(n)}$ is also a
-	function for $n > 0$ and $i \in \interval{1}{k}$.
+	function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$.
 \end{proof}
 
 \begin{proposition}
@@ -265,14 +272,14 @@ for $i \in \interval{1}{k}$ and
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)}$ be the
 	quasi-deterministic $k$-separated finite-state automaton derived from
 	$\mathcal{A}$ by applying the construction described above for $n > 0$. Then
-	$dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $i \in \interval{1}{k}$.
+	$dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $i \in \{ 1, 2, \ldots, k \}$.
 \end{proposition}
 
 \begin{proof}
 	We prove that $dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $n > 0$ and $i \in
-	\interval{1}{k}$ by induction on $n$. We have $\rho_i^{(1)} = \tau_i^{(1)} =
-	\emptyset$ for $i \in \interval{1}{k}$. Let us assume that $dom(\rho_i^{(n)})
-	= rng(\tau_i^{(n)})$ for $n > 0$ and $i \in \interval{1}{k}$. Then
+	\{ 1, 2, \ldots, k \}$ by induction on $n$. We have $\rho_i^{(1)} = \tau_i^{(1)} =
+	\emptyset$ for $i \in \{ 1, 2, \ldots, k \}$. Let us assume that $dom(\rho_i^{(n)})
+	= rng(\tau_i^{(n)})$ for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. Then
 	$dom(\rho_i^{(n+1)}) = dom(\rho_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
 	rng(\tau_i^{(n)})) = rng(\tau_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
 	rng(\tau_i^{(n)})) = rng(\tau_i^{(n+1)})$.
@@ -320,12 +327,12 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\end{align*}
 	be a successful path in $\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \}
 	\subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
-	\interval{1}{n-1}$ such that $\sigma_i \in \Sigma$ if $i \in I$ and
+	\{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if $i \in I$ and
 	$\sigma_i = \epsilon$ otherwise. Also, let $i_h < i_j$ if $h < j$ for $h, j
-	\in \interval{1}{l}$. It follows that $\sigma_{i_1} \sigma_{i_2} \ldots
+	\in \{ 1, 2, \ldots, l \}$. It follows that $\sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_l} = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$. Let $p_1 = s$. We
 	have $\sigma_{i_1} \in \Sigma$ and if $i_1 > 1$ then $\sigma_j = \epsilon$
-	for $j \in \interval{1}{i_1-1}$. Therefore,
+	for $j \in \{ 1, 2, \ldots, i_1-1 \}$. Therefore,
 	\begin{align*}
 		q_{i_1} \in \Delta_\epsilon(q_1) \subseteq \hat{\Delta}_\epsilon(S)
 		= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(S) \cap P_r} =
@@ -333,13 +340,13 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\end{align*}
 	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
-	$h \in \interval{2}{l}$.
+	$h \in \{ 2, 3, \ldots, l \}$.
 	Let $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
 	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
-	$p_{h+1}^j = \delta_j(p_h, \sigma_{i_h})$ for $j \in \interval{1}{k}$.
+	$p_{h+1}^j = \delta_j(p_h, \sigma_{i_h})$ for $j \in \{ 1, 2, \ldots, k \}$.
 	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
 	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
-	\interval{i_h+1}{i_{h+1}-1}$. Therefore,
+	\{ i_h+1, i_h+2, \ldots, i_{h+1}-1 \}$. Therefore,
 	\begin{align*}
 		q_{i_{h+1}} &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h},
 		\sigma_{i_h})) = \bigcup_{j=1}^k \bigcup_{r=1}^k
@@ -357,7 +364,7 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		= \bigcup_{j=1}^k p_{h+1}^j.
 	\end{align*}
 	Otherwise, $h = l$ and if $n - i_l > 1$ then $\sigma_j = \epsilon$ for $j
-	\in \interval{i_l+1}{n-1}$. Therefore,
+	\in \{ i_l+1, i_l+2, \ldots, n-1 \}$. Therefore,
 	\begin{align*}
 		q_n \in \hat{\Delta}_\epsilon(\Delta_f(q_{i_l}, \sigma_{i_l}))
 		&\subseteq \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
@@ -370,7 +377,7 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	It follows that $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$.
 	Therefore, $p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$
 	for some $j
-	\in \interval{1}{k}$. Therefore,
+	\in \{ 1, 2, \ldots, k \}$. Therefore,
 	\begin{align*}
 		\langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2, \sigma_{i_2},
 		p_3 \rangle, \ldots, \langle p_l, \sigma_{i_l}, p_{l+1} \rangle
@@ -388,10 +395,10 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		\rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, p_n \rangle
 	\end{align*}
 	be a successful path in $\mathcal{A'}$.
-	There exists $j \in \interval{1}{k}$ such that $p_n^j \in F_j'$ and thus
+	There exists $j \in \{ 1, 2, \ldots, k \}$ such that $p_n^j \in F_j'$ and thus
 	$p_n^j \cap F \neq \emptyset$. Therefore, there exists $q_n \in F$.
-	Let us assume there exist $q_i \in Q$ and $j \in \interval{1}{k}$ such that
-	$q_i \in p_i^j$ for $i \in \interval{2}{n}$. By definition, $p_{i} =
+	Let us assume there exist $q_i \in Q$ and $j \in \{ 1, 2, \ldots, k \}$ such that
+	$q_i \in p_i^j$ for $i \in \{ 2, 3, \ldots, n \}$. By definition, $p_{i} =
 	\delta(p_{i-1}, \sigma_{i-1}) = \langle p_i^1, p_i^2, \ldots, p_i^k \rangle$
 	where
 	\begin{align*}
@@ -403,17 +410,17 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		\sigma_{i-1} \})) \cap P_j}.
 	\end{align*}
 	Since $q_i \in p_i^j$ implies $|p_i^j| > 0$ there exists $r \in
-	\interval{1}{k}$ such that $|p_{i-1}^r| > 0$.
+	\{ 1, 2, \ldots, k \}$ such that $|p_{i-1}^r| > 0$.
 	Therefore, there exists $q_{i-1} \in p_{i-1}^r$.
 	Moreover, since $q_i \in \hat{\Delta}_\epsilon(\hat{\Delta}_f
 	(p_{i-1}^r, \{ \sigma_{i-1} \}))$ there exists $l_{i-1} > 0$ and
-	$q_{i-1, h} \in Q$ for $h \in \interval{1}{l_{i-1}}$ such that
+	$q_{i-1, h} \in Q$ for $h \in \{ 1, 2, \ldots, l_{i-1} \}$ such that
 	$\langle q_{i-1}, \sigma_{i-1}, q_{i-1, 1} \rangle \in \Delta$,
 	$\langle q_{i-1, h}, \epsilon, q_{i-1, h+1} \rangle \in \Delta$ for $h \in
-	\interval{1}{l_{i-1}-1}$ and $q_{i-1, l_{i-1}} = q_i$. Specifically, in
+	\{ 1, 2, \ldots, l_{i-1}-1 \}$ and $q_{i-1, l_{i-1}} = q_i$. Specifically, in
 	case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i \rangle \in
 	\Delta$.
-	There exist $q_1 \in Q$ and $j \in \interval{1}{k}$ such that $q_1 \in
+	There exist $q_1 \in Q$ and $j \in \{ 1, 2, \ldots, k \}$ such that $q_1 \in
 	p_1^j$ and thus $q_1 \in S$. Therefore,
 	\begin{align*}
 		&\langle q_1, \sigma_1, q_{1,1} \rangle, \langle q_{1,1}, \epsilon,
@@ -450,7 +457,7 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	$\mathcal{A}$ by applying the construction described above for $n > 0$. Let
 	$dom(\eta_x^{(n)}) = dom(\eta_x^{(n+1)})$, $dom(\tau_i^{(n)}) =
 	dom(\tau_i^{(n+1)})$ and $dom(\eta_i^{(n)}) = dom(\eta_i^{(n+1)})$ for $i
-	\in \interval{1}{k}$, $q \in R_n$ and $\sigma \in \Sigma$. Then $R^{(n+1)} =
+	\in \{ 1, 2, \ldots, k \}$, $q \in R_n$ and $\sigma \in \Sigma$. Then $R^{(n+1)} =
 	R^{(n)}$.
 \end{proposition}
 
@@ -472,7 +479,7 @@ automata. We shall now prove its correctness and provide a runtime complexity bo
 
 $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
 
-\For {$i \in \interval{1}{k}$} {
+\For {$i \in \{ 1, 2, \ldots, k \}$} {
   $P_i \gets Q_i \cup X$\;
   $s_i \gets S_\epsilon \cap P_i$\;
   $Q_i' \gets \{ s_i \}$\;
@@ -487,7 +494,7 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 	$Updated \gets False$\;
 
 	$q \gets Extract(Next)$\;
-	\For {$i \in \interval{1}{k}$} {
+	\For {$i \in \{ 1, 2, \ldots, k \}$} {
 		\If {$q_i \cap F \neq \emptyset$} {
       			$F_i' \gets F_i' \cup \{ q_i \}$\;
 		}
@@ -495,7 +502,7 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 
 	\For {$\sigma \in \Sigma$} {
 		$e_x \gets \emptyset$\;
-		\For {$i \in \interval{1}{k}$} {
+		\For {$i \in \{ 1, 2, \ldots, k \}$} {
       			$t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{
 			\sigma \})) \cap P_i$\;
 			$Updated \gets Updated$ or $\langle q_i, \sigma \rangle \in
@@ -512,7 +519,7 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 		$Updated \gets Updated$ or $q \in dom(\eta_x)$\;
 		$\eta_x \gets \eta_x \cup \{ \langle q, e_x \rangle \}$\;
 
-		\For {$i \in \interval{1}{k}$} {
+		\For {$i \in \{ 1, 2, \ldots, k \}$} {
       			$e_i \gets t_i \cup e_x$\;
       			$Q_i' \gets Q_i' \cup \{ e_i \}$\;
 			$Updated \gets Updated$ or $\langle t_i, e_x \rangle \in
@@ -533,22 +540,22 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 \begin{proposition}\label{p_quasidet_auto_2}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $Visited_x = rng(\eta_x)$ and
-	$Visited_i = dom(\tau_i)$ for $i \in \interval{1}{k}$ during the execution
+	$Visited_i = dom(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$ during the execution
 	of Algorithm \ref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
 	The first time the condition at line 10 is executed $Visited_x = rng(\eta_x)
-	= \emptyset$ and $Visited_i = dom(\tau_i)$ for $i \in \interval{1}{k}$ for
-	$i \in \interval{1}{k}$. The only time $Visited_x$ and $\eta_x$ are modified
+	= \emptyset$ and $Visited_i = dom(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$ for
+	$i \in \{ 1, 2, \ldots, k \}$. The only time $Visited_x$ and $\eta_x$ are modified
 	inside the while loop is at lines 28 and 29. If $Visited_x = rng(\eta_x)$
 	before the execution of line 28 then $Visited_x = rng(\eta_x)$ after the
 	execution of line 29. The only time $Visited_i$ and $\tau_i$ are modified
-	inside the while loop for $i \in \interval{1}{k}$ is at lines 22 and 26.
+	inside the while loop for $i \in \{ 1, 2, \ldots, k \}$ is at lines 22 and 26.
 	If $Visited_i = dom(\tau_i)$ before the execution of line 22 then $Visited_i
-	= dom(\tau_i)$ after the execution of line 26 for $i \in \interval{1}{k}$.
+	= dom(\tau_i)$ after the execution of line 26 for $i \in \{ 1, 2, \ldots, k \}$.
 	Therefore, $Visited_x = rng(\eta_x)$ and $Visited_i = dom(\tau_i)$ for $i
-	\in \interval{1}{k}$ during the execution of Algorithm
+	\in \{ 1, 2, \ldots, k \}$ during the execution of Algorithm
 	\ref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
 \end{proof}
 
@@ -562,10 +569,10 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 \begin{proof}
 	The first time the condition at line 10 is executed $Next = \{ s \}$,
 	$Visited_x = \emptyset$ and $Visited_i = \emptyset$ for $i \in
-	\interval{1}{k}$. The only time $Next$ is modified inside the while loop is
+	\{ 1, 2, \ldots, k \}$. The only time $Next$ is modified inside the while loop is
 	at line 36 where $\delta(q, \sigma)$ is added to $Next$ for $q \in Next$ and
 	$\sigma \in \Sigma$. However, this happens only if $\langle e_i, \sigma
-	\rangle \not\in Visited_i$ for $i \in \interval{1}{k}$ and $e \not\in
+	\rangle \not\in Visited_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $e \not\in
 	Visited_x$. By construction, $e = \delta_x(q, \sigma)$ and $e_i =
 	\delta_i(q, \sigma) = \delta(q, \sigma)^i$. Therefore, based on Propositions
 	\ref{p_quasidet_auto_1} and \ref{p_quasidet_auto_2} the condition at line 10
@@ -604,7 +611,7 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 \begin{proof}
 	The first time the condition at line 10 is executed $Next = \{ s \}$,
 	$\eta_x = \emptyset$, $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$ and $F_i' =
-	\tau_i = \rho_i = \eta_i = \emptyset$ for $i \in \interval{1}{k}$.
+	\tau_i = \rho_i = \eta_i = \emptyset$ for $i \in \{ 1, 2, \ldots, k \}$.
 	Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle
 	= \mathcal{A}'^{(1)}$ and $Next = R_1$. Let us assume that after $n > 0$
 	iterations of the while loop $\langle \Sigma, Q', 2^X, s, F', \tau, \rho,
@@ -613,26 +620,26 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 	extracted from $Next$ in a first-in-first-out order and is then processed
 	at lines 12 through 38. The only time $F'$ is updated within the while
 	loop is at line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq
-	\emptyset$ for $i \in \interval{1}{k}$. Therefore, after $n+r$ iterations of
+	\emptyset$ for $i \in \{ 1, 2, \ldots, k \}$. Therefore, after $n+r$ iterations of
 	the while loop $F' = F'^{(n+r+1)}$. The only time $\tau$ is updated within
 	the while loop is at line 22 where $\langle q_i, \sigma,
 	\hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i \rangle$
-	is added to $\tau_i$ for $i \in \interval{1}{k}$ and $\sigma \in \Sigma$.
+	is added to $\tau_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in \Sigma$.
 	Therefore, after $n+r$ iterations of the while loop $\tau =
 	\tau^{(n+r+1)}$. The only time $\rho$ is updated within the while loop
 	is at line 24 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
-	\rangle$ is added to $\rho_i$ for $i \in \interval{1}{k}$ and $\sigma \in
+	\rangle$ is added to $\rho_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in
 	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\rho =
 	\rho^{(n+r+1)}$. At line 18 we have $e = \emptyset$. The value of $e$
 	is updated at line 25 where $\rho_i(\tau_i(q^i, \sigma))$ is added to it for
-	$i \in \interval{1}{k}$ and $\sigma \in \Sigma$. Therefore, at line 28 we
+	$i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in \Sigma$. Therefore, at line 28 we
 	have $e = \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))$ for $\sigma \in
 	\Sigma$. The only time $\eta_x$ is updated within the while loop is at line
 	28 where $\langle q, e \rangle$ is added to it. Therefore, after $n+r$
 	iterations of the while loop $\eta_x = \eta_x^{(n+r+1)}$. The only time
 	$\eta$ is updated within the while loop is at line 33 where $\langle
 	\tau_i(q^i, \sigma), \eta_x(q, \sigma), \tau_i(q^i, \sigma) \cup \eta_x(q,
-	\sigma) \rangle$ is added to it for $i \in \interval{1}{k}$ and $\sigma \in
+	\sigma) \rangle$ is added to it for $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in
 	\Sigma$. Therefore, after $n+r$ iterations of the while loop $\eta =
 	\eta^{(n+r+1)}$. The only times $Q'$ is updated within the while
 	loop is at line 21 where $\tau_i(q^i, \sigma)$ is added to it and at line
