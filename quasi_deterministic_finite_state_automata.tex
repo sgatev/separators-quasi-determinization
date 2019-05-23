@@ -26,8 +26,8 @@
 \begin{remark}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. We
-	write $q^j$ for $j \in \{ 1, 2, \ldots, k \}$ to denote the $j$-th element of $q
-	\in \prod_{i=1}^k{Q_i}$.
+	shall write $q^i$ to denote the $i$-th element of $q \in \prod_{i=1}^k{Q_i}$
+	for $i \in \{ 1, 2, \ldots, k \}$.
 \end{remark}
 
 \begin{definition}
@@ -97,10 +97,10 @@
 	is either trivial or non-trivial. A trivial path $\pi$ in $\mathcal{A}$ is
 	associated with every state $q \in \prod_{i=1}^k{Q_i}$. The length of the
 	path $\pi$ is $0$. The start state of the path $\pi$ is $q$. The end state
-	of the path $\pi$ is $q$. The path $\pi$ is succsessful if and only if $q =
-	s$ and $q^j \in F_j$ for some $j \in \{ 1, 2, \ldots, k \}$. The label of the
-	path $\pi$ is $\epsilon$. A non-trivial path $\pi$ in $\mathcal{A}$ is a
-	finite sequence of state transitions
+	of the path $\pi$ is $q$. The label of the path $\pi$ is $\epsilon$. The
+	path $\pi$ is succsessful if and only if $q = s$ and $q^j \in F_j$ for some
+	$j \in \{ 1, 2, \ldots, k \}$. A non-trivial path $\pi$ in $\mathcal{A}$ is
+	a finite sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
@@ -113,10 +113,10 @@
 			\{ 1, 2, \ldots, n-1 \}$.
 	\end{itemize}
 	The length of the path $\pi$ is $n-1$. The start state of the path $\pi$ is
-	$q_1$. The end state of the path $\pi$ is $q_n$. The path $\pi$ is
-	successful if and only if $q_1 = s$ and $q_n^j \in F_j$ for some $j \in \{
-	1, 2, \ldots, k \}$. The label of the path $\pi$ is the word
-	$\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over $\Sigma$.
+	$q_1$. The end state of the path $\pi$ is $q_n$. The label of the path $\pi$
+	is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over
+	$\Sigma$. The path $\pi$ is successful if and only if $q_1 = s$ and $q_n^j
+	\in F_j$ for some $j \in \{ 1, 2, \ldots, k \}$. 
 \end{definition}
 
 \begin{proposition}
@@ -194,8 +194,9 @@ $q \gets s$\;
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
 $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$. Let $P_i = Q_i \cup X$
-for $i \in \{ 1, 2, \ldots, k \}$. We construct the quasi-deterministic $k$-separated
-finite-state automaton $\mathcal{A}'$ and the set of states $R$ by induction. Let
+for $i \in \{ 1, 2, \ldots, k \}$. The quasi-deterministic $k$-separated
+finite-state automaton $\mathcal{A}'$ and the set of states $R$ are constructed by
+induction. Let
 \begin{align*}
 	\mathcal{A}'^{(1)} &= \langle \Sigma, Q'^{(1)}, 2^X, s,
 	F'^{(1)}, \tau^{(1)}, \rho^{(1)}, \eta^{(1)}, \emptyset \rangle,\\
@@ -240,12 +241,16 @@ where
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
 for $i \in \{ 1, 2, \ldots, k \}$ and
-\begin{align*}
-\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ &\langle \eta_x^{i (n)}(q^1, q^2, \ldots, q^i),
-\rho_i^{(n+1)}(\tau_i^{(n+1)}(q^{i+1}, \sigma)) \rangle \mid\\
-&\exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \{ 1, 2, \ldots,
-k-1 \} \}.
-\end{align*}
+\begin{itemize}
+	\item $\begin{aligned}[t]
+		\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ &\langle \eta_x^{i (n)}(p^1,
+		p^2, \ldots, p^i), p^{i+1}, \eta_x^{i (n)}(p^1, p^2, \ldots, p^i)
+		\cup p^{i+1} \rangle \mid\\
+		&\exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \{
+		1, 2, \ldots, k-1 \}(\\
+		&p^i = \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^{i+1}, \sigma))) \}.
+	\end{aligned}$
+\end{itemize}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
@@ -257,14 +262,15 @@ k-1 \} \}.
 \end{proposition}
 
 \begin{proof}
-	Since $\hat{\Delta}_\epsilon$ is a function then $\tau_i^{(n)}$ is also a
-	function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. By construction,
-	$\rho_i^{(n)}$ is a function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. Since
-	$\tau_i^{(n)}$ and $\rho_i^{(n)}$ are functions for $n > 0$ and $i \in
-	\{ 1, 2, \ldots, k \}$ then $\eta_x^{(n)}$ is also a function for $n > 0$. Since
-	$\tau_i^{(n)}$ is a function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$, and
-	$\eta_x^{(n)}$ is a function for $n > 0$ then $\eta_i^{(n)}$ is also a
-	function for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$.
+	Since $\hat{\Delta}_f$ and $\hat{\Delta}_\epsilon$ are functions then
+	$\tau_i^{(n)}$ is also a function for $n > 0$ and $i \in \{ 1, 2, \ldots, k
+	\}$. By construction, $\rho_i^{(n)}$ is a function for $n > 0$ and $i \in \{
+	1, 2, \ldots, k \}$. Since $\tau_i^{(n)}$ and $\rho_i^{(n)}$ are functions
+	for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$ then $\eta_x^{(n)}$ is also a
+	function for $n > 0$. Since $\tau_i^{(n)}$ is a function for $n > 0$ and $i
+	\in \{ 1, 2, \ldots, k \}$, and $\eta_x^{(n)}$ is a function for $n > 0$
+	then $\eta_i^{(n)}$ is also a function for $n > 0$ and $i \in \{ 1, 2,
+	\ldots, k \}$.
 \end{proof}
 
 \begin{proposition}
@@ -277,32 +283,36 @@ k-1 \} \}.
 
 \begin{proof}
 	We prove that $dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $n > 0$ and $i \in
-	\{ 1, 2, \ldots, k \}$ by induction on $n$. We have $\rho_i^{(1)} = \tau_i^{(1)} =
-	\emptyset$ for $i \in \{ 1, 2, \ldots, k \}$. Let us assume that $dom(\rho_i^{(n)})
-	= rng(\tau_i^{(n)})$ for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. Then
-	$dom(\rho_i^{(n+1)}) = dom(\rho_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
-	rng(\tau_i^{(n)})) = rng(\tau_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
-	rng(\tau_i^{(n)})) = rng(\tau_i^{(n+1)})$.
+	\{ 1, 2, \ldots, k \}$ by induction on $n$. Since $\rho_i^{(1)} =
+	\tau_i^{(1)} = \emptyset$ for $i \in \{ 1, 2, \ldots, k \}$ the statement
+	holds for $n = 1$. Let us assume that $dom(\rho_i^{(n)}) =
+	rng(\tau_i^{(n)})$ for $n > 0$ and $i \in \{ 1, 2, \ldots, k \}$. Then
+	\begin{align*}
+		dom(\rho_i^{(n+1)}) &= dom(\rho_i^{(n)}) \cup (rng(\tau_i^{(n+1)})
+		\setminus rng(\tau_i^{(n)}))\\
+		&= rng(\tau_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
+		rng(\tau_i^{(n)}))\\
+		&= rng(\tau_i^{(n+1)}).
+	\end{align*}
 \end{proof}
 
 \begin{lemma}\label{l_quasidet_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(i)}$ and $R^{(i)}$
+	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)}$ and $R^{(n)}$
 	be respectively the quasi-deterministic $k$-separated finite-state automaton
 	and the set of states derived from $\mathcal{A}$ by applying the
-	construction described above for $i > 0$. There exists $n > 0$ such that
-	$R^{(i)} = R^{(i+1)}$ and $\mathcal{A'}^{(i)} = \mathcal{A'}^{(i+1)}$ for
-	$i > n$.
+	construction described above for $n > 0$. There exists $m > 0$ such that
+	$R^{(n)} = R^{(n+1)}$ and $\mathcal{A'}^{(n)} = \mathcal{A'}^{(n+1)}$ for
+	$n > m$.
 \end{lemma}
 
 \begin{proof}
-	By construction, $R^{(i)} \subseteq R^{(i+1)} \subseteq
-	\prod_{j=1}^k{2^{P_j}}$ for $i > 0$. Therefore, there exists $n \leq
-	|\prod_{j=1}^k{2^{P_j}}|$ such that $R^{(n)}
-	= R^{(n+1)}$ and thus $R_{n+1} = \emptyset$. In that case,
-	$\mathcal{A}'^{(n+2)} = \mathcal{A}'^{(n+1)}$
-	and $R^{(n+2)} = R^{(n+1)}$. It follows that $R^{(i)} = R^{(i+1)}$ and
-	$\mathcal{A}^{(i)} = \mathcal{A}^{(i+1)}$ for $i > n$.
+	By construction, $R^{(n)} \subseteq R^{(n+1)} \subseteq
+	\prod_{i=1}^k{2^{P_i}}$ for $n > 0$. Therefore, there exists $m \leq
+	|\prod_{i=1}^k{2^{P_i}}|$ such that $R^{(m)} = R^{(m+1)}$ and thus $R_{m+1}
+	= \emptyset$. In that case, $\mathcal{A}'^{(m+2)} = \mathcal{A}'^{(m+1)}$
+	and $R^{(m+2)} = R^{(m+1)}$. It follows that $R^{(n)} = R^{(n+1)}$ and
+	$\mathcal{A}^{(n)} = \mathcal{A}^{(n+1)}$ for $n > m$.
 \end{proof}
 
 For the smallest $n > 0$ such that $\mathcal{A'}^{(n)} = \mathcal{A'}^{(n+1)}$ we
@@ -318,35 +328,39 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 
 \begin{proof}
 	First, we show that $\mathcal{L}_\mathcal{A} \subseteq
-	\mathcal{L}_\mathcal{A'}$.
-	Let $\sigma_1 \sigma_2 \ldots \sigma_{n-1} \in \mathcal{L}_\mathcal{A}$ for
-	$n > 0$ and let
+	\mathcal{L}_\mathcal{A'}$. Let $w = \sigma_1 \sigma_2 \ldots \sigma_{n-1}
+	\in \mathcal{L}_\mathcal{A}$ for $n > 0$ where $\sigma_i \in
+	\Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots, n-1 \}$. There exists a
+	successful path $\pi$ in $\mathcal{A}$ with label $w$. Let $q' \in P_i$ and
+	$q'' \in P_j$ be respectively the start and end state of $\pi$ for $i, j \in
+	\{ 1, 2, \ldots, k \}$. If $\pi$ is trivial then $q' = q'' \in S \cap F$ and
+	$i = j$. Thus, $q' \in \hat{\Delta}_\epsilon(S) \cap P_i$ and also $q' \in
+	F_i'$. Therefore, $w = \epsilon \in \mathcal{L}_\mathcal{A'}$. Otherwise, if
+	$\pi$ is non-trivial, then let
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	be a successful path in $\mathcal{A}$. Let $I = \{ i_1, i_2, \ldots, i_l \}
-	\subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
-	\{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if $i \in I$ and
-	$\sigma_i = \epsilon$ otherwise. Also, let $i_h < i_j$ if $h < j$ for $h, j
-	\in \{ 1, 2, \ldots, l \}$. It follows that $\sigma_{i_1} \sigma_{i_2} \ldots
+	be the sequence of state transitions that constitutes $\pi$. Let $I = \{
+	i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of
+	indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$
+	if $i \in I$. Also, let $i_h < i_j$ if $h < j$ for $h, j \in \{ 1, 2,
+	\ldots, l \}$. It follows that $\sigma_{i_1} \sigma_{i_2} \ldots
 	\sigma_{i_l} = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$. Let $p_1 = s$. We
 	have $\sigma_{i_1} \in \Sigma$ and if $i_1 > 1$ then $\sigma_j = \epsilon$
 	for $j \in \{ 1, 2, \ldots, i_1-1 \}$. Therefore,
 	\begin{align*}
 		q_{i_1} \in \Delta_\epsilon(q_1) \subseteq \hat{\Delta}_\epsilon(S)
-		= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(S) \cap P_r} =
-		\bigcup_{r=1}^k{p_1^r}.
+		= \bigcup_{j=1}^k{\hat{\Delta}_\epsilon(S) \cap P_j} =
+		\bigcup_{j=1}^k{p_1^j}.
 	\end{align*}
-	Let us assume that $p_h = \delta(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-	\sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{r=1}^k{p_h^r}$ for
-	$h \in \{ 2, 3, \ldots, l \}$.
-	Let $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
-	\langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
-	$p_{h+1}^j = \delta_j(p_h, \sigma_{i_h})$ for $j \in \{ 1, 2, \ldots, k \}$.
-	If $h < l$ then $\sigma_{i_{h+1}} \in \Sigma$ and if
-	$i_{h+1} - i_h > 1$ then $\sigma_j = \epsilon$ for $j \in
-	\{ i_h+1, i_h+2, \ldots, i_{h+1}-1 \}$. Therefore,
+	Let us assume that $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+	\sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$ for $h \in \{ 1,
+	2, \ldots, l \}$. Let $p_{h+1} = \delta(p_h, \sigma_{i_h}) = \langle
+	p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where $p_{h+1}^j =
+	\delta_j(p_h, \sigma_{i_h})$ for $j \in \{ 1, 2, \ldots, k \}$. If $h < l$
+	then $\sigma_{i_{h+1}} \in \Sigma$ and if $i_{h+1} - i_h > 1$ then $\sigma_j
+	= \epsilon$ for $j \in \{ i_h+1, i_h+2, \ldots, i_{h+1}-1 \}$. Therefore,
 	\begin{align*}
 		q_{i_{h+1}} &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h},
 		\sigma_{i_h})) = \bigcup_{j=1}^k \bigcup_{r=1}^k
@@ -360,30 +374,36 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 		p_h^j, \{ \sigma_{i_h} \})) \cup \bigcup_{r=1}^k
 		\hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
 		(p_h^r, \{\sigma_{i_h} \})) \cap X) \big]\\
-		&= \bigcup_{j=1}^k \delta_j(p_h, \sigma_{i_h})
-		= \bigcup_{j=1}^k p_{h+1}^j.
+		&= \bigcup_{j=1}^k \delta_j(p_h, \sigma_{i_h})\\
+		&= \bigcup_{j=1}^k p_{h+1}^j.
 	\end{align*}
 	Otherwise, $h = l$ and if $n - i_l > 1$ then $\sigma_j = \epsilon$ for $j
 	\in \{ i_l+1, i_l+2, \ldots, n-1 \}$. Therefore,
 	\begin{align*}
-		q_n \in \hat{\Delta}_\epsilon(\Delta_f(q_{i_l}, \sigma_{i_l}))
-		&\subseteq \bigcup_{r=1}^k{\hat{\Delta}_\epsilon(
-		\hat{\Delta}_f(p_l^r, \{ \sigma_{i_l} \}))}\\
-		&= \bigcup_{j=1}^k{\bigcup_{r=1}^k{
-		\hat{\Delta}_\epsilon(\hat{\Delta}_f(p_l^r, \{
-		\sigma_{i_l} \})) \cap P_j}}
-		= \bigcup_{j=1}^k{p_{l+1}^j}.
+		q_n &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_l},
+		\sigma_{i_l})) = \bigcup_{j=1}^k \bigcup_{r=1}^k
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^r, \{
+		\sigma_{i_l} \}))\\
+		&= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(
+		p_l^j, \{ \sigma_{i_l} \})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^r, \{ \sigma_{i_l} \}))
+		\big]\\
+		&= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(
+		p_l^j, \{ \sigma_{i_l} \})) \cup \bigcup_{r=1}^k
+		\hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
+		(p_l^r, \{\sigma_{i_l} \})) \cap X) \big]\\
+		&= \bigcup_{j=1}^k \delta_j(p_l, \sigma_{i_l})\\
+		&= \bigcup_{j=1}^k p_{l+1}^j.
 	\end{align*}
 	It follows that $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$.
 	Therefore, $p_{l+1}^j \cap F \neq \emptyset$ and thus $p_{l+1}^j \in F_j'$
-	for some $j
-	\in \{ 1, 2, \ldots, k \}$. Therefore,
+	for some $j \in \{ 1, 2, \ldots, k \}$. Therefore,
 	\begin{align*}
 		\langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2, \sigma_{i_2},
 		p_3 \rangle, \ldots, \langle p_l, \sigma_{i_l}, p_{l+1} \rangle
 	\end{align*}
-	is a successful path in $\mathcal{A'}$ and thus $\sigma_{i_1} \sigma_{i_2}
-	\ldots \sigma_{i_l} = \sigma_1 \sigma_2 \ldots \sigma_{n-1} \in
+	is a successful path in $\mathcal{A'}$ and thus $w = \sigma_{i_1}
+	\sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1 \sigma_2 \ldots \sigma_{n-1} \in
 	\mathcal{L}_\mathcal{A'}$.
 
 	Similarly, we show that $\mathcal{L}_\mathcal{A'} \subseteq

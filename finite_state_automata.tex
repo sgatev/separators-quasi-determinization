@@ -34,8 +34,8 @@
 	\Delta \rangle$ is either trivial or non-trivial. A trivial path $\pi$ in
 	$\mathcal{A}$ is associated with every state $q \in Q$. The length of the
 	path $\pi$ is $0$. The start state of the path $\pi$ is $q$. The end state
-	of the path $\pi$ is $q$. The path $\pi$ is succsessful if and only if $q
-	\in S \cap F$. The label of the path $\pi$ is $\epsilon$. A non-trivial
+	of the path $\pi$ is $q$. The label of the path $\pi$ is $\epsilon$. The
+	path $\pi$ is succsessful if and only if $q \in S \cap F$. A non-trivial
 	path $\pi$ in $\mathcal{A}$ is a finite sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
@@ -50,9 +50,9 @@
 			\{ 1, 2, \ldots, n-1 \}$.
 	\end{itemize}
 	The length of the path $\pi$ is $n-1$. The start state of the path $\pi$ is
-	$q_1$. The end state of the path $\pi$ is $q_n$. The path $\pi$ is
-	successful if and only if $q_1 \in S$ and $q_n \in F$. The label of the path
-	$\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$.
+	$q_1$. The end state of the path $\pi$ is $q_n$. The label of the path $\pi$
+	is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ over $\Sigma$. The path
+	$\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$.
 \end{definition}
 
 \begin{proposition}
