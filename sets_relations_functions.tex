@@ -8,6 +8,19 @@ $m, n \in \mathbb{N}$. A tuple $t$ of $n$ elements is denoted by $\langle t_1, t
 \ldots, t_n \rangle$ and its length is indicated by $|t| = n$.
 
 \begin{definition}
+	The sets $S_1, S_2, \ldots, S_n$ form a partition of the set $S$ for $n > 0$
+	if and only if
+	\begin{itemize}
+		\item $S = \bigcup_{i=1}^n{S_i}$,
+		\item $|S_i| > 0$ for $i \in \{ 1, 2, \ldots, n \}$,
+		\item $S_i \cap S_j = \emptyset$ if $i \neq j$ for $i, j \in
+			\{ 1, 2, \ldots, n \}$.
+	\end{itemize}
+	We write $P_S = \{ S_1, S_2, \ldots, S_n \}$ to indicate that the sets $S_1,
+	S_2, \ldots, S_n$ form a partition of the set $S$.
+\end{definition}
+
+\begin{definition}
 	Let $f: X \rightarrow Y$ be a function. The domain and range of $f$ are the
 	sets respectively defined as
 	\begin{align*}
