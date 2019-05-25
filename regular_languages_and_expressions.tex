@@ -22,42 +22,31 @@
 
 \begin{definition}
 	Let $\Sigma$ be an alphabet such that $\Sigma \cap \{ \varnothing, (, ), .,
-	+, * \} = \emptyset$. The class of regular expressions over $\Sigma$ is the
-	inclusion-wise least subset of $(\Sigma \cup \{ \varnothing, (, ), ., +, *
-	\})^*$ such that
+	+, * \} = \emptyset$. The class of regular expressions denoting regular
+	languages over $\Sigma$ is the inclusion-wise least subset of $(\Sigma \cup
+	\{ \varnothing, (, ), ., +, * \})^*$ such that
 	\begin{enumerate}
-		\item $\varnothing$ is a regular expression over $\Sigma$,
+		\item $\varnothing$ is a regular expression over $\Sigma$ denoting
+			the regular language $\emptyset$,
 		\item if $\sigma \in \Sigma_\epsilon$ then $\sigma$ is a regular
-			expression over $\Sigma$,
+			expression over $\Sigma$ denoting the regular language $\{
+			\sigma \}$,
 		\item if $\mathcal{R}_1$ and $\mathcal{R}_2$ are regular expressions
-			over $\Sigma$ then
+			over $\Sigma$ denoting respectively the regular languages
+			$\mathcal{L}_1$ and $\mathcal{L}_2$ then
 			\begin{itemize}
 				\item $(\mathcal{R}_1.\mathcal{R}_2)$ is a regular
-					expression over $\Sigma$,
+					expression over $\Sigma$ denoting the
+					regular language $\mathcal{L}_1 \hat{\cdot}
+					\mathcal{L}_2$,
 				\item $(\mathcal{R}_1+\mathcal{R}_2)$ is a regular
-					expression over $\Sigma$,
+					expression over $\Sigma$ denoting the
+					regular language $\mathcal{L}_1 \cup 
+					\mathcal{L}_2$,
 				\item $(\mathcal{R}_1*)$ is a regular expression
-					over $\Sigma$.
+					over $\Sigma$ denoting the regular language
+					$\mathcal{L}_1^*$.
 			\end{itemize}
-	\end{enumerate}
-\end{definition}
-
-\begin{definition}
-	The regular language $\mathcal{L}_\mathcal{R}$ denoted by a regular
-	expression $\mathcal{R}$ is defined recursively as follows.
-	\begin{enumerate}
-		\item If $\mathcal{R} = \varnothing$ then $\mathcal{L}_\mathcal{R} =
-			\emptyset$,
-		\item if $\mathcal{R} = \sigma$ for $\sigma \in \Sigma_\epsilon$
-			then $\mathcal{L}_\mathcal{R} = \{ \sigma \}$,
-		\item if $\mathcal{R} = (\mathcal{R}_1.\mathcal{R}_2)$ then
-			$\mathcal{L}_\mathcal{R} = \mathcal{L}_{\mathcal{R}_1}
-			\hat{\cdot} \mathcal{L}_{\mathcal{R}_2}$,
-		\item if $\mathcal{R} = (\mathcal{R}_1+\mathcal{R}_2)$ then
-			$\mathcal{L}_\mathcal{R} = \mathcal{L}_{\mathcal{R}_1}
-			\cup \mathcal{L}_{\mathcal{R}_2}$,
-		\item if $\mathcal{R} = (\mathcal{R}_1*)$ then
-			$\mathcal{L}_\mathcal{R} = \mathcal{L}_1^*$.
 	\end{enumerate}
 \end{definition}
 

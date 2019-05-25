@@ -13,7 +13,7 @@ t_2, \ldots, t_n \rangle$ and its length is indicated by $|t| = n$.
 	if and only if
 	\begin{itemize}
 		\item $S = \bigcup_{i=1}^n{S_i}$,
-		\item $|S_i| > 0$ for $i \in \{ 1, 2, \ldots, n \}$,
+		\item $S_i \neq \emptyset$ for $i \in \{ 1, 2, \ldots, n \}$,
 		\item $S_i \cap S_j = \emptyset$ if $i \neq j$ for $i, j \in
 			\{ 1, 2, \ldots, n \}$.
 	\end{itemize}
@@ -22,8 +22,8 @@ t_2, \ldots, t_n \rangle$ and its length is indicated by $|t| = n$.
 \end{definition}
 
 \begin{definition}
-	Let $f: X \rightarrow Y$ be a function. The domain and range of $f$ are the
-	sets respectively defined as
+	The domain and range of a function $f: X \rightarrow Y$ are the sets
+	respectively defined as
 	\begin{align*}
 		dom(f) &= \{ x \in X \mid \exists y \in Y (f(x) = y) \},\\
 		rng(f) &= \{ y \in Y \mid \exists x \in X (f(x) = y) \}.
@@ -36,8 +36,8 @@ t_2, \ldots, t_n \rangle$ and its length is indicated by $|t| = n$.
 \end{definition}
 
 \begin{definition}
-	Let $f: X \rightarrow Y$ be a function. The set-lifted function $\hat{f}
-	: 2^X \rightarrow 2^Y$ is defined as
+	The set-lifted function $\hat{f} : 2^X \rightarrow 2^Y$ induced by a
+	function $f: X \rightarrow Y$ is defined as
 	\begin{align*}
 		\hat{f}(X') = \{ f(x) \in Y \mid \exists x \in X' \cap dom(f) \}.
 	\end{align*}

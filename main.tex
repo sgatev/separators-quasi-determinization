@@ -1,26 +1,23 @@
 \documentclass{article}
 
+\usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage[hidelinks]{hyperref}
-\usepackage[noend]{algpseudocode}
 \usepackage[linesnumbered, ruled, vlined]{algorithm2e}
+\usepackage[noend]{algpseudocode}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{interval}
 \usepackage{pgfplots}
 
 \usetikzlibrary{automata,positioning}
 
-\DeclareMathOperator*{\argmax}{argmax}
-
+\newtheorem*{case}{Case}
 \newtheorem{definition}{Definition}[subsection]
-\newtheorem{theorem}{Theorem}[subsection]
 \newtheorem{lemma}{Lemma}[subsection]
-\newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{proposition}{Proposition}[subsection]
 \newtheorem{remark}{Remark}[subsection]
-\newtheorem*{case}{Case}
+\newtheorem{theorem}{Theorem}[subsection]
 
 \title{Separators for quasi-determinization of finite-state automata}
 \author{Stanislav Gatev}
