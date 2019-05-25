@@ -11,8 +11,9 @@
 \begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
 	\rangle$ is $k$-separated for $k > 1$ if and only if there exists a
-	separator $X \subseteq Q$ inducing a partition $P_Q = \{ X, Q_1, \ldots, Q_k
-	\}$. The $k$-separated finite-state automaton $\mathcal{A}$ is denoted by
+	separator $X$ in $\mathcal{A}$ inducing a partition $P_Q = \{ X, Q_1,
+	\ldots, Q_k \}$. The $k$-separated finite-state automaton $\mathcal{A}$ is
+	denoted by
 	\begin{align*}
 		\langle \Sigma, Q', X, S, F, \Delta \rangle
 	\end{align*}
@@ -38,7 +39,7 @@
 \begin{proposition}\label{p_small_delta}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $\Delta \subseteq \bigcup_{i=1}^k
-	((Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X))$.
+	(Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X)$.
 \end{proposition}
 
 \begin{proof}
@@ -67,8 +68,8 @@
 		\end{aligned} &\\
 		&= \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times Q_i)
 		\cup \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times X)\\
-		&= \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times (Q_i
-		\cup X)).
+		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times (Q_i
+		\cup X).
 	\end{flalign*}
 \end{proof}
 

@@ -11,16 +11,16 @@
 		\item $Q$ is a finite set of states,
 		\item $S \subseteq Q$ is a set of start states,
 		\item $F \subseteq Q$ is a set of final states,
-		\item $\Delta : Q \times \Sigma_\epsilon \times Q$ is a relation of
-			state transitions.
+		\item $\Delta \subseteq Q \times \Sigma_\epsilon \times Q$ is a
+			relation of state transitions.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton. The generalized relation of state transitions
-	$\Delta^* : Q \times \Sigma^* \times Q$ is defined as the inclusion-wise
-	least set such that
+	$\Delta^* \subseteq Q \times \Sigma^* \times Q$ is defined as the
+	inclusion-wise least set such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
 		\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle
