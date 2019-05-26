@@ -1,16 +1,17 @@
 \subsection{Separated finite-state automata}
 
 \begin{definition}
-	The set $X \subseteq Q$ is a separator in a finite-state automaton
-	$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there
-	exists a partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such that
-	$\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq
-	j$ for $i, j \in \{ 1, 2, \ldots, k \}$.
+	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
+	finite-state automaton. The set $X \subseteq Q$ is a separator in
+	$\mathcal{A}$ if and only if there exists a partition $P_Q = \{ X, Q_1,
+	\ldots, Q_k \}$ for $k > 1$ such that $\Delta \cap (Q_i \times
+	\Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \{ 1,
+	2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is $k$-separated for $k > 1$ if and only if there exists a
+	\rangle$ is $k$-separa\-ted for $k > 1$ if and only if there exists a
 	separator $X$ in $\mathcal{A}$ inducing a partition $P_Q = \{ X, Q_1,
 	\ldots, Q_k \}$. The $k$-separated finite-state automaton $\mathcal{A}$ is
 	denoted by
