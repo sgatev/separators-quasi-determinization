@@ -1,16 +1,16 @@
 \subsection{Sets, relations and functions}
 
-Sets, relations, functions and tuples are introduced as usual. The cardinality of a
-set $S$ is indicated by $|S|$. The unique set with no members is denoted by
-$\emptyset$ and $2^S$ stands for the powerset of a set $S$. The sets of natural and
-real numbers are respectively indicated by $\mathbb{N}$ and $\mathbb{R}$. The set of
-all natural numbers greater than or equal to $m \in \mathbb{N}$ and less than or
-equal to $n \in \mathbb{N}$ is denoted by $\{ m, m+1, \ldots, n \}$. A tuple $t$ of
-$n$ elements is denoted by $\langle t_1, t_2, \ldots, t_n \rangle$ and its length is
-indicated by $|t| = n$.
+Sets, relations, functions and tuples as well as boolean operations on sets are
+introduced as usual. The cardinality of a set $S$ is denoted by $|S|$. The unique
+set with no members is denoted by $\emptyset$ and $2^S$ stands for the powerset of a
+set $S$. The sets of natural and real numbers are respectively denoted by
+$\mathbb{N}$ and $\mathbb{R}$. The set of all natural numbers greater than or equal
+to $m \in \mathbb{N}$ and less than or equal to $n \in \mathbb{N}$ is denoted by $\{
+m, m+1, \ldots, n \}$. A tuple $t$ of $n \in \mathbb{N}$ elements is denoted by
+$\langle t_1, t_2, \ldots, t_n \rangle$ and its length by $|t|$.
 
 \begin{definition}
-	The sets $S_1, S_2, \ldots, S_n$ form a partition of the set $S$ for $n > 0$
+	The sets $S_1, S_2, \ldots, S_n$ for $n > 0$ form a partition of a set $S$
 	if and only if
 	\begin{itemize}
 		\item $S = \bigcup_{i=1}^n{S_i}$,
@@ -47,8 +47,8 @@ S_2, \ldots, S_n$ form a partition of the set $S$.
 \end{definition}
 
 \begin{definition}
-	Let $f: \mathbb{N} \rightarrow \mathbb{R}$ and $g: \mathbb{N} \rightarrow
-	\mathbb{R}$ be functions. We shall write $f \in \mathcal{O}(g)$ if and only
-	if there exist $c > 0$ and $m \in \mathbb{N}$ such that $|f(n)| \leq
-	c|g(n)|$ for every $n > m$.
+	Let $g : \mathbb{N} \rightarrow \mathbb{R}$ be a function. Then
+	$\mathcal{O}(g)$ denotes the set of functions $f: \mathbb{N} \rightarrow
+	\mathbb{R}$ such that $|f(n)| \leq c|g(n)|$ for $n \geq m$ where $c > 0$
+	and $m \in \mathbb{N}$.
 \end{definition}

@@ -13,38 +13,15 @@
 		\item $S \subseteq Q$ is a set of start states,
 		\item $F \subseteq Q$ is a set of final states,
 		\item $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \times
-			Q$ is a relation of state transitions and outputs.
+			Q$ is a relation of state transitions.
 	\end{itemize}
-\end{definition}
-
-\begin{definition}
-	A path $\pi$ in a finite-state transducer $\mathcal{T} = \langle \Sigma,
-	\Omega, Q, S, F, \Delta \rangle$ is a non-empty sequence of state
-	transitions and outputs
-	\begin{align*}
-		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
-		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
-		\rangle
-	\end{align*}
-	where
-	\begin{itemize}
-		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
-		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \interval{1}{n-1}$,
-		\item $w_i \in \Omega^*$ for $i \in \interval{1}{n-1}$,
-		\item $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta$ for
-			$i \in \interval{1}{n-1}$.
-	\end{itemize}
-	The path $\pi$ is successful if and only if $q_1 \in S$ and $q_n \in F$. The
-	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$
-	over $\Sigma$. The output of the path $\pi$ is the word $w_1 w_2
-	\ldots w_{n-1}$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The generalized relation of state transitions and
-	outputs $\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined
-	inductively as the least relation such that
+	finite-state transducer. The generalized relation of state transitions
+	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined
+	as the inclusion-wise least set such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, \epsilon, q \rangle \in \Delta^*$ for
 			$q \in Q$,
@@ -55,14 +32,41 @@
 \end{definition}
 
 \begin{definition}
+	A path in a finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega,
+	Q, S, F, \Delta \rangle$ is either trivial or non-trivial. A trivial path
+	$\pi_q$ in $\mathcal{T}$ is associated with every state $q \in Q$. The
+	length of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state
+	of $\pi_q$ is $q$. The label of $\pi_q$ is $\langle \epsilon, \epsilon
+	\rangle$. The path $\pi_q$ is succsessful if and only if $q \in S \cap F$. A
+	non-trivial path $\pi$ in $\mathcal{T}$ is a finite sequence of state
+	transitions
+	\begin{align*}
+		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
+		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
+		\rangle
+	\end{align*}
+	for $n > 1$ where
+	\begin{itemize}
+		\item $q_i \in Q$ for $i \in \{ 1, 2, \ldots, n \}$,
+		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots,
+			n-1 \}$,
+		\item $w_i \in \Omega^*$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
+		\item $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta$ for
+			$i \in \{ 1, 2, \ldots, n-1 \}$.
+	\end{itemize}
+	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
+	state of $\pi$ is $q_n$. The label of $\pi$ is $\langle \sigma_1 \sigma_2
+	\ldots \sigma_{n-1}, w_1 w_2 \ldots w_{n-1} \rangle$. The path $\pi$ is
+	successful if and only if $q_1 \in S$ and $q_n \in F$.
+\end{definition}
+
+\begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The $\epsilon$-closure of a state of $\mathcal{T}$
-	is the function $\Delta_\epsilon : Q \rightarrow 2^{Q \times \Omega^*}$
-	defined as
+	finite-state transducer. The state $\epsilon$-closure function
+	$\Delta_\epsilon : Q \rightarrow 2^{Q \times \Omega^*}$ defined as
 	\begin{align*}
 		\Delta_\epsilon(q) = \{ \langle p, u \rangle \in Q \times \Omega^*
-			\mid \exists \langle q, \epsilon, u, p \rangle \in \Delta^*
-			\}.
+			\mid \langle q, \epsilon, u, p \rangle \in \Delta^* \}.
 	\end{align*}
 \end{definition}
 
@@ -77,9 +81,9 @@
 \end{definition}
 
 \begin{definition}
-	The relation recognized by a finite-state transducer $\mathcal{T} =
-	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all pairs
-	of labels and outputs of successful paths
+	The relation recognized by a finite-state transducer $\mathcal{T} = \langle
+	\Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all labels of
+	successful paths
 	\begin{align*}
 		\mathcal{R}_\mathcal{T} = \{ \langle u, v \rangle \in \Sigma^*
 		\times \Omega^* \mid \exists s \in S \; \exists f \in F (\langle s,
@@ -97,24 +101,28 @@
 
 \begin{proposition}[see \cite{MS19}]
 	Let $\mathcal{T}$ be a finite-state transducer. There exists a trimmed
-	finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}_\mathcal{T}
-	= \mathcal{R}_\mathcal{T'}$.
+	finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}_\mathcal{T'}
+	= \mathcal{R}_\mathcal{T}$.
 \end{proposition}
 
 \begin{definition}
 	A finite-state transducer $\mathcal{T}$ is functional if and only if
-	$\mathcal{R}_\mathcal{T}$ is a function. If $\mathcal{T}$ is a functional
-	finite-state transducer we shall write $\mathcal{F}_\mathcal{T}$ instead of
-	$\mathcal{R}_\mathcal{T}$.
+	$\mathcal{R}_\mathcal{T}$ is the graph of a function.
 \end{definition}
+
+\noindent
+We shall write $\mathcal{F}_\mathcal{T}$ instead of $\mathcal{R}_\mathcal{T}$ in
+case $\mathcal{T}$ is a functional finite-state transducer.
 
 \begin{definition}
 	The graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
 	transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
-	is the triple
+	is the pair
 	\begin{align*}
-		\langle Q, \Sigma_\epsilon \times \Omega^*, \Delta \rangle.
+		\langle Q, E \rangle
 	\end{align*}
+	where $E = \{ \{ q', q'' \} \mid \exists \langle q', \sigma, w, q'' \rangle
+	\in \Delta \}$.
 \end{definition}
 
 \begin{definition}
@@ -132,8 +140,8 @@
 		\item $\Sigma$ and $\Omega$ are respectively input and output
 			alphabets,
 		\item $Q$ is a finite set of states,
-		\item $s \in Q$ is a start state, $F \subseteq Q$ is a set of final
-			states,
+		\item $s \in Q$ is a start state,
+		\item $F \subseteq Q$ is a set of final states,
 		\item $\delta : Q \times \Sigma \rightarrow Q$ is a state transition
 			function,
 		\item $\lambda : Q \times \Sigma \rightarrow \Omega^*$ is a
@@ -141,29 +149,6 @@
 		\item $\psi : F \rightarrow \Omega^*$ is a final state output
 			function.
 	\end{itemize}
-\end{definition}
-
-\begin{definition}
-	A path $\pi$ in a subsequential finite-state transducer $\mathcal{T} =
-	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is a
-	non-empty sequence of state transitions
-	\begin{align*}
-		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
-		q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
-		\rangle
-	\end{align*}
-	where
-	\begin{itemize}
-		\item $q_i \in Q$ for $i \in \interval{1}{n}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \interval{1}{n-1}$,
-		\item $w_i = \lambda(q_i, \sigma_i)$ for $i \in \interval{1}{n-1}$,
-		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-			\interval{1}{n-1}$.
-	\end{itemize}
-	The path $\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$. The
-	label of the path $\pi$ is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of
-	length $n-1$ over $\Sigma$. The output of the path $\pi$ is the word $w_1
-	w_2 \ldots w_{n-1} \psi(q_n)$ over $\Omega$.
 \end{definition}
 
 \begin{definition}
@@ -185,10 +170,39 @@
 	\rightarrow \Omega^*$ is defined inductively as the least function such that
 	\begin{itemize}
 		\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
-		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \lambda(\delta^*(q,
-			w), \sigma)$ for $q \in Q$, $w \in \Sigma^*$ and $\sigma
-			\in \Sigma$.
+		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \cdot
+			\lambda(\delta^*(q, w), \sigma)$ for $q \in Q$, $w \in
+			\Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
+\end{definition}
+
+\begin{definition}
+	A path in a subsequential finite-state transducer $\mathcal{T} = \langle
+	\Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is either trivial or
+	non-trivial. A trivial path $\pi_q$ in $\mathcal{T}$ is associated with
+	every state $q \in Q$. The length of $\pi_q$ is $0$. The start state of
+	$\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of $\pi_q$ is
+	$\epsilon$. The output of $\pi_q$ is $\epsilon$. The path $\pi_q$ is
+	succsessful if and only if $q \in \{ s \} \cap F$. A non-trivial path $\pi$
+	in $\mathcal{T}$ is a finite sequence of state transitions
+	\begin{align*}
+		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
+		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
+		\rangle
+	\end{align*}
+	for $n > 1$ where
+	\begin{itemize}
+		\item $q_i \in Q$ for $i \in \{ 1, 2, \ldots, n \}$,
+		\item $\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
+		\item $w_i = \lambda(q_i, \sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1
+			\}$,
+		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in \{ 1, 2, \ldots,
+			n-1 \}$.
+	\end{itemize}
+	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
+	state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots
+	\sigma_{n-1}$. The output of $\pi$ is $w_1 w_2 \ldots w_{n-1}$. The path
+	$\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$.
 \end{definition}
 
 \begin{definition}
@@ -196,9 +210,9 @@
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
 	\rangle$ is the set of all pairs of labels and outputs of successful paths
 	\begin{align*}
-		\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w)\psi(f) \rangle
-		\in \Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) =
-		f) \}.
+		\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w) \cdot \psi(f)
+		\rangle \in \Sigma^* \times \Omega^* \mid \exists f \in F
+		(\delta^*(s, w) = f) \}.
 	\end{align*}
 \end{definition}
 

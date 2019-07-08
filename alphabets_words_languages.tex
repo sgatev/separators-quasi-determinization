@@ -7,25 +7,25 @@
 \begin{definition}
 	A word $w$ of length $n \in \mathbb{N}$ over an alphabet $\Sigma$ is a tuple
 	$\langle \sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ where $\sigma_i \in
-	\Sigma$ for $i \in \{ 1, 2, \ldots, n \}$. The notation
-	$\sigma_1\sigma_2\ldots\sigma_n$ is preferred over $\langle \sigma_1,
-	\sigma_2, \ldots, \sigma_n \rangle$ for words.
+	\Sigma$ for $i \in \{ 1, 2, \ldots, n \}$.
+\end{definition}
+
+\noindent
+We shall prefer the notation $\sigma_1\sigma_2\ldots\sigma_n$ over $\langle
+\sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ for words.
+
+\begin{definition}
+	The unique word of length $0$ over any alphabet is denoted by $\epsilon$.
 \end{definition}
 
 \begin{definition}
-	The unique word of length $0$ over any alphabet is indicated by $\epsilon$.
-\end{definition}
-
-\begin{definition}
-	Let $\Sigma$ be an alphabet. The set $\Sigma \cup \{ \epsilon \}$ is denoted
-	by $\Sigma_\epsilon$.
-\end{definition}
-
-\begin{definition}
-	Let $\Sigma$ be an alphabet. The set of all words of length $0$ over
-	$\Sigma$ is $\Sigma^0 = \{ \epsilon \}$. The set of all words of length $n >
-	0$ over $\Sigma$ is $\Sigma^n = \Sigma^{n-1} \times \Sigma$. The set of all
-	words over $\Sigma$ is $\Sigma^* = \bigcup_{i = 0}^{\infty} \Sigma^i$.
+	Let $\Sigma$ be an alphabet. Then
+	\begin{itemize}
+		\item $\Sigma_\epsilon = \Sigma \cup \{ \epsilon \}$,
+		\item $\Sigma^0 = \{ \epsilon \}$,
+		\item $\Sigma^n = \Sigma^{n-1} \times \Sigma$ for $n > 0$,
+		\item $\Sigma^* = \bigcup_{n = 0}^{\infty} \Sigma^n$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
@@ -36,86 +36,105 @@
 		\sigma_m''
 	\end{align*}
 	where $w' = \sigma'_1\sigma'_2\ldots\sigma'_n$ and $w'' =
-	\sigma''_1\sigma''_2\ldots\sigma''_m$ are words over $\Sigma$. It follows
-	that $w \cdot \epsilon = \epsilon \cdot w = w$ for any word $w$ over
-	$\Sigma$. Concatenation of words is associative, that is $u \cdot (v \cdot
-	w) = (u \cdot v) \cdot w$ for all words $u$, $v$ and $w$ over $\Sigma$.
-	Thus, we shall from now on write $w'w''$ instead of $w' \cdot w''$ without
-	causing ambiguity.
+	\sigma''_1\sigma''_2\ldots\sigma''_m$ are words over $\Sigma$.
 \end{definition}
 
-%\begin{definition}
-%	Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a prefix of the
-%	word $w \in \Sigma^*$ if and only if $w = uv$ for some $v \in \Sigma^*$. It
-%	follows that $\epsilon$ is a prefix of every word. The set of all prefixes
-%	of a word $w \in \Sigma^*$ is denoted by
-%	\begin{align*}
-%		Pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
-%	\end{align*}
-%\end{definition}
+\begin{corollary}
+	Let $w$ be a word over an alphabet $\Sigma$. Then
+	\begin{equation*}
+		w \cdot \epsilon = \epsilon \cdot w = w.
+	\end{equation*}
+\end{corollary}
 
-%\begin{definition}
-%	Let $w = uv$ be a word over an alphabet $\Sigma$. We use $u^{-1}w$ to denote
-%	the word $v$ derived by removing the prefix $u$ from $w$. It follows that
-%	$\epsilon^{-1}w = w$ for any word $w$.
-%\end{definition}
+\noindent
+Concatenation of words is associative. That is, $u \cdot (v \cdot w) = (u \cdot v)
+\cdot w$ for all words $u$, $v$ and $w$ over an alphabet $\Sigma$. Thus, we shall
+from now on write $uvw$ to denote the concatenation of $u$, $v$ and $w$ without
+causing ambiguity.
 
-%\begin{proposition}
-%	Let $u$ and $v$ be words over an alphabet $\Sigma$. Then
-%	\begin{align*}
-%		v^{-1}u^{-1}w = (uv)^{-1}w
-%	\end{align*}
-%	for every $w \in \Sigma^*$.
-%\end{proposition}
+\begin{definition}
+	Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a prefix of the
+	word $w \in \Sigma^*$ if and only if $w = uv$ for some $v \in \Sigma^*$. The
+	set of all prefixes of a word $w \in \Sigma^*$ is denoted by
+	\begin{align*}
+		Pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
+	\end{align*}
+\end{definition}
 
-%\begin{proof}
-%	We prove the statement by induction on $v$. Let $v = \epsilon$. Then
-%	\begin{align*}
-%		v^{-1}u^{-1}w
-%		&= \epsilon^{-1}u^{-1}w\\
-%		&= u^{-1}w\\
-%		&= (u\epsilon)^{-1}w\\
-%		&= (uv)^{-1}w.
-%	\end{align*}
-%	Let us assume that the statement holds for $v' \in \Sigma^*$. Let $v = v'a$
-%	where $a \in \Sigma$. Then
-%	\begin{align*}
-%		v^{-1}u^{-1}w
-%		&= (v'a)^{-1}u^{-1}w\\
-%		&= a^{-1}v'^{-1}u^{-1}w\\
-%		&= a^{-1}(uv')^{-1}w\\
-%		&= (uv'a)^{-1}w\\
-%		&= (uv)^{-1}w.
-%	\end{align*}
-%\end{proof}
+\begin{corollary}
+	Let $w$ be a word over an alphabet $\Sigma$. Then $\epsilon \in Pref(w)$.
+\end{corollary}
 
-%\begin{definition}
-%	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an
-%	alphabet $\Sigma$ for $n \in \mathbb{N}$ is the word
-%	\begin{align*}
-%		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
-%		|u|}.
-%	\end{align*}
-%	We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to
-%	indicate the longest common prefix of words.
-%\end{definition}
+\begin{definition}
+	Let $w = uv$ be a word over an alphabet $\Sigma$. Then
+	\begin{equation*}
+		u^{-1}w = v.
+	\end{equation*}
+\end{definition}
 
-%\begin{definition}
-%	Sequential distance of words over an alphabet $\Sigma$ is the function
-%	$d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$ defined as
-%	\begin{align*}
-%		d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
-%	\end{align*}
-%\end{definition}
+\begin{corollary}
+	Let $w$ be a word over an alphabet $\Sigma$. Then $\epsilon^{-1}w = w$.
+\end{corollary}
 
-%\begin{definition}
-%	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
-%	\rightarrow \Omega^*$ has bounded variation if and only if
-%	\begin{align*}
-%		\forall k \geq 0 \; \exists K \geq 0 \; \forall u, v \in dom(f)
-%		(d_\Sigma(u, v) \leq k \implies d_\Omega(f(u), f(v)) \leq K).
-%	\end{align*}
-%\end{definition}
+\begin{proposition}
+	Let $u$, $v$ and $w$ be words over an alphabet $\Sigma$. Then
+	\begin{align*}
+		v^{-1}u^{-1}w = (uv)^{-1}w.
+	\end{align*}
+\end{proposition}
+
+\begin{proof}
+	We prove the statement by induction on the length of $v$. Let $|v| = 0$.
+	Then $v = \epsilon$ and
+	\begin{equation*}
+		v^{-1}u^{-1}w
+		= \epsilon^{-1}u^{-1}w
+		= u^{-1}w
+		= (u\epsilon)^{-1}w
+		= (uv)^{-1}w.
+	\end{equation*}
+	Let us assume that the statement holds for $v' \in \Sigma^*$. Let $v =
+	v'\sigma$ where $\sigma \in \Sigma$. Then
+	\begin{align*}
+		v^{-1}u^{-1}w
+		&= (v'\sigma)^{-1}u^{-1}w\\
+		&= \sigma^{-1}v'^{-1}u^{-1}w\\
+		&= \sigma^{-1}(uv')^{-1}w\\
+		&= (uv'\sigma)^{-1}w\\
+		&= (uv)^{-1}w.
+	\end{align*}
+\end{proof}
+
+\begin{definition}
+	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an
+	alphabet $\Sigma$ for $n \in \mathbb{N}$ is the word
+	\begin{align*}
+		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
+		|u|}.
+	\end{align*}
+\end{definition}
+
+\noindent
+We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to indicate
+the longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an alphabet
+$\Sigma$ for $n \in \mathbb{N}$.
+
+\begin{definition}
+	Sequential distance of words over an alphabet $\Sigma$ is the function
+	$d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$ defined as
+	\begin{align*}
+		d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
+	\end{align*}
+\end{definition}
+
+\begin{definition}
+	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
+	\rightarrow \Omega^*$ has bounded variation if and only if
+	\begin{align*}
+		\forall k \geq 0 \; \exists K \geq 0 \; \forall u, v \in dom(f)
+		(d_\Sigma(u, v) \leq k \implies d_\Omega(f(u), f(v)) \leq K).
+	\end{align*}
+\end{definition}
 
 \begin{definition}
 	A language $\mathcal{L}$ over an alphabet $\Sigma$ is a subset
@@ -125,10 +144,11 @@
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. The $0$-iterated
-	language induced by $\mathcal{L}$ is the set $\mathcal{L}^0 = \{ \epsilon
-	\}$. The $n$-iterated language induced by $\mathcal{L}$ is the set
-	$\mathcal{L}^n = \mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$ for $n > 0$. The
-	iterated language induced by $\mathcal{L}$ is the set $\mathcal{L}^* =
-	\bigcup_{i = 0}^{\infty} \mathcal{L}^i$.
+	Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. Then
+	\begin{itemize}
+		\item $\mathcal{L}^0 = \{ \epsilon \}$,
+		\item $\mathcal{L}^n = \mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$
+			for $n > 0$,
+		\item $\mathcal{L}^* = \bigcup_{n = 0}^{\infty} \mathcal{L}^n$.
+	\end{itemize}
 \end{definition}

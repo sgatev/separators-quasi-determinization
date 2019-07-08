@@ -44,7 +44,7 @@
 \end{proposition}
 
 \begin{proof}
-	\begin{flalign*}
+	\begin{align*}
 		\Delta \subseteq Q \times \Sigma_\epsilon \times Q
 		&= (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
 		(\bigcup_{i=1}^k{Q_i} \cup X) &\\
@@ -55,11 +55,11 @@
 			\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times X) \cup\\
 			&(X \times \Sigma_\epsilon \times X).
 		\end{aligned}
-	\end{flalign*}
+	\end{align*}
 	Since $\mathcal{A}$ is $k$-separated then $\Delta \cap (Q_i \times
 	\Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in
 	\{ 1, 2, \ldots, k \}$. Therefore,
-	\begin{flalign*}
+	\begin{align*}
 		\Delta &\subseteq \begin{aligned}[t]
 			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
 			\cup\\
@@ -71,7 +71,7 @@
 		\cup \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times X)\\
 		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times (Q_i
 		\cup X).
-	\end{flalign*}
+	\end{align*}
 \end{proof}
 
 \begin{proposition}
@@ -88,25 +88,26 @@
 	$\mathcal{A}$ with start state $q'$, end state $q''$ and label $w$. If the
 	path $\pi$ is trivial then $w = \epsilon$ and $q' = q''$. Since $Q_i \cap
 	Q_j = \emptyset$ then $q' \in X$. Therefore, the statement holds for $w' =
-	w'' = \epsilon$. Otherwise, if the path $\pi$ is non-trivial, there exists a
-	finite sequence of state transitions
+	w'' = \epsilon$ and $x = q' = q''$. Otherwise, if the path $\pi$ is
+	non-trivial, there exists a finite sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	for $n > 0$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$
+	for $n > 1$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$
 	for $r \in \{ 1, 2, \ldots, n-1 \}$, $q_1 = q'$, $q_n = q''$ and $w =
 	\sigma_1\sigma_2\ldots\sigma_{n-1}$. Let us assume that $q_r \not\in X$ for
 	$r \in \{ 1, 2, \ldots, n \}$. It follows that $q_1 = q' \in Q_i$ and $q_n =
 	q'' \in Q_j$. Since $i \neq j$ there exists $r \in \{ 1, 2, \ldots, n-1 \}$
-	such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$ and $q_r \in
-	Q_{r'}, q_{r+1} \in Q_{r''}$ for $r', r'' \in \{ 1, 2, \ldots, k \}$ and $r'
-	\neq r''$. However, this contradicts the assumption that $\mathcal{A}$ is
-	$k$-separated. Therefore, there exists $r \in \{ 1, 2, \ldots, n \}$ such
-	that $q_r \in X$. Let $w' = \sigma_1\sigma_2\ldots\sigma_{r-1}$ and $w'' =
-	\sigma_r\sigma_{r+1}\ldots\sigma_{n-1}$. It is easy to see that $w = w'w''$
-	and $\langle q_1, w', q_r \rangle, \langle q_r, w'', q_n \rangle \in
-	\Delta^*$.
+	such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$, $q_r \in
+	Q_{r'}$ and $q_{r+1} \in Q_{r''}$ where $r', r'' \in \{ 1, 2, \ldots, k \}$
+	and $r' \neq r''$. However, this contradicts the assumption that
+	$\mathcal{A}$ is $k$-separated. Therefore, there exists $r \in \{ 1, 2,
+	\ldots, n \}$ such that $q_r \in X$. Let $w' =
+	\sigma_1\sigma_2\ldots\sigma_{r-1}$ and $w'' =
+	\sigma_r\sigma_{r+1}\ldots\sigma_{n-1}$. Then $w = w'w''$ and $\langle q_1,
+	w', q_r \rangle, \langle q_r, w'', q_n \rangle \in \Delta^*$. Letting $x =
+	q_r$ shows that the statement also holds in this case.
 \end{proof}
 
 \begin{definition}

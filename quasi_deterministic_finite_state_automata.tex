@@ -206,7 +206,7 @@ induction. Let
 \end{align*}
 where
 \begin{itemize}
-	\item $s^i = \hat{\Delta}_\epsilon(S) \cap P_i$,
+	\item $s^i = \hat{\Delta}_\epsilon^i(S)$,
 	\item $Q_i'^{(1)} = \{ s^i \}$,
 	\item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} = \emptyset$
 \end{itemize}
@@ -219,8 +219,8 @@ Let
 \begin{align*}
 	\mathcal{A'}^{(n+1)} &= \langle \Sigma, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
 	\tau^{(n+1)}, \rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)} \rangle,\\
-	R^{(n+1)} &= R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
-	R_n \; \exists \sigma \in \Sigma \}
+	R^{(n+1)} &= R^{(n)} \cup \{ q'' \mid \exists \langle q', \sigma, q''
+	\rangle \in \delta^{(n+1)} \setminus \delta^{(n)} \}
 \end{align*}
 where
 \begin{itemize}
@@ -486,13 +486,25 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\eta_x^{(n)} \rangle$ and $R^{(n)}$ be respectively the quasi-deterministic
 	$k$-separated finite-state automaton and the set of states derived from
 	$\mathcal{A}$ by applying the construction described above for $n > 0$. Let
-	$dom(\eta_x^{(n)}) = dom(\eta_x^{(n+1)})$, $dom(\tau_i^{(n)}) =
-	dom(\tau_i^{(n+1)})$ and $dom(\eta_i^{(n)}) = dom(\eta_i^{(n+1)})$ for $i
-	\in \{ 1, 2, \ldots, k \}$, $q \in R_n$ and $\sigma \in \Sigma$. Then $R^{(n+1)} =
-	R^{(n)}$.
+	$dom(\eta_x^{(n+1)}) = dom(\eta_x^{(n)})$ and $dom(\tau_i^{(n+1)}) =
+	dom(\tau_i^{(n)})$, $dom(\eta_i^{(n+1)}) = dom(\eta_i^{(n)})$ for $i \in \{
+	1, 2, \ldots, k \}$. Then $R^{(n+1)} = R^{(n)}$.
 \end{proposition}
 
 \begin{proof}
+	Since $dom(\eta_x^{(n+1)}) = dom(\eta_x^{(n)})$ then $rng(\eta_x^{(n+1)}) =
+	rng(\eta_x^{(n)})$. Since $dom(\tau_i^{(n+1)}) = dom(\tau_i^{(n)})$ and
+	$dom(\eta_i^{(n+1)}) = dom(\eta_i^{(n)})$ then $rng(\tau_i^{(n+1)}) =
+	rng(\tau_i^{(n)})$ and $rng(\eta_i^{(n+1)}) = rng(\eta_i^{(n)})$ for $i \in
+	\{ 1, 2, \ldots, k \}$. Therefore, $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{
+	\langle q,  q \cap X \rangle \in P_i \times X \mid \exists q \in
+	rng(\tau_i^{(n+1)}) \setminus rng(\tau_i^{(n)}) \} = \rho_i^{(n)}$ for $i
+	\in \{ 1, 2, \ldots, k \}$. Since $\eta_x^{(n+1)} = \eta_x^{(n)}$ and
+	$\tau_i^{(n+1)} = \tau_i^{(n)}$, $\rho_i^{(n+1)} = \rho_i^{(n)}$,
+	$\eta_i^{(n+1)} = \eta_i^{(n)}$ for $i \in \{ 1, 2, \ldots, k \}$ then
+	$\delta^{(n+1)} = \delta^{(n)}$. Therefore, $R^{(n+1)} = R^{(n)} \cup \{ q''
+	\mid \exists \langle q', \sigma, q'' \rangle \in \delta^{(n+1)}
+	\setminus \delta^{(n)} \} = R^{(n)}$.
 \end{proof}
 
 The construction described above and Proposition \ref{p_quasidet_auto_1} inspire

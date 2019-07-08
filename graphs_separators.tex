@@ -9,7 +9,7 @@
 	\begin{itemize}
 		\item $V$ is a finite set of vertices,
 		\item $E$ is a finite set of edges,
-		\item $e \subseteq V$ and $|e| = 2$ for $e \in E$.
+		\item $e \subseteq V$ and $|e| \in \{ 1, 2 \}$ for $e \in E$.
 	\end{itemize}
 \end{definition}
 
@@ -17,9 +17,14 @@
 	A graph $\mathcal{G} = \langle V, E \rangle$ is planar if and only if there
 	exist an injective function $f_v$ that maps vertices of the graph to
 	distinct points in the real plane and an injective function $f_e$ that maps
-	edges of the graph to simple curves in the real plane such that $f_e(\{ v',
-	v'' \})$ has end points $f_v(v')$ and $f_v(v'')$ for each edge $\{ v', v''
-	\} \in E$, and curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
+	edges of the graph to simple curves in the real plane such that
+	\begin{itemize}
+		\item $f_e(\{ v \})$ has both of its end points equal to $f_v(v)$
+			for $\{ v \} \in E$,
+		\item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and
+			$f_v(v'')$ for $\{ v', v'' \} \in E$,
+		\item curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
+	\end{itemize}
 \end{definition}
 
 \begin{definition}
