@@ -60,6 +60,14 @@
 	successful if and only if $q_1 \in S$ and $q_n \in F$.
 \end{definition}
 
+\begin{proposition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
+	finite-state transducer. There exists a path in $\mathcal{T}$ with start
+	state $q' \in Q$, end state $q'' \in Q$ and label $\langle u, v \rangle \in
+	\Sigma^* \times \Omega^*$ if and only if $\langle q', u, v, q'' \rangle \in
+	\Delta^*$.
+\end{proposition}
+
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
 	finite-state transducer. The state $\epsilon$-closure function

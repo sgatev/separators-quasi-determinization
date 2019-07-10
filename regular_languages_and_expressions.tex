@@ -51,6 +51,13 @@
 \end{definition}
 
 \begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
+	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. There
+	exists a finite-state automaton $\mathcal{A}$ such that
+	$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$.
+\end{theorem}
+
+\iffalse
+\begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
 	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. A
 	finite-state automaton $\mathcal{A}$ such that $\mathcal{L}_\mathcal{A} =
 	\mathcal{L}_\mathcal{R}$ can be constructed from $\mathcal{R}$ as follows.
@@ -102,6 +109,7 @@
 			\end{itemize}
 	\end{enumerate}
 \end{theorem}
+\fi
 
 \begin{figure}[!h]
 	\centering

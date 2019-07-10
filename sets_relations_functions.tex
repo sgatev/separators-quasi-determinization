@@ -2,8 +2,8 @@
 
 Sets, relations, functions and tuples as well as boolean operations on sets are
 introduced as usual. The cardinality of a set $S$ is denoted by $|S|$. The unique
-set with no members is denoted by $\emptyset$ and $2^S$ stands for the powerset of a
-set $S$. The sets of natural and real numbers are respectively denoted by
+set with no members is denoted by $\emptyset$. The powerset of a set $S$ is denoted
+by $2^S$. The sets of natural and real numbers are respectively denoted by
 $\mathbb{N}$ and $\mathbb{R}$. The set of all natural numbers greater than or equal
 to $m \in \mathbb{N}$ and less than or equal to $n \in \mathbb{N}$ is denoted by $\{
 m, m+1, \ldots, n \}$. A tuple $t$ of $n \in \mathbb{N}$ elements is denoted by
@@ -21,8 +21,8 @@ $\langle t_1, t_2, \ldots, t_n \rangle$ and its length by $|t|$.
 \end{definition}
 
 \noindent
-We shall write $P_S = \{ S_1, S_2, \ldots, S_n \}$ to indicate that the sets $S_1,
-S_2, \ldots, S_n$ form a partition of the set $S$.
+We shall write $\{ S_1, S_2, \ldots, S_n \}_S$ to indicate that the
+sets $S_1, S_2, \ldots, S_n$ form a partition of the set $S$.
 
 \begin{definition}
 	The domain and range of a function $f: X \rightarrow Y$ are the sets
@@ -42,7 +42,7 @@ S_2, \ldots, S_n$ form a partition of the set $S$.
 	The set-lifted function $\hat{f} : 2^X \rightarrow 2^Y$ induced by a
 	function $f: X \rightarrow Y$ is defined as
 	\begin{align*}
-		\hat{f}(X') = \{ f(x) \in Y \mid \exists x \in X' \cap dom(f) \}.
+		\hat{f}(Z) = \{ f(x) \in Y \mid \exists x \in Z \cap dom(f) \}.
 	\end{align*}
 \end{definition}
 
