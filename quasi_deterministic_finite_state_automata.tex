@@ -8,14 +8,15 @@
 	\end{align*}
 	where
 	\begin{itemize}
+		\item $Q, s, F, \tau, \rho$ and $\eta$ are tuples of $k$ elements,
 		\item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i
 			\rangle$ is a deterministic finite-state automaton for $i
 			\in \{ 1, 2, \ldots, k \}$,
-		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ where
+		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ and
 			$\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
 			function such that $dom(\rho_i) = rng(\tau_i)$ for $i \in
 			\{ 1, 2, \ldots, k \}$,
-		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ where
+		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ and
 			$\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
 			extension function for $i \in \{ 1, 2, \ldots, k \}$,
 		\item $\eta_x : X \times X \rightarrow X$ is a separator extension
@@ -23,11 +24,9 @@
 	\end{itemize}
 \end{definition}
 
-\begin{remark}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. We
-	shall write $q^i$ to denote the $i$-th element of $q \in \prod_{i=1}^k{Q_i}$.
-\end{remark}
+\noindent
+We shall write $q^i$ to denote the $i$-th element of a state $q \in
+\prod_{i=1}^k{Q_i}$ of a quasi-deterministic $k$-separated finite-state automaton.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
@@ -56,7 +55,7 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	state quasi-transition function $\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma
+	quasi-state transition function $\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma
 	\rightarrow Q_i$ is defined as
 	\begin{align*}
 		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
@@ -93,56 +92,54 @@
 \begin{definition}
 	A path in a quasi-deterministic $k$-separated finite-state automaton
 	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
-	is either trivial or non-trivial. A trivial path $\pi$ in $\mathcal{A}$ is
-	associated with every state $q \in \prod_{i=1}^k{Q_i}$. The length of the
-	path $\pi$ is $0$. The start state of the path $\pi$ is $q$. The end state
-	of the path $\pi$ is $q$. The label of the path $\pi$ is $\epsilon$. The
-	path $\pi$ is succsessful if and only if $q = s$ and $q^i \in F_i$ for some
-	$i \in \{ 1, 2, \ldots, k \}$. A non-trivial path $\pi$ in $\mathcal{A}$ is
-	a finite sequence of state transitions
+	is either trivial or non-trivial. A trivial path $\pi_q$ in $\mathcal{A}$ is
+	associated with every state $q \in \prod_{i=1}^k{Q_i}$. The length of
+	$\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of $\pi_q$
+	is $q$. The label of $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful
+	if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k
+	\}$. A non-trivial path $\pi$ in $\mathcal{A}$ is a finite sequence of state
+	transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	for $n > 0$ where
+	for $n > 1$ where
 	\begin{itemize}
 		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \{ 1, 2, \ldots, n \}$,
 		\item $\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
 		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
 			\{ 1, 2, \ldots, n-1 \}$.
 	\end{itemize}
-	The length of the path $\pi$ is $n-1$. The start state of the path $\pi$ is
-	$q_1$. The end state of the path $\pi$ is $q_n$. The label of the path $\pi$
-	is the word $\sigma_1\sigma_2\ldots\sigma_{n-1}$ of length $n-1$ over
-	$\Sigma$. The path $\pi$ is successful if and only if $q_1 = s$ and $q_n^i
-	\in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. 
+	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
+	state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots
+	\sigma_{n-1}$. The path $\pi$ is successful if and only if $q_1 = s$ and
+	$q_n^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. 
 \end{definition}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-determinis\-tic $k$-separated finite-state automaton.
-	There exists a path with label $w \in \Sigma^*$ starting from state $q' \in
-	\prod_{i=1}^k{Q_i}$ and ending in state $q'' \in \prod_{i=1}^k{Q_i}$ in
-	$\mathcal{A}$ if and only if $\delta^*(q', w) = q''$.
+	There exists a path in $\mathcal{A}$ with start state $q' \in
+	\prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label $w \in
+	\Sigma^*$ if and only if $\delta^*(q', w) = q''$.
 \end{proposition}
 
 \begin{proof}
-	We prove the statement by induction on the length of the label $w \in
-	\Sigma^*$. If $|w| = 0$, then $w = \epsilon$. Let $\pi$ be a path with label
-	$\epsilon$ starting from state $q' \in \prod_{i=1}^k{Q_i}$ and ending in
-	state $q'' \in \prod_{i=1}^k{Q_i}$. By definition, only trivial paths are
-	labeled with $\epsilon$. Therefore, $q' = q''$ and by definition
-	$\delta^*(q', \epsilon) = q'$. A similar argument follows in the other
-	direction. Otherwise, if $|w| > 0$, then $w = w'\sigma$ for $w' \in
-	\Sigma^*$ and $\sigma \in \Sigma$. Let $\pi$ be a path with label $w$
-	starting from state $q' \in \prod_{i=1}^k{Q_i}$ and ending in state $q'' \in
-	\prod_{i=1}^k{Q_i}$. There exist a state $q''' \in \prod_{i=1}^k{Q_i}$ and a
-	path with label $w'$ starting from state $q'$ and ending in state $q'''$.
-	Furthermore, $\delta(q''', \sigma) = q''$ by definition. By the inductive
-	hypothesis, $\delta^*(q', w') = q'''$. Therefore, by definition
-	$\delta^*(q', w) = \delta^*(q', w'\sigma) = \delta(\delta^*(q', w'), \sigma)
-	= \delta(q''', \sigma) = q''$. Again, a similar argument could be followed
-	in the other direction.
+	We prove the statement by induction on the length of $w$. If $|w| = 0$, then
+	$w = \epsilon$. Let there be a path with start state $q'
+	\in \prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label $w
+	= \epsilon$. Only trivial paths are labeled with $\epsilon$. Therefore, $q'
+	= q''$ and by definition $\delta^*(q', w) = \delta^*(q', \epsilon) = q' =
+	q''$. A similar argument follows in the other direction. Otherwise, if $|w|
+	> 0$, then $w = w'\sigma$ for $w' \in \Sigma^*$ and $\sigma \in \Sigma$. Let
+	there be a path with start state $q' \in
+	\prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label $w$.
+	There exist a state $q''' \in \prod_{i=1}^k{Q_i}$ and a path with start
+	state $q'$, end state $q'''$ and label $w'$. Furthermore, $\delta(q''',
+	\sigma) = q''$ by definition. By the inductive hypothesis $\delta^*(q', w')
+	= q'''$. Therefore, by definition $\delta^*(q', w) = \delta^*(q', w'\sigma)
+	= \delta(\delta^*(q', w'), \sigma) = \delta(q''', \sigma) = q''$. Again, a
+	similar argument can be followed in the other direction.
 \end{proof}
 
 \begin{definition}
@@ -155,34 +152,37 @@
 	\end{align*}
 \end{definition}
 
-\iffalse
+\noindent
+Algorithm \ref{alg:qdfsa_traversal} shows how to deterministically check whether a
+word is recognized by a quasi-deterministic $k$-separated finite-state automaton.
+
 \SetAlgoNoLine
 \begin{algorithm}[H]
-\caption{Traversal of a quasi-deterministic k-separated finite-state automaton}
+\caption{Traversal of a quasi-deterministic $k$-separated finite-state automaton.}
 \label{alg:qdfsa_traversal}
 
 \DontPrintSemicolon
 \KwIn{$\langle \Sigma, Q, s, F, \tau, \rho, \eta, \eta_x \rangle,
-	w=\sigma_1\sigma_2\ldots\sigma_n$}
+	\sigma_1\sigma_2\ldots\sigma_n$}
 \KwOut{$\mathbb{B}$}
 
 $q \gets s$\;
 
-\For {$\sigma \in w$} {
+\For {$j \in \{ 1, 2, \ldots, n \}$} {
   \For {$i \in \{ 1, 2, \ldots, k \}$} {
-    $t_i \gets \tau_i(q_i, \sigma)$\;
+    $t_i \gets \tau_i(q_i, \sigma_j)$\;
     $r_i \gets \rho_i(t_i)$\;
   }
-  $e \gets r_1$\;
+  $x \gets r_1$\;
   \For {$i \in \{ 2, 3, \ldots, k \}$} {
-    $e \gets \eta_x(e, r_i)$\;
+    $x \gets \eta_x(x, r_i)$\;
   }
-  \For {$i \in \{ 2, 3, \ldots, k \}$} {
-    $q_i \gets \eta_i(t_i, e)$\;
+  \For {$i \in \{ 1, 2, \ldots, k \}$} {
+    $q_i \gets \eta_i(t_i, x)$\;
   }
 }
 
-\For {$i \in \{ 2, 3, \ldots, k \}$} {
+\For {$i \in \{ 1, 2, \ldots, k \}$} {
   \If {$q_i \in F_i$} {
 	  \Return $True$\;
   }
@@ -190,8 +190,8 @@ $q \gets s$\;
 
 \Return $False$
 \end{algorithm}
-\fi
 
+\noindent
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
 $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$. Let $P_i = Q_i \cup X$

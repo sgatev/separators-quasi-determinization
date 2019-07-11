@@ -5,10 +5,10 @@
 	the inclusion-wise least subset of $\Sigma^*$ such that
 	\begin{enumerate}
 		\item $\emptyset$ is a regular language over $\Sigma$,
-		\item if $\sigma \in \Sigma_\epsilon$ then $\{ \sigma \}$ is a
+		\item if $\sigma \in \Sigma_\epsilon$, then $\{ \sigma \}$ is a
 			regular language over $\Sigma$,
 		\item if $\mathcal{L}_1$ and $\mathcal{L}_2$ are regular languages
-			over $\Sigma$ then
+			over $\Sigma$, then
 			\begin{itemize}
 				\item $\mathcal{L}_1 \hat{\cdot} \mathcal{L}_2$ is a
 					regular language over $\Sigma$,
@@ -28,12 +28,12 @@
 	\begin{enumerate}
 		\item $\varnothing$ is a regular expression over $\Sigma$ denoting
 			the regular language $\emptyset$,
-		\item if $\sigma \in \Sigma_\epsilon$ then $\sigma$ is a regular
+		\item if $\sigma \in \Sigma_\epsilon$, then $\sigma$ is a regular
 			expression over $\Sigma$ denoting the regular language $\{
 			\sigma \}$,
 		\item if $\mathcal{R}_1$ and $\mathcal{R}_2$ are regular expressions
 			over $\Sigma$ denoting respectively the regular languages
-			$\mathcal{L}_1$ and $\mathcal{L}_2$ then
+			$\mathcal{L}_1$ and $\mathcal{L}_2$, then
 			\begin{itemize}
 				\item $(\mathcal{R}_1.\mathcal{R}_2)$ is a regular
 					expression over $\Sigma$ denoting the
@@ -62,11 +62,11 @@
 	finite-state automaton $\mathcal{A}$ such that $\mathcal{L}_\mathcal{A} =
 	\mathcal{L}_\mathcal{R}$ can be constructed from $\mathcal{R}$ as follows.
 	\begin{enumerate}
-		\item If $\mathcal{R} = \varnothing$ then $\mathcal{A} = \langle
+		\item If $\mathcal{R} = \varnothing$, then $\mathcal{A} = \langle
 			\Sigma, \{ s, f \}, \{ s \}, \{ f \}, \emptyset \rangle$ is
 			the Type 1 Thompson finite-state automaton constructed from
 			$\mathcal{R}$,
-		\item if $\mathcal{R} = \sigma$ for $\sigma \in \Sigma_\epsilon$
+		\item if $\mathcal{R} = \sigma$ for $\sigma \in \Sigma_\epsilon$,
 			then $\mathcal{A} = \langle \Sigma, \{ s, f \}, \{ s \}, \{
 			f \}, \{ \langle s, \sigma, f \rangle \} \rangle$ is the Type
 			2 Thompson finite-state automaton constructed from
@@ -75,7 +75,7 @@
 			\rangle$ and $\mathcal{A}'' = \langle \Sigma, Q'', S'', F'',
 			\Delta'' \rangle$ are the Thompson finite-state automata
 			constructed respectively from $\mathcal{R}'$ and
-			$\mathcal{R}''$ then
+			$\mathcal{R}''$, then
 			\begin{itemize}
 				\item $\mathcal{A} = \langle \Sigma, Q' \cup Q'',
 					S', F'', \Delta \rangle$ is the Type 3

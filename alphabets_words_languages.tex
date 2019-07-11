@@ -10,8 +10,7 @@
 	\Sigma$ for $i \in \{ 1, 2, \ldots, n \}$.
 \end{definition}
 
-\noindent
-We shall prefer the notation $\sigma_1\sigma_2\ldots\sigma_n$ over $\langle
+We shall prefer the notation $\sigma_1 \sigma_2 \ldots \sigma_n$ over $\langle
 \sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ for words.
 
 \begin{definition}
@@ -24,7 +23,7 @@ We shall prefer the notation $\sigma_1\sigma_2\ldots\sigma_n$ over $\langle
 		\item $\Sigma_\epsilon = \Sigma \cup \{ \epsilon \}$,
 		\item $\Sigma^0 = \{ \epsilon \}$,
 		\item $\Sigma^n = \Sigma^{n-1} \times \Sigma$ for $n > 0$,
-		\item $\Sigma^* = \bigcup_{n = 0}^{\infty} \Sigma^n$.
+		\item $\Sigma^* = \bigcup\limits_{n = 0}^{\infty} \Sigma^n$.
 	\end{itemize}
 \end{definition}
 
@@ -46,7 +45,6 @@ We shall prefer the notation $\sigma_1\sigma_2\ldots\sigma_n$ over $\langle
 	\end{equation*}
 \end{corollary}
 
-\noindent
 Concatenation of words is associative. That is, $u \cdot (v \cdot w) = (u \cdot v)
 \cdot w$ for all words $u$, $v$ and $w$ over an alphabet $\Sigma$. Thus, we shall
 from now on write $uvw$ to denote the concatenation of $u$, $v$ and $w$ without
@@ -62,7 +60,10 @@ causing ambiguity.
 \end{definition}
 
 \begin{corollary}
-	Let $w$ be a word over an alphabet $\Sigma$. Then $\epsilon \in Pref(w)$.
+	Let $w$ be a word over an alphabet $\Sigma$. Then
+	\begin{equation*}
+		\epsilon \in Pref(w).
+	\end{equation*}
 \end{corollary}
 
 \begin{definition}
@@ -73,7 +74,10 @@ causing ambiguity.
 \end{definition}
 
 \begin{corollary}
-	Let $w$ be a word over an alphabet $\Sigma$. Then $\epsilon^{-1}w = w$.
+	Let $w$ be a word over an alphabet $\Sigma$. Then
+	\begin{equation*}
+		\epsilon^{-1}w = w.
+	\end{equation*}
 \end{corollary}
 
 \begin{proposition}
@@ -109,12 +113,11 @@ causing ambiguity.
 	The longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an
 	alphabet $\Sigma$ for $n > 0$ is the word
 	\begin{align*}
-		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n{Pref(w_i)}}{
-		|u|}.
+		\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap\limits_{i=1}^n
+		Pref(w_i)} |u|.
 	\end{align*}
 \end{definition}
 
-\noindent
 We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to indicate
 the longest common prefix of the words $w_1, w_2, \ldots, w_n$ over an alphabet
 $\Sigma$ for $n > 0$.
@@ -149,6 +152,7 @@ $\Sigma$ for $n > 0$.
 		\item $\mathcal{L}^0 = \{ \epsilon \}$,
 		\item $\mathcal{L}^n = \mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$
 			for $n > 0$,
-		\item $\mathcal{L}^* = \bigcup_{n = 0}^{\infty} \mathcal{L}^n$.
+		\item $\mathcal{L}^* = \bigcup\limits_{n = 0}^{\infty}
+			\mathcal{L}^n$.
 	\end{itemize}
 \end{definition}
