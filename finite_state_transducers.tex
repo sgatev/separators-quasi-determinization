@@ -12,16 +12,16 @@
 		\item $Q$ is a finite set of states,
 		\item $S \subseteq Q$ is a set of start states,
 		\item $F \subseteq Q$ is a set of final states,
-		\item $\Delta : Q \times (\Sigma_\epsilon \times \Omega^*) \times
-			Q$ is a relation of state transitions.
+		\item $\Delta : Q \times \Sigma_\epsilon \times \Omega^* \times Q$
+			is a relation of state transitions.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
 	finite-state transducer. The generalized relation of state transitions
-	$\Delta^* : Q \times (\Sigma^* \times \Omega^*) \times Q$ is defined
-	as the inclusion-wise least set such that
+	$\Delta^* : Q \times \Sigma^* \times \Omega^* \times Q$ is defined as the
+	inclusion-wise least set such that
 	\begin{itemize}
 		\item $\langle q, \epsilon, \epsilon, q \rangle \in \Delta^*$ for
 			$q \in Q$,
@@ -45,15 +45,8 @@
 		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
-	for $n > 1$ where
-	\begin{itemize}
-		\item $q_i \in Q$ for $i \in \{ 1, 2, \ldots, n \}$,
-		\item $\sigma_i \in \Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots,
-			n-1 \}$,
-		\item $w_i \in \Omega^*$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
-		\item $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta$ for
-			$i \in \{ 1, 2, \ldots, n-1 \}$.
-	\end{itemize}
+	for $n > 1$ where $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta$
+	for $i \in \{ 1, 2, \ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
 	state of $\pi$ is $q_n$. The label of $\pi$ is $\langle \sigma_1 \sigma_2
 	\ldots \sigma_{n-1}, w_1 w_2 \ldots w_{n-1} \rangle$. The path $\pi$ is
@@ -103,8 +96,8 @@
 	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
 	\Delta \rangle$ is trimmed if and only if for every state $q \in Q$ there
 	exist $s \in S$, $f \in F$, $w', w'' \in \Sigma^*$ and $v', v'' \in
-	\Omega^*$ such that $\langle s, w', v', q \rangle \in \Delta^*$ and
-	$\langle q, w'', v'', f \rangle \in \Delta^*$.
+	\Omega^*$ such that $\langle s, w', v', q \rangle, \langle q, w'', v'', f
+	\rangle \in \Delta^*$.
 \end{definition}
 
 \begin{proposition}[see \cite{MS19}]
@@ -118,7 +111,6 @@
 	$\mathcal{R}_\mathcal{T}$ is the graph of a function.
 \end{definition}
 
-\noindent
 We shall write $\mathcal{F}_\mathcal{T}$ instead of $\mathcal{R}_\mathcal{T}$ in
 case $\mathcal{T}$ is a functional finite-state transducer.
 
@@ -131,11 +123,6 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 	\end{align*}
 	where $E = \{ \{ q', q'' \} \mid \exists \langle q', \sigma, w, q'' \rangle
 	\in \Delta \}$.
-\end{definition}
-
-\begin{definition}
-	A finite-state transducer $\mathcal{T}$ is planar if and only if its
-	corresponding graph $\mathcal{G}_{\mathcal{T}}$ is planar.
 \end{definition}
 
 \begin{definition}
@@ -161,9 +148,9 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
-	\rangle$ be a subsequential finite-state transducer. The generalized
-	function of state transitions $\delta^* : Q \times \Sigma^* \rightarrow Q$
-	is defined inductively as the least function such that
+	\rangle$ be a subsequential finite-state transducer. The generalized state
+	transition function $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined
+	inductively as the least function such that
 	\begin{itemize}
 		\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
 		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
@@ -173,9 +160,9 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
-	\rangle$ be a subsequential finite-state transducer. The generalized
-	function of state transition outputs $\lambda^* : Q \times \Sigma^*
-	\rightarrow \Omega^*$ is defined inductively as the least function such that
+	\rangle$ be a subsequential finite-state transducer. The generalized state
+	transition output function $\lambda^* : Q \times \Sigma^* \rightarrow
+	\Omega^*$ is defined inductively as the least function such that
 	\begin{itemize}
 		\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
 		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \cdot
@@ -190,33 +177,26 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 	non-trivial. A trivial path $\pi_q$ in $\mathcal{T}$ is associated with
 	every state $q \in Q$. The length of $\pi_q$ is $0$. The start state of
 	$\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of $\pi_q$ is
-	$\epsilon$. The output of $\pi_q$ is $\epsilon$. The path $\pi_q$ is
-	succsessful if and only if $q \in \{ s \} \cap F$. A non-trivial path $\pi$
-	in $\mathcal{T}$ is a finite sequence of state transitions
+	$\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is succsessful if and
+	only if $q \in \{ s \} \cap F$. A non-trivial path $\pi$ in $\mathcal{T}$ is
+	a finite sequence of state transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
 		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
-	for $n > 1$ where
-	\begin{itemize}
-		\item $q_i \in Q$ for $i \in \{ 1, 2, \ldots, n \}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
-		\item $w_i = \lambda(q_i, \sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1
-			\}$,
-		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in \{ 1, 2, \ldots,
-			n-1 \}$.
-	\end{itemize}
+	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ and $w_i = \lambda(q_i,
+	\sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
-	state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots
-	\sigma_{n-1}$. The output of $\pi$ is $w_1 w_2 \ldots w_{n-1}$. The path
+	state of $\pi$ is $q_n$. The label of $\pi$ is $\langle \sigma_1 \sigma_2
+	\ldots \sigma_{n-1}, w_1 w_2 \ldots w_{n-1} \rangle$. The path
 	$\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$.
 \end{definition}
 
 \begin{definition}
 	The function recognized by a subsequential finite-state transducer
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
-	\rangle$ is the set of all pairs of labels and outputs of successful paths
+	\rangle$ is the set of all pairs of labels of successful paths
 	\begin{align*}
 		\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w) \cdot \psi(f)
 		\rangle \in \Sigma^* \times \Omega^* \mid \exists f \in F
@@ -226,7 +206,7 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 
 \begin{theorem}[Mohri, see \cite{M96}]\label{t_choffrut_mohri}
 	Let $\mathcal{T}$ be a functional finite-state transducer and let
-	$\mathcal{F}_\mathcal{T}$ have bounded variation. There exists a
+	$\mathcal{F}_\mathcal{T}$ has bounded variation. There exists a
 	subsequential finite-state transducer $\mathcal{T'}$ such that
 	$\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$.
 \end{theorem}
