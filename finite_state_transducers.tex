@@ -1,50 +1,47 @@
 \subsection{Finite-state transducers}
 
 \begin{definition}
-	A finite-state transducer $\mathcal{T}$ is a tuple
-	\begin{align*}
-		\langle \Sigma, \Omega, Q, S, F, \Delta \rangle
-	\end{align*}
+	A \emph{finite-state transducer} $\mathcal{T}$ is a tuple
+	\begin{equation*}
+	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle
+	\end{equation*}
 	where
 	\begin{itemize}
-		\item $\Sigma$ and $\Omega$ are respectively input and output
-			alphabets,
-		\item $Q$ is a finite set of states,
-		\item $S \subseteq Q$ is a set of start states,
-		\item $F \subseteq Q$ is a set of final states,
-		\item $\Delta : Q \times \Sigma_\epsilon \times \Omega^* \times Q$
-			is a relation of state transitions.
+	\item $\Sigma$ and $\Omega$ are respectively input and output alphabets,
+	\item $Q$ is a finite set of states,
+	\item $S \subseteq Q$ is a set of start states,
+	\item $F \subseteq Q$ is a set of final states,
+	\item $\Delta : Q \times \Sigma_\epsilon \times \Omega^* \times Q$ is a
+		relation of state transitions.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The generalized relation of state transitions
+	finite-state transducer. The \emph{generalized relation of state transitions}
 	$\Delta^* : Q \times \Sigma^* \times \Omega^* \times Q$ is defined as the
-	inclusion-wise least set such that
+	inclusion-wise minimal set such that
 	\begin{itemize}
-		\item $\langle q, \epsilon, \epsilon, q \rangle \in \Delta^*$ for
-			$q \in Q$,
-		\item $\langle q', w\sigma, uv, q''' \rangle \in \Delta^*$ for
-			$\langle q', w, u, q'' \rangle \in \Delta^*$ and $\langle
-			q'', \sigma, v, q''' \rangle \in \Delta$.
+	\item $\langle q, \epsilon, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
+	\item $\langle q', w\sigma, uv, q''' \rangle \in \Delta^*$ for $\langle q',
+		w, u, q'' \rangle \in \Delta^*$ and $\langle q'', \sigma, v, q'''
+		\rangle \in \Delta$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
-	A path in a finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega,
-	Q, S, F, \Delta \rangle$ is either trivial or non-trivial. A trivial path
-	$\pi_q$ in $\mathcal{T}$ is associated with every state $q \in Q$. The
-	length of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state
-	of $\pi_q$ is $q$. The label of $\pi_q$ is $\langle \epsilon, \epsilon
-	\rangle$. The path $\pi_q$ is succsessful if and only if $q \in S \cap F$. A
-	non-trivial path $\pi$ in $\mathcal{T}$ is a finite sequence of state
-	transitions
-	\begin{align*}
-		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
-		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
-		\rangle
-	\end{align*}
+	A \emph{path in a finite-state transducer} $\mathcal{T} = \langle \Sigma,
+	\Omega, Q, S, F, \Delta \rangle$ is either trivial or non-trivial. A
+	\emph{trivial path} $\pi_q$ in $\mathcal{T}$ is associated with every state
+	$q \in Q$. The length of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$.
+	The end state of $\pi_q$ is $q$. The label of $\pi_q$ is $\langle \epsilon,
+	\epsilon \rangle$. The path $\pi_q$ is succsessful if and only if $q \in S
+	\cap F$. A \emph{non-trivial path} $\pi$ in $\mathcal{T}$ is a finite
+	sequence of state transitions
+	\begin{equation*}
+	\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3
+	\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n \rangle
+	\end{equation*}
 	for $n > 1$ where $\langle q_i, \sigma_i, w_i, q_{i+1} \rangle \in \Delta$
 	for $i \in \{ 1, 2, \ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
@@ -63,39 +60,39 @@
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The state $\epsilon$-closure function
+	finite-state transducer. The \emph{state $\epsilon$-closure function}
 	$\Delta_\epsilon : Q \rightarrow 2^{Q \times \Omega^*}$ defined as
-	\begin{align*}
-		\Delta_\epsilon(q) = \{ \langle p, u \rangle \in Q \times \Omega^*
-			\mid \langle q, \epsilon, u, p \rangle \in \Delta^* \}.
-	\end{align*}
+	\begin{equation*}
+	\Delta_\epsilon(q) = \{ \langle p, u \rangle \in Q \times \Omega^* \mid
+	\langle q, \epsilon, u, p \rangle \in \Delta^* \}.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The longest common output function
+	finite-state transducer. The \emph{longest common output function}
 	$\Delta_\wedge : \Sigma^* \rightarrow \Omega^*$ is defined as
-	\begin{align*}
-		\Delta_\wedge(w) = \bigwedge{\{ u \in \Omega^* \mid \exists s \in S
-		\; \exists q \in Q (\langle s, w, u, q \rangle \in \Delta^*) \}}.
-	\end{align*}
+	\begin{equation*}
+	\Delta_\wedge(w) = \bigwedge{\{ u \in \Omega^* \mid \exists s \in S \;
+	\exists q \in Q (\langle s, w, u, q \rangle \in \Delta^*) \}}.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
-	The relation recognized by a finite-state transducer $\mathcal{T} = \langle
-	\Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all labels of
+	The \emph{relation recognized by a finite-state transducer} $\mathcal{T} =
+	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is the set of all labels of
 	successful paths
-	\begin{align*}
-		\mathcal{R}_\mathcal{T} = \{ \langle u, v \rangle \in \Sigma^*
-		\times \Omega^* \mid \exists s \in S \; \exists f \in F (\langle s,
-		u, v, f \rangle \in \Delta^*) \}.
-	\end{align*}
+	\begin{equation*}
+	\mathcal{R}_\mathcal{T} = \{ \langle u, v \rangle \in \Sigma^* \times
+	\Omega^* \mid \exists s \in S \; \exists f \in F (\langle s, u, v, f \rangle
+	\in \Delta^*) \}.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
-	\Delta \rangle$ is trimmed if and only if for every state $q \in Q$ there
-	exist $s \in S$, $f \in F$, $w', w'' \in \Sigma^*$ and $v', v'' \in
+	\Delta \rangle$ is \emph{trimmed} if and only if for every state $q \in Q$
+	there exist $s \in S$, $f \in F$, $w', w'' \in \Sigma^*$ and $v', v'' \in
 	\Omega^*$ such that $\langle s, w', v', q \rangle, \langle q, w'', v'', f
 	\rangle \in \Delta^*$.
 \end{definition}
@@ -107,7 +104,7 @@
 \end{proposition}
 
 \begin{definition}
-	A finite-state transducer $\mathcal{T}$ is functional if and only if
+	A finite-state transducer $\mathcal{T}$ is \emph{functional} if and only if
 	$\mathcal{R}_\mathcal{T}$ is the graph of a function.
 \end{definition}
 
@@ -115,76 +112,72 @@ We shall write $\mathcal{F}_\mathcal{T}$ instead of $\mathcal{R}_\mathcal{T}$ in
 case $\mathcal{T}$ is a functional finite-state transducer.
 
 \begin{definition}
-	The graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
-	transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
+	The \emph{graph $\mathcal{G}_{\mathcal{T}}$ corresponding to a finite-state
+	transducer} $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$
 	is the pair
-	\begin{align*}
-		\langle Q, E \rangle
-	\end{align*}
-	where $E = \{ \{ q', q'' \} \mid \exists \langle q', \sigma, w, q'' \rangle
-	\in \Delta \}$.
+	\begin{equation*}
+	\langle Q, E \rangle
+	\end{equation*}
+	where $E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon \;
+	\exists w \in \Omega^* (\langle q', \sigma, w, q'' \rangle \in \Delta) \}$.
 \end{definition}
 
 \begin{definition}
-	A subsequential finite-state transducer $\mathcal{T}$ is a tuple
-	\begin{align*}
-		\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle
-	\end{align*}
+	A \emph{subsequential finite-state transducer} $\mathcal{T}$ is a tuple
+	\begin{equation*}
+	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle
+	\end{equation*}
 	where
 	\begin{itemize}
-		\item $\Sigma$ and $\Omega$ are respectively input and output
-			alphabets,
-		\item $Q$ is a finite set of states,
-		\item $s \in Q$ is a start state,
-		\item $F \subseteq Q$ is a set of final states,
-		\item $\delta : Q \times \Sigma \rightarrow Q$ is a state transition
-			function,
-		\item $\lambda : Q \times \Sigma \rightarrow \Omega^*$ is a
-			state transition output function,
-		\item $\psi : F \rightarrow \Omega^*$ is a final state output
-			function.
+	\item $\Sigma$ and $\Omega$ are respectively input and output alphabets,
+	\item $Q$ is a finite set of states,
+	\item $s \in Q$ is a start state,
+	\item $F \subseteq Q$ is a set of final states,
+	\item $\delta : Q \times \Sigma \rightarrow Q$ is a state transition
+		function,
+	\item $\lambda : Q \times \Sigma \rightarrow \Omega^*$ is a state transition
+		output function,
+	\item $\psi : F \rightarrow \Omega^*$ is a final state output function.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
-	\rangle$ be a subsequential finite-state transducer. The generalized state
-	transition function $\delta^* : Q \times \Sigma^* \rightarrow Q$ is defined
-	inductively as the least function such that
+	\rangle$ be a subsequential finite-state transducer. The \emph{generalized
+	state transition function} $\delta^* : Q \times \Sigma^* \rightarrow Q$ is
+	defined as the least function such that
 	\begin{itemize}
-		\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
-		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
-			$q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
+	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in Q$,
+		$w \in \Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
-	\rangle$ be a subsequential finite-state transducer. The generalized state
-	transition output function $\lambda^* : Q \times \Sigma^* \rightarrow
-	\Omega^*$ is defined inductively as the least function such that
+	\rangle$ be a subsequential finite-state transducer. The \emph{generalized
+	state transition output function} $\lambda^* : Q \times \Sigma^* \rightarrow
+	\Omega^*$ is defined as the least function such that
 	\begin{itemize}
-		\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
-		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \cdot
-			\lambda(\delta^*(q, w), \sigma)$ for $q \in Q$, $w \in
-			\Sigma^*$ and $\sigma \in \Sigma$.
+	\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
+	\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \lambda(\delta^*(q, w),
+		\sigma)$ for $q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
-	A path in a subsequential finite-state transducer $\mathcal{T} = \langle
-	\Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is either trivial or
-	non-trivial. A trivial path $\pi_q$ in $\mathcal{T}$ is associated with
-	every state $q \in Q$. The length of $\pi_q$ is $0$. The start state of
-	$\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of $\pi_q$ is
-	$\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is succsessful if and
-	only if $q \in \{ s \} \cap F$. A non-trivial path $\pi$ in $\mathcal{T}$ is
-	a finite sequence of state transitions
-	\begin{align*}
-		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
-		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
-		\rangle
-	\end{align*}
+	A \emph{path in a subsequential finite-state transducer} $\mathcal{T} =
+	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is either
+	trivial or non-trivial. A \emph{trivial path} $\pi_q$ in $\mathcal{T}$ is
+	associated with every state $q \in Q$. The length of $\pi_q$ is $0$. The
+	start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of
+	$\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is
+	succsessful if and only if $q = s \in F$. A \emph{non-trivial path} $\pi$ in
+	$\mathcal{T}$ is a finite sequence of state transitions
+	\begin{equation*}
+	\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3
+	\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n \rangle
+	\end{equation*}
 	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ and $w_i = \lambda(q_i,
 	\sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
@@ -193,20 +186,27 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 	$\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$.
 \end{definition}
 
+\begin{proposition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
+	\rangle$ be a subsequential finite-state transducer. There exists a path in
+	$\mathcal{T}$ with start state $q' \in Q$, end state $q'' \in Q$ and label
+	$\langle u, v \rangle \in \Sigma^* \times \Omega^*$ if and only if
+	$q'' = \delta^*(q', u)$ and $v = \lambda^*(q', u)$.
+\end{proposition}
+
 \begin{definition}
-	The function recognized by a subsequential finite-state transducer
+	The \emph{function recognized by a subsequential finite-state transducer}
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
-	\rangle$ is the set of all pairs of labels of successful paths
-	\begin{align*}
-		\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w) \cdot \psi(f)
-		\rangle \in \Sigma^* \times \Omega^* \mid \exists f \in F
-		(\delta^*(s, w) = f) \}.
-	\end{align*}
+	\rangle$ is the set of all labels of successful paths
+	\begin{equation*}
+	\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w) \psi(f) \rangle \in
+	\Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) = f) \}.
+	\end{equation*}
 \end{definition}
 
-\begin{theorem}[Mohri, see \cite{M96}]\label{t_choffrut_mohri}
-	Let $\mathcal{T}$ be a functional finite-state transducer and let
-	$\mathcal{F}_\mathcal{T}$ has bounded variation. There exists a
+\begin{theorem}[Mohri, see \cite{M97}]\label{t_choffrut_mohri}
+	Let $\mathcal{T}$ be a functional finite-state transducer. If
+	$\mathcal{F}_\mathcal{T}$ has bounded variation, then there exists a
 	subsequential finite-state transducer $\mathcal{T'}$ such that
 	$\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$.
 \end{theorem}

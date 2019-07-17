@@ -154,15 +154,8 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 		q_3 \rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
 		\rangle
 	\end{align*}
-	for $n > 1$ where
-	\begin{itemize}
-		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \{ 1, 2, \ldots, n \}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
-		\item $w_i = \lambda(q_i, \sigma_i)$ for $i \in
-			\{ 1, 2, \ldots, n-1 \}$,
-		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-			\{ 1, 2, \ldots, n-1 \}$.
-	\end{itemize}
+	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ and $w_i = \lambda(q_i,
+	\sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
 	state of $\pi$ is $q_n$. The label of $\pi$ is the pair $\langle \sigma_1
 	\sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots w_{n-1} \rangle$. The path
@@ -181,13 +174,27 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 
 \begin{proof}
 	We prove the statement by induction on the length of $u$. If $|u| = 0$, then
-	$u = \epsilon$. Let $\pi$ be a path with start state $q' \in
+	$u = \epsilon$. Let there be a path with start state $q' \in
 	\prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label
-	$\langle u, v \rangle = \langle \epsilon, v \rangle$. By definition, $\pi$
-	should be trivial. Thus, $v = \epsilon$ and $q' = q''$. By definition,
-	$\delta^*(q', u) = \delta^*(q', \epsilon) = q' = q''$ and $\lambda^*(q',
-	u) = \lambda^*(q', \epsilon) = \epsilon = v$. Therefore, the statement
-	holds in this case. Let 2
+	$\langle u, v \rangle = \langle \epsilon, v \rangle$. Only trivial paths
+	have a component of their label equal to $\epsilon$. Therefore, $q' = q''$,
+	$v = \epsilon$ and by definition $\delta^*(q', u) = \delta^*(q', \epsilon) =
+	q' = q''$ and $\lambda^*(q', u) = \lambda^*(q', \epsilon) = \epsilon = v$.
+	A similar argument follows in the other direction. Otherwise, if $|u|
+	> 0$, then $u = u'\sigma$ for $u' \in \Sigma^*$ and $\sigma \in \Sigma$.
+	Let there be a path with start state $q' \in
+	\prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label
+	$\langle u, v \rangle$.
+	There exist a state $q''' \in \prod_{i=1}^k{Q_i}$ and a path with start
+	state $q'$, end state $q'''$ and label $\langle u', v' \rangle$ where $v'
+	\in Pref(v)$. By definition $\delta(q''', \sigma) = q''$ and $\lambda(q''',
+	\sigma) = v'^{-1}v$. By the inductive hypothesis $\delta^*(q', u') = q'''$
+	and $\lambda^*(q', u') = v'$. Therefore, by definition $\delta^*(q', u) =
+	\delta^*(q', u'\sigma) = \delta(\delta^*(q', u'), \sigma) = \delta(q''',
+	\sigma) = q''$ and $\lambda^*(q', u) = \lambda^*(q', u'\sigma) =
+	\lambda^*(q', u') \cdot \lambda(\delta^*(q', u'), \sigma) = v' \cdot
+	\lambda(q''', \sigma) = v' \cdot v'^{-1}v = v$. Again, a similar argument
+	can be followed in the other direction.
 \end{proof}
 
 \begin{definition}
@@ -202,45 +209,43 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 	\end{align*}
 \end{definition}
 
-\iffalse
 We now describe a construction that produces a quasi-subsequential $k$-separated
 finite-state transducer $\mathcal{T'}$ from a trimmed functional $k$-separated
-finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, \vec{Q}, X, S, F,
-\Delta \rangle$ such that $\mathcal{F}_\mathcal{T}$ has bounded variation.
-
-Let $P_i = Q_i \cup X$ for $i \in \interval{1}{k}$. We construct the
-quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}'^{(n)}$ for
-$n > 0$ and the set of states $R^{(n)}$ for $n \in \mathbb{N}$ inductively. Let
+finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta
+\rangle$ such that $\mathcal{F}_\mathcal{T}$ has bounded variation.
+Let $P_i = Q_i \cup X$ for $i \in \{ 1, 2, \ldots, k \}$. The quasi-subsequential
+$k$-separated finite-state transducer $\mathcal{T}'$ and the set of states $R$ are
+constructed by induction. Let
 \begin{align*}
-	\mathcal{T}'^{(1)} &= \langle \Sigma, \Omega, \vec{Q'}^{(1)}, 2^X, s,
-	\vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset}, \vec{\emptyset},
-	\emptyset, \vec{\emptyset}, \vec{\emptyset} \rangle,\\
+	\mathcal{T}'^{(1)} &= \langle \Sigma, \Omega, Q'^{(1)}, 2^X, s,
+	F'^{(1)}, \tau^{(1)}, \rho^{(1)}, \eta^{(1)}, \emptyset, \lambda^{(1)},
+	\psi^{(1)} \rangle,\\
 	R^{(0)} &= \emptyset,\\
 	R^{(1)} &= \{ s \}
 \end{align*}
 where
 \begin{itemize}
-	\item $s^i = \{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q
-		\in P_i \}$,
-	\item $Q_i'^{(1)} = \{ s^i \}$
+	\item $s^i = \{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in
+		P_i \}$,
+	\item $Q_i'^{(1)} = \{ s^i \}$,
+	\item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} = 
+		\lambda_i^{(1)} = \psi_i^{(1)} = \emptyset$
 \end{itemize}
-for $i \in \interval{1}{k}$. Let us assume that $\mathcal{T}'^{(n)}$ and $R^{(n)}$ are constructed. The set of
-states introduced at step $n$ is
+for $i \in \{ 1, 2, \ldots, k \}$. Let us assume that $\mathcal{T}'^{(n)}$ and
+$R^{(n)}$ are constructed for $n > 0$. The set of states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
-The longest common quasi-state transition output function
-$\lambda_i^{\wedge (n)} : Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ is defined
-as
+The longest common quasi-state transition output function $\lambda_i^{\wedge (n)} :
+Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ is defined as
 \begin{align*}
 	\lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge_{\langle p', u
 	\rangle \in q}{\bigwedge_{\langle p', \sigma, v, p'' \rangle \in
 	\Delta}{uv}}
 \end{align*}
-for $i \in \interval{1}{k}$.
-The state quasi-successor function
-$succ_i^{(n)} : \prod_{j=1}^k Q_j'^{(n)} \times \Sigma \rightarrow 2^{P_i \times
-\Omega^*}$ is defined as
+for $i \in \{ 1, 2, \ldots, k \}$. The state quasi-successor function $succ_i^{(n)}
+: \prod_{j=1}^k Q_j'^{(n)} \times \Sigma \rightarrow 2^{P_i \times \Omega^*}$ is
+defined as
 \begin{align*}
 	succ_i^{(n)}(q, \sigma) = \begin{aligned}[t]
 	\{ &\langle p''', \lambda(q, \sigma)^{-1}uvw \rangle \mid\\
@@ -249,13 +254,17 @@ $succ_i^{(n)} : \prod_{j=1}^k Q_j'^{(n)} \times \Sigma \rightarrow 2^{P_i \times
 	&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')(p''' \in P_i) \}
 	\end{aligned}
 \end{align*}
-for $i \in \interval{1}{k}$.
-We construct the quasi-subsequential $k$-separated finite-state transducer
+for $i \in \{ 1, 2, \ldots, k \}$.
+Let
 \begin{align*}
-	\mathcal{T}'^{(n+1)} = \langle &\Sigma, \Omega, \vec{Q'}^{(n+1)},
-	2^X, s, \vec{F'}^{(n+1)}, \vec{\tau}^{(n+1)},\\
-	&\vec{\rho}^{(n+1)}, \vec{\eta}^{(n+1)}, \eta_x^{(n+1)},
-	\vec{\lambda}^{(n+1)}, \vec{\psi}^{(n+1)} \rangle
+	\mathcal{T}'^{(n+1)} &= \begin{aligned}[t]
+		\langle &\Sigma, \Omega, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
+		\tau^{(n+1)},\\
+		&\rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)}, \lambda^{(n+1)},
+		\psi^{(n+1)} \rangle
+	\end{aligned}\\
+	R^{(n+1)} &= R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
+	R_n \exists \sigma \in \Sigma \}.
 \end{align*}
 where
 \begin{itemize}
@@ -276,9 +285,6 @@ where
 		rng(\tau_i^{(n+1)}) \setminus rng(\tau_i^{(n)})\\
 		&\exists \langle p, w \rangle \in q (p \in X) \},
 		\end{aligned}$
-	\item $\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ \langle q,
-		\bigcup_{i=1}^k \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))
-		\rangle \mid \exists q \in R_n \exists \sigma \in \Sigma \}$,
 	\item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \begin{aligned}[t]
 		\{ &\langle \tau_i^{(n+1)} (q^i, \sigma), \eta_x^{(n+1)}(q),
 		\tau_i^{(n+1)} (q^i, \sigma) \cup \eta_x^{(n+1)}(q) \rangle \mid\\
@@ -287,6 +293,20 @@ where
 	\item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
 		rng(\eta_i^{(n+1)})$
 \end{itemize}
+for $i \in \{ 1, 2, \ldots, k \}$ and
+\begin{itemize}
+	\item $\begin{aligned}[t]
+		\eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ &\langle \eta_x^{i (n)}(p^1,
+		p^2, \ldots, p^i), p^{i+1}, \eta_x^{i (n)}(p^1, p^2, \ldots, p^i)
+		\cup p^{i+1} \rangle \mid\\
+		&\exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \{
+		1, 2, \ldots, k-1 \}(\\
+		&p^i = \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^{i+1}, \sigma))) \}.
+	\end{aligned}$
+\end{itemize}
+
+\iffalse
+
 for $i \in \interval{1}{k}$, along with the set of states
 \begin{align*}
 	R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in

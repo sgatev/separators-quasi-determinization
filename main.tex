@@ -15,12 +15,14 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 
-\newtheorem{definition}{Definition}[subsection]
-\newtheorem{proposition}[definition]{Proposition}
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{corollary}[definition]{Corollary}
-\newtheorem{remark}[definition]{Remark}
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
 \newtheorem*{case}{Case}
 
 \title{Separators for Quasi-Determinization of Finite-State Devices}

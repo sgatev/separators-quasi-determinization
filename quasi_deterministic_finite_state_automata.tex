@@ -103,13 +103,8 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
 		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
 	\end{align*}
-	for $n > 1$ where
-	\begin{itemize}
-		\item $q_i \in \prod_{j=1}^k{Q_j}$ for $i \in \{ 1, 2, \ldots, n \}$,
-		\item $\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$,
-		\item $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in
-			\{ 1, 2, \ldots, n-1 \}$.
-	\end{itemize}
+	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in \{ 1, 2,
+	\ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
 	state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots
 	\sigma_{n-1}$. The path $\pi$ is successful if and only if $q_1 = s$ and
@@ -191,7 +186,6 @@ $q \gets s$\;
 \Return $False$
 \end{algorithm}
 
-\noindent
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton
 $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$. Let $P_i = Q_i \cup X$

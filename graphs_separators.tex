@@ -1,38 +1,38 @@
 \subsection{Graphs and separators}
 
 \begin{definition}
-	A graph $\mathcal{G}$ is a pair
-	\begin{align*}
-		\langle V, E \rangle
-	\end{align*}
+	A \emph{graph} $\mathcal{G}$ is a pair
+	\begin{equation*}
+	\langle V, E \rangle
+	\end{equation*}
 	where
 	\begin{itemize}
-		\item $V$ is a finite set of vertices,
-		\item $E$ is a finite set of edges,
-		\item $e \subseteq V$ and $|e| \in \{ 1, 2 \}$ for $e \in E$.
+	\item $V$ is a finite set of vertices,
+	\item $E$ is a finite set of edges,
+	\item $e \subseteq V$ and $|e| \in \{ 1, 2 \}$ for $e \in E$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
-	A graph $\mathcal{G} = \langle V, E \rangle$ is planar if and only if there
-	exist an injective function $f_v$ that maps vertices of the graph to
+	A graph $\mathcal{G} = \langle V, E \rangle$ is \emph{planar} if and only if
+	there exist an injective function $f_v$ that maps vertices of the graph to
 	distinct points in the real plane and an injective function $f_e$ that maps
 	edges of the graph to simple curves in the real plane such that
 	\begin{itemize}
-		\item $f_e(\{ v \})$ has both of its end points equal to $f_v(v)$
-			for $\{ v \} \in E$,
-		\item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and
-			$f_v(v'')$ for $\{ v', v'' \} \in E$,
-		\item curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
+	\item $f_e(\{ v \})$ has both of its end points equal to $f_v(v)$ for $\{ v
+		\} \in E$,
+	\item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and $f_v(v'')$
+		for $\{ v', v'' \} \in E$,
+	\item curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{G} = \langle V, E \rangle$ be a graph. The set $X \subseteq V$
-	is a separator in $\mathcal{G}$ if and only if there exists a partition $\{
-	X, V_1, \ldots, V_n \}_V$ for $n > 1$ such that $E \cap \{ \{ v', v'' \}
-	\mid \exists v' \in V_i \; \exists v'' \in V_j \} = \emptyset$ if $i \neq j$
-	for $i, j \in \{1, 2, \ldots, n \}$.
+	is a \emph{separator} in $\mathcal{G}$ if and only if there exists a
+	partition $\{ X, V_1, \ldots, V_n \}_V$ for $n > 1$ such that $E \cap \{ \{
+	v', v'' \} \mid \exists v' \in V_i \; \exists v'' \in V_j \} = \emptyset$ if
+	$i \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan, see \cite{LT77}]\label{t_lipton_tarjan}
