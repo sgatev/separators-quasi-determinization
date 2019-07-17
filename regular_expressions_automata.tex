@@ -1,10 +1,10 @@
 \subsection{Finite-state automata from regular expressions}
 
 In this subsection, we show that finite-state automata derived from regular
-expressions by applying the construction described in Theorem \ref{t_thompson}
+expressions by applying the construction described in \Cref{thm:thompson}
 are separated. We first prove that the graphs corresponding to Thompson finite-state
-automata are planar. As a consequence, the algorithm described in Theorem
-\ref{t_lipton_tarjan} could be applied to a Thompson finite-state automaton
+automata are planar. As a consequence, the algorithm described in
+\Cref{thm:lipton_tarjan} could be applied to a Thompson finite-state automaton
 $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ to find a separator of size
 $\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We then present an algorithm,
 specialized for Thompson finite-state automata, that is guaranteed to find a
@@ -13,7 +13,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 \begin{proposition}
 	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$ and
 	let $\mathcal{A}$ be the finite-state automaton derived from $\mathcal{R}$
-	by applying the construction described in Theorem $\ref{t_thompson}$. Then
+	by applying the construction described in $\Cref{thm:thompson}$. Then
 	$\mathcal{G}_\mathcal{A}$ is planar.
 \end{proposition}
 
@@ -40,7 +40,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 	\begin{case}[$\mathcal{R} = \emptyset$]
 		$\mathcal{A}$ is a Type 1 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_1}$. There are two vertices
+		presented in $\Cref{fig:f_thompson_1}$. There are two vertices
 		and no edges in $\mathcal{G}_{\mathcal{A}}$. Properties 1 and 2 hold
 		for $\mathcal{G}_{\mathcal{A}}$ by construction. Properties 3, 4 and
 		5 hold for $\mathcal{G}_{\mathcal{A}}$ trivially.
@@ -64,7 +64,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 	\begin{case}[$\mathcal{R} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
 		$\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_2}$. There are two vertices
+		presented in $\Cref{fig:f_thompson_2}$. There are two vertices
 		and a single edge in $\mathcal{G}_{\mathcal{A}}$. Properties 1, 2, 4
 		and 5 hold for $\mathcal{G}_{\mathcal{A}}$ by construction. Property
 		3 holds for $\mathcal{G}_{\mathcal{A}}$ trivially.
@@ -89,7 +89,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		and $\mathcal{R}''$ are regular expressions]
 		$\mathcal{A}$ is a Type 3 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and
+		presented in $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and
 		$\mathcal{A}''$ be the Thompson finite-state automata constructed
 		from $\mathcal{R}'$ and $\mathcal{R}''$ respectively. Also, let
 		properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
@@ -140,7 +140,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		and $\mathcal{R}''$ are regular expressions]
 		$\mathcal{A}$ is a Type 4 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and
+		presented in $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and
 		$\mathcal{A}''$ be the Thompson finite-state automata constructed
 		from $\mathcal{R}'$ and $\mathcal{R}''$ respectively. Also, let
 		properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
@@ -200,7 +200,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		expression]
 		$\mathcal{A}$ is a Type 5 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in Figure $\ref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be
+		presented in $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be
 		the Thompson finite-state automaton constructed from $\mathcal{R}'$.
 		Also, let properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$.
 		Properties 1 and 2 hold for $\mathcal{G}_{\mathcal{A}}$ by
@@ -255,7 +255,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 
 We will now show that there exists a specialized algorithm that finds a separator of
 constant size in a Thompson finite-state automaton. The main procedure is described
-in Algorithm \ref{alg:thompson_separator}. We proceed with proving the correctness
+in \Cref{alg:thompson_separator}. We proceed with proving the correctness
 of the algorithm and providing a bound for the size of the resulting separator.
 
 \SetAlgoNoLine
@@ -307,10 +307,10 @@ finite-state automaton.}
 	\Return $\langle X, Q_c \setminus X, R \rangle$
 \end{algorithm}
 
-\begin{proposition}\label{p_thompson_sep_1}
+\begin{proposition}\label{prop:thompson_sep_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
 	finite-state automaton. Then if $\mathcal{A}_c$ is Type 1 or Type 2 during
-	the execution of Algorithm \ref{alg:thompson_separator} on input
+	the execution of \Cref{alg:thompson_separator} on input
 	$\mathcal{A}$ the condition at line 4 is false.
 \end{proposition}
 
@@ -320,32 +320,32 @@ finite-state automaton.}
 	the condition at line 4 is false.
 \end{proof}
 
-\begin{proposition}\label{p_thompson_sep_2}
+\begin{proposition}\label{prop:thompson_sep_2}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then Algorithm \ref{alg:thompson_separator}
+	finite-state automaton. Then \Cref{alg:thompson_separator}
 	completes on input $\mathcal{A}$ in $\mathcal{O}(|Q|)$ time.
 \end{proposition}
 
 \begin{proof}
 	$\mathcal{A}_c$ is set to $\mathcal{A}$ at line 1. If at any execution of
 	the condition at line 4 the Thompson finite-state automaton $\mathcal{A}_c$
-	is Type 1 or Type 2 then by Proposition \ref{p_thompson_sep_1} the loop
+	is Type 1 or Type 2 then by \Cref{prop:thompson_sep_1} the loop
 	terminates. Otherwise, $\mathcal{A}_c$ is updated depending on its type.
 	Since $|Q_c|$ decreases after each iteration of the loop, eventually the
 	condition at line 4 will become false and the loop will not be executed
-	anymore. Therefore, Algorithm \ref{alg:thompson_separator} completes on
+	anymore. Therefore, \Cref{alg:thompson_separator} completes on
 	input $\mathcal{A}$. Moreover, the loop will be executed at most $|Q|$
 	times. Since lines 10, 14, 20, 24 and 29 represent unions of disjoint sets
 	the total time required to compute $R$ is $\mathcal{O}(|Q|)$. The rest of
 	the lines within the loop require a constant amount of time per iteration.
-	Therefore, Algorithm \ref{alg:thompson_separator} completes in
+	Therefore, \Cref{alg:thompson_separator} completes in
 	$\mathcal{O}(|Q|)$ time.
 \end{proof}
 
-\begin{proposition}\label{p_thompson_sep_3}
+\begin{proposition}\label{prop:thompson_sep_3}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
 	finite-state automaton. Then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$
-	during the execution of Algorithm \ref{alg:thompson_separator} on input
+	during the execution of \Cref{alg:thompson_separator} on input
 	$\mathcal{A}$.
 \end{proposition}
 
@@ -389,13 +389,13 @@ finite-state automaton.}
 
 	\noindent
 	Therefore, $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$ during the
-	execution of Algorithm \ref{alg:thompson_separator} on input $\mathcal{A}$.
+	execution of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proof}
 
-\begin{proposition}\label{p_thompson_sep_4}
+\begin{proposition}\label{prop:thompson_sep_4}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then $|X| = 2$ during the execution of Algorithm
-	\ref{alg:thompson_separator} on input $\mathcal{A}$.
+	finite-state automaton. Then $|X| = 2$ during the execution of
+	\Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
@@ -409,10 +409,10 @@ finite-state automaton.}
 	the last iteration of the loop $|X| = 2$ at line 32.
 \end{proof}
 
-\begin{proposition}\label{p_thompson_sep_5}
+\begin{proposition}\label{prop:thompson_sep_5}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
 	finite-state automaton. Then $|R| \leq \frac{2}{3} |Q|$ during the execution
-	of Algorithm \ref{alg:thompson_separator} on input $\mathcal{A}$.
+	of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
@@ -459,16 +459,16 @@ finite-state automaton.}
 	\end{case}
 
 	\noindent
-	Therefore, $|R| \leq \frac{2}{3} |Q|$ during the execution of Algorithm
-	\ref{alg:thompson_separator} on input $\mathcal{A}$.
+	Therefore, $|R| \leq \frac{2}{3} |Q|$ during the execution of
+	\Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proof}
 
-\begin{proposition}\label{p_thompson_sep_6}
+\begin{proposition}\label{prop:thompson_sep_6}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
 	finite-state automaton. Then $\Delta \cap (Q_c \setminus X \times
 	\Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon \times Q_c
-	\setminus X) = \emptyset$ during the execution of Algorithm
-	\ref{alg:thompson_separator} on input $\mathcal{A}$.
+	\setminus X) = \emptyset$ during the execution of
+	\Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
@@ -520,7 +520,7 @@ finite-state automaton.}
 	\noindent
 	Therefore, $\Delta \cap (Q_c \setminus X \times \Sigma_\epsilon \times R) =
 	\Delta \cap (R \times \Sigma_\epsilon \times Q_c \setminus X) = \emptyset$
-	during the execution of Algorithm \ref{alg:thompson_separator} on input
+	during the execution of \Cref{alg:thompson_separator} on input
 	$\mathcal{A}$.
 \end{proof}
 
@@ -533,6 +533,5 @@ finite-state automaton.}
 \end{theorem}
 
 \begin{proof}
-	Follows directly from Propositions \ref{p_thompson_sep_2},
-	\ref{p_thompson_sep_4}, \ref{p_thompson_sep_5} and \ref{p_thompson_sep_6}.
+	Follows directly from \Cref{prop:thompson_sep_2,prop:thompson_sep_4,prop:thompson_sep_5,prop:thompson_sep_6}.
 \end{proof}

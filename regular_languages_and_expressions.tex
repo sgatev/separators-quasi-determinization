@@ -55,13 +55,13 @@
 	\end{itemize}
 \end{definition}
 
-\begin{theorem}[Thompson, see \cite{T68}]\label{t_thompson}
+\begin{theorem}[Thompson, see \cite{T68}]\label{thm:thompson}
 	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$. There
 	exists a finite-state automaton $\mathcal{A}$ such that
 	$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{R}$.
 \end{theorem}
 
-The proof of Theorem \ref{t_thompson} is essentially a recursive method for
+The proof of \Cref{thm:thompson} is essentially a recursive method for
 constructing a finite-state automaton $\mathcal{A}$ from a regular expression
 $\mathcal{R}$. It effectively creates 5 distinct types of finite-state automata
 depending on the type of regular expression.
@@ -132,15 +132,15 @@ depending on the type of regular expression.
 			(s7) edge[bend left=-80] node[above]{$\epsilon$} (s2);
 	\end{tikzpicture}
 	\caption{Thompson finite-state automaton derived from the regular expression
-		$(0+1)*$  by applying the construction described in Theorem
-		\ref{t_thompson}.}
+		$(0+1)*$  by applying the construction described in
+		\Cref{thm:thompson}.}
 	\label{fig:f_thompson_0}
 \end{figure}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton derived from a regular expression by applying the
-	construction described in Theorem \ref{t_thompson}. Then $|S| = |F| = 1$.
+	construction described in \Cref{thm:thompson}. Then $|S| = |F| = 1$.
 \end{proposition}
 
 \begin{proof}

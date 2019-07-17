@@ -148,7 +148,7 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 \end{definition}
 
 \noindent
-Algorithm \ref{alg:qdfsa_traversal} shows how to deterministically check whether a
+\Cref{alg:qdfsa_traversal} shows how to deterministically check whether a
 word is recognized by a quasi-deterministic $k$-separated finite-state automaton.
 
 \SetAlgoNoLine
@@ -291,7 +291,7 @@ for $i \in \{ 1, 2, \ldots, k \}$ and
 	\end{align*}
 \end{proof}
 
-\begin{lemma}\label{l_quasidet_1}
+\begin{lemma}\label{lem:quasidet_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)}$ and $R^{(n)}$
 	be respectively the quasi-deterministic $k$-separated finite-state automaton
@@ -313,7 +313,7 @@ for $i \in \{ 1, 2, \ldots, k \}$ and
 For the smallest $n > 0$ such that $\mathcal{A'}^{(n)} = \mathcal{A'}^{(n+1)}$ we
 define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 
-\begin{lemma}\label{l_quasidet_2}
+\begin{lemma}\label{lem:quasidet_2}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton and let $\mathcal{A'}$ be the
 	quasi-deterministic $k$-separated finite-state automaton derived from
@@ -470,10 +470,10 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 \end{theorem}
 
 \begin{proof}
-	Follows directly from Lemmas \ref{l_quasidet_1} and \ref{l_quasidet_2}.
+	Follows directly from \Cref{lem:quasidet_1,lem:quasidet_2}.
 \end{proof}
 
-\begin{proposition}\label{p_quasidet_auto_1}
+\begin{proposition}\label{prop:quasidet_auto_1}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)} = \langle
 	\Sigma, Q'^{(n)}, 2^X, s, F'^{(n)}, \tau^{(n)}, \rho^{(n)}, \eta^{(n)},
@@ -501,8 +501,8 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 	\setminus \delta^{(n)} \} = R^{(n)}$.
 \end{proof}
 
-The construction described above and Proposition \ref{p_quasidet_auto_1} inspire
-Algorithm \ref{alg:quasi_det_sfsa} for quasi-determinization of finite-state
+The construction described above and \Cref{prop:quasidet_auto_1} inspire
+\Cref{alg:quasi_det_sfsa} for quasi-determinization of finite-state
 automata. We shall now prove its correctness and provide a runtime complexity bound.
 
 \SetAlgoNoLine
@@ -574,11 +574,11 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 \Return $\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$
 \end{algorithm}
 
-\begin{proposition}\label{p_quasidet_auto_2}
+\begin{proposition}\label{prop:quasidet_auto_2}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Then $Visited_x = rng(\eta_x)$ and
 	$Visited_i = dom(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$ during the execution
-	of Algorithm \ref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
+	of \Cref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
@@ -592,13 +592,13 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 	If $Visited_i = dom(\tau_i)$ before the execution of line 22 then $Visited_i
 	= dom(\tau_i)$ after the execution of line 26 for $i \in \{ 1, 2, \ldots, k \}$.
 	Therefore, $Visited_x = rng(\eta_x)$ and $Visited_i = dom(\tau_i)$ for $i
-	\in \{ 1, 2, \ldots, k \}$ during the execution of Algorithm
-	\ref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
+	\in \{ 1, 2, \ldots, k \}$ during the execution of \Cref{alg:quasi_det_sfsa}
+	on input $\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Algorithm \ref{alg:quasi_det_sfsa}
+	$k$-separated finite-state automaton. \Cref{alg:quasi_det_sfsa}
 	completes on input $\mathcal{A}$ in $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
 	\sum_{i=1}^k 2^{|Q_i|})$ time.
 \end{proposition}
@@ -611,11 +611,11 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 	$\sigma \in \Sigma$. However, this happens only if $\langle e_i, \sigma
 	\rangle \not\in Visited_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $e \not\in
 	Visited_x$. By construction, $e = \delta_x(q, \sigma)$ and $e_i =
-	\delta_i(q, \sigma) = \delta(q, \sigma)^i$. Therefore, based on Propositions
-	\ref{p_quasidet_auto_1} and \ref{p_quasidet_auto_2} the condition at line 10
+	\delta_i(q, \sigma) = \delta(q, \sigma)^i$. Therefore, based on
+	\Cref{prop:quasidet_auto_1,prop:quasidet_auto_2} the condition at line 10
 	is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
-	\sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, Algorithm
-	\ref{alg:quasi_det_sfsa} completes on input $\mathcal{A}$.
+	\sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, \Cref{alg:quasi_det_sfsa}
+	completes on input $\mathcal{A}$.
 	Line $1$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
 	Lines $3-6$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
 	time per iteration. Lines $8-9$ are executed once and require
@@ -633,7 +633,7 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 	most $\mathcal{O}(|Q|)$ time per iteration. Lines $35-37$ are executed at
 	most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and require
 	$\mathcal{O}(k)$ time per iteration. Therefore, the total runtime complexity
-	bound for Algorithm \ref{alg:quasi_det_sfsa} is $\mathcal{O}(k |\Sigma| |Q|
+	bound for \Cref{alg:quasi_det_sfsa} is $\mathcal{O}(k |\Sigma| |Q|
 	2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$.
 \end{proof}
 
@@ -641,7 +641,7 @@ $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state automaton. Let $\mathcal{A}_c$ be the
 	quasi-deterministic $k$-separated finite-state automaton produced by
-	Algorithm \ref{alg:quasi_det_sfsa} on input $\mathcal{A}$. Then
+	\Cref{alg:quasi_det_sfsa} on input $\mathcal{A}$. Then
 	$\mathcal{A}_c = \mathcal{A}'$.
 \end{proposition}
 

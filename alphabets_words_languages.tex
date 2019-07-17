@@ -23,7 +23,7 @@ We shall prefer the notation $\sigma_1 \sigma_2 \ldots \sigma_n$ over $\langle
 	\item $\Sigma_\epsilon = \Sigma \cup \{ \epsilon \}$,
 	\item $\Sigma^0 = \{ \epsilon \}$,
 	\item $\Sigma^n = \Sigma^{n-1} \times \Sigma$ for $n > 0$,
-	\item $\Sigma^* = \bigcup\limits_{n = 0}^{\infty} \Sigma^n$.
+	\item $\Sigma^* = \bigcup_{n = 0}^{\infty} \Sigma^n$.
 	\end{itemize}
 \end{definition}
 
@@ -31,7 +31,8 @@ We shall prefer the notation $\sigma_1 \sigma_2 \ldots \sigma_n$ over $\langle
 	\emph{Concatenation} of words over an alphabet $\Sigma$ is the function
 	$\cdot : \Sigma^* \times \Sigma^* \rightarrow \Sigma^*$ defined as
 	\begin{equation*}
-	w' \cdot w'' = \sigma_1' \ldots \sigma_n' \sigma_1'' \ldots \sigma_m''
+	w' \cdot w'' = \sigma_1' \sigma_2' \ldots \sigma_n' \sigma_1'' \sigma_2''
+	\ldots \sigma_m''
 	\end{equation*}
 	where $w' = \sigma'_1 \sigma'_2 \ldots \sigma'_n$ and $w'' = \sigma''_1
 	\sigma''_2 \ldots \sigma''_m$ are words over $\Sigma$.
@@ -93,9 +94,9 @@ causing ambiguity.
 	v^{-1}u^{-1}w = \epsilon^{-1}u^{-1}w = u^{-1}w = (u\epsilon)^{-1}w =
 	(uv)^{-1}w.
 	\end{equation*}
-	Otherwise, if $|v| > 0$, then $v = v'\sigma$ where $v' \in \Sigma^*$ and $v
-	\in \Sigma$. Let us assume that the statement holds for words of size less
-	than $|v|$. Then
+	Otherwise, if $|v| > 0$, then $v = v'\sigma$ where $v' \in \Sigma^*$ and
+	$\sigma \in \Sigma$. Let us assume that the statement holds for words of
+	size less than $|v|$. Then
 	\begin{align*}
 	v^{-1}u^{-1}w
 	&= (v'\sigma)^{-1}u^{-1}w\\
@@ -110,7 +111,7 @@ causing ambiguity.
 	The \emph{longest common prefix} of the words $w_1, w_2, \ldots, w_n$ over
 	an alphabet $\Sigma$ for $n > 0$ is the word
 	\begin{equation*}
-	\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap\limits_{i=1}^n pref(w_i)} |u|.
+	\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n pref(w_i)} |u|.
 	\end{equation*}
 \end{definition}
 
@@ -148,6 +149,6 @@ the longest common prefix of the words $w_1, w_2, \ldots, w_n$.
 	\item $\mathcal{L}^0 = \{ \epsilon \}$,
 	\item $\mathcal{L}^n = \mathcal{L}^{n-1} \hat{\cdot} \mathcal{L}$ for $n >
 		0$,
-	\item $\mathcal{L}^* = \bigcup\limits_{n = 0}^{\infty} \mathcal{L}^n$.
+	\item $\mathcal{L}^* = \bigcup_{n = 0}^{\infty} \mathcal{L}^n$.
 	\end{itemize}
 \end{definition}
