@@ -41,7 +41,7 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The \emph{separator state transition function}
+	finite-state transducer. The \emph{separator transition function}
 	$\delta_x : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow X$ is defined as
 	\begin{equation*}
 	\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
@@ -177,17 +177,17 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 	A similar argument follows in the other direction. Otherwise, if $|u|
 	> 0$, then $u = u'\sigma$ for $u' \in \Sigma^*$ and $\sigma \in \Sigma$.
 	Let there be a path with start state $q' \in
-	\prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label
+	\prod_{i=1}^k{Q_i}$, end state $q''' \in \prod_{i=1}^k{Q_i}$ and label
 	$\langle u, v \rangle$.
-	There exist a state $q''' \in \prod_{i=1}^k{Q_i}$ and a path with start
-	state $q'$, end state $q'''$ and label $\langle u', v' \rangle$ where $v'
-	\in Pref(v)$. By definition $\delta(q''', \sigma) = q''$ and $\lambda(q''',
-	\sigma) = v'^{-1}v$. By the inductive hypothesis $\delta^*(q', u') = q'''$
+	There exist a state $q'' \in \prod_{i=1}^k{Q_i}$ and a path with start
+	state $q'$, end state $q''$ and label $\langle u', v' \rangle$ where $v'
+	\in pref(v)$. By definition $\delta(q'', \sigma) = q'''$ and $\lambda(q'',
+	\sigma) = v'^{-1}v$. By the inductive hypothesis $\delta^*(q', u') = q''$
 	and $\lambda^*(q', u') = v'$. Therefore, by definition $\delta^*(q', u) =
-	\delta^*(q', u'\sigma) = \delta(\delta^*(q', u'), \sigma) = \delta(q''',
-	\sigma) = q''$ and $\lambda^*(q', u) = \lambda^*(q', u'\sigma) =
-	\lambda^*(q', u') \cdot \lambda(\delta^*(q', u'), \sigma) = v' \cdot
-	\lambda(q''', \sigma) = v' \cdot v'^{-1}v = v$. Again, a similar argument
+	\delta^*(q', u'\sigma) = \delta(\delta^*(q', u'), \sigma) = \delta(q'',
+	\sigma) = q'''$ and $\lambda^*(q', u) = \lambda^*(q', u'\sigma) =
+	\lambda^*(q', u')\lambda(\delta^*(q', u'), \sigma) = v' \cdot
+	\lambda(q'', \sigma) = v' \cdot v'^{-1}v = v$. Again, a similar argument
 	can be followed in the other direction.
 \end{proof}
 
@@ -202,6 +202,43 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 		k \}(\delta^*(s, w)^i \in F_i) \}.
 	\end{align*}
 \end{definition}
+
+\Cref{alg:qsfst_translation} shows how to deterministically translate an input word
+to an output word using a quasi-subsequential finite-state transducer.
+
+\begin{algorithm}[h]
+\DontPrintSemicolon
+\KwIn{$\langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi
+	\rangle, \sigma_1 \sigma_2 \ldots \sigma_n$}
+\KwOut{$\Omega^*$}
+
+$q \gets s$\;
+$o \gets \epsilon$\;
+\For {$j \in \{ 1, 2, \ldots, n \}$} {
+  \For {$i \in \{ 1, 2, \ldots, k \}$} {
+    $t_i \gets \tau_i(q_i, \sigma_j)$\;
+    $r_i \gets \rho_i(t_i)$\;
+  }
+  $x \gets r_1$\;
+  \For {$i \in \{ 2, 3, \ldots, k \}$} {
+    $x \gets \eta_x(x, r_i)$\;
+  }
+  \For {$i \in \{ 1, 2, \ldots, k \}$} {
+    $q_i \gets \eta_i(t_i, x)$\;
+  }
+}
+\For {$i \in \{ 1, 2, \ldots, k \}$} {
+  \lIf {$q_i \in F_i$} {
+	  \Return $True$
+  }
+}
+\Return $\textbf{undefined}$
+
+\caption{Traversal of a quasi-deterministic $k$-separated finite-state automaton.}
+\label{alg:qsfst_translation}
+\end{algorithm}
+
+
 
 We now describe a construction that produces a quasi-subsequential $k$-separated
 finite-state transducer $\mathcal{T'}$ from a trimmed functional $k$-separated

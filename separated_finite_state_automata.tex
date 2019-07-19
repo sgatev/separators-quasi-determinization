@@ -5,13 +5,19 @@
 	\langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there exists a
 	partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $\Delta \cap
 	(Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j
-	\in \{ 1, 2, \ldots, k \}$. In that case the finite-state automaton
-	$\mathcal{A}$ is said to be \emph{$k$-separated}.
+	\in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
-We shall write $\mathcal{A} = \langle \Sigma, Q', X, S, F, \Delta \rangle$ where $Q'
-= \langle Q_1, Q_2, \ldots, Q_k \rangle$ in case the finite-state automaton
-$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
+\begin{definition}
+	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
+	\rangle$ is \emph{$k$-separa\-ted} if and only if there exists a separator $X$
+	in $\mathcal{A}$ inducing a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k >
+	1$.
+\end{definition}
+
+We shall write $\mathcal{A} = \langle \Sigma, Q', X, S, F, \Delta \rangle$
+where $Q' = \langle Q_1, Q_2, \ldots, Q_k \rangle$ in case the finite-state automaton
+$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is \emph{$k$-separated}.
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a

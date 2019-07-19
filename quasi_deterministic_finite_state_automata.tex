@@ -38,7 +38,7 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	\emph{separator state transition function} $\delta_x : \prod_{i=1}^k{Q_i}
+	\emph{separator transition function} $\delta_x : \prod_{i=1}^k{Q_i}
 	\times \Sigma \rightarrow X$ is defined as
 	\begin{equation*}
 	\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
@@ -147,7 +147,6 @@ recognized by a quasi-deterministic $k$-separated finite-state automaton.
 \DontPrintSemicolon
 \KwIn{$\langle \Sigma, Q, s, F, \tau, \rho, \eta, \eta_x \rangle, \sigma_1 \sigma_2
 	\ldots \sigma_n$}
-\KwOut{$\mathbb{B}$}
 
 $q \gets s$\;
 \For {$j \in \{ 1, 2, \ldots, n \}$} {

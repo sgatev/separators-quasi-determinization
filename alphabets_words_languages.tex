@@ -11,8 +11,8 @@
 \end{definition}
 
 We shall prefer the notation $\sigma_1 \sigma_2 \ldots \sigma_n$ over $\langle
-\sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ for words. The unique word of length
-$0$ over any alphabet is denoted by $\epsilon$.
+\sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ for words and shall write $\epsilon$
+for the unique word of length $0$ over any alphabet.
 
 \begin{definition}
 	Let $\Sigma$ be an alphabet. Then
@@ -25,23 +25,25 @@ $0$ over any alphabet is denoted by $\epsilon$.
 \end{definition}
 
 \begin{definition}
-	\emph{Concatenation} of words over an alphabet $\Sigma$ is the function
+	\emph{Concatenation of words} over an alphabet $\Sigma$ is the function
 	$\cdot : \Sigma^* \times \Sigma^* \rightarrow \Sigma^*$ defined as
 	\begin{equation*}
 	w' \cdot w'' = \sigma_1' \sigma_2' \ldots \sigma_n' \sigma_1'' \sigma_2''
 	\ldots \sigma_m''
 	\end{equation*}
 	where $w' = \sigma'_1 \sigma'_2 \ldots \sigma'_n$ and $w'' = \sigma''_1
-	\sigma''_2 \ldots \sigma''_m$ are words over $\Sigma$ for $n, m \in
-	\mathbb{N}$.
+	\sigma''_2 \ldots \sigma''_m$ are respectively words of length $n \in
+	\mathbb{N}$ and $m \in \mathbb{N}$ over $\Sigma$.
 \end{definition}
 
+\iffalse
 \begin{corollary}
 	Let $w$ be a word over an alphabet $\Sigma$. Then
 	\begin{equation*}
 	w \cdot \epsilon = \epsilon \cdot w = w.
 	\end{equation*}
 \end{corollary}
+\fi
 
 Concatenation of words is associative. That is, $u \cdot (v \cdot w) = (u \cdot v)
 \cdot w$ for all words $u$, $v$ and $w$ over an alphabet $\Sigma$. Thus, we shall
@@ -57,12 +59,14 @@ causing ambiguity.
 	\end{equation*}
 \end{definition}
 
+\iffalse
 \begin{corollary}
 	Let $w$ be a word over an alphabet $\Sigma$. Then
 	\begin{equation*}
 	\epsilon \in pref(w).
 	\end{equation*}
 \end{corollary}
+\fi
 
 \begin{definition}
 	Let $w = uv$ be a word over an alphabet $\Sigma$. Then
@@ -71,12 +75,14 @@ causing ambiguity.
 	\end{equation*}
 \end{definition}
 
+\iffalse
 \begin{corollary}
 	Let $w$ be a word over an alphabet $\Sigma$. Then
 	\begin{equation*}
 	\epsilon^{-1}w = w.
 	\end{equation*}
 \end{corollary}
+\fi
 
 \begin{proposition}
 	Let $u$, $v$ and $w$ be words over an alphabet $\Sigma$. Then
@@ -117,7 +123,7 @@ We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to deno
 the longest common prefix of the words $w_1, w_2, \ldots, w_n$.
 
 \begin{definition}
-	\emph{Sequential distance} of words over an alphabet $\Sigma$ is the
+	\emph{Sequential distance of words} over an alphabet $\Sigma$ is the
 	function $d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$
 	defined as
 	\begin{equation*}

@@ -100,12 +100,14 @@
 \begin{proposition}[see \cite{MS19}]
 	Let $\mathcal{T}$ be a finite-state transducer. There exists a trimmed
 	finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}_\mathcal{T'}
-	= \mathcal{R}_\mathcal{T}$.
+	= \mathcal{R}_\mathcal{T}$. Furthermore, there exists an algorithm that
+	constructs $\mathcal{T'}$ from $\mathcal{T}$.
 \end{proposition}
 
 \begin{definition}
 	A finite-state transducer $\mathcal{T}$ is \emph{functional} if and only if
-	$\mathcal{R}_\mathcal{T}$ is the graph of a function.
+	$\mathcal{R}_\mathcal{T}$ is the graph of a function $\mathcal{F}_\mathcal{T}
+	: \Sigma^* \rightarrow \Omega^*$.
 \end{definition}
 
 We shall write $\mathcal{F}_\mathcal{T}$ instead of $\mathcal{R}_\mathcal{T}$ in
