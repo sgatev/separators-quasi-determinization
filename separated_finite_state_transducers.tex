@@ -1,47 +1,39 @@
 \subsection{Separated finite-state transducers}
 
 \begin{definition}
-	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer. The set $X \subseteq Q$ is a separator in
-	$\mathcal{T}$ if and only if there exists a partition $P_Q = \{ X, Q_1,
-	\ldots, Q_k \}$ for $k > 1$ such that $\Delta \cap (Q_i \times
-	\Sigma_\epsilon \times \Omega^* \times Q_j) = \emptyset$ if $i \neq j$ for
-	$i, j \in \{ 1, 2, \ldots, k \}$.
+	The set $X$ is a \emph{separator in a finite-state transducer} $\mathcal{T} =
+	\langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ if and only if there exists
+	a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $\Delta \cap
+	(Q_i \times \Sigma_\epsilon \times \Omega^* \times Q_j) = \emptyset$ if $i
+	\neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. In that case the finite-state
+	transducer $\mathcal{T}$ is said to be \emph{$k$-separated}.
 \end{definition}
 
-\begin{definition}
-	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
-	\Delta \rangle$ is $k$-separated for $k > 1$ if and only if there exists a
-	separator $X$ in $\mathcal{T}$ inducing a partition $P_Q = \{ X, Q_1,
-	\ldots, Q_k \}$. The $k$-separated finite-state transducer $\mathcal{T}$ is
-	denoted by
-	\begin{align*}
-		\langle \Sigma, \Omega, Q', X, S, F, \Delta \rangle
-	\end{align*}
-	where $Q' = \langle Q_1, Q_2, \ldots, Q_k \rangle$.
-\end{definition}
+We shall write $\mathcal{T} = \langle \Sigma, \Omega, Q', X, S, F, \Delta \rangle$
+where $Q' = \langle Q_1, Q_2, \ldots, Q_k \rangle$ in case the finite-state
+transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ is
+$k$-separated.
 
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-	finite-state transducer and let $X$ be a separator in
-	$\mathcal{G}_\mathcal{T}$. Then $X$ is a separator in $\mathcal{T}$.
+	finite-state transducer. If $X$ is a separator in $\mathcal{G}_\mathcal{T}$,
+	then $X$ is a separator in $\mathcal{T}$.
 \end{proposition}
 
 \begin{proof}
-	Since $X$ is a separator in $\mathcal{G}_\mathcal{T} = \langle Q, E \rangle$
-	there exists a partition $P_Q = \{ X, Q_1, \ldots, Q_k \}$ for $k > 1$ such
-	that $E \cap \{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j
-	\} = \emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus,
-	$\Delta \cap (Q_i \times \Sigma_\epsilon \times \Omega^* \times Q_j) =
-	\emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Therefore,
-	$X$ is a separator in $\mathcal{T}$.
+	Since $X$ is a separator in $\mathcal{G}_\mathcal{T} = \langle Q, E \rangle$,
+	there exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that
+	$E \cap \{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} =
+	\emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta
+	\cap (Q_i \times \Sigma_\epsilon \times \Omega^* \times Q_j) = \emptyset$ if
+	$i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a
+	separator in $\mathcal{T}$.
 \end{proof}
 
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state transducer. Then $\Delta \subseteq
-	\bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times \Omega^* \times
-	(Q_i \cup X)$.
+	$k$-separated finite-state transducer. Then $\Delta \subseteq \bigcup_{i=1}^k
+	(Q_i \cup X) \times \Sigma_\epsilon \times \Omega^* \times (Q_i \cup X)$.
 \end{proposition}
 
 \begin{proof}
@@ -52,24 +44,26 @@
 		\Omega^* \times (\bigcup_{i=1}^k{Q_i} \cup X) &\\
 		&= \begin{aligned}[t]
 			&\bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times
-			\Sigma_\epsilon \times \Omega^* \times Q_j) \cup\\
-			&\bigcup_{i=1}^k (X \times \Sigma_\epsilon \times \Omega^*
-			\times Q_i) \cup \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon
-			\times \Omega^* \times X) \cup\\
-			&(X \times \Sigma_\epsilon \times \Omega^* \times X).
+			\Sigma_\epsilon \times \Omega^* \times Q_j) \cup
+			\bigcup_{i=1}^k (X \times \Sigma_\epsilon \times \Omega^*
+			\times Q_i) \cup\\
+			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon
+			\times \Omega^* \times X) \cup
+			(X \times \Sigma_\epsilon \times \Omega^* \times X).
 		\end{aligned}
 	\end{align*}
-	Since $\mathcal{T}$ is $k$-separated then $\Delta \cap (Q_i \times
+	Since $\mathcal{T}$ is $k$-separated, then $\Delta \cap (Q_i \times
 	\Sigma_\epsilon \times \Omega^* \times Q_j) = \emptyset$ if $i \neq j$ for
 	$i, j \in \{ 1, 2, \ldots, k \}$. Therefore,
 	\begin{align*}
 		\Delta &\subseteq \begin{aligned}[t]
 			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times \Omega^*
+			\times Q_i) \cup
+			\bigcup_{i=1}^k (X \times \Sigma_\epsilon \times \Omega^*
 			\times Q_i) \cup\\
-			&\bigcup_{i=1}^k (X \times \Sigma_\epsilon \times \Omega^*
-			\times Q_i) \cup \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon
-			\times \Omega^* \times X) \cup\\
-			&(X \times \Sigma_\epsilon \times \Omega^* \times X)
+			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon
+			\times \Omega^* \times X) \cup
+			(X \times \Sigma_\epsilon \times \Omega^* \times X)
 		\end{aligned} &\\
 		&= \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times
 		\Omega^* \times Q_i) \cup \bigcup_{i=1}^k ((Q_i \cup X) \times
@@ -82,7 +76,7 @@
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
 	$k$-separated finite-state transducer. Let $\langle q', u, v, q'' \rangle
-	\in \Delta^*$ for $u \in \Sigma^*$, $v \in \Omega^*$, $q' \in Q_i \cup X$
+	\in \Delta^*$ for $q' \in Q_i \cup X$
 	and $q'' \in Q_j \cup X$ where $i, j \in \{ 1, 2, \ldots, k \}$ and $i \neq
 	j$. There exist $u', u'' \in \Sigma^*$, $v', v'' \in \Omega^*$ and $x \in X$
 	such that $u = u'u''$, $v = v'v''$ and $\langle q', u', v', x \rangle,
@@ -90,10 +84,10 @@
 \end{proposition}
 
 \begin{proof}
-	Since $\langle q', u, v, q'' \rangle \in \Delta^*$ there exists a path $\pi$
+	Since $\langle q', u, v, q'' \rangle \in \Delta^*$, there exists a path $\pi$
 	in $\mathcal{T}$ with start state $q'$, end state $q''$ and label $\langle
-	u, v \rangle$. If the path $\pi$ is trivial then $u = v = \epsilon$ and $q'
-	= q''$. Since $Q_i \cap Q_j = \emptyset$ then $q' \in X$. Therefore, the
+	u, v \rangle$. If the path $\pi$ is trivial then $u = v = \epsilon$ and $q' =
+	q''$. Since $Q_i \cap Q_j = \emptyset$, then $q' = q'' \in X$. Therefore, the
 	statement holds for $u' = u'' = v' = v'' = \epsilon$ and $x = q' = q''$.
 	Otherwise, if the path $\pi$ is non-trivial, there exists a finite sequence
 	of state transitions
@@ -106,7 +100,7 @@
 	\Delta$ for $r \in \{ 1, 2, \ldots, n-1 \}$, $q_1 = q'$, $q_n = q''$, $u =
 	\sigma_1\sigma_2\ldots\sigma_{n-1}$ and $v = w_1 w_2 \ldots w_{n-1}$. Let us
 	assume that $q_r \not\in X$ for $r \in \{ 1, 2, \ldots, n \}$. It follows
-	that $q_1 = q' \in Q_i$ and $q_n = q'' \in Q_j$. Since $i \neq j$ there
+	that $q_1 = q' \in Q_i$ and $q_n = q'' \in Q_j$. Since $i \neq j$, there
 	exists $r \in \{ 1, 2, \ldots, n-1 \}$ such that $\langle q_r, \sigma_r,
 	w_r, q_{r+1} \rangle \in \Delta$, $q_r \in Q_{r'}$ and $q_{r+1} \in Q_{r''}$
 	where $r', r'' \in \{ 1, 2, \ldots, k \}$ and $r' \neq r''$. However, this
@@ -121,8 +115,8 @@
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state transducer. The component state
-	$\epsilon$-closure function $\Delta_\epsilon^i : \bigcup_{j=1}^k Q_j \cup X
+	$k$-separated finite-state transducer. The \emph{quasi-state
+	$\epsilon$-closure function} $\Delta_\epsilon^i : \bigcup_{j=1}^k Q_j \cup X
 	\rightarrow 2^{Q_i \cup X}$ is defined as
 	\begin{align*}
 		\Delta_\epsilon^i(q') = \{ q'' \in Q_i \cup X \mid \exists w \in
@@ -130,6 +124,23 @@
 	\end{align*}
 	for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
+
+\begin{proposition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
+	$k$-separated finite-state transducer. Let $Q' \subseteq \bigcup_{i=1}^k Q_i
+	\cup X$. Let $\langle q'', \epsilon, w'', q''' \rangle \in \Delta^*$ where
+	$q'' \in \hat{\Delta}_\epsilon^i(Q')$ for $i \in \{ 1, 2, \ldots, k \}$ and
+	$q''' \in Q$. There exist $q' \in Q'$ and $w' \in \Omega^*$ such that
+	$\langle q', \epsilon, w'w'', q''' \rangle \in \Delta^*$.
+\end{proposition}
+
+\begin{proof}
+	Since $\hat{\Delta}_\epsilon^i(Q') = \{ q'' \in Q_i \cup X \mid \exists q'
+	\in Q' \; \exists w' \in \Omega^* (\langle q', \epsilon, w', q'' \rangle \in
+	\Delta^*) \}$, there exist $q' \in Q'$ and $w' \in \Omega^*$ such that
+	$\langle q', \epsilon, w', q'' \rangle \in \Delta^*$. Therefore, $\langle q',
+	\epsilon, w'w'', q''' \rangle \in \Delta^*$ by definition.
+\end{proof}
 
 \begin{proposition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
@@ -152,12 +163,6 @@
 			\hat{\Delta}_\epsilon^i(Q') \; \exists w \in \Omega^* (\\
 			&\langle q', \epsilon, w, q'' \rangle \in \Delta^*) \}
 		\end{aligned}\\
-		&= \begin{aligned}[t]
-			\{ q''' \in Q_i \cup X \mid &\exists q' \in Q' \; \exists q''
-			\in (Q_i \cup X) \; \exists w', w'' \in \Omega^* (\\
-			&\langle q', \epsilon, w', q'' \rangle, \langle q'', w'',
-			\epsilon, q''' \rangle \in \Delta^*) \}
-		\end{aligned}\\
 		&= \{ q'' \in Q_i \cup X \mid \exists q' \in Q' \; \exists w \in
 		\Omega^* (\langle q', \epsilon, w, q'' \rangle \in \Delta^*) \}\\
 		&= \hat{\Delta}_\epsilon^i(Q').
@@ -170,3 +175,25 @@
 	\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X)$ if $i \neq j$
 	for $i, j \in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq Q_j \cup X$.
 \end{proposition}
+
+\begin{proof}
+	\begin{align*}
+	\hat{\Delta}_\epsilon^i(Q')
+	&= \{ q'' \in Q_i \cup X \mid \exists q' \in Q' \; \exists w \in \Omega^*
+	(\langle q', \epsilon, w, q'' \rangle \in \Delta^*) \}\\
+	&= \begin{aligned}[t]
+		\{ q''' \in Q_i \cup X \mid &\exists q' \in Q' \; \exists q'' \in X
+		\; \exists w', w'' \in \Omega^* (\\
+		&\langle q', \epsilon, w', q'' \rangle, \langle q'', \epsilon, w'',
+		q''' \rangle \in \Delta^*) \}
+	\end{aligned}\\
+	&= \{ q'' \in Q_i \cup X \mid \exists q' \in \hat{\Delta}_\epsilon(Q') \cap
+	X \; \exists w \in \Omega^* (\langle q', \epsilon, w, q'' \rangle \in
+	\Delta^*) \}\\
+	&= \hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(Q') \cap X) \cap (Q_i \cup
+	X)\\
+	&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon(Q') \cap (Q_j \cup X) \cap
+	X)\\
+	&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X).
+	\end{align*}
+\end{proof}

@@ -1,0 +1,19 @@
+\subsection{Weighted finite-state automata}
+
+\begin{definition}
+	A \emph{weighted finite-state automaton} $\mathcal{A}$ is a tuple
+	\begin{equation*}
+	\langle \Sigma, Q, S, F, \Delta, \iota, \phi \rangle
+	\end{equation*}
+	where
+	\begin{itemize}
+	\item $\Sigma$ is an alphabet,
+	\item $Q$ is a finite set of states,
+	\item $S \subseteq Q$ is a set of start states,
+	\item $F \subseteq Q$ is a set of final states,
+	\item $\Delta \subseteq Q \times \Sigma_\epsilon \times \mathbb{R} \times Q$
+		is a relation of state transitions,
+	\item $\iota : S \rightarrow \mathbb{R}$ is a start state weight function,
+	\item $\phi : F \rightarrow \mathbb{R}$ is a final state weight function.
+	\end{itemize}
+\end{definition}

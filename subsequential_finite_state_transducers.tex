@@ -1,0 +1,92 @@
+\subsection{Subsequential finite-state transducers}
+
+\begin{definition}
+	A \emph{subsequential finite-state transducer} $\mathcal{T}$ is a tuple
+	\begin{equation*}
+	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle
+	\end{equation*}
+	where
+	\begin{itemize}
+	\item $\Sigma$ and $\Omega$ are respectively input and output alphabets,
+	\item $Q$ is a finite set of states,
+	\item $s \in Q$ is a start state,
+	\item $F \subseteq Q$ is a set of final states,
+	\item $\delta : Q \times \Sigma \rightarrow Q$ is a state transition
+		function,
+	\item $\lambda : Q \times \Sigma \rightarrow \Omega^*$ is a state transition
+		output function such that $dom(\lambda) = dom(\delta)$,
+	\item $\psi : F \rightarrow \Omega^*$ is a final state output function.
+	\end{itemize}
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
+	\rangle$ be a subsequential finite-state transducer. The \emph{generalized
+	state transition function} $\delta^* : Q \times \Sigma^* \rightarrow Q$ is
+	defined as the inclusion-wise least function such that
+	\begin{itemize}
+	\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
+	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ if
+		$\delta^*(q, w)$ and $\delta(\delta^*(q, w), \sigma)$ are defined for
+		$q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	\end{itemize}
+\end{definition}
+
+\begin{definition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
+	\rangle$ be a subsequential finite-state transducer. The \emph{generalized
+	state transition output function} $\lambda^* : Q \times \Sigma^* \rightarrow
+	\Omega^*$ is defined as the inclusion-wise least function such that
+	\begin{itemize}
+	\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
+	\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \lambda(\delta^*(q, w),
+		\sigma)$ if $\delta^*(q, w)$ and $\lambda(\delta^*(q, w), \sigma)$
+		are defined for $q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	\end{itemize}
+\end{definition}
+
+\begin{definition}
+	A \emph{path in a subsequential finite-state transducer} $\mathcal{T} =
+	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is either
+	trivial or non-trivial. A \emph{trivial path} $\pi_q$ in $\mathcal{T}$ is
+	associated with every state $q \in Q$. The length of $\pi_q$ is $0$. The
+	start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of
+	$\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is
+	succsessful if and only if $q = s \in F$. A \emph{non-trivial path} $\pi$ in
+	$\mathcal{T}$ is a finite sequence of state transitions
+	\begin{equation*}
+	\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3
+	\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n \rangle
+	\end{equation*}
+	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ and $w_i = \lambda(q_i,
+	\sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
+	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
+	state of $\pi$ is $q_n$. The label of $\pi$ is $\langle \sigma_1 \sigma_2
+	\ldots \sigma_{n-1}, w_1 w_2 \ldots w_{n-1} \rangle$. The path
+	$\pi$ is successful if and only if $q_1 = s$ and $q_n \in F$.
+\end{definition}
+
+\begin{proposition}
+	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
+	\rangle$ be a subsequential finite-state transducer. There exists a path in
+	$\mathcal{T}$ with start state $q' \in Q$, end state $q'' \in Q$ and label
+	$\langle u, v \rangle \in \Sigma^* \times \Omega^*$ if and only if
+	$q'' = \delta^*(q', u)$ and $v = \lambda^*(q', u)$.
+\end{proposition}
+
+\begin{definition}
+	The \emph{function recognized by a subsequential finite-state transducer}
+	$\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
+	\rangle$ is the set of all labels of successful paths
+	\begin{equation*}
+	\mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(w) \psi(f) \rangle \in
+	\Sigma^* \times \Omega^* \mid \exists f \in F (\delta^*(s, w) = f) \}.
+	\end{equation*}
+\end{definition}
+
+\begin{theorem}[Mohri, see \cite{M96}]\label{t_choffrut_mohri}
+	Let $\mathcal{T}$ be a functional finite-state transducer. If
+	$\mathcal{F}_\mathcal{T}$ has bounded variation, then there exists a
+	subsequential finite-state transducer $\mathcal{T'}$ such that
+	$\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$.
+\end{theorem}

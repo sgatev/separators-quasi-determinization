@@ -1,108 +1,101 @@
 \subsection{Quasi-deterministic finite-state automata}
 
 \begin{definition}
-	A quasi-deterministic $k$-separated finite-state automaton $\mathcal{A}$
-	is a tuple
-	\begin{align*}
-		\langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
-	\end{align*}
+	A \emph{quasi-deterministic $k$-separated finite-state automaton}
+	$\mathcal{A}$ is a tuple
+	\begin{equation*}
+	\langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
+	\end{equation*}
 	where
 	\begin{itemize}
-		\item $Q, s, F, \tau, \rho$ and $\eta$ are tuples of $k$ elements,
-		\item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i
-			\rangle$ is a deterministic finite-state automaton for $i
-			\in \{ 1, 2, \ldots, k \}$,
-		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ and
-			$\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
-			function such that $dom(\rho_i) = rng(\tau_i)$ for $i \in
-			\{ 1, 2, \ldots, k \}$,
-		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ and
-			$\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
-			extension function for $i \in \{ 1, 2, \ldots, k \}$,
-		\item $\eta_x : X \times X \rightarrow X$ is a separator extension
-			function.
+	\item $Q, s, F, \tau, \rho$ and $\eta$ are tuples of $k$ elements,
+	\item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
+		deterministic finite-state automaton for $i \in \{ 1, 2, \ldots, k
+		\}$,
+	\item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function such
+		that $dom(\rho_i) = rng(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$,
+	\item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state extension
+		function for $i \in \{ 1, 2, \ldots, k \}$,
+	\item $\eta_x : X \times X \rightarrow X$ is a separator extension function.
 	\end{itemize}
 \end{definition}
 
-\noindent
 We shall write $q^i$ to denote the $i$-th element of a state $q \in
 \prod_{i=1}^k{Q_i}$ of a quasi-deterministic $k$-separated finite-state automaton.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	iterated separator extension functions $\eta_x^i : X^i \rightarrow X$ are
-	defined as the inclusion-wise least functions such that
+	\emph{iterated separator extension functions} $\eta_x^i : X^i \rightarrow X$
+	are defined as the inclusion-wise least functions such that
 	\begin{itemize}
-		\item $\eta_x^1(x) = x$,
-		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
-			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k
-			\}$.
+	\item $\eta_x^1(x) = x$,
+	\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1, x_2,
+		\ldots, x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k \}$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	separator state transition function $\delta_x : \prod_{i=1}^k{Q_i} \times
-	\Sigma \rightarrow X$ is defined as
-	\begin{align*}
-		\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
-		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
-	\end{align*}
+	\emph{separator state transition function} $\delta_x : \prod_{i=1}^k{Q_i}
+	\times \Sigma \rightarrow X$ is defined as
+	\begin{equation*}
+	\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
+	\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	quasi-state transition function $\delta_i : \prod_{j=1}^k{Q_j} \times \Sigma
-	\rightarrow Q_i$ is defined as
-	\begin{align*}
-		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
-		\sigma))
-	\end{align*}
+	\emph{quasi-state transition function} $\delta_i : \prod_{j=1}^k{Q_j} \times
+	\Sigma \rightarrow Q_i$ is defined as
+	\begin{equation*}
+	\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))
+	\end{equation*}
 	for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	state transition function $\delta : \prod_{i=1}^k{Q_i} \times \Sigma
+	\emph{state transition function} $\delta : \prod_{i=1}^k{Q_i} \times \Sigma
 	\rightarrow \prod_{i=1}^k{Q_i}$ is defined as
-	\begin{align*}
-		\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q,
-		\sigma), \ldots, \delta_k(q, \sigma) \rangle.
-	\end{align*}
+	\begin{equation*}
+	\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
+	\delta_k(q, \sigma) \rangle.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
 	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
-	generalized function of state transitions $\delta^* : \prod_{i=1}^k{Q_i}
-	\times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is defined as the
-	inclusion-wise least function such that
+	\emph{generalized function of state transitions} $\delta^* :
+	\prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow \prod_{i=1}^k{Q_i}$ is
+	defined as the least function such that
 	\begin{itemize}
-		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
-		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
-			$q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma
-			\in \Sigma$.
+	\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
+	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ if
+		$\delta^*(q, w)$ and $\delta(\delta^*(q, w), \sigma)$ are defined for
+		$q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
-	A path in a quasi-deterministic $k$-separated finite-state automaton
+	A \emph{path in a quasi-deterministic $k$-separated finite-state automaton}
 	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
-	is either trivial or non-trivial. A trivial path $\pi_q$ in $\mathcal{A}$ is
-	associated with every state $q \in \prod_{i=1}^k{Q_i}$. The length of
-	$\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of $\pi_q$
-	is $q$. The label of $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful
-	if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k
-	\}$. A non-trivial path $\pi$ in $\mathcal{A}$ is a finite sequence of state
-	transitions
-	\begin{align*}
-		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
-		\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-	\end{align*}
+	is either trivial or non-trivial. A \emph{trivial path} $\pi_q$ in
+	$\mathcal{A}$ is associated with every state $q \in \prod_{i=1}^k{Q_i}$. The
+	length of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of
+	$\pi_q$ is $q$. The label of $\pi_q$ is $\epsilon$. The path $\pi_q$ is
+	succsessful if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2,
+	\ldots, k \}$. A \emph{non-trivial path} $\pi$ in $\mathcal{A}$ is a finite
+	sequence of state transitions
+	\begin{equation*}
+	\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
+	\dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+	\end{equation*}
 	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in \{ 1, 2,
 	\ldots, n-1 \}$.
 	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
@@ -127,42 +120,36 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 	= q''$ and by definition $\delta^*(q', w) = \delta^*(q', \epsilon) = q' =
 	q''$. A similar argument follows in the other direction. Otherwise, if $|w|
 	> 0$, then $w = w'\sigma$ for $w' \in \Sigma^*$ and $\sigma \in \Sigma$. Let
-	there be a path with start state $q' \in
-	\prod_{i=1}^k{Q_i}$, end state $q'' \in \prod_{i=1}^k{Q_i}$ and label $w$.
-	There exist a state $q''' \in \prod_{i=1}^k{Q_i}$ and a path with start
-	state $q'$, end state $q'''$ and label $w'$. Furthermore, $\delta(q''',
-	\sigma) = q''$ by definition. By the inductive hypothesis $\delta^*(q', w')
-	= q'''$. Therefore, by definition $\delta^*(q', w) = \delta^*(q', w'\sigma)
-	= \delta(\delta^*(q', w'), \sigma) = \delta(q''', \sigma) = q''$. Again, a
-	similar argument can be followed in the other direction.
+	there be a path with start state $q' \in \prod_{i=1}^k{Q_i}$, end state $q'''
+	\in \prod_{i=1}^k{Q_i}$ and label $w$. There exist a state $q'' \in
+	\prod_{i=1}^k{Q_i}$ and a path with start state $q'$, end state $q''$ and
+	label $w'$. Furthermore, $\delta(q'', \sigma) = q'''$ by definition. By the
+	inductive hypothesis $\delta^*(q', w') = q''$. Therefore, by definition
+	$\delta^*(q', w) = \delta^*(q', w'\sigma) = \delta(\delta^*(q', w'), \sigma)
+	= \delta(q'', \sigma) = q'''$. Again, a similar argument can be followed in
+	the other direction.
 \end{proof}
 
 \begin{definition}
-	The language recognized by a quasi-deterministic $k$-separa\-ted finite-state
-	automaton $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ is the set of all labels of successful paths
-	\begin{align*}
-		\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists i \in
-		\{ 1, 2, \ldots, k \}(\delta^*(s, w)^i \in F_i) \}.
-	\end{align*}
+	The \emph{language recognized by a quasi-deterministic $k$-separa\-ted
+	finite-state automaton} $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau,
+	\rho, \eta, \eta_x \rangle$ is the set of all labels of successful paths
+	\begin{equation*}
+	\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists i \in \{ 1, 2,
+	\ldots, k \}(\delta^*(s, w)^i \in F_i) \}.
+	\end{equation*}
 \end{definition}
 
-\noindent
-\Cref{alg:qdfsa_traversal} shows how to deterministically check whether a
-word is recognized by a quasi-deterministic $k$-separated finite-state automaton.
+\Cref{alg:qdfsa_traversal} shows how to deterministically check whether a word is
+recognized by a quasi-deterministic $k$-separated finite-state automaton.
 
-\SetAlgoNoLine
-\begin{algorithm}[H]
-\caption{Traversal of a quasi-deterministic $k$-separated finite-state automaton.}
-\label{alg:qdfsa_traversal}
-
+\begin{algorithm}[h]
 \DontPrintSemicolon
-\KwIn{$\langle \Sigma, Q, s, F, \tau, \rho, \eta, \eta_x \rangle,
-	\sigma_1\sigma_2\ldots\sigma_n$}
+\KwIn{$\langle \Sigma, Q, s, F, \tau, \rho, \eta, \eta_x \rangle, \sigma_1 \sigma_2
+	\ldots \sigma_n$}
 \KwOut{$\mathbb{B}$}
 
 $q \gets s$\;
-
 \For {$j \in \{ 1, 2, \ldots, n \}$} {
   \For {$i \in \{ 1, 2, \ldots, k \}$} {
     $t_i \gets \tau_i(q_i, \sigma_j)$\;
@@ -176,15 +163,41 @@ $q \gets s$\;
     $q_i \gets \eta_i(t_i, x)$\;
   }
 }
-
 \For {$i \in \{ 1, 2, \ldots, k \}$} {
-  \If {$q_i \in F_i$} {
-	  \Return $True$\;
+  \lIf {$q_i \in F_i$} {
+	  \Return $True$
   }
 }
-
 \Return $False$
+
+\caption{Traversal of a quasi-deterministic $k$-separated finite-state automaton.}
+\label{alg:qdfsa_traversal}
 \end{algorithm}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a quasi-determi\-nistic $k$-separated finite-state automaton Let
+	$w = \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in
+	\mathbb{N}$ over $\Sigma$. Then \Cref{alg:qdfsa_traversal} completes on input
+	$\mathcal{A}$ and $w$ in $\mathcal{O}(kn)$ time.
+\end{proposition}
+
+\begin{proof}
+	Line $1$ of \Cref{alg:qdfsa_traversal} is executed once and requires
+	$\mathcal{O}(1)$ time.
+	Lines $4-5$ of \Cref{alg:qdfsa_traversal} are executed $kn$ times and require
+	$\mathcal{O}(1)$ time per iteration.
+	Line $6$ of \Cref{alg:qdfsa_traversal} is executed $n$ times and requires
+	$\mathcal{O}(1)$ time per iteration.
+	Line $8$ is executed $(k-1)n$ times and requires $\mathcal{O}(1)$ time per
+	iteration.
+	Line $10$ is executed $kn$ times and requires $\mathcal{O}(1)$ time per
+	iteration.
+	Line $12$ is executed $k$ times and requires $\mathcal{O}(1)$ time per
+	iteration.
+	Therefore, the total runtime complexity bound for \Cref{alg:qdfsa_traversal}
+	is $\mathcal{O}(kn)$.
+\end{proof}
 
 We now describe a construction that produces a quasi-deterministic $k$-separa\-ted
 finite-state automaton $\mathcal{A}'$ from a $k$-separated finite-state automaton

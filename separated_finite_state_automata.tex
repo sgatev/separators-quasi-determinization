@@ -1,18 +1,12 @@
 \subsection{Separated finite-state automata}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The set $X \subseteq Q$ is a \emph{separator} in
-	$\mathcal{A}$ if and only if there exists a partition $\{ X, Q_1, \ldots,
-	Q_k \}_Q$ for $k > 1$ such that $\Delta \cap (Q_i \times \Sigma_\epsilon
-	\times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$.
-\end{definition}
-
-\begin{definition}
-	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is \emph{$k$-separa\-ted} for $k > 1$ if and only if there exists a
-	separator $X$ in $\mathcal{A}$ inducing a partition $\{ X, Q_1, \ldots, Q_k
-	\}_Q$.
+	The set $X$ is a \emph{separator in a finite-state automaton} $\mathcal{A} =
+	\langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there exists a
+	partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $\Delta \cap
+	(Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j
+	\in \{ 1, 2, \ldots, k \}$. In that case the finite-state automaton
+	$\mathcal{A}$ is said to be \emph{$k$-separated}.
 \end{definition}
 
 We shall write $\mathcal{A} = \langle \Sigma, Q', X, S, F, \Delta \rangle$ where $Q'
@@ -27,11 +21,11 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 
 \begin{proof}
 	Since $X$ is a separator in $\mathcal{G}_\mathcal{A} = \langle Q, E \rangle$,
-	then there exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such
-	that $E \cap \{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j
-	\} = \emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus,
-	$\Delta \cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq
-	j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a separator in
+	there exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that
+	$E \cap \{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} =
+	\emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta
+	\cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for
+	$i, j \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a separator in
 	$\mathcal{A}$.
 \end{proof}
 
@@ -43,7 +37,7 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 
 \begin{proof}
 	\begin{align*}
-		\Delta \subseteq Q \times \Sigma_\epsilon \times Q
+		\Delta &\subseteq Q \times \Sigma_\epsilon \times Q\\
 		&= (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
 		(\bigcup_{i=1}^k{Q_i} \cup X) &\\
 		&= \begin{aligned}[t]
@@ -82,11 +76,11 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 \end{proposition}
 
 \begin{proof}
-	Since $\langle q', w, q'' \rangle \in \Delta^*$, then there exists a path
-	$\pi$ in $\mathcal{A}$ with start state $q'$, end state $q''$ and label $w$.
-	If the path $\pi$ is trivial, then $w = \epsilon$ and $q' = q''$. Since $Q_i
-	\cap Q_j = \emptyset$, then $q' = q'' \in X$. Therefore, the statement holds
-	for $w' = w'' = \epsilon$ and $x = q' = q''$. Otherwise, if the path $\pi$ is
+	Since $\langle q', w, q'' \rangle \in \Delta^*$, there exists a path $\pi$ in
+	$\mathcal{A}$ with start state $q'$, end state $q''$ and label $w$. If the
+	path $\pi$ is trivial, then $w = \epsilon$ and $q' = q''$. Since $Q_i \cap
+	Q_j = \emptyset$, then $q' = q'' \in X$. Therefore, the statement holds for
+	$w' = w'' = \epsilon$ and $x = q' = q''$. Otherwise, if the path $\pi$ is
 	non-trivial, there exists a finite sequence of state transitions
 	\begin{equation*}
 		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
@@ -96,7 +90,7 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 	for $r \in \{ 1, 2, \ldots, n-1 \}$, $q_1 = q'$, $q_n = q''$ and $w =
 	\sigma_1\sigma_2\ldots\sigma_{n-1}$. Let us assume that $q_r \not\in X$ for
 	$r \in \{ 1, 2, \ldots, n \}$. It follows that $q_1 = q' \in Q_i$ and $q_n =
-	q'' \in Q_j$. Since $i \neq j$, then there exists $r \in \{ 1, 2, \ldots,
+	q'' \in Q_j$. Since $i \neq j$, there exists $r \in \{ 1, 2, \ldots,
 	n-1 \}$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$, $q_r
 	\in Q_{r'}$ and $q_{r+1} \in Q_{r''}$ where $r', r'' \in \{ 1, 2, \ldots, k
 	\}$ and $r' \neq r''$. However, this contradicts the assumption that
@@ -110,7 +104,7 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. The \emph{component state
+	$k$-separated finite-state automaton. The \emph{quasi-state
 	$\epsilon$-closure function} $\Delta_\epsilon^i : \bigcup_{j=1}^k Q_j \cup X
 	\rightarrow 2^{Q_i \cup X}$ is defined as
 	\begin{equation*}
@@ -122,15 +116,16 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $\langle q'', \epsilon, q'''
-	\rangle \in \Delta^*$ where $Q' \subseteq Q$, $q'' \in
-	\hat{\Delta}_\epsilon^i(Q')$ and $q''' \in Q$. There exists $q' \in Q'$ such
-	that $\langle q', \epsilon, q''' \rangle \in \Delta^*$.
+	$k$-separated finite-state automaton. Let $Q' \subseteq \bigcup_{i=1}^k Q_i
+	\cup X$. Let $\langle q'', \epsilon, q''' \rangle \in \Delta^*$ where $q''
+	\in \hat{\Delta}_\epsilon^i(Q')$ and $q''' \in Q$ for $i \in \{ 1, 2, \ldots,
+	k \}$. There exists $q' \in Q'$ such that $\langle q',
+	\epsilon, q''' \rangle \in \Delta^*$.
 \end{proposition}
 
 \begin{proof}
 	Since $\hat{\Delta}_\epsilon^i(Q') = \{ q'' \in Q_i \cup X \mid \exists q'
-	\in Q' (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}$, then there
+	\in Q' (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}$, there
 	exists $q' \in Q'$ such that $\langle q', \epsilon, q'' \rangle \in
 	\Delta^*$. Therefore, $\langle q', \epsilon, q''' \rangle \in \Delta^*$ by
 	definition.
@@ -188,17 +183,17 @@ Q', s, F', \delta \rangle$ derived by applying the construction described in
 $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$. Thus, $|\delta| \leq |Q'|
 \times |\Sigma| = 2^{|Q|} \times |\Sigma|$. In fact, the worst-case bound is attained
 for some finite-state automata (\Cref{fig:worst_case_det}). Based on
-\Cref{prop:small_delta}, if $\mathcal{A}$ is $k$-separated for $k > 1$ we could
-effectively simulate $p = \delta(q, \sigma)$ by decomposing the state transition
-function $\delta$ into quasi-state transition functions $\delta_i : 2^{(Q_i \cup X)}
-\times \Sigma \rightarrow 2^{(Q_i \cup X)}$ for $i \in \{ 1, 2, \ldots, k \}$ and
-the state $q \subseteq Q$ into quasi-states $q_i \subseteq Q_i \cup X$ for $i \in \{
-1, 2, \ldots, k \}$, evaluating $p_i = \delta_i(q_i, \sigma)$ for each of the
-quasi-states and composing the results into the new state $p = \bigcup_{i=1}^k q_i
-\subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the functions $\delta_i$
-combined will be smaller than $\delta$ leading towards a more efficient
-representation of $\mathcal{A'}$ while maintaining its deterministic behavior. This
-insight motivates the construction described below.
+\Cref{prop:small_delta}, if $\mathcal{A}$ is $k$-separated we could effectively
+simulate a deterministic state transition $p = \delta(q, \sigma)$ by decomposing the
+state transition function $\delta$ into quasi-state transition functions $\delta_i :
+2^{(Q_i \cup X)} \times \Sigma \rightarrow 2^{(Q_i \cup X)}$ for $i \in \{ 1, 2,
+\ldots, k \}$ and the state $q \subseteq Q$ into quasi-states $q_i \subseteq Q_i
+\cup X$ for $i \in \{ 1, 2, \ldots, k \}$, evaluating $p_i = \delta_i(q_i, \sigma)$
+for each of the quasi-states and composing the results into the new state $p =
+\bigcup_{i=1}^k p_i \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the
+functions $\delta_i$ combined will be smaller than $\delta$ leading towards a more
+efficient representation of $\mathcal{A'}$ while maintaining its deterministic
+behavior. This insight motivates the construction described below.
 
 \begin{figure}[!h]
 	\centering

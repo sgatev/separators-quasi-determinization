@@ -1,119 +1,114 @@
 \subsection{Quasi-subsequential finite-state transducers}
 
 \begin{definition}
-	A quasi-subsequential $k$-separated finite-state transducer $\mathcal{T}$
-	is a tuple
-	\begin{align*}
-		\langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
-		\lambda, \psi \rangle
-	\end{align*}
+	A \emph{quasi-subsequential $k$-separated finite-state transducer}
+	$\mathcal{T}$ is a tuple
+	\begin{equation*}
+	\langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi
+	\rangle
+	\end{equation*}
 	where
 	\begin{itemize}
-		\item $\mathcal{T}_i = \langle \Sigma, \Omega, Q_i, s_i, F_i,
-			\tau_i, \lambda_i, \psi_i \rangle$ is a subsequential
-			finite-state transducer for $i \in \{ 1, 2, \ldots, k \}$, 
-		\item $\rho = \langle \rho_1, \rho_2, \ldots, \rho_k \rangle$ and
-			$\rho_i : Q_i \rightarrow X$ is a quasi-state reduction
-			function such that $dom(\rho_i) = rng(\tau_i)$ for $i \in
-			\{ 1, 2, \ldots, k \}$,
-		\item $\eta = \langle \eta_1, \eta_2, \ldots, \eta_k \rangle$ and
-			$\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state
-			extension function for $i \in \{ 1, 2, \ldots, k \}$,
-		\item $\eta_x : X \times X \rightarrow X$ is a separator extension
-			function.
+	\item $Q, s, F, \tau, \rho, \eta, \lambda$ and $\psi$ are tuples of $k$
+		elements,
+	\item $\mathcal{T}_i = \langle \Sigma, \Omega, Q_i, s_i, F_i, \tau_i,
+		\lambda_i, \psi_i \rangle$ is a subsequential finite-state transducer
+		for $i \in \{ 1, 2, \ldots, k \}$, 
+	\item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function such
+		that $dom(\rho_i) = rng(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$,
+	\item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state extension
+		function for $i \in \{ 1, 2, \ldots, k \}$,
+	\item $\eta_x : X \times X \rightarrow X$ is a separator extension function.
 	\end{itemize}
 \end{definition}
 
-\noindent
 We shall write $q^i$ to denote the $i$-th element of a state $q \in
 \prod_{i=1}^k{Q_i}$ in a quasi-subsequential $k$-separated finite-state transducer.
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The iterated separator extension functions
+	finite-state transducer. The \emph{iterated separator extension functions}
 	$\eta_x^i : X^i \rightarrow X$ are defined as the inclusion-wise least
 	functions such that
 	\begin{itemize}
-		\item $\eta_x^1(x) = x$,
-		\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1,
-			x_2, \ldots, x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k
-			\}$.
+	\item $\eta_x^1(x) = x$,
+	\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1, x_2,
+		\ldots, x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k \}$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The separator state transition function $\delta_x :
-	\prod_{i=1}^k{Q_i} \times \Sigma \rightarrow X$ is defined as
-	\begin{align*}
-		\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
-		\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
-	\end{align*}
+	finite-state transducer. The \emph{separator state transition function}
+	$\delta_x : \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow X$ is defined as
+	\begin{equation*}
+	\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
+	\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The state quasi-transition function $\delta_i :
-	\prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ is defined as
-	\begin{align*}
-		\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q,
-		\sigma))
-	\end{align*}
+	finite-state transducer. The \emph{state quasi-transition function} $\delta_i
+	: \prod_{j=1}^k{Q_j} \times \Sigma \rightarrow Q_i$ is defined as
+	\begin{equation*}
+	\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))
+	\end{equation*}
 	for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The state transition function $\delta :
+	finite-state transducer. The \emph{state transition function} $\delta :
 	\prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \prod_{i=1}^k{Q_i}$ is defined
 	as
-	\begin{align*}
-		\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q,
-		\sigma), \ldots, \delta_k(q, \sigma) \rangle.
-	\end{align*}
+	\begin{equation*}
+	\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
+	\delta_k(q, \sigma) \rangle.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The generalized function of state transitions
+	finite-state transducer. The \emph{generalized function of state transitions}
 	$\delta^* : \prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow
 	\prod_{i=1}^k{Q_i}$ is defined as the inclusion-wise least function such
 	that
 	\begin{itemize}
-		\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
-		\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
-			$q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma
-			\in \Sigma$.
+	\item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k{Q_i}$,
+	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ if
+		$\delta^*(q, w)$ and $\delta(\delta^*(q, w), \sigma)$ are defined for
+		$q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The state transition output function $\lambda :
-	\prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \Omega^*$ is defined as
-	\begin{align*}
-		\lambda(q, \sigma) = \bigwedge_{i=1}^k{\lambda_i(q^i, \sigma)}.
-	\end{align*}
+	finite-state transducer. The \emph{state transition output function} $\lambda
+	: \prod_{i=1}^k{Q_i} \times \Sigma \rightarrow \Omega^*$ is defined as
+	\begin{equation*}
+	\lambda(q, \sigma) = \bigwedge_{i=1}^k{\lambda_i(q^i, \sigma)}.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subse\-quential $k$-separated
-	finite-state transducer. The generalized function of state transition
-	outputs $\lambda^* : \prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow
+	finite-state transducer. The \emph{generalized function of state transition
+	outputs} $\lambda^* : \prod_{i=1}^k{Q_i} \times \Sigma^* \rightarrow
 	\Omega^*$ is defined as the inclusion-wise least function such that
 	\begin{itemize}
-		\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in
-			\prod_{i=1}^k{Q_i}$,
-		\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \cdot \lambda(\delta^*(q,
-			w), \sigma)$ for $q \in \prod_{i=1}^k{Q_i}$, $w \in
-			\Sigma^*$ and $\sigma \in \Sigma$.
+	\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in \prod_{i=1}^k{Q_i}$,
+	\item $\lambda^*(q, w\sigma) = \lambda^*(q, w)\lambda(\delta^*(q, w),
+		\sigma)$ if $\delta^*(q, w)$ and $\lambda(\delta^*(q, w), \sigma)$
+		are defined for $q \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$ and
+		$\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
 
@@ -121,25 +116,24 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
 	\eta_x, \lambda, \psi \rangle$ be a quasi-subsequential $k$-separated
 	finite-state transducer. Then
-	\begin{align*}
-		\lambda(q'', \sigma)^{-1} \lambda^*(q', w)^{-1} u = \lambda^*(q',
-		w \sigma)^{-1} u
-	\end{align*}
-	for $q' \in Q$, $w \in \Sigma^*$, $\sigma \in \Sigma$, $u \in
-	\Omega^*$ and $q'' = \delta^*(q', w)$.
+	\begin{equation*}
+	\lambda(\delta^*(q', w), \sigma)^{-1} \lambda^*(q', w)^{-1} u =
+	\lambda^*(q', w \sigma)^{-1} u
+	\end{equation*}
+	for $q' \in \prod_{i=1}^k{Q_i}$, $w \in \Sigma^*$, $\sigma \in \Sigma$ and $u
+	\in \Omega^*$.
 \end{proposition}
 
 \begin{proof}
 	\begin{align*}
-		\lambda(q'', \sigma)^{-1} \lambda^*(q', w)^{-1} u
-		&= (\lambda^*(q', w) \lambda(q'', \sigma))^{-1} u\\
-		&= (\lambda^*(q', w) \lambda(\delta^*(q', w), \sigma))^{-1} u\\
-		&= \lambda^*(q', w \sigma)^{-1} u.
+	\lambda(\delta^*(q', w), \sigma)^{-1} \lambda^*(q', w)^{-1} u
+	&= (\lambda^*(q', w) \lambda(\delta^*(q', w), \sigma))^{-1} u\\
+	&= \lambda^*(q', w \sigma)^{-1} u.
 	\end{align*}
 \end{proof}
 
 \begin{definition}
-	A path in a quasi-subsequential $k$-separated finite-state transducer
+	A \emph{path in a quasi-subsequential $k$-separated finite-state transducer}
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
 	\lambda, \psi \rangle$ is either trivial or non-trivial. A trivial path
 	$\pi_q$ in $\mathcal{T}$ is associated with every state $q \in
@@ -198,8 +192,8 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 \end{proof}
 
 \begin{definition}
-	The function recognized by a quasi-subsequential $k$-sepa\-rated
-	finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F,
+	The \emph{function recognized by a quasi-subsequential $k$-sepa\-rated
+	finite-state transducer} $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F,
 	\tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$ is the set of all labels
 	of successful paths
 	\begin{align*}

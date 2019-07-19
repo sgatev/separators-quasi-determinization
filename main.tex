@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage[hidelinks]{hyperref}
-\usepackage[linesnumbered, ruled, vlined]{algorithm2e}
+\usepackage[linesnumbered,vlined,noline,noend]{algorithm2e}
 \usepackage[noend]{algpseudocode}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -15,6 +15,9 @@
 \usetikzlibrary{automata,arrows,positioning}
 
 \DeclareMathOperator*{\argmax}{argmax}
+
+\SetAlCapSty{}
+\SetAlCapSkip{1em}
 
 \newtheorem{theorem}{Theorem}[subsection]
 \newtheorem{proposition}[theorem]{Proposition}
