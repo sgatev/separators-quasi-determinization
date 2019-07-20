@@ -203,100 +203,65 @@ We shall write $q^i$ to denote the $i$-th element of a state $q \in
 	\end{align*}
 \end{definition}
 
-\Cref{alg:qsfst_translation} shows how to deterministically translate an input word
-to an output word using a quasi-subsequential finite-state transducer.
-
-\begin{algorithm}[h]
-\DontPrintSemicolon
-\KwIn{$\langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi
-	\rangle, \sigma_1 \sigma_2 \ldots \sigma_n$}
-\KwOut{$\Omega^*$}
-
-$q \gets s$\;
-$o \gets \epsilon$\;
-\For {$j \in \{ 1, 2, \ldots, n \}$} {
-  \For {$i \in \{ 1, 2, \ldots, k \}$} {
-    $t_i \gets \tau_i(q_i, \sigma_j)$\;
-    $r_i \gets \rho_i(t_i)$\;
-  }
-  $x \gets r_1$\;
-  \For {$i \in \{ 2, 3, \ldots, k \}$} {
-    $x \gets \eta_x(x, r_i)$\;
-  }
-  \For {$i \in \{ 1, 2, \ldots, k \}$} {
-    $q_i \gets \eta_i(t_i, x)$\;
-  }
-}
-\For {$i \in \{ 1, 2, \ldots, k \}$} {
-  \lIf {$q_i \in F_i$} {
-	  \Return $True$
-  }
-}
-\Return $\textbf{undefined}$
-
-\caption{Traversal of a quasi-deterministic $k$-separated finite-state automaton.}
-\label{alg:qsfst_translation}
-\end{algorithm}
-
-
-
-We now describe a construction that produces a quasi-subsequential $k$-separated
+We now describe a construction that produces a quasi-subsequential $k$-separa\-ted
 finite-state transducer $\mathcal{T'}$ from a trimmed functional $k$-separated
 finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta
-\rangle$ such that $\mathcal{F}_\mathcal{T}$ has bounded variation.
-Let $P_i = Q_i \cup X$ for $i \in \{ 1, 2, \ldots, k \}$. The quasi-subsequential
+\rangle$ if $\mathcal{F}_\mathcal{T}$ has bounded variation. Let $P_i = Q_i \cup X$
+for $i \in \{ 1, 2, \ldots, k \}$. The quasi-subsequential
 $k$-separated finite-state transducer $\mathcal{T}'$ and the set of states $R$ are
 constructed by induction. Let
-\begin{align*}
-	\mathcal{T}'^{(1)} &= \langle \Sigma, \Omega, Q'^{(1)}, 2^X, s,
-	F'^{(1)}, \tau^{(1)}, \rho^{(1)}, \eta^{(1)}, \emptyset, \lambda^{(1)},
-	\psi^{(1)} \rangle,\\
-	R^{(0)} &= \emptyset,\\
-	R^{(1)} &= \{ s \}
-\end{align*}
+\begin{itemize}
+\item $\mathcal{T}'^{(1)} = \langle \Sigma, \Omega, Q'^{(1)}, 2^X, s, F'^{(1)},
+	\tau^{(1)}, \rho^{(1)}, \eta^{(1)}, \emptyset, \lambda^{(1)}, \psi^{(1)}
+	\rangle$,
+\item $R^{(0)} = \emptyset$,
+\item $R^{(1)} = \{ s \}$
+\end{itemize}
 where
 \begin{itemize}
-	\item $s^i = \{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in
-		P_i \}$,
-	\item $Q_i'^{(1)} = \{ s^i \}$,
-	\item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} = 
-		\lambda_i^{(1)} = \psi_i^{(1)} = \emptyset$
+\item $s^i = \{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in P_i \}$,
+\item $Q_i'^{(1)} = \{ s^i \}$,
+\item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} =  \lambda_i^{(1)} =
+	\psi_i^{(1)} = \emptyset$
 \end{itemize}
 for $i \in \{ 1, 2, \ldots, k \}$. Let us assume that $\mathcal{T}'^{(n)}$ and
-$R^{(n)}$ are constructed for $n > 0$. The set of states introduced at step $n$ is
+$R^{(n)}$ are constructed for $n > 0$.
+
+The set of states introduced at step $n$ is
 \begin{align*}
 	R_n = R^{(n)} \setminus R^{(n-1)}.
 \end{align*}
+
 The longest common quasi-state transition output function $\lambda_i^{\wedge (n)} :
 Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ is defined as
-\begin{align*}
-	\lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge_{\langle p', u
-	\rangle \in q}{\bigwedge_{\langle p', \sigma, v, p'' \rangle \in
-	\Delta}{uv}}
-\end{align*}
-for $i \in \{ 1, 2, \ldots, k \}$. The state quasi-successor function $succ_i^{(n)}
-: \prod_{j=1}^k Q_j'^{(n)} \times \Sigma \rightarrow 2^{P_i \times \Omega^*}$ is
-defined as
-\begin{align*}
-	succ_i^{(n)}(q, \sigma) = \begin{aligned}[t]
-	\{ &\langle p''', \lambda(q, \sigma)^{-1}uvw \rangle \mid\\
-	&\exists \langle p', u \rangle \in q^i\\
-	&\exists \langle p', \sigma, v, p'' \rangle \in \Delta\\
-	&\exists \langle p''', w \rangle \in \Delta_\epsilon(p'')(p''' \in P_i) \}
-	\end{aligned}
-\end{align*}
+\begin{equation*}
+\lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge \{ uv \mid \exists \langle p', u
+\rangle \in q \; \exists p'' \in P_i \; \exists v \in \Omega^* (\langle p', \sigma,
+v, p'' \rangle \in \Delta) \}
+\end{equation*}
 for $i \in \{ 1, 2, \ldots, k \}$.
+
+The state quasi-successor function $succ_i^{(n)} : \prod_{j=1}^k Q_j'^{(n)} \times
+\Sigma \rightarrow 2^{P_i \times \Omega^*}$ is defined as
+\begin{equation*}
+	succ_i^{(n)}(q, \sigma) = \begin{aligned}[t]
+	\{ &\langle p''', \lambda(q, \sigma)^{-1}uvw \rangle \mid \exists \langle p',
+	u \rangle \in q^i \; \exists p'', p''' \in P_i \; \exists v, w \in \Omega^*
+	(\\
+	&\langle p', \sigma, v, p'' \rangle \in \Delta \land
+	\langle p''', w \rangle \in \Delta_\epsilon(p'')) \}
+	\end{aligned}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+
 Let
-\begin{align*}
-	\mathcal{T}'^{(n+1)} &= \begin{aligned}[t]
-		\langle &\Sigma, \Omega, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
-		\tau^{(n+1)},\\
-		&\rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)}, \lambda^{(n+1)},
-		\psi^{(n+1)} \rangle
-	\end{aligned}\\
-	R^{(n+1)} &= R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
-	R_n \exists \sigma \in \Sigma \}.
-\end{align*}
+\begin{itemize}
+\item $\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
+	\tau^{(n+1)}, \rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)}, \lambda^{(n+1)},
+	\psi^{(n+1)} \rangle$,
+\item $R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
+	R_n \; \exists \sigma \in \Sigma \}$
+\end{itemize}
 where
 \begin{itemize}
 	\item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in
@@ -337,7 +302,6 @@ for $i \in \{ 1, 2, \ldots, k \}$ and
 \end{itemize}
 
 \iffalse
-
 for $i \in \interval{1}{k}$, along with the set of states
 \begin{align*}
 	R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
