@@ -1,7 +1,7 @@
-\subsection{Quasi-deterministic finite-state automata}
+\section{Quasi-deterministic finite-state automata}
 
 \begin{definition}
-	A \emph{quasi-deterministic $k$-separated finite-state automaton}
+	A \emph{$k$-separated quasi-deterministic finite-state automaton}
 	$\mathcal{A}$ is a tuple
 	\begin{equation*}
 	\langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
@@ -22,13 +22,15 @@
 	\end{itemize}
 \end{definition}
 
-We shall denote the set of states $\prod_{i=1}^k{Q_i}$ of a quasi-deterministic
-$k$-separated finite-state automaton by $\mathcal{P}(Q)$ and shall write $q^i$ for
-the $i$-th element of a state $q \in \mathcal{P}(Q)$.
+A state in a $k$-separated quasi-deterministic finite-state automaton $\mathcal{A} =
+\langle \Sigma, Q,\\X, s, F, \tau, \rho, \eta, \eta_x \rangle$ is an element of the
+set $\prod_{i=1}^k{Q_i}$. We shall denote the set of states $\prod_{i=1}^k{Q_i}$ by
+$\mathcal{P}(Q)$ and shall write $q^i$ for the $i$-th element of a state $q \in
+\mathcal{P}(Q)$.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
 	\emph{iterated separator extension functions} $\eta_x^i : X^i \rightarrow X$
 	are defined as
 	\begin{itemize}
@@ -40,7 +42,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
 	\emph{separator state transition function} $\delta_x : \mathcal{P}(Q) \times
 	\Sigma \rightarrow X$ is defined as
 	\begin{equation*}
@@ -51,7 +53,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
 	\emph{quasi-state transition function} $\delta_i : \mathcal{P}(Q) \times
 	\Sigma \rightarrow Q_i$ is defined as
 	\begin{equation*}
@@ -62,7 +64,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
 	\emph{state transition function} $\delta : \mathcal{P}(Q) \times \Sigma
 	\rightarrow \mathcal{P}(Q)$ is defined as
 	\begin{equation*}
@@ -73,7 +75,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-deterministic $k$-separated finite-state automaton. The
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
 	\emph{generalized function of state transitions} $\delta^* : \mathcal{P}(Q)
 	\times \Sigma^* \rightarrow \mathcal{P}(Q)$ is defined as the least function
 	such that
@@ -86,7 +88,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \end{definition}
 
 \begin{definition}
-	A \emph{path in a quasi-deterministic $k$-separated finite-state automaton}
+	A \emph{path in a $k$-separated quasi-deterministic finite-state automaton}
 	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
 	is either trivial or non-trivial. A \emph{trivial path} $\pi_q$ in
 	$\mathcal{A}$ is associated with every state $q \in \mathcal{P}(Q)$. The
@@ -109,10 +111,10 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-determinis\-tic $k$-separated finite-state automaton.
-	There exists a path in $\mathcal{A}$ with start state $q' \in
-	\mathcal{P}(Q)$, end state $q'' \in \mathcal{P}(Q)$ and label $w \in
-	\Sigma^*$ if and only if $\delta^*(q', w) = q''$.
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. There
+	exists a path in $\mathcal{A}$ with start state $q' \in \mathcal{P}(Q)$, end
+	state $q'' \in \mathcal{P}(Q)$ and label $w \in \Sigma^*$ if and only if
+	$\delta^*(q', w) = q''$.
 \end{proposition}
 
 \begin{proof}
@@ -134,7 +136,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \end{proof}
 
 \begin{definition}
-	The \emph{language recognized by a quasi-deterministic $k$-separa\-ted
+	The \emph{language recognized by a $k$-separated quasi-determini\-stic
 	finite-state automaton} $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau,
 	\rho, \eta, \eta_x \rangle$ is the set of all labels of successful paths
 	\begin{equation*}
@@ -144,7 +146,7 @@ the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \end{definition}
 
 \Cref{alg:qdfsa_traversal} illustrates how to deterministically decide whether a word
-is recognized by a quasi-deterministic $k$-separated finite-state automaton.
+is recognized by a $k$-separated quasi-deterministic finite-state automaton.
 
 \begin{algorithm}[h]
 \DontPrintSemicolon
@@ -152,17 +154,17 @@ is recognized by a quasi-deterministic $k$-separated finite-state automaton.
 	\ldots \sigma_n$}
 
 $q \gets s$\;
-\For {$j \in \{ 1, 2, \ldots, n \}$} {
-  \For {$i \in \{ 1, 2, \ldots, k \}$} {
-    $t_i \gets \tau_i(q_i, \sigma_j)$\;
-    $r_i \gets \rho_i(t_i)$\;
+\For {$i \in \{ 1, 2, \ldots, n \}$} {
+  \For {$j \in \{ 1, 2, \ldots, k \}$} {
+    $t_j \gets \tau_j(q_j, \sigma_i)$\;
+    $r_j \gets \rho_j(t_j)$\;
   }
   $x \gets r_1$\;
-  \For {$i \in \{ 2, 3, \ldots, k \}$} {
-    $x \gets \eta_x(x, r_i)$\;
+  \For {$j \in \{ 2, 3, \ldots, k \}$} {
+    $x \gets \eta_x(x, r_j)$\;
   }
-  \For {$i \in \{ 1, 2, \ldots, k \}$} {
-    $q_i \gets \eta_i(t_i, x)$\;
+  \For {$j \in \{ 1, 2, \ldots, k \}$} {
+    $q_j \gets \eta_j(t_j, x)$\;
   }
 }
 \For {$i \in \{ 1, 2, \ldots, k \}$} {
@@ -172,15 +174,15 @@ $q \gets s$\;
 }
 \Return \textbf{false}
 
-\caption{Traversal of a quasi-deterministic $k$-separated finite-state automaton.}
+\caption{Traversal of a $k$-separated quasi-deterministic finite-state automaton.}
 \label{alg:qdfsa_traversal}
 \end{algorithm}
 
 \begin{proposition}
 	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a quasi-determi\-nistic $k$-separated finite-state automaton Let
-	$w = \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in
-	\mathbb{N}$ over $\Sigma$. Then \Cref{alg:qdfsa_traversal} completes on input
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton Let $w
+	= \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in \mathbb{N}$
+	over $\Sigma$. Then \Cref{alg:qdfsa_traversal} completes on input
 	$\mathcal{A}$ and $w$ in $\mathcal{O}(kn)$ time.
 \end{proposition}
 
@@ -228,8 +230,8 @@ Let
 \begin{itemize}
 \item $\mathcal{A'}^{(n+1)} = \langle \Sigma, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
 	\tau^{(n+1)}, \rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)} \rangle$,
-\item $R^{(n+1)} = R^{(n)} \cup \{ q'' \mid \exists \langle q', \sigma, q''
-	\rangle \in \delta^{(n+1)} \setminus \delta^{(n)} \}$
+\item $R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in
+	R_n \; \exists \sigma \in \Sigma \}$
 \end{itemize}
 where
 \begin{itemize}
