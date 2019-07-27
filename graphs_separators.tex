@@ -27,15 +27,19 @@
 
 \begin{definition}
 	The set $X$ is a \emph{separator in a graph} $\mathcal{G} = \langle V, E
-	\rangle$ if and only if there exists a partition $\{ X, V_1, \ldots, V_n
-	\}_V$ for $n > 1$ such that $E \cap \{ \{ v', v'' \} \mid \exists v' \in V_i
-	\; \exists v'' \in V_j \} = \emptyset$ if $i \neq j$ for $i, j \in \{1, 2,
-	\ldots, n \}$.
+	\rangle$ if and only if there exists a partition ${\{ X, V_1, \ldots, V_n
+	\}}_V$ for $n > 1$ such that
+	\begin{equation*}
+		E \cap \{ \{ v', v'' \} \mid \exists v' \in V_i \; \exists v'' \in
+		V_j \} = \emptyset
+	\end{equation*}
+	if $i \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
-\begin{theorem}[Lipton, Tarjan, see \cite{LT77}]\label{t_lipton_tarjan}
+\begin{theorem}[Lipton, Tarjan, see \cite{lipton_tarjan_theorem}]
+	\label{thm:lipton_tarjan}
 	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. There exists a
-	separator $X$ in $\mathcal{G}$ inducing a partition $\{ X, V_1, V_2 \}_V$
+separator $X$ in $\mathcal{G}$ inducing a partition ${\{ X, V_1, V_2 \}}_V$
 	such that $|X| \leq 2 \sqrt{2|V|}$ and $|V_i| \leq \frac{2}{3} |V|$ for $i
 	\in \{ 1, 2 \}$. Furthermore, there exists an algorithm that finds $\{ X,
 	V_1, V_2 \}_V$ in $\mathcal{O}(|V|)$ time.

@@ -137,13 +137,13 @@ element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
 	A \emph{path in a $k$-separated quasi-subsequential finite-state transducer}
 	$\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
-	\lambda, \psi \rangle$ is either trivial or non-trivial. A \emph{trivial
-	path} $\pi_q$ in $\mathcal{T}$ is associated with every state $q \in
+	\lambda, \psi \rangle$ is either trivial or non-trivial. A trivial
+	path $\pi_q$ in $\mathcal{T}$ is associated with every state $q \in
 	\mathcal{P}(Q)$. The length of $\pi_q$ is $0$. The start state of
 	$\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of $\pi_q$ is
 	$\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is succsessful if and
 	only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. A
-	\emph{non-trivial path} $\pi$ in $\mathcal{T}$ is a finite sequence of state
+	non-trivial path $\pi$ in $\mathcal{T}$ is a finite sequence of state
 	transitions
 	\begin{align*}
 		\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
@@ -215,6 +215,9 @@ $o \gets \epsilon$\;
 $q \gets s$\;
 \For {$i \in \{ 1, 2, \ldots, n \}$} {
   \For {$j \in \{ 1, 2, \ldots, k \}$} {
+    \lIf {$\tau_j(q_j, \sigma_i)$ is \textbf{undefined}} {
+      \Return \textbf{undefined}
+    }
     $o_j \gets \lambda_j(q_j, \sigma_j)$\;
     $t_j \gets \tau_j(q_j, \sigma_i)$\;
     $r_j \gets \rho_j(t_j)$\;
@@ -229,7 +232,7 @@ $q \gets s$\;
   }
 }
 \For {$i \in \{ 1, 2, \ldots, k \}$} {
-  \lIf {$q_i \in F_i$} {
+  \If {$q_i \in F_i$} {
 	  \Return $o \cdot \psi_i(q_i)$
   }
 }
@@ -251,30 +254,25 @@ $q \gets s$\;
 \end{proposition}
 
 \begin{proof}
-	Lines $1-2$ of \Cref{alg:qsfst_traversal} are executed once and require
-	$\mathcal{O}(1)$ time.
-	Lines $5-7$ of \Cref{alg:qsfst_traversal} are executed at most $kn$ times
-	require $\mathcal{O}(1)$ time.
-	Line $8$ of \Cref{alg:qsfst_traversal} is executed at most $n$ times and
-	assuming $lcp$ requires $\mathcal{O}(ko)$ time where $o = \min_{i=1}^k
-	|o_i|$, the execution over all iteration requires $\mathcal{O}(km+n)$ time in
-	total.
-	Line $9$ of \Cref{alg:qsfst_traversal} is executed at most $n$ times and
-	requires $\mathcal{O}(1)$ time.
-	Line $11$ of \Cref{alg:qsfst_traversal} is executed at most $(k-1)n$ times
-	and requires $\mathcal{O}(1)$ time.
-	Line $13$ of \Cref{alg:qsfst_traversal} is executed at most $kn$ times and
-	requires $\mathcal{O}(1)$ time.
-	Line $15$ of \Cref{alg:qsfst_traversal} is executed at most $k$ times and
-	requires $\mathcal{O}(1)$ time.
+	Lines $1-2$ are executed once and require $\mathcal{O}(1)$ time.
+	Lines $5-8$ are executed at most $kn$ times require $\mathcal{O}(1)$ time.
+	Line $9$ is executed at most $n$ times and assuming $lcp$ requires
+	$\mathcal{O}(ko)$ time where $o = \min_{i=1}^k |o_i|$, the execution over all
+	iteration requires $\mathcal{O}(km+n)$ time in total.
+	Line $10$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
+	Line $12$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$
+	time.
+	Line $14$ is executed at most $kn$ times and requires $\mathcal{O}(1)$ time.
+	Line $16$ is executed at most $k$ times and requires $\mathcal{O}(1)$ time.
+	Line $17$ is executed at most once and requires $\mathcal{O}(1)$ time.
 	Therefore, the total runtime complexity bound for \Cref{alg:qsfst_traversal}
 	is $\mathcal{O}(k(n+m))$.
 \end{proof}
 
-The complexity bound that we derived for \Cref{alg:qsfst_traversal} relies on the
-ability to compute longest common prefixes of $k$ words in $\mathcal{O}(km)$ time
-where $m$ is the length of the smallest of these words. \Cref{alg:lcp} presents one
-possible way of doing that.
+The complexity bound for \Cref{alg:qsfst_traversal} depends on the ability to compute
+longest common prefixes of $k$ words in $\mathcal{O}(km)$ time where $m$ is the
+length of the smallest of these words. \Cref{alg:lcp} presents one possible way of
+doing that.
 
 \begin{algorithm}[h]
 \DontPrintSemicolon
@@ -310,21 +308,18 @@ $i \gets 0$\;
 	Let $w_1, w_2, \ldots, w_k$ be words over an alphabet $\Sigma$ for $k \in
 	\mathbb{N}$ such that $w_i = \sigma_1 \sigma_2 \ldots \sigma_{n_i}$ for $i
 	\in \{ 1, 2, \ldots, k \}$. Then \Cref{alg:lcp} completes on input $w_1, w_2,
-	\ldots, w_k$ in $\mathcal{O}(kn)$ time where $n = \min_{i=1}^k |w_i|$.
+	\ldots, w_k$ in $\mathcal{O}(kn)$ time where $n = \min_{i=1}^k n_i$.
 \end{proposition}
 
 \begin{proof}
-	Line $1$ of \Cref{alg:lcp} is executed once and requires $\mathcal{O}(1)$
+	Line $1$ is executed once and requires $\mathcal{O}(1)$ time.
+	Line $3$ is executed $k-1$ times and requires $\mathcal{O}(1)$ time.
+	Lines $4-5$ are executed once and require $\mathcal{O}(1)$ time.
+	Line $8$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$
 	time.
-	Line $3$ of \Cref{alg:lcp} is executed $k$ times and requires
-	$\mathcal{O}(1)$ time.
-	Lines $4-5$ of \Cref{alg:lcp} are executed once and require $\mathcal{O}(1)$
-	time.
-	Line $8$ of \Cref{alg:lcp} is executed at most $(k-1)n$ times and requires
-	$\mathcal{O}(1)$ time.
-	Assuming that concatenation of words requires $\mathcal{O}(1)$ time, then
-	lines $9-10$ of \Cref{alg:lcp} are executed at most $n$ times once and
-	require $\mathcal{O}(1)$ time.
+	Lines $9-10$ are executed at most $n$ times and assuming that concatenation
+	of words requires $\mathcal{O}(1)$ time, then each execution of these lines
+	requires at most $\mathcal{O}(1)$ time.
 	Therefore, the total runtime complexity bound for \Cref{alg:lcp} is
 	$\mathcal{O}(kn)$.
 \end{proof}

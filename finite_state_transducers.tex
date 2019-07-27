@@ -32,12 +32,12 @@
 \begin{definition}
 	A \emph{path in a finite-state transducer} $\mathcal{T} = \langle \Sigma,
 	\Omega, Q, S, F, \Delta \rangle$ is either trivial or non-trivial. A
-	\emph{trivial path} $\pi_q$ in $\mathcal{T}$ is associated with every state
+	trivial path $\pi_q$ in $\mathcal{T}$ is associated with every state
 	$q \in Q$. The length of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$.
 	The end state of $\pi_q$ is $q$. The label of $\pi_q$ is $\langle \epsilon,
 	\epsilon \rangle$. The path $\pi_q$ is succsessful if and only if $q \in S
-	\cap F$. A \emph{non-trivial path} $\pi$ in $\mathcal{T}$ is a finite
-	sequence of state transitions
+	\cap F$. A non-trivial path $\pi$ in $\mathcal{T}$ is a finite sequence of
+	state transitions
 	\begin{equation*}
 	\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3
 	\rangle, \dots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n \rangle
@@ -63,8 +63,8 @@
 	finite-state transducer. The \emph{state $\epsilon$-closure function}
 	$\Delta_\epsilon : Q \rightarrow 2^{Q \times \Omega^*}$ is defined as
 	\begin{equation*}
-	\Delta_\epsilon(q) = \{ \langle p, u \rangle \in Q \times \Omega^* \mid
-	\langle q, \epsilon, u, p \rangle \in \Delta^* \}.
+	\Delta_\epsilon(q') = \{ \langle q'', w \rangle \in Q \times \Omega^* \mid
+	\langle q', \epsilon, w, q'' \rangle \in \Delta^* \}.
 	\end{equation*}
 \end{definition}
 
@@ -73,8 +73,8 @@
 	finite-state transducer. The \emph{longest common output function}
 	$\Delta_\wedge : \Sigma^* \rightarrow \Omega^*$ is defined as
 	\begin{equation*}
-	\Delta_\wedge(w) = \bigwedge{\{ u \in \Omega^* \mid \exists s \in S \;
-	\exists q \in Q (\langle s, w, u, q \rangle \in \Delta^*) \}}.
+	\Delta_\wedge(u) = \bigwedge{\{ v \in \Omega^* \mid \exists s \in S \;
+	\exists q \in Q (\langle s, u, v, q \rangle \in \Delta^*) \}}.
 	\end{equation*}
 \end{definition}
 
@@ -92,16 +92,16 @@
 \begin{definition}
 	A finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F,
 	\Delta \rangle$ is \emph{trimmed} if and only if for every state $q \in Q$
-	there exist $s \in S$, $f \in F$, $u', u'' \in \Sigma^*$ and $v', v'' \in
-	\Omega^*$ such that $\langle s, u', v', q \rangle, \langle q, u'', v'', f
-	\rangle \in \Delta^*$.
+	there exist states $s \in S$, $f \in F$, inputs $u', u'' \in \Sigma^*$ and
+	outputs $v', v'' \in \Omega^*$ such that $\langle s, u', v', q \rangle,
+	\langle q, u'', v'', f \rangle \in \Delta^*$.
 \end{definition}
 
-\begin{proposition}[see \cite{MS19}]
-	Let $\mathcal{T}$ be a finite-state transducer. There exists a trimmed
+\begin{proposition}[see \cite{mihov_schulz}]
+	For every finite-state transducer $\mathcal{T}$ there exists a trimmed
 	finite-state transducer $\mathcal{T'}$ such that $\mathcal{R}_\mathcal{T'}
 	= \mathcal{R}_\mathcal{T}$. Furthermore, there exists an algorithm that
-	constructs $\mathcal{T'}$ from $\mathcal{T}$.
+	constructs $\mathcal{T'}$ given $\mathcal{T}$.
 \end{proposition}
 
 \begin{definition}
@@ -120,6 +120,10 @@ case $\mathcal{T}$ is a functional finite-state transducer.
 	\begin{equation*}
 	\langle Q, E \rangle
 	\end{equation*}
-	where $E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon \;
-	\exists w \in \Omega^* (\langle q', \sigma, w, q'' \rangle \in \Delta) \}$.
+	where
+	\begin{equation*}
+		E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon \;
+		\exists w \in \Omega^* (\langle q', \sigma, w, q'' \rangle \in
+		\Delta) \}.
+	\end{equation*}
 \end{definition}

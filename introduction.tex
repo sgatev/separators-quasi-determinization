@@ -3,11 +3,11 @@
 Finite-state devices are fundamental to computer science, finding applications in
 compiler design, natural language processing, and many other fields. Hopcroft,
 Motwani and Ullman \cite{hopcroft_motwani_ullman} give an extensive introduction to
-finite-state automata and their relation to the theory of computation. In their
-recent work \cite{mihov_schulz}, Mihov and Schulz present an overview of a
-generalized model of finite-state automata, finite-state transducers, and bimachines.
-Mohri \cite{mohri_transducers} discusses applications of finite-state transducers in
-natural language processing.
+finite-state automata and their relation to the theory of computation. Mohri
+\cite{mohri_transducers} discusses applications of weighted finite-state automata and
+finite-state transducers in natural language processing. Mihov and Schulz
+\cite{mihov_schulz} present an overview of a generalized model of finite-state
+automata, finite-state transducers, and bimachines.
 \bigbreak
 A central problem in the theory of finite-state devices is that of non-determi\-nism
 and the existence of deterministic representations with similar expressive power. In
@@ -15,8 +15,8 @@ their seminal work \cite{rabin_scott}, Rabin and Scott introduce the notion of
 non-deterministic finite-state automata, show that these devices are equivalent in
 their expressiveness to deterministic finite-state automata, and present an algorithm
 that constructs a deterministic finite-state automaton from a given non-deterministic
-finite-state automaton. Choffrut \cite{choffrut} proves that a specific class of
-rational functions can be represented by a deterministic flavor of finite-state
+finite-state automaton. Choffrut \cite{choffrut} proves that rational functions with
+bounded variation can be represented by a deterministic flavor of finite-state
 transducers. Mohri \cite{mohri_applications} shows that the determinization algorithm
 introduced by Rabin and Scoot can be generalized to work for this class of rational
 functions. While often good in practice, a downside to the algorithm is that in the

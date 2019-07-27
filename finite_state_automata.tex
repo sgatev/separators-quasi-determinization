@@ -31,11 +31,11 @@
 
 \begin{definition}
 	A \emph{path in a finite-state automaton} $\mathcal{A} = \langle \Sigma, Q,
-	S, F, \Delta \rangle$ is either trivial or non-trivial. A \emph{trivial path}
+	S, F, \Delta \rangle$ is either trivial or non-trivial. A trivial path
 	$\pi_q$ in $\mathcal{A}$ is associated with every state $q \in Q$. The length
 	of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of
 	$\pi_q$ is $q$. The label of $\pi_q$ is $\epsilon$. The path $\pi_q$ is
-	succsessful if and only if $q \in S \cap F$. A \emph{non-trivial} path $\pi$
+	succsessful if and only if $q \in S \cap F$. A non-trivial path $\pi$
 	in $\mathcal{A}$ is a finite sequence of state transitions
 	\begin{equation*}
 	\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
@@ -59,8 +59,7 @@
 \begin{definition}
 	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
 	finite-state automaton. The \emph{state transition function} $\Delta_f : Q
-	\times \Sigma_\epsilon \rightarrow 2^Q$ induced by the relation $\Delta$ is
-	defined as
+	\times \Sigma_\epsilon \rightarrow 2^Q$ is defined as
 	\begin{equation*}
 	\Delta_f(q', \sigma) = \{ q'' \in Q \mid \langle q', \sigma, q'' \rangle \in
 	\Delta \}.
@@ -94,13 +93,16 @@
 	\begin{equation*}
 	\langle Q, E \rangle
 	\end{equation*}
-	where $E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon (\langle
-	q', \sigma, q'' \rangle \in \Delta) \}$.
+	where
+	\begin{equation*}
+		E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon (\langle
+		q', \sigma, q'' \rangle \in \Delta) \}.
+	\end{equation*}
 \end{definition}
 
 \begin{definition}
 	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is \emph{deterministic} if and only if $S = \{ s \}$ and  $\Delta$
+	\rangle$ is \emph{determi\-nistic} if and only if $S = \{ s \}$ and  $\Delta$
 	is the graph of a function $\delta : Q \times \Sigma \rightarrow Q$.
 \end{definition}
 
@@ -108,9 +110,10 @@ We shall write $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ in case t
 finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is
 deterministic.
 
-\begin{theorem}[Rabin, Scott, see \cite{RS59}]\label{thm:rabin_scott}
+\begin{theorem}[Rabin, Scott, see \cite{rabin_scott}]
+	\label{thm:rabin_scott}
 	Let $\mathcal{A}$ be a finite-state automaton. There exists a deterministic
 	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}_\mathcal{A'}
 	= \mathcal{L}_\mathcal{A}$. Furthermore, there exists an algorithm that
-	constructs $\mathcal{A'}$ from $\mathcal{A}$.
+	constructs $\mathcal{A'}$ given $\mathcal{A}$.
 \end{theorem}

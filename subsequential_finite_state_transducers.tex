@@ -23,11 +23,10 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
 	\rangle$ be a subsequential finite-state transducer. The \emph{generalized
 	state transition function} $\delta^* : Q \times \Sigma^* \rightarrow Q$ is
-	defined as the inclusion-wise least function such that
+	defined as
 	\begin{itemize}
 	\item $\delta^*(q, \epsilon) = q$ for $q \in Q$,
-	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ if
-		$\delta^*(q, w)$ and $\delta(\delta^*(q, w), \sigma)$ are defined for
+	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for
 		$q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
@@ -36,23 +35,22 @@
 	Let $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi
 	\rangle$ be a subsequential finite-state transducer. The \emph{generalized
 	state transition output function} $\lambda^* : Q \times \Sigma^* \rightarrow
-	\Omega^*$ is defined as the inclusion-wise least function such that
+	\Omega^*$ is defined as
 	\begin{itemize}
 	\item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in Q$,
 	\item $\lambda^*(q, w\sigma) = \lambda^*(q, w) \lambda(\delta^*(q, w),
-		\sigma)$ if $\delta^*(q, w)$ and $\lambda(\delta^*(q, w), \sigma)$
-		are defined for $q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+		\sigma)$ for $q \in Q$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
 	\end{itemize}
 \end{definition}
 
 \begin{definition}
 	A \emph{path in a subsequential finite-state transducer} $\mathcal{T} =
 	\langle \Sigma, \Omega, Q, s, F, \delta, \lambda, \psi \rangle$ is either
-	trivial or non-trivial. A \emph{trivial path} $\pi_q$ in $\mathcal{T}$ is
+	trivial or non-trivial. A trivial path $\pi_q$ in $\mathcal{T}$ is
 	associated with every state $q \in Q$. The length of $\pi_q$ is $0$. The
 	start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of
 	$\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is
-	succsessful if and only if $q = s \in F$. A \emph{non-trivial path} $\pi$ in
+	succsessful if and only if $q = s \in F$. A non-trivial path $\pi$ in
 	$\mathcal{T}$ is a finite sequence of state transitions
 	\begin{equation*}
 	\langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3
@@ -84,10 +82,11 @@
 	\end{equation*}
 \end{definition}
 
-\begin{theorem}[Mohri, see \cite{M96}]\label{t_choffrut_mohri}
-	Let $\mathcal{T}$ be a functional finite-state transducer. If
-	$\mathcal{F}_\mathcal{T}$ has bounded variation, then there exists a
-	subsequential finite-state transducer $\mathcal{T'}$ such that
-	$\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$. Furthermore, there
-	exists an algorithm that constructs $\mathcal{T'}$ from $\mathcal{T}$.
+\begin{theorem}[Mohri, see \cite{mohri_applications}]
+	\label{thm:choffrut_mohri}
+	For every functional finite-state transducer $\mathcal{T}$ such that
+	$\mathcal{F}_\mathcal{T}$ has bounded variation there exists a subsequential
+	finite-state transducer $\mathcal{T'}$ such that $\mathcal{F}_\mathcal{T'} =
+	\mathcal{F}_\mathcal{T}$. Furthermore, there exists an algorithm that
+	constructs $\mathcal{T'}$ given $\mathcal{T}$.
 \end{theorem}

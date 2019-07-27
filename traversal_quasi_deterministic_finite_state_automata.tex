@@ -1,0 +1,66 @@
+\section{Traversal of quasi-deterministic finite-state automata}
+
+\Cref{alg:qdfsa_traversal} represents a deterministic procedure that decides whether
+a word is recognized by a $k$-separated quasi-deterministic finite-state automaton.
+
+\begin{algorithm}[h]
+\DontPrintSemicolon
+\KwIn{$\langle \Sigma, Q, s, F, \tau, \rho, \eta, \eta_x \rangle, \sigma_1 \sigma_2
+	\ldots \sigma_n$}
+
+$q \gets s$\;
+
+\For {$i \in \{ 1, 2, \ldots, n \}$} {
+  \For {$j \in \{ 1, 2, \ldots, k \}$} {
+    \If {$\tau_j(q_j, \sigma_i)$ is \textbf{undefined}} {
+      \Return \textbf{undefined}
+    }
+    $t_j \gets \tau_j(q_j, \sigma_i)$\;
+    $r_j \gets \rho_j(t_j)$\;
+  }
+  $x \gets r_1$\;
+  \For {$j \in \{ 2, 3, \ldots, k \}$} {
+    $x \gets \eta_x(x, r_j)$\;
+  }
+  \For {$j \in \{ 1, 2, \ldots, k \}$} {
+    $q_j \gets \eta_j(t_j, x)$\;
+  }
+}
+
+\For {$i \in \{ 1, 2, \ldots, k \}$} {
+  \If {$q_i \in F_i$} {
+	  \Return \textbf{true}
+  }
+}
+
+\Return \textbf{false}
+
+\caption{Traversal of a $k$-separated quasi-deterministic finite-state automaton.}
+\label{alg:qdfsa_traversal}
+\end{algorithm}
+
+\begin{proposition}
+	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
+	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton and $w
+	= \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in \mathbb{N}$
+	over $\Sigma$. Then \Cref{alg:qdfsa_traversal} completes on input
+	$\mathcal{A}$ and $w$ in $\mathcal{O}(kn)$ time.
+\end{proposition}
+
+\begin{proof}
+	Line $1$ is executed once and requires $\mathcal{O}(1)$ time.
+	Line $4$ is executed at most $kn$ times and requires $\mathcal{O}(1)$ time
+	per execution.
+	Lines $6-7$ are executed at most $kn$ times and require $\mathcal{O}(1)$
+	time per execution.
+	Line $8$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time per
+	execution.
+	Line $10$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$
+	time per execution.
+	Line $12$ is executed $kn$ times and requires $\mathcal{O}(1)$ time per
+	execution.
+	Line $14$ is executed at most $k$ times and requires $\mathcal{O}(1)$ time
+	per execution.
+	Therefore, the total runtime complexity bound for \Cref{alg:qdfsa_traversal}
+	is $\mathcal{O}(kn)$.
+\end{proof}

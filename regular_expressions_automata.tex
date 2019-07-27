@@ -1,52 +1,48 @@
-\section{Finite-state automata from regular expressions}
+\section{Separated finite-state automata from regular expressions}
 
-In this subsection, we show that finite-state automata derived from regular
-expressions by applying the construction described in \Cref{thm:thompson}
-are separated. We first prove that the graphs corresponding to Thompson finite-state
-automata are planar. As a consequence, the algorithm described in
-\Cref{thm:lipton_tarjan} could be applied to a Thompson finite-state automaton
-$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ to find a separator of size
-$\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We then present an algorithm,
-specialized for Thompson finite-state automata, that is guaranteed to find a
-separator of constant size in $\mathcal{O}(|Q|)$ time.
+In this section, we show that finite-state automata constructed from regular
+expressions using the algorithm described in \Cref{thm:thompson} are separated. We
+first prove that the graph corresponding to a Thompson finite-state automaton
+$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is planar. As a consequence,
+the algorithm described in \Cref{thm:lipton_tarjan} can be applied to find a
+separator of size $\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We then
+present an algorithm, specialized for Thompson finite-state automata, that is
+guaranteed to find a separator of constant size in $\mathcal{O}(|Q|)$ time.
 
 \begin{proposition}
-	Let $\mathcal{R}$ be a regular expression over an alphabet $\Sigma$ and
-	let $\mathcal{A}$ be the finite-state automaton derived from $\mathcal{R}$
-	by applying the construction described in $\Cref{thm:thompson}$. Then
-	$\mathcal{G}_\mathcal{A}$ is planar.
+  Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$ and
+  $\mathcal{A}$ be the finite-state automaton constructed from $\mathcal{E}$ by
+  applying the algorithm described in $\Cref{thm:thompson}$. Then
+  $\mathcal{G}_\mathcal{A}$ is planar.
 \end{proposition}
 
 \begin{proof}
-	We show by induction on the construction of the Thompson finite-state
-	automaton $\mathcal{A}$ that its corresponding graph
-	$\mathcal{G}_{\mathcal{A}}$ can be embedded in a square so that the following
-	properties hold.
-	\begin{enumerate}
-		\item Only the vertex corresponding to the single start state of
-			$\mathcal{A}$ is mapped to a point that lies on the left
-			side of the square,
-		\item only the vertex corresponding to the single final state of
-			$\mathcal{A}$ is mapped to a point that lies on the right
-			side of the square,
-		\item the vertices corresponding to all other states of $\mathcal{A}$
-			are mapped to points that lie properly inside the square,
-		\item edges that correspond to transitions of $\mathcal{A}$ are
-			mapped to simple curves that lie properly inside the square,
-		\item curves intersect only at points corresponding to vertices of
-			$\mathcal{G}_{\mathcal{A}}$.
-	\end{enumerate}
+  We show by induction on the construction of the Thompson finite-state automaton
+  $\mathcal{A}$ that its corresponding graph $\mathcal{G}_{\mathcal{A}}$ can be
+  embedded in a square so that the following properties hold.
+  \begin{enumerate}
+    \item Only the vertex corresponding to the single start state of $\mathcal{A}$ is
+	    mapped to a point that lies on the left side of the square,
+    \item only the vertex corresponding to the single final state of $\mathcal{A}$ is
+	    mapped to a point that lies on the right side of the square,
+    \item the vertices corresponding to all other states of $\mathcal{A}$ are mapped
+	    to points that lie properly inside the square,
+    \item edges that correspond to transitions of $\mathcal{A}$ are mapped to simple
+	    curves that lie properly inside the square,
+    \item curves intersect only at points corresponding to vertices of
+	    $\mathcal{G}_{\mathcal{A}}$.
+  \end{enumerate}
 
-	\begin{case}[$\mathcal{R} = \emptyset$]
-		$\mathcal{A}$ is a Type 1 Thompson finite-state automaton. The
-		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in $\Cref{fig:f_thompson_1}$. There are two vertices
-		and no edges in $\mathcal{G}_{\mathcal{A}}$. Properties 1 and 2 hold
-		for $\mathcal{G}_{\mathcal{A}}$ by construction. Properties 3, 4 and
-		5 hold for $\mathcal{G}_{\mathcal{A}}$ trivially.
+  \begin{case}[$\mathcal{E} = \emptyset$]
+    $\mathcal{A}$ is a Type 1 Thompson finite-state automaton. The embedding of the
+    graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
+    $\Cref{fig:f_thompson_1}$. There are two vertices and no edges in
+    $\mathcal{G}_{\mathcal{A}}$. Properties 1 and 2 hold for
+    $\mathcal{G}_{\mathcal{A}}$ by construction. Properties 3, 4 and 5 hold for
+    $\mathcal{G}_{\mathcal{A}}$ trivially.
 
-		\begin{figure}[!h]
-			\centering
+  \begin{figure}[!h]
+	\centering
 			\begin{tikzpicture}[on grid, auto, scale=0.5]
 				\draw[dotted] (-4, -4) rectangle (4, 4);
 
@@ -61,7 +57,7 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		\end{figure}
 	\end{case}
 
-	\begin{case}[$\mathcal{R} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
+	\begin{case}[$\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
 		$\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
 		presented in $\Cref{fig:f_thompson_2}$. There are two vertices
@@ -85,13 +81,13 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		\end{figure}
 	\end{case}
 
-	\begin{case}[$\mathcal{R} = \mathcal{R}'.\mathcal{R}''$ where $\mathcal{R}'$
-		and $\mathcal{R}''$ are regular expressions]
+	\begin{case}[$\mathcal{E} = \mathcal{E}'.\mathcal{E}''$ where $\mathcal{E}'$
+		and $\mathcal{E}''$ are regular expressions]
 		$\mathcal{A}$ is a Type 3 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
 		presented in $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and
 		$\mathcal{A}''$ be the Thompson finite-state automata constructed
-		from $\mathcal{R}'$ and $\mathcal{R}''$ respectively. Also, let
+		from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
 		properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
 		$\mathcal{G}_\mathcal{A''}$. Since property 1 holds for
 		$\mathcal{G}_\mathcal{A'}$ and property 2 holds for
@@ -136,13 +132,13 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		\end{figure}
 	\end{case}
 
-	\begin{case}[$\mathcal{R} = \mathcal{R}'+\mathcal{R}''$ where $\mathcal{R}'$
-		and $\mathcal{R}''$ are regular expressions]
+	\begin{case}[$\mathcal{E} = \mathcal{E}'+\mathcal{E}''$ where $\mathcal{E}'$
+		and $\mathcal{E}''$ are regular expressions]
 		$\mathcal{A}$ is a Type 4 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
 		presented in $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and
 		$\mathcal{A}''$ be the Thompson finite-state automata constructed
-		from $\mathcal{R}'$ and $\mathcal{R}''$ respectively. Also, let
+		from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
 		properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
 		$\mathcal{G}_\mathcal{A''}$. Properties 1 and 2 hold for
 		$\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds
@@ -196,12 +192,12 @@ separator of constant size in $\mathcal{O}(|Q|)$ time.
 		\end{figure}
 	\end{case}
 
-	\begin{case}[$\mathcal{R} = \mathcal{R}'*$ where $\mathcal{R}'$ is a regular
+	\begin{case}[$\mathcal{E} = \mathcal{E}'*$ where $\mathcal{E}'$ is a regular
 		expression]
 		$\mathcal{A}$ is a Type 5 Thompson finite-state automaton. The
 		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
 		presented in $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be
-		the Thompson finite-state automaton constructed from $\mathcal{R}'$.
+		the Thompson finite-state automaton constructed from $\mathcal{E}'$.
 		Also, let properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$.
 		Properties 1 and 2 hold for $\mathcal{G}_{\mathcal{A}}$ by
 		construction. Since property 3 holds for $\mathcal{G}_\mathcal{A'}$
