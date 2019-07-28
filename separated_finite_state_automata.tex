@@ -26,12 +26,13 @@ $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is \emph{$k$-separated}.
 \end{proposition}
 
 \begin{proof}
-	There exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ in
-	$\mathcal{G}_\mathcal{A}$ such that $E \cap \{ \{ q', q'' \} \mid \exists q'
-	\in Q_i \; \exists q'' \in Q_j \} = \emptyset$ if $i \neq j$ for $i, j \in \{
-	1, 2, \ldots, k \}$. Thus, $\Delta \cap (Q_i \times \Sigma_\epsilon \times
-	Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$.
-	Therefore, $X$ is a separator in $\mathcal{A}$.
+	There exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ in
+	$\mathcal{G}_\mathcal{A} = \langle Q, E \rangle$ for $k > 1$ such that $E
+	\cap \{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} =
+	\emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta
+	\cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for
+	$i, j \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a separator in
+	$\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}\label{prop:small_delta}
