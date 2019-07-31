@@ -1,46 +1,45 @@
 \section{Graphs and separators}
 
 \begin{definition}
-	A \emph{graph} $\mathcal{G}$ is a pair
-	\begin{equation*}
-	\langle V, E \rangle
-	\end{equation*}
-	where
-	\begin{itemize}
-	\item $V$ is a finite set of vertices,
-	\item $E$ is a finite set of edges,
-	\item $e \subseteq V$ and $|e| \in \{ 1, 2 \}$ for $e \in E$.
-	\end{itemize}
+  A \emph{graph} $\mathcal{G}$ is a pair
+  \begin{equation*}
+    \langle V, E \rangle
+  \end{equation*}
+  where
+  \begin{itemize}
+    \item $V$ is a finite set of vertices,
+    \item $E$ is a finite set of edges,
+    \item $e \subseteq V$ and $|e| \in \{ 1, 2 \}$ for $e \in E$.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	A graph $\mathcal{G} = \langle V, E \rangle$ is \emph{planar} if and only if
-	there exist an injective function $f_v$ that maps vertices of the graph to
-	distinct points in the real plane and an injective function $f_e$ that maps
-	edges of the graph to simple curves in the real plane such that
-	\begin{itemize}
-	\item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and $f_v(v'')$
-		for $\{ v', v'' \} \in E$,
-	\item curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
-	\end{itemize}
+  A graph $\mathcal{G} = \langle V, E \rangle$ is \emph{planar} if and only if there
+  exist an injective function $f_v$ that maps vertices of the graph to distinct
+  points in the real plane and an injective function $f_e$ that maps edges of the
+  graph to simple curves in the real plane such that
+  \begin{itemize}
+    \item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and $f_v(v'')$ for
+	    $\{ v', v'' \} \in E$,
+    \item curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	The set $X$ is a \emph{separator in a graph} $\mathcal{G} = \langle V, E
-	\rangle$ if and only if there exists a partition ${\{ X, V_1, \ldots, V_n
-	\}}_V$ for $n > 1$ such that
-	\begin{equation*}
-		E \cap \{ \{ v', v'' \} \mid \exists v' \in V_i \; \exists v'' \in
-		V_j \} = \emptyset
-	\end{equation*}
-	if $i \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
+  The set $X$ is a \emph{separator in a graph} $\mathcal{G} = \langle V, E \rangle$
+  if and only if there exists a partition ${\{ X, V_1, \ldots, V_n \}}_V$ for $n > 1$
+  such that
+  \begin{equation*}
+    E \cap \{ \{ v', v'' \} \mid \exists v' \in V_i \; \exists v'' \in V_j \} =
+    \emptyset
+  \end{equation*}
+  if $i \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan, see \cite{lipton_tarjan_theorem}]
-	\label{thm:lipton_tarjan}
-	Let $\mathcal{G} = \langle V, E \rangle$ be a planar graph. There exists a
-separator $X$ in $\mathcal{G}$ inducing a partition ${\{ X, V_1, V_2 \}}_V$
-	such that $|X| \leq 2 \sqrt{2|V|}$ and $|V_i| \leq \frac{2}{3} |V|$ for $i
-	\in \{ 1, 2 \}$. Furthermore, there exists an algorithm that finds $\{ X,
-	V_1, V_2 \}_V$ in $\mathcal{O}(|V|)$ time.
+  \label{thm:lipton_tarjan}
+  There exists an algorithm that, given a planar graph $\mathcal{G} = \langle V, E
+  \rangle$, finds a separator $X$ and a partition $\{ X, V_1, V_2 \}_V$ such that
+  $|X| \leq 2 \sqrt{2|V|}$ and $|V_i| \leq \frac{2}{3} |V|$ for $i \in \{ 1, 2 \}$ in
+  $\mathcal{O}(|V|)$ time.
 \end{theorem}

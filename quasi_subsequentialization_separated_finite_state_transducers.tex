@@ -1,0 +1,243 @@
+\section{Quasi-subsequentialization of separated finite-state transducers}
+
+We now describe an inductive construction that, given a functional $k$-separated
+finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta
+\rangle$, produces a $k$-separated quasi-subsequential finite-state transducer
+$\mathcal{T}'$ such that $\mathcal{F}_{\mathcal{T}'} = \mathcal{F}_\mathcal{T}$.
+Let $P_i = Q_i \cup X$ for $i \in \{ 1, 2, \ldots, k \}$. The start state
+$s$ of the $k$-separated quasi-subsequential finite-state transducer $\mathcal{T}'$
+is defined as
+\begin{equation*}
+  \langle s_1, s_2, \ldots, s_k \rangle
+\end{equation*}
+where $s^i = \hat{\Delta}_\epsilon^i(S)$ for $i \in \{ 1, 2, \ldots, k \}$.
+The base $k$-separated quasi-subsequential finite-state transducer
+$\mathcal{T}'^{(1)}$ is defined as
+\begin{equation*}
+  \langle \Sigma, \Omega, Q'^{(1)}, 2^X, s, F'^{(1)}, \tau^{(1)}, \rho^{(1)},
+  \eta^{(1)}, \emptyset, \lambda^{(1)}, \psi^{(1)} \rangle
+\end{equation*}
+where $Q_i'^{(1)} = \{ s^i \}$ and $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} =
+\eta_i^{(1)} = \lambda_i^{(1)} = \psi_i^{(1)} = \emptyset$ for $i \in \{ 1, 2,
+\ldots, k \}$.
+The base set of states $R^{(1)}$ is defined as $\{ s \}$.
+Let us assume that $\mathcal{T}'^{(n)}$ and $R^{(n)}$ are constructed for $n > 0$.
+The set of states introduced at step $n$ is $R_n = R^{(n)} \setminus R^{(n-1)}$ where
+$R^{(0)} = \emptyset$.
+The longest common quasi-state transition output function $\lambda_i^{\wedge (n)} :
+Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ is defined as
+\begin{equation*}
+  \lambda_i^{\wedge (n)}(q, \sigma) = \begin{aligned}[t]
+    \bigwedge \{ &uvw \in \Omega^* \mid \exists \langle p', u \rangle \in q \;
+    \exists p'', p''' \in P_i\\
+    &\exists v, w \in \Omega^* (\langle p', \sigma, v, p'' \rangle \in \Delta \land
+    \langle p''', w \rangle \in \Delta_\epsilon^i(p'')) \}
+  \end{aligned}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The quasi-state successor function $\bar{\tau}_i^{(n)} : Q_i'^{(n)} \times \Sigma
+\rightarrow 2^{P_i \times \Omega^*}$ is defined as
+\begin{equation*}
+  \bar{\tau}_i^{(n)}(q, \sigma) = \begin{aligned}[t]
+    \{ &\langle p''', \lambda_i^{\wedge (n)}(q, \sigma)^{-1}uvw \rangle \in P_i
+    \times \Omega^* \mid \exists \langle p', u \rangle \in q \; \exists p'', p'''
+    \in P_i\\
+    &\exists v, w \in \Omega^* ( \langle p', \sigma, v, p'' \rangle \in \Delta \land
+    \langle p''', w \rangle \in \Delta_\epsilon^i(p'')) \}
+  \end{aligned}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next set of final states $F_i'^{(n+1)}$ is defined as
+\begin{equation*}
+  F_i'^{(n)} \cup \{ q^i \mid \exists q \in R_n \; \exists \langle p, w \rangle \in
+  q^i (p \in F) \}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next final quasi-state output function $\psi_i^{(n+1)}$ is defined as
+\begin{equation*}
+  \psi_i^{(n)} \cup \{ \langle q^i, w \rangle \mid \exists q \in R_n \; \exists
+  \langle p, w \rangle \in q^i (p \in F) \}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next quasi-state transition output function $\lambda_i^{(n+1)}$ is defined as
+\begin{equation*}
+  \lambda_i^{(n)} \cup \{ \langle q^i, \sigma, \lambda_i^{\wedge (n)}(q^i, \sigma)
+  \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next quasi-state transition function $\tau_i^{(n+1)}$ is defined as
+\begin{equation*}
+  \tau_i^{(n)} \cup \{ \langle q^i, \sigma, \bar{\tau}_i^{(n)}(q^i, \sigma) \rangle \mid
+  \exists q \in R_n \; \exists \sigma \in \Sigma \}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next quasi-state reduction function $\rho_i^{(n+1)}$ is defined as
+\begin{equation*}
+  \rho_i^{(n)} \cup \{ \langle q, \{ \langle p, w \rangle \in q \mid p \in X \}
+  \rangle \mid \exists q \in rng(\tau_i^{(n+1)}) \setminus rng(\tau_i^{(n)}) \}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next quasi-state extension function $\eta_i^{(n+1)}$ is defined as
+\begin{equation*}
+  \eta_i^{(n)} \cup \begin{aligned}[t]
+    \{ \langle &\tau_i^{(n+1)}(q^i, \sigma),
+    \delta_x^{(n+1)}(q, \sigma),\\
+    &\tau_i^{(n+1)} (q^i, \sigma) \cup \{ \langle p'', uv \rangle \mid \exists
+    \langle p', u \rangle \in \delta_x^{(n+1)}(q, \sigma) \; \exists \langle p'', v
+    \rangle \in \Delta_\epsilon^i(p') \} \rangle \mid\\
+    &\exists q \in R_n \; \exists \sigma \in \Sigma \}
+  \end{aligned}
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next separator extension function $\eta_x^{(n+1)}$ is defined as
+\begin{equation*}
+  \eta_x^{(n)} \cup \bigcup_{i=1}^{k-1} \begin{aligned}[t]
+    \{ \langle
+     & \bigcup_{j=1}^i \rho_j^{(n+1)}(\tau_j^{(n+1)}(q^j, \sigma)),
+    \rho_{i+1}^{(n+1)}(\tau_{i+1}^{(n+1)}(q^{i+1}, \sigma)),           \\
+     & \bigcup_{j=1}^{i+1} \rho_j^{(n+1)}(\tau_j^{(n+1)}(q^j, \sigma))
+    \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}.
+  \end{aligned}
+\end{equation*}
+The next set of states $Q_i'^{(n+1)}$ is defined as
+\begin{equation*}
+  Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup rng(\eta_i^{(n+1)})
+\end{equation*}
+for $i \in \{ 1, 2, \ldots, k \}$.
+The next $k$-separated quasi-subsequential finite-state transducer
+$\mathcal{T}'^{(n+1)}$ is defined as
+\begin{equation*}
+  \langle \Sigma, \Omega, Q'^{(n+1)}, 2^X, s, F'^{(n+1)}, \tau^{(n+1)},
+  \rho^{(n+1)}, \eta^{(n+1)}, \eta_x^{(n+1)}, \lambda^{(n+1)}, \psi^{(n+1)} \rangle.
+\end{equation*}
+The next set of states $R^{(n+1)}$ is defined as
+\begin{equation*}
+  R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma) \mid \exists q \in R_n \; \exists
+  \sigma \in \Sigma \}.
+\end{equation*}
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
+  $k$-separated finite-state transducer. Let $\mathcal{T}'^{(n)}$ be the
+  quasi-subsequential $k$-separated finite-state transducer derived from
+  $\mathcal{T}$ by applying the construction described above for $n > 0$. Then
+  $\tau_i, \rho_i, \eta_i, \lambda_i, \psi_i$ for $i \in \{ 1, 2, \ldots, k \}$ and
+  $\eta_x$ are functions.
+\end{proposition}
+
+\begin{proof}
+  Since $\lambda_i^{\wedge (n)}$ and $\bar{\tau}_i^{(n)}$ are functions, then
+  $\tau_i^{(n)}$ is also a function for $i \in \{ 1, 2, \ldots, k \}$. By
+  construction, $\rho_i^{(n)}$ is a function for $i \in \{ 1, 2, \ldots, k \}$. Since
+  $\tau_i^{(n)}$ and $\rho_i^{(n)}$ are functions for $i \in \{ 1, 2, \ldots, k \}$,
+  then $\eta_x^{(n)}$ is also a function. Since $\tau_i^{(n)}$ is a function for $i
+  \in \{ 1, 2, \ldots, k \}$ and $\eta_x^{(n)}$ is a function, then $\eta_i^{(n)}$
+  is also a function for $i \in \{ 1, 2, \ldots, k \}$. Since
+  $\lambda_i^{\wedge (n)}$ is a function, then $\lambda_i^{(n)}$ is also a function
+  for $i \in \{ 1, 2, \ldots, k \}$. By construction, $\psi_i^{(n)}$ is a function
+  for $i \in \{ 1, 2, \ldots, k \}$.
+\end{proof}
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
+  $k$-separated finite-state transducer. Let $\mathcal{T}'^{(n)}$ be the
+  $k$-separated quasi-subsequential finite-state transducer derived from
+  $\mathcal{T}$ by applying the construction described above for $n > 0$. Then
+  $dom(\lambda_i^{(n)}) = dom(\tau_i^{(n)})$ for $i \in \{ 1, 2, \ldots, k \}$.
+\end{proposition}
+
+\begin{proof}
+  We prove that $dom(\lambda_i^{(n)}) = dom(\tau_i^{(n)})$ for $i \in \{ 1, 2,
+  \ldots, k \}$ by induction on $n$. Since $\lambda_i^{(1)} = \tau_i^{(1)} =
+  \emptyset$ for $i \in \{ 1, 2, \ldots, k \}$, the statement holds for $n = 1$. Let
+  us assume that $dom(\lambda_i^{(n)}) = dom(\tau_i^{(n)})$ for $n > 0$ and $i \in \{
+  1, 2, \ldots, k \}$. Then
+  \begin{align*}
+    dom(\lambda_i^{(n+1)}) & = dom(\lambda_i^{(n)}) \cup \{ \langle q^i, \sigma
+    \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}\\
+                        & = dom(\tau_i^{(n)}) \cup \{ \langle q^i, \sigma
+    \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}\\
+                        & = dom(\tau_i^{(n+1)}).
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
+  $k$-separated finite-state transducer. Let $\mathcal{T}'^{(n)}$ be the
+  $k$-separated quasi-subsequential finite-state transducer derived from
+  $\mathcal{T}$ by applying the construction described above for $n > 0$. Then
+  $dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $i \in \{ 1, 2, \ldots, k \}$.
+\end{proposition}
+
+\begin{proof}
+  We prove that $dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $i \in \{ 1, 2, \ldots,
+  k \}$ by induction on $n$. Since $\rho_i^{(1)} = \tau_i^{(1)} = \emptyset$ for $i
+  \in \{ 1, 2, \ldots, k \}$, the statement holds for $n = 1$. Let us assume that
+  $dom(\rho_i^{(n)}) = rng(\tau_i^{(n)})$ for $n > 0$ and $i \in \{ 1, 2, \ldots, k
+  \}$. Then
+  \begin{align*}
+    dom(\rho_i^{(n+1)}) & = dom(\rho_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
+    rng(\tau_i^{(n)}))\\
+                        & = rng(\tau_i^{(n)}) \cup (rng(\tau_i^{(n+1)}) \setminus
+    rng(\tau_i^{(n)}))\\
+                        & = rng(\tau_i^{(n+1)}).
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
+  functional $k$-separated finite-state transducer such that
+  $\mathcal{F}_\mathcal{T}$ has bounded variation. Let $\mathcal{T'}^{(n)}$ and
+  $R^{(n)}$ be respectively the $k$-separated quasi-subsequential finite-state
+  transducer and the set of states derived from $\mathcal{T}$ by applying the
+  construction described above for $n > 0$. There exists $m \in \mathbb{N}$ such that
+  $R^{(n)} = R^{(n+1)}$ and $\mathcal{T'}^{(n)} = \mathcal{T'}^{(n+1)}$ for $n > m$.
+\end{lemma}
+
+\begin{proof}
+  If $R^{(m)} = R^{(m+1)}$ for $m > 0$, then $R_{m+1} = \emptyset$. Thus,
+  $\mathcal{T}'^{(m+2)} = \mathcal{T}'^{(m+1)}$ and $R^{(m+2)} = R^{(m+1)}$. It
+  follows that $R^{(n)} = R^{(n+1)}$ and $\mathcal{T}'^{(n)} = \mathcal{T}'^{(n+1)}$
+  for $n > m$.
+  Let us assume that such $m$ does not exist.
+  It follows that $R_n \neq \emptyset$ for $n > 0$.
+  Let us assign each state $q \in Q$ a path $\langle q, w_q, v_q, f_q \rangle \in
+  \Delta^*$ for some $f_q \in F$.
+  Such paths exist because $\mathcal{T}$ is trimmed.
+  Let $W = \max_{q \in Q}{|w_q|}$ and $V = \max_{q \in Q}{|v_q|}$.
+  Since $\mathcal{F}_\mathcal{T}$ has bounded variation, then for $k = 2W$ there
+  exists $K \geq 0$ such that $d_\Sigma(w', w''') \leq k$ implies
+  $d_\Sigma(\mathcal{F}_\mathcal{T}(w'), \mathcal{F}_\mathcal{T}(w'')) \leq K$ for
+  all words $w', w'' \in \Sigma^*$.
+  Since $R_n \neq \emptyset$ for $n > 0$ and $Q$ is finite, there exist $n > 0$, $q_n
+  \in R_n$, $j \in \{ 1, 2, \ldots, k \}$ and $\langle p', u' \rangle \in q_n^j$ such
+  that $|u'| > K + V$.
+  Also, by construction, there exists $w \in \Sigma^*$ such that $q_n =
+  \delta^{(n)*}(s, w)$.
+  Since $u' \neq \epsilon$, it follows that there exists $\langle p'', u'' \rangle
+  \in q_n^j$ such that $u' \wedge u'' = \epsilon$.
+  Therefore, there exist $s', s'' \in S$  such that $\langle s', w, \lambda^{(i)*}(s,
+  w)u', p' \rangle \in \Delta^*$ and $\langle s'', w, \lambda^{(i)*}(s, w)u'', p''
+  \rangle \in \Delta^*$.
+  Moreover, we have $\langle p', w_{p'}, v_{p'}, f_{p'} \rangle \in \Delta^*$ and
+  $\langle p'', w_{p''}, v_{p''}, f_{p''} \rangle \in \Delta^*$. We have
+  $d_\Sigma(ww_{p'}, ww_{p''}) \leq |w_{p'}| + |w_{p''}| \leq 2W = k$. If $u'' =
+  \epsilon$, then
+  \begin{align*}
+    d_\Sigma(\lambda^{(n)*}(s, w)u'v', \lambda^{(n)*}(s, w)u''v'')
+    &= d_\Sigma(u'v', v'')\\
+    &> (K + V + |v'|) - V
+    > K.
+  \end{align*}
+  Otherwise,
+  \begin{align*}
+    d_\Sigma(\lambda^{(n)*}(s, w)u'v', \lambda^{(n)*}(s, w)u''v'')
+    &= |u'| + |v'| + |u''| + |v''|\\
+    &> |u'|
+    > K + V
+    > K.
+  \end{align*}
+  This contradicts the precondition that $\mathcal{F}_\mathcal{T}$ has bounded
+  variation. Therefore, there exists $m \in \mathbb{N}$ such that $R^{(n)} =
+  R^{(n+1)}$ and $\mathcal{T}'^{(n)} = \mathcal{T}'^{(n+1)}$ for $n > m$.
+\end{proof}

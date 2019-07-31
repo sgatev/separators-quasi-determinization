@@ -1,162 +1,159 @@
 \section{Regular languages and expressions}
 
 \begin{definition}
-	The class of \emph{regular languages} over an alphabet $\Sigma$ is the
-	inclusion-wise minimal subset of $\Sigma^*$ such that
-	\begin{itemize}
-	\item $\emptyset$ is a regular language over $\Sigma$,
-	\item if $\sigma \in \Sigma_\epsilon$, then $\{ \sigma \}$ is a regular
-		language over $\Sigma$,
-	\item if $\mathcal{L}'$ and $\mathcal{L}''$ are regular languages over
-		$\Sigma$, then
-		\begin{itemize}
-		\item $\mathcal{L}'\;\hat{\cdot}\;\mathcal{L}''$ is a regular
-			language over $\Sigma$,
-		\item $\mathcal{L}' \cup \mathcal{L}''$ is a regular language over
-			$\Sigma$,
-		\item $\mathcal{L}'^*$ is a regular language over $\Sigma$.
-		\end{itemize}
-	\end{itemize}
+  The class of \emph{regular languages} over an alphabet $\Sigma$ is the
+  inclusion-wise minimal subset of $\Sigma^*$ such that
+  \begin{itemize}
+    \item $\emptyset$ is a regular language over $\Sigma$,
+    \item if $\sigma \in \Sigma_\epsilon$, then $\{ \sigma \}$ is a regular language
+	    over $\Sigma$,
+    \item if $\mathcal{L}'$ and $\mathcal{L}''$ are regular languages over $\Sigma$,
+	    then
+	    \begin{itemize}
+              \item $\mathcal{L}'\;\hat{\cdot}\;\mathcal{L}''$ is a regular language
+		      over $\Sigma$,
+              \item $\mathcal{L}' \cup \mathcal{L}''$ is a regular language over
+		      $\Sigma$,
+              \item $\mathcal{L}'^*$ is a regular language over $\Sigma$.
+            \end{itemize}
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	The class of \emph{regular expressions} over an alphabet $\Sigma$ where $\{
-	\emptyset, (, ), ., +, * \} \not\subseteq \Sigma$ is the inclusion-wise
-	minimal subset of $(\Sigma \cup \{ \emptyset, (, ), ., +, * \})^*$ such that
-	\begin{itemize}
-	\item $\emptyset$ is a regular expression over $\Sigma$,
-	\item if $\sigma \in \Sigma_\epsilon$, then $\sigma$ is a regular expression
-		over $\Sigma$,
-	\item if $\mathcal{E}'$ and $\mathcal{E}''$ are regular expressions over
-		$\Sigma$, then
-		\begin{itemize}
-		\item $(\mathcal{E}'\;.\;\mathcal{E}'')$ is a regular expression over
-			$\Sigma$,
-		\item $(\mathcal{E}'+\mathcal{E}'')$ is a regular expression over
-			$\Sigma$,
-		\item $(\mathcal{E}'*)$ is a regular expression over $\Sigma$.
-		\end{itemize}
-	\end{itemize}
+  The class of \emph{regular expressions} over an alphabet $\Sigma$ where $\{
+  \emptyset, (, ), ., +, * \} \not\subseteq \Sigma$ is the inclusion-wise minimal
+  subset of $(\Sigma \cup \{ \emptyset, (, ), ., +, * \})^*$ such that
+  \begin{itemize}
+    \item $\emptyset$ is a regular expression over $\Sigma$,
+    \item if $\sigma \in \Sigma_\epsilon$, then $\sigma$ is a regular expression over
+	    $\Sigma$,
+    \item if $\mathcal{E}'$ and $\mathcal{E}''$ are regular expressions over
+          $\Sigma$, then
+          \begin{itemize}
+            \item $(\mathcal{E}'\;.\;\mathcal{E}'')$ is a regular expression over
+                  $\Sigma$,
+            \item $(\mathcal{E}'+\mathcal{E}'')$ is a regular expression over
+                  $\Sigma$,
+            \item $(\mathcal{E}'*)$ is a regular expression over $\Sigma$.
+          \end{itemize}
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	The \emph{language denoted by a regular expression} $\mathcal{E}$ over an
-	alphabet $\Sigma$ is the set $\mathcal{L}_\mathcal{E}$ defined as
-	\begin{itemize}
-	\item $\emptyset$ if $\mathcal{E} = \emptyset$,
-	\item $\{ \sigma \}$ if $\mathcal{E} = \sigma$,
-	\item $\mathcal{L}_{\mathcal{E}'}\;\hat{\cdot}\;\mathcal{L}_{\mathcal{E}''}$
-		if $\mathcal{E} = (\mathcal{E}'\;.\;\mathcal{E}'')$,
-	\item $\mathcal{L}_{\mathcal{E}'} \cup \mathcal{L}_{\mathcal{E}''}$
-		if $\mathcal{E} = (\mathcal{E}'+\mathcal{E}'')$,
-	\item $\mathcal{L}_{\mathcal{E}'}^*$ if $\mathcal{E} = (\mathcal{E}'*)$
-	\end{itemize}
-	where $\sigma \in \Sigma_\epsilon$ and $\mathcal{E}'$, $\mathcal{E}''$ are
-	regular expressions over $\Sigma$.
+  The \emph{language denoted by a regular expression} $\mathcal{E}$ over an alphabet
+  $\Sigma$ is the set $\mathcal{L}_\mathcal{E}$ defined as
+  \begin{itemize}
+    \item $\emptyset$ if $\mathcal{E} = \emptyset$,
+    \item $\{ \sigma \}$ if $\mathcal{E} = \sigma$,
+    \item $\mathcal{L}_{\mathcal{E}'}\;\hat{\cdot}\;\mathcal{L}_{\mathcal{E}''}$ if
+	    $\mathcal{E} = (\mathcal{E}'\;.\;\mathcal{E}'')$,
+    \item $\mathcal{L}_{\mathcal{E}'} \cup \mathcal{L}_{\mathcal{E}''}$ if
+	    $\mathcal{E} = (\mathcal{E}'+\mathcal{E}'')$,
+    \item $\mathcal{L}_{\mathcal{E}'}^*$ if $\mathcal{E} = (\mathcal{E}'*)$
+  \end{itemize}
+  where $\sigma \in \Sigma_\epsilon$ and $\mathcal{E}'$, $\mathcal{E}''$ are regular
+  expressions over $\Sigma$.
 \end{definition}
 
 \begin{theorem}[Thompson, see \cite{thompson}]
-	\label{thm:thompson}
-	Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$. There
-	exists a finite-state automaton $\mathcal{A}$ such that
-	$\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{E}$. Furthermore, there
-	exists an algorithm that constructs $\mathcal{A}$ given $\mathcal{E}$ in
-	$\mathcal{O}(|\mathcal{E}|)$ time.
+  \label{thm:thompson}
+  There exists an algorithm that, given a regular expression $\mathcal{E}$ over an
+  alphabet $\Sigma$, constructs a finite-state automaton $\mathcal{A}$ such that
+  $\mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{E}$ in $\mathcal{O}(|\mathcal{E}|)$
+  time.
 \end{theorem}
 
-The proof of \Cref{thm:thompson} is essentially a recursive method for constructing
-a finite-state automaton $\mathcal{A}_\mathcal{E} = \langle \Sigma, Q_\mathcal{E},
+The proof of \Cref{thm:thompson} is essentially a recursive method for constructing a
+finite-state automaton $\mathcal{A}_\mathcal{E} = \langle \Sigma, Q_\mathcal{E},
 S_\mathcal{E}, F_\mathcal{E}, \Delta_\mathcal{E} \rangle$ from a regular expression
 $\mathcal{E}$. It creates 5 distinct types of finite-state automata depending on the
-type of regular expression.
-If $\mathcal{E} = \emptyset$, then $\mathcal{A}_\mathcal{E} = \langle \Sigma, \{ s,
-f \}, \{ s \}, \{ f \}, \emptyset \rangle$ is the Type 1 finite-state automaton constructed from $\mathcal{E}$.
-If $\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$, then
+type of regular expression. If $\mathcal{E} = \emptyset$, then
+$\mathcal{A}_\mathcal{E} = \langle \Sigma, \{ s, f \}, \{ s \}, \{ f \}, \emptyset
+\rangle$ is the Type 1 finite-state automaton constructed from $\mathcal{E}$. If
+$\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$, then
 $\mathcal{A}_\mathcal{E} = \langle \Sigma, \{ s, f \}, \{ s \}, \{ f \}, \{ \langle
 s, \sigma, f \rangle \} \rangle$ is the Type 2 finite-state automaton constructed
-from $\mathcal{E}$.
-If $\mathcal{E} = (\mathcal{E}'\;.\;\mathcal{E}'')$, then $\mathcal{A}_\mathcal{E} =
-\langle \Sigma, Q_{\mathcal{E}'} \cup Q_{\mathcal{E}''}, S_{\mathcal{E}'},
-F_{\mathcal{E}''}, \Delta_\mathcal{E} \rangle$ is the Type 3 finite-state automaton
-constructed from $\mathcal{E}$ where
+from $\mathcal{E}$. If $\mathcal{E} = (\mathcal{E}'\;.\;\mathcal{E}'')$, then
+$\mathcal{A}_\mathcal{E} = \langle \Sigma, Q_{\mathcal{E}'} \cup Q_{\mathcal{E}''},
+S_{\mathcal{E}'}, F_{\mathcal{E}''}, \Delta_\mathcal{E} \rangle$ is the Type 3
+finite-state automaton constructed from $\mathcal{E}$ where
 \begin{equation*}
-	\Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup
-	\Delta_{\mathcal{E}''} \cup (F_{\mathcal{E}'} \times \{ \epsilon \}
-	\times S_{\mathcal{E}''}).
+  \Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup \Delta_{\mathcal{E}''} \cup
+  (F_{\mathcal{E}'} \times \{ \epsilon \} \times S_{\mathcal{E}''}).
 \end{equation*}
 If $\mathcal{E} = (\mathcal{E}'+\mathcal{E}'')$, then $\mathcal{A}_\mathcal{E} =
 \langle \Sigma, Q_{\mathcal{E}'} \cup Q_{\mathcal{E}''} \cup \{ s, f \}, \{ s \}, \{
 f \}, \Delta_\mathcal{E} \rangle$ is the Type 4 finite-state automaton constructed
 from $\mathcal{E}$ where
 \begin{equation*}
-	\Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup
-	\Delta_{\mathcal{E}''} \cup (\{ \langle s, \epsilon \rangle \} \times
-	(S_{\mathcal{E}'} \cup S_{\mathcal{E}''})) \cup ((F_{\mathcal{E}'}
-	\cup F_{\mathcal{E}''}) \times \{ \langle \epsilon, f \rangle \}).
+  \Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup \Delta_{\mathcal{E}''} \cup (\{
+  \langle s, \epsilon \rangle \} \times (S_{\mathcal{E}'} \cup S_{\mathcal{E}''}))
+  \cup ((F_{\mathcal{E}'} \cup F_{\mathcal{E}''}) \times \{ \langle \epsilon, f
+  \rangle \}).
 \end{equation*}
 If $\mathcal{E} = (\mathcal{E}'*)$, then $\mathcal{A}_\mathcal{E} = \langle \Sigma,
 Q_{\mathcal{E}'} \cup \{ s, f \}, \{ s \}, \{ f \}, \Delta_\mathcal{E} \rangle$ is
 the Type 5 finite-state automaton constructed from $\mathcal{E}$ where
 \begin{equation*}
-	\Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup \{ \langle s,
-	\epsilon, s' \rangle, \langle s, \epsilon, f \rangle, \langle f',
-	\epsilon, f \rangle, \langle f', \epsilon, s' \rangle \mid \exists s'
-	\in S_{\mathcal{E}'} \; \exists f' \in F_{\mathcal{E}'} \}.
+  \Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup \{ \langle s, \epsilon, s' \rangle,
+  \langle s, \epsilon, f \rangle, \langle f', \epsilon, f \rangle, \langle f',
+  \epsilon, s' \rangle \mid \exists s' \in S_{\mathcal{E}'} \; \exists f' \in
+  F_{\mathcal{E}'} \}.
 \end{equation*}
 \Cref{figure:thompson_automaton} shows the finite-state automaton constructed from
 the regular expression $(0+1)*$ using the described algorithm.
 
 \begin{figure}[!h]
-	\centering
-	\begin{tikzpicture}[on grid, auto, scale=0.35]
-  		\node[state, initial, fill=white, scale=0.375]
-			(s1) at (-10, 0) {};
-  		\node[state, fill=white, scale=0.375]
-			(s2) at (-6, 0) {};
-		\node[state, fill=white, scale=0.375]
-			(s3) at (-2, 2) {};
-		\node[state, fill=white, scale=0.375]
-			(s4) at (-2, -2) {};
-		\node[state, fill=white, scale=0.375]
-			(s5) at (2, 2) {};
-		\node[state, fill=white, scale=0.375]
-			(s6) at (2, -2) {};
-		\node[state, fill=white, scale=0.375]
-			(s7) at (6, 0) {};
-  		\node[state, accepting, fill=white, scale=0.375]
-			(s8) at (10, 0) {};
+  \centering
+  \begin{tikzpicture}[on grid, auto, scale=0.35]
+    \node[state, initial, fill=white, scale=0.375]
+    (s1) at (-10, 0) {};
+    \node[state, fill=white, scale=0.375]
+    (s2) at (-6, 0) {};
+    \node[state, fill=white, scale=0.375]
+    (s3) at (-2, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s4) at (-2, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s5) at (2, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s6) at (2, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s7) at (6, 0) {};
+    \node[state, accepting, fill=white, scale=0.375]
+    (s8) at (10, 0) {};
 
-		\draw
-			(s1) edge node{$\epsilon$} (s2)
-			(s2) edge node{$\epsilon$} (s3)
-			(s2) edge node{$\epsilon$} (s4)
-			(s3) edge node{$0$} (s5)
-			(s4) edge node{$1$} (s6)
-			(s5) edge node{$\epsilon$} (s7)
-			(s6) edge node{$\epsilon$} (s7)
-			(s7) edge node{$\epsilon$} (s8)
-			(s1) edge[bend right=40] node{$\epsilon$} (s8)
-			(s7) edge[bend left=-80] node[above]{$\epsilon$} (s2);
-	\end{tikzpicture}
-	\caption{Finite-state automaton derived from the regular expression $(0+1)*$
-		by applying the construction described in \Cref{thm:thompson}.}
-	\label{figure:thompson_automaton}
+    \draw
+    (s1) edge node{$\epsilon$} (s2)
+    (s2) edge node{$\epsilon$} (s3)
+    (s2) edge node{$\epsilon$} (s4)
+    (s3) edge node{$0$} (s5)
+    (s4) edge node{$1$} (s6)
+    (s5) edge node{$\epsilon$} (s7)
+    (s6) edge node{$\epsilon$} (s7)
+    (s7) edge node{$\epsilon$} (s8)
+    (s1) edge[bend right=40] node{$\epsilon$} (s8)
+    (s7) edge[bend left=-80] node[above]{$\epsilon$} (s2);
+  \end{tikzpicture}
+  \caption{Finite-state automaton derived from the regular expression $(0+1)*$ by
+  	applying the construction described in \Cref{thm:thompson}.}
+  \label{figure:thompson_automaton}
 \end{figure}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton derived from a regular expression by applying the
-	construction described in \Cref{thm:thompson}. Then $|S| = |F| = 1$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton derived from a regular expression by applying the construction described
+  in \Cref{thm:thompson}. Then $|S| = |F| = 1$.
 \end{proposition}
 
 \begin{proof}
-	We prove the statement by induction on the construction of the finite-state
-	automaton.
-	\begin{case}[$\mathcal{A}$ is Type 1, 2, 4 or 5]
-	$|S| = |\{ s \}| = 1$ and $|F| = |\{ f \}| = 1$ by construction.
-	\end{case}
-	\begin{case}[$\mathcal{A}$ is Type 3]
-	$|S| = |S'| = 1$ and $|F| = |F''| = 1$ by the inductive hypothesis for
-	$\mathcal{A'}$ and $\mathcal{A''}$.
-	\end{case}
+  We prove the statement by induction on the construction of the finite-state
+  automaton.
+  \begin{case}[$\mathcal{A}$ is Type 1, 2, 4 or 5]
+    $|S| = |\{ s \}| = 1$ and $|F| = |\{ f \}| = 1$ by construction.
+  \end{case}
+  \begin{case}[$\mathcal{A}$ is Type 3]
+    $|S| = |S'| = 1$ and $|F| = |F''| = 1$ by the inductive hypothesis for
+    $\mathcal{A'}$ and $\mathcal{A''}$.
+  \end{case}
 \end{proof}

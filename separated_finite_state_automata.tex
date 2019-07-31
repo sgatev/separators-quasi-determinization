@@ -1,186 +1,187 @@
 \section{Separated finite-state automata}
 
 \begin{definition}
-	The set $X$ is a \emph{separator in a finite-state automaton} $\mathcal{A} =
-	\langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there exists a
-	partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $\Delta \cap
-	(Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j
-	\in \{ 1, 2, \ldots, k \}$.
+  The set $X$ is a \emph{separator in a finite-state automaton} $\mathcal{A} =
+  \langle \Sigma, Q, S, F, \Delta \rangle$ if and only if there exists a partition
+  $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $\Delta \cap (Q_i \times
+  \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2,
+  \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
-	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is \emph{$k$-separa\-ted} for $k > 1$ if and only if there exists a
-	separator $X$ in $\mathcal{A}$ inducing a partition $\{ X, Q_1, \ldots, Q_k
-	\}_Q$.
+  A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is
+  \emph{$k$-separated} for $k > 1$ if and only if there exists a separator $X$ in
+  $\mathcal{A}$ inducing a partition $\{ X, Q_1, \ldots, Q_k \}_Q$.
 \end{definition}
 
 We shall write $\mathcal{A} = \langle \Sigma, Q', X, S, F, \Delta \rangle$ where $Q'
 = \langle Q_1, Q_2, \ldots, Q_k \rangle$ in case the finite-state automaton
-$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is \emph{$k$-separated}.
+$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is $k$-separated.
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. If $X$ is a separator in $\mathcal{G}_\mathcal{A}$,
-	then $X$ is a separator in $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton. If $X$ is a separator in $\mathcal{G}_\mathcal{A}$, then $X$ is a
+  separator in $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
-	There exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ in
-	$\mathcal{G}_\mathcal{A} = \langle Q, E \rangle$ for $k > 1$ such that $E
-	\cap \{ \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} =
-	\emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta
-	\cap (Q_i \times \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for
-	$i, j \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a separator in
-	$\mathcal{A}$.
-\end{proof}
-
-\begin{proposition}\label{prop:small_delta}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Then $\Delta \subseteq \bigcup_{i=1}^k
-	(Q_i \cup X) \times \Sigma_\epsilon \times (Q_i \cup X)$.
-\end{proposition}
-
-\begin{proof}
-	\begin{align*}
-		\Delta &\subseteq Q \times \Sigma_\epsilon \times Q\\
-		&= (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
-		(\bigcup_{i=1}^k{Q_i} \cup X) &\\
-		&= \begin{aligned}[t]
-			&\bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times \Sigma_\epsilon
-			\times Q_j) \cup \bigcup_{i=1}^k (X \times \Sigma_\epsilon
-			\times Q_i) \cup\\
-			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times X) \cup
-			(X \times \Sigma_\epsilon \times X).
-		\end{aligned}
-	\end{align*}
-	Since $\mathcal{A}$ is $k$-separated, then $\Delta \cap (Q_i \times
-	\Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in
-	\{ 1, 2, \ldots, k \}$. Therefore,
-	\begin{align*}
-		\Delta &\subseteq \begin{aligned}[t]
-			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
-			\cup \bigcup_{i=1}^k (X \times \Sigma_\epsilon \times Q_i)
-			\cup\\
-			&\bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times X) \cup
-			(X \times \Sigma_\epsilon \times X)
-		\end{aligned} &\\
-		&= \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times Q_i)
-		\cup \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times X)\\
-		&= \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times (Q_i
-		\cup X).
-	\end{align*}
-\end{proof}
-
-\begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $\langle q', w, q'' \rangle \in
-	\Delta^*$ for $w \in \Sigma^*$, $q' \in Q_i \cup X$ and $q'' \in Q_j \cup X$
-	where $i, j \in \{ 1, 2, \ldots, k \}$ and $i \neq j$. There exist $w', w''
-	\in \Sigma^*$ and $x \in X$ such that $w = w'w''$ and $\langle q', w', x
-	\rangle, \langle x, w'', q'' \rangle \in \Delta^*$.
-\end{proposition}
-
-\begin{proof}
-	Since $\langle q', w, q'' \rangle \in \Delta^*$, there exists a path $\pi$ in
-	$\mathcal{A}$ with start state $q'$, end state $q''$ and label $w$. If the
-	path $\pi$ is trivial, then $w = \epsilon$ and $q' = q''$. Since $Q_i \cap
-	Q_j = \emptyset$, then $q' = q'' \in X$. Therefore, the statement holds for
-	$w' = w'' = \epsilon$ and $x = q' = q''$. Otherwise, if the path $\pi$ is
-	non-trivial, there exists a finite sequence of state transitions
-	\begin{equation*}
-		\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3
-		\rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-	\end{equation*}
-	for $n > 1$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$
-	for $r \in \{ 1, 2, \ldots, n-1 \}$, $q_1 = q'$, $q_n = q''$ and $w =
-	\sigma_1\sigma_2\ldots\sigma_{n-1}$. Let us assume that $q_r \not\in X$ for
-	$r \in \{ 1, 2, \ldots, n \}$. It follows that $q_1 = q' \in Q_i$ and $q_n =
-	q'' \in Q_j$. Since $i \neq j$, there exists $r \in \{ 1, 2, \ldots,
-	n-1 \}$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$, $q_r
-	\in Q_{r'}$ and $q_{r+1} \in Q_{r''}$ where $r', r'' \in \{ 1, 2, \ldots, k
-	\}$ and $r' \neq r''$. However, this contradicts the assumption that
-	$\mathcal{A}$ is $k$-separated. Therefore, there exists $r \in \{ 1, 2,
-	\ldots, n \}$ such that $q_r \in X$. Let $w' = \sigma_1 \sigma_2 \ldots
-	\sigma_{r-1}$ and $w'' = \sigma_r \sigma_{r+1} \ldots \sigma_{n-1}$. Then $w
-	= w'w''$ and $\langle q_1, w', q_r \rangle, \langle q_r, w'', q_n \rangle \in
-	\Delta^*$. Letting $x = q_r$ shows that the statement also holds in this
-	case.
+  Let $X$ be a separator in $\mathcal{G}_\mathcal{A} = \langle Q, E \rangle$. There
+  exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $E \cap \{
+  \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} = \emptyset$ if $i
+  \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta \cap (Q_i \times
+  \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in \{ 1, 2,
+  \ldots, k \}$. Therefore, $X$ is a separator in $\mathcal{A}$.
 \end{proof}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. The \emph{quasi-state
-	$\epsilon$-closure function} $\Delta_\epsilon^i : \bigcup_{j=1}^k Q_j \cup X
-	\rightarrow 2^{Q_i \cup X}$ is defined as
-	\begin{equation*}
-	\Delta_\epsilon^i(q') = \{ q'' \in Q_i \cup X \mid \langle q', \epsilon, q''
-	\rangle \in \Delta^* \}
-	\end{equation*}
-	for $i \in \{ 1, 2, \ldots, k \}$.
+  A \emph{component $\mathcal{C}(Q_i)$ in a $k$-separated finite-state automaton}
+  $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ is the set $Q_i \cup X$
+  for $i \in \{ 1, 2, \ldots, k \}$.
+\end{definition}
+
+\begin{proposition}\label{prop:small_delta}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+  $k$-separated finite-state automaton. Then $\Delta \subseteq \bigcup_{i=1}^k
+  \mathcal{C}(Q_i) \times \Sigma_\epsilon \times \mathcal{C}(Q_i)$.
+\end{proposition}
+
+\begin{proof}
+  \begin{align*}
+    \Delta                        & \subseteq Q \times \Sigma_\epsilon \times Q                   \\
+                                  & = (\bigcup_{i=1}^k{Q_i} \cup X) \times \Sigma_\epsilon \times
+    (\bigcup_{i=1}^k{Q_i} \cup X) &                                                               \\
+                                  & = \begin{aligned}[t]
+       & \bigcup_{i=1}^k \bigcup_{j=1}^k (Q_i \times \Sigma_\epsilon
+      \times Q_j) \cup \bigcup_{i=1}^k (X \times \Sigma_\epsilon
+      \times Q_i) \cup                                               \\
+       & \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times X) \cup
+      (X \times \Sigma_\epsilon \times X).
+    \end{aligned}
+  \end{align*}
+  Since $\mathcal{A}$ is $k$-separated, then $\Delta \cap (Q_i \times
+    \Sigma_\epsilon \times Q_j) = \emptyset$ if $i \neq j$ for $i, j \in
+    \{ 1, 2, \ldots, k \}$. Therefore,
+  \begin{align*}
+    \Delta & \subseteq \begin{aligned}[t]
+       & \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times Q_i)
+      \cup \bigcup_{i=1}^k (X \times \Sigma_\epsilon \times Q_i)
+      \cup                                                          \\
+       & \bigcup_{i=1}^k (Q_i \times \Sigma_\epsilon \times X) \cup
+      (X \times \Sigma_\epsilon \times X)
+    \end{aligned}                                & \\
+    & = \bigcup_{i=1}^k (\mathcal{C}(Q_i) \times \Sigma_\epsilon \times Q_i)
+    \cup \bigcup_{i=1}^k (\mathcal{C}(Q_i) \times \Sigma_\epsilon \times X)\\
+    & = \bigcup_{i=1}^k \mathcal{C}(Q_i) \times \Sigma_\epsilon \times
+    \mathcal{C}(Q_i).
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. Let $\langle q', w, q'' \rangle \in \Delta^*$ for $q' \in
+  \mathcal{C}(Q_i)$, $w \in \Sigma^*$, and $q'' \in \mathcal{C}(Q_j)$ where $i, j \in
+  \{ 1, 2, \ldots, k \}$ and $i \neq j$. There exist $w', w'' \in \Sigma^*$ and $x
+  \in X$ such that $w = w'w''$ and $\langle q', w', x \rangle, \langle x, w'', q''
+  \rangle \in \Delta^*$.
+\end{proposition}
+
+\begin{proof}
+  Since $\langle q', w, q'' \rangle \in \Delta^*$, there exists a path $\pi$ in
+  $\mathcal{A}$ with start state $q'$, end state $q''$ and label $w$. If the path
+  $\pi$ is trivial, then $w = \epsilon$ and $q' = q''$. Since $Q_i \cap Q_j =
+  \emptyset$, then $q' = q'' \in X$. Therefore, the statement holds for $w' = w'' =
+  \epsilon$ and $x = q' = q''$. Otherwise, if the path $\pi$ is non-trivial, there
+  exists a finite sequence of state transitions
+  \begin{equation*}
+    \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \ldots,
+    \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+  \end{equation*}
+  for $n > 1$ such that $\langle q_r, \sigma_r, q_{r+1} \rangle \in \Delta$ for $r
+  \in \{ 1, 2, \ldots, n-1 \}$, $q_1 = q'$, $q_n = q''$ and $w = \sigma_1 \sigma_2
+  \ldots \sigma_{n-1}$. Let us assume that $q_r \not\in X$ for $r \in \{ 1, 2,
+  \ldots, n \}$. It follows that $q_1 = q' \in Q_i$ and $q_n = q'' \in Q_j$. Since $i
+  \neq j$, there exists $r \in \{ 1, 2, \ldots, n-1 \}$ such that $\langle q_r,
+  \sigma_r, q_{r+1} \rangle \in \Delta$, $q_r \in Q_{r'}$ and $q_{r+1} \in Q_{r''}$
+  where $r', r'' \in \{ 1, 2, \ldots, k \}$ and $r' \neq r''$. However, this
+  contradicts the assumption that $\mathcal{A}$ is $k$-separated. Therefore, there
+  exists $r \in \{ 1, 2, \ldots, n \}$ such that $q_r \in X$. Let $w' = \sigma_1
+  \sigma_2 \ldots \sigma_{r-1}$ and $w'' = \sigma_r \sigma_{r+1} \ldots
+  \sigma_{n-1}$. Then $w = w'w''$ and $\langle q_1, w', q_r \rangle, \langle q_r,
+  w'', q_n \rangle \in \Delta^*$. Letting $x = q_r$ shows that the statement also
+  holds in this case.
+\end{proof}
+
+\begin{definition}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. The \emph{component $\epsilon$-closure function}
+  $\Delta_\epsilon^i : \bigcup_{j=1}^k \mathcal{C}(Q_j) \rightarrow
+  2^{\mathcal{C}(Q_i)}$ is defined as
+  \begin{equation*}
+    \Delta_\epsilon^i(q') = \{ q'' \in \mathcal{C}(Q_i) \mid \langle q', \epsilon,
+    q'' \rangle \in \Delta^* \}
+  \end{equation*}
+  for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Let $Q' \subseteq \bigcup_{i=1}^k Q_i
-	\cup X$. Let $\langle q'', \epsilon, q''' \rangle \in \Delta^*$ where $q''
-	\in \hat{\Delta}_\epsilon^i(Q')$ and $q''' \in Q$ for $i \in \{ 1, 2, \ldots,
-	k \}$. There exists $q' \in Q'$ such that $\langle q',
-	\epsilon, q''' \rangle \in \Delta^*$.
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. Let $\langle q'', \epsilon, q''' \rangle \in \Delta^*$ for
+  $q'' \in \hat{\Delta}_\epsilon^i(Q')$ and $q''' \in \bigcup_{j=1}^k
+  \mathcal{C}(Q_j)$ where $i \in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq
+  \bigcup_{i=1}^k \mathcal{C}(Q_i)$. There exists $q' \in Q'$ such that $\langle q',
+  \epsilon, q''' \rangle \in \Delta^*$.
 \end{proposition}
 
 \begin{proof}
-	Since $\hat{\Delta}_\epsilon^i(Q') = \{ q'' \in Q_i \cup X \mid \exists q'
-	\in Q' (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}$, there
-	exists $q' \in Q'$ such that $\langle q', \epsilon, q'' \rangle \in
-	\Delta^*$. Therefore, $\langle q', \epsilon, q''' \rangle \in \Delta^*$ by
-	definition.
+  Since $\hat{\Delta}_\epsilon^i(Q') = \{ q'' \in \mathcal{C}(Q_i) \mid \exists q'
+  \in Q' (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}$, there exists $q' \in
+  Q'$ such that $\langle q', \epsilon, q'' \rangle \in \Delta^*$. Therefore, $\langle
+  q', \epsilon, q''' \rangle \in \Delta^*$ by definition.
 \end{proof}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(\hat{
-	\Delta}_\epsilon^i(Q') \cap X) \subseteq \hat{\Delta}_\epsilon^i(Q')$ for $i
-	\in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq Q_i \cup X$.
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. Then $\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^i(Q')
+  \cap X) \subseteq \hat{\Delta}_\epsilon^i(Q')$ for $i \in \{ 1, 2, \ldots, k \}$
+  and $Q' \subseteq \mathcal{C}(Q_i)$.
 \end{proposition}
 
 \begin{proof}
-	\begin{align*}
-	\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^i(Q') \cap X)
-	&= \{ q'' \in Q_i \cup X \mid \exists q' \in \hat{\Delta}_\epsilon^i(Q')
-	\cap X (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
-	&\subseteq \{ q'' \in Q_i \cup X \mid \exists q' \in
-	\hat{\Delta}_\epsilon^i(Q') (\langle q', \epsilon, q'' \rangle \in \Delta^*)
-	\}\\
-	&= \{ q'' \in Q_i \cup X \mid \exists q' \in Q' (\langle q', \epsilon, q''
-	\rangle \in \Delta^*) \}\\
-	&= \hat{\Delta}_\epsilon^i(Q').
-	\end{align*}
+  \begin{align*}
+    \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^i(Q') \cap X)
+    &= \{ q'' \in \mathcal{C}(Q_i) \mid \exists q' \in \hat{\Delta}_\epsilon^i(Q')
+    \cap X (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
+    &\subseteq \{ q'' \in \mathcal{C}(Q_i) \mid \exists q' \in
+    \hat{\Delta}_\epsilon^i(Q') (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
+    &= \{ q'' \in \mathcal{C}(Q_i) \mid \exists q' \in Q' (\langle q', \epsilon, q''
+    \rangle \in \Delta^*) \}\\
+    & = \hat{\Delta}_\epsilon^i(Q').
+  \end{align*}
 \end{proof}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-	$k$-separated finite-state automaton. Then $\hat{\Delta}_\epsilon^i(Q') =
-	\hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X)$ if $i \neq j$
-	for $i, j \in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq Q_j \cup X$.
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. Then $\hat{\Delta}_\epsilon^i(Q') =
+  \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X)$ if $i \neq j$ for $i,
+  j \in \{ 1, 2, \ldots, k \}$ and $Q' \subseteq \mathcal{C}(Q_j)$.
 \end{proposition}
 
 \begin{proof}
-	\begin{align*}
-	\hat{\Delta}_\epsilon^i(Q')
-	&= \{ q'' \in Q_i \cup X \mid \exists q' \in Q' (\langle q', \epsilon, q''
-	\rangle \in \Delta^*) \}\\
-	&= \{ q''' \in Q_i \cup X \mid \exists q' \in Q' \; \exists q'' \in X
-	(\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon, q''' \rangle \in
-	\Delta^*) \}\\
-	&= \{ q'' \in Q_i \cup X \mid \exists q' \in \hat{\Delta}_\epsilon(Q') \cap
-	X (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
-	&= \hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(Q') \cap X) \cap (Q_i \cup
-	X)\\
-	&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon(Q') \cap (Q_j \cup X) \cap
-	X)\\
-	&= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X).
-	\end{align*}
+  \begin{align*}
+    \hat{\Delta}_\epsilon^i(Q')
+    &= \{ q'' \in \mathcal{C}(Q_i) \mid \exists q' \in Q' (\langle q', \epsilon, q''
+    \rangle \in \Delta^*) \}\\
+    &= \{ q''' \in \mathcal{C}(Q_i) \mid \exists q' \in Q' \; \exists q'' \in X
+    (\langle q', \epsilon, q'' \rangle, \langle q'', \epsilon, q''' \rangle \in
+    \Delta^*) \}\\
+    &= \{ q'' \in \mathcal{C}(Q_i) \mid \exists q' \in \hat{\Delta}_\epsilon(Q') \cap
+    X (\langle q', \epsilon, q'' \rangle \in \Delta^*) \}\\
+    &= \hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(Q') \cap X) \cap
+    \mathcal{C}(Q_i)\\
+    &= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon(Q') \cap \mathcal{C}(Q_j) \cap
+    X)\\
+    &= \hat{\Delta}_\epsilon^i(\hat{\Delta}_\epsilon^j(Q') \cap X).
+  \end{align*}
 \end{proof}
 
 The states of a deterministic finite-state automaton $\mathcal{A'} = \langle \Sigma,
@@ -189,40 +190,41 @@ Q', s, F', \delta \rangle$ derived by applying the construction described in
 $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$. Thus, $|\delta| \leq |Q'|
 \times |\Sigma| = 2^{|Q|} \times |\Sigma|$. In fact, the worst-case bound is attained
 for some finite-state automata (\Cref{fig:worst_case_det}). Based on
-\Cref{prop:small_delta}, if $\mathcal{A}$ is $k$-separated we could effectively
+\Cref{prop:small_delta}, if $\mathcal{A}$ is $k$-separated, we could effectively
 simulate a deterministic state transition $p = \delta(q, \sigma)$ by decomposing the
 state transition function $\delta$ into quasi-state transition functions $\delta_i :
 2^{(Q_i \cup X)} \times \Sigma \rightarrow 2^{(Q_i \cup X)}$ for $i \in \{ 1, 2,
-\ldots, k \}$ and the state $q \subseteq Q$ into quasi-states $q_i \subseteq Q_i
-\cup X$ for $i \in \{ 1, 2, \ldots, k \}$, evaluating $p_i = \delta_i(q_i, \sigma)$
-for each of the quasi-states and composing the results into the new state $p =
+\ldots, k \}$ and the state $q \subseteq Q$ into quasi-states $q_i \subseteq Q_i \cup
+X$ for $i \in \{ 1, 2, \ldots, k \}$, evaluating $p_i = \delta_i(q_i, \sigma)$ for
+each of the quasi-states and composing the results into the new state $p =
 \bigcup_{i=1}^k p_i \subseteq Q$. If $\sum_{i=1}^k 2^{|Q_i| + |X|} < 2^{|Q|}$ the
-functions $\delta_i$ combined will be smaller than $\delta$ leading towards a more
+functions $\delta_i$ combined will be smaller than $\delta$ leading to a more
 efficient representation of $\mathcal{A'}$ while maintaining its deterministic
-behavior. This insight motivates the construction described below.
+behavior. In fact, we shall see that it is not necessary to combine the quasi-states
+after each traversal. This insight motivates the construction described below.
 
 \begin{figure}[!h]
-	\centering
-	\begin{tikzpicture}[on grid, auto, scale=0.25]
-  		\node[state, initial, fill=white, scale=0.75]
-			(s1) at (-20, 0) {$1$};
-  		\node[state, fill=white, scale=0.75]
-			(s2) at (-12, 0) {$2$};
-		\node[state, fill=white, scale=0.75]
-			(s3) at (-4, 0) {$3$};
-		\node[state, fill=white, scale=0.75]
-			(s4) at (4, 0) {$4$};
-  		\node[state, accepting, fill=white, scale=0.75]
-			(sn) at (20, 0) {$n$};
+  \centering
+  \begin{tikzpicture}[on grid, auto, scale=0.25]
+    \node[state, initial, fill=white, scale=0.75]
+    (s1) at (-20, 0) {$1$};
+    \node[state, fill=white, scale=0.75]
+    (s2) at (-12, 0) {$2$};
+    \node[state, fill=white, scale=0.75]
+    (s3) at (-4, 0) {$3$};
+    \node[state, fill=white, scale=0.75]
+    (s4) at (4, 0) {$4$};
+    \node[state, accepting, fill=white, scale=0.75]
+    (sn) at (20, 0) {$n$};
 
-		\path[->] (s1) edge [loop above] node {$0,1$} (s1);
-		\path[->] (s1) edge node {$1$} (s2);
-		\path[->] (s2) edge node {$0,1$} (s3);
-		\path[->] (s3) edge node {$0,1$} (s4);
-		\path[->] (s4) edge [dashed] node {} (sn);
-	\end{tikzpicture}
-	\caption{Finite-state automaton with $n$ states that produces a deterministic
-		finite-state automaton with $2^n$ states when applied the
-		construction described in \Cref{thm:rabin_scott}.}
-	\label{fig:worst_case_det}
+    \path[->] (s1) edge [loop above] node {$0,1$} (s1);
+    \path[->] (s1) edge node {$1$} (s2);
+    \path[->] (s2) edge node {$0,1$} (s3);
+    \path[->] (s3) edge node {$0,1$} (s4);
+    \path[->] (s4) edge [dashed] node {} (sn);
+  \end{tikzpicture}
+  \caption{Finite-state automaton with $n$ states that produces a deterministic
+    finite-state automaton with $2^n$ states when applied the
+    construction described in \Cref{thm:rabin_scott}.}
+  \label{fig:worst_case_det}
 \end{figure}

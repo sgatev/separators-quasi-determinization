@@ -1,147 +1,141 @@
 \section{Quasi-deterministic finite-state automata}
 
 \begin{definition}
-	A \emph{$k$-separated quasi-deterministic finite-state automaton}
-	$\mathcal{A}$ is a tuple
-	\begin{equation*}
-	\langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
-	\end{equation*}
-	where
-	\begin{itemize}
-	\item $Q, s, F, \tau, \rho$ and $\eta$ are tuples of $k$ elements,
-	\item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
-		deterministic finite-state automaton for $i \in \{ 1, 2, \ldots, k
-		\}$,
-	\item $X$ is a separator set such that $X \subseteq Q_i$ for $i \in \{ 1, 2,
-		\ldots, k \}$,
-	\item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function such
-		that $dom(\rho_i) = rng(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$,
-	\item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state extension
-		function for $i \in \{ 1, 2, \ldots, k \}$,
-	\item $\eta_x : X \times X \rightarrow X$ is a separator extension function.
-	\end{itemize}
+  A \emph{$k$-separated quasi-deterministic finite-state automaton}
+  $\mathcal{A}$ is a tuple
+  \begin{equation*}
+    \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
+  \end{equation*}
+  where
+  \begin{itemize}
+    \item $Q, s, F, \tau, \rho$ and $\eta$ are tuples of $k$ elements,
+    \item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
+          deterministic finite-state automaton for $i \in \{ 1, 2, \ldots, k
+            \}$,
+    \item $X$ is a separator set such that $X \subseteq Q_i$ for $i \in \{ 1, 2,
+            \ldots, k \}$,
+    \item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function such
+          that $dom(\rho_i) = rng(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$,
+    \item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state extension
+          function for $i \in \{ 1, 2, \ldots, k \}$,
+    \item $\eta_x : X \times X \rightarrow X$ is a separator extension function.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	A state in a $k$-separated quasi-deterministic finite-state automaton
-	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
-	is an element of the set $\prod_{i=1}^k{Q_i}$.
+  A state in a $k$-separated quasi-deterministic finite-state automaton $\mathcal{A}
+  = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ is an element of
+  the set $\prod_{i=1}^k{Q_i}$.
 \end{definition}
 
 We shall denote the set of states $\prod_{i=1}^k{Q_i}$ by $\mathcal{P}(Q)$ and shall
 write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
-	\emph{iterated separator extension functions} $\eta_x^i : X^i \rightarrow X$
-	are defined as
-	\begin{itemize}
-	\item $\eta_x^1(x) = x$,
-	\item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1, x_2,
-		\ldots, x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k \}$.
-	\end{itemize}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
+  a $k$-separated quasi-deterministic finite-state automaton. The \emph{iterated
+  separator extension functions} $\eta_x^i : X^i \rightarrow X$ are defined as
+  \begin{itemize}
+    \item $\eta_x^1(x) = x$,
+    \item $\eta_x^i(x_1, x_2, \ldots, x_i) = \eta_x(\eta_x^{i-1}(x_1, x_2, \ldots,
+	    x_{i-1}), x_i)$ for $i \in \{ 2, 3, \ldots, k \}$.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
-	\emph{separator state transition function} $\delta_x : \mathcal{P}(Q) \times
-	\Sigma \rightarrow X$ is defined as
-	\begin{equation*}
-	\delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)),
-	\rho_2(\tau_2(q^2, \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
-	\end{equation*}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
+  a $k$-separated quasi-deterministic finite-state automaton. The \emph{separator
+  state transition function} $\delta_x : \mathcal{P}(Q) \times \Sigma \rightarrow X$
+  is defined as
+  \begin{equation*}
+    \delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)), \rho_2(\tau_2(q^2,
+    \sigma)), \ldots, \rho_k(\tau_k(q^k, \sigma))).
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
-	\emph{quasi-state transition function} $\delta_i : \mathcal{P}(Q) \times
-	\Sigma \rightarrow Q_i$ is defined as
-	\begin{equation*}
-	\delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))
-	\end{equation*}
-	for $i \in \{ 1, 2, \ldots, k \}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
+  a $k$-separated quasi-deterministic finite-state automaton. The \emph{quasi-state
+  transition function} $\delta_i : \mathcal{P}(Q) \times \Sigma \rightarrow Q_i$ is
+  defined as
+  \begin{equation*}
+    \delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))
+  \end{equation*}
+  for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
-	\emph{state transition function} $\delta : \mathcal{P}(Q) \times \Sigma
-	\rightarrow \mathcal{P}(Q)$ is defined as
-	\begin{equation*}
-	\delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
-	\delta_k(q, \sigma) \rangle.
-	\end{equation*}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
+  be a $k$-separated quasi-deterministic finite-state automaton. The \emph{state
+  transition function} $\delta : \mathcal{P}(Q) \times \Sigma \rightarrow
+  \mathcal{P}(Q)$ is defined as
+  \begin{equation*}
+    \delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
+    \delta_k(q, \sigma) \rangle.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. The
-	\emph{generalized state transition function} $\delta^* : \mathcal{P}(Q)
-	\times \Sigma^* \rightarrow \mathcal{P}(Q)$ is defined as
-	\begin{itemize}
-	\item $\delta^*(q, \epsilon) = q$ for $q \in \mathcal{P}(Q)$,
-	\item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in
-		\mathcal{P}(Q)$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
-	\end{itemize}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
+  be a $k$-separated quasi-deterministic finite-state automaton. The
+  \emph{generalized state transition function} $\delta^* : \mathcal{P}(Q) \times
+  \Sigma^* \rightarrow \mathcal{P}(Q)$ is defined as
+  \begin{itemize}
+    \item $\delta^*(q, \epsilon) = q$ for $q \in \mathcal{P}(Q)$,
+    \item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in
+            \mathcal{P}(Q)$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	A \emph{path in a $k$-separated quasi-deterministic finite-state automaton}
-	$\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
-	is either trivial or non-trivial. A trivial path $\pi_q$ in
-	$\mathcal{A}$ is associated with every state $q \in \mathcal{P}(Q)$. The
-	length of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of
-	$\pi_q$ is $q$. The label of $\pi_q$ is $\epsilon$. The path $\pi_q$ is
-	succsessful if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2,
-	\ldots, k \}$. A non-trivial path $\pi$ in $\mathcal{A}$ is a finite
-	sequence of state transitions
-	\begin{equation*}
-	\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
-	\dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-	\end{equation*}
-	for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in \{ 1, 2,
-	\ldots, n-1 \}$.
-	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
-	state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots
-	\sigma_{n-1}$. The path $\pi$ is successful if and only if $q_1 = s$ and
-	$q_n^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. 
+  A \emph{path in a $k$-separated quasi-deterministic finite-state automaton}
+  $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ is
+  either trivial or non-trivial. A trivial path $\pi_q$ in $\mathcal{A}$ is
+  associated with every state $q \in \mathcal{P}(Q)$. The length of $\pi_q$ is $0$.
+  The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of
+  $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful if and only if $q = s$ and
+  $q^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. A non-trivial path $\pi$ in
+  $\mathcal{A}$ is a finite sequence of state transitions
+  \begin{equation*}
+    \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \dots,
+    \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+  \end{equation*}
+  for $n > 1$ where $q_{i+1} = \delta(q_i, \sigma_i)$ for $i \in \{ 1, 2, \ldots, n-1
+  \}$. The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end state
+  of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots \sigma_{n-1}$.
+  The path $\pi$ is successful if and only if $q_1 = s$ and $q_n^i \in F_i$ for some
+  $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x
-	\rangle$ be a $k$-separated quasi-deterministic finite-state automaton. There
-	exists a path in $\mathcal{A}$ with start state $q' \in \mathcal{P}(Q)$, end
-	state $q'' \in \mathcal{P}(Q)$ and label $w \in \Sigma^*$ if and only if
-	$\delta^*(q', w) = q''$.
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
+  a $k$-separated quasi-deterministic finite-state automaton. There exists a path in
+  $\mathcal{A}$ with start state $q' \in \mathcal{P}(Q)$, end state $q'' \in
+  \mathcal{P}(Q)$ and label $w \in \Sigma^*$ if and only if $\delta^*(q', w) = q''$.
 \end{proposition}
 
 \begin{proof}
-	We prove the statement by induction on the length of $w$. If $|w| = 0$, then
-	$w = \epsilon$. Let there be a path with start state $q'
-	\in \mathcal{P}(Q)$, end state $q'' \in \mathcal{P}(Q)$ and label $w
-	= \epsilon$. Only trivial paths are labeled with $\epsilon$. Therefore, $q'
-	= q''$ and by definition $\delta^*(q', w) = \delta^*(q', \epsilon) = q' =
-	q''$. A similar argument follows in the other direction. Otherwise, if $|w|
-	> 0$, then $w = w'\sigma$ for $w' \in \Sigma^*$ and $\sigma \in \Sigma$. Let
-	there be a path with start state $q' \in \mathcal{P}(Q)$, end state $q'''
-	\in \mathcal{P}(Q)$ and label $w$. There exist a state $q'' \in
-	\mathcal{P}(Q)$ and a path with start state $q'$, end state $q''$ and
-	label $w'$. Furthermore, $\delta(q'', \sigma) = q'''$ by definition. By the
-	inductive hypothesis $\delta^*(q', w') = q''$. Therefore, by definition
-	$\delta^*(q', w) = \delta^*(q', w'\sigma) = \delta(\delta^*(q', w'), \sigma)
-	= \delta(q'', \sigma) = q'''$. Again, a similar argument can be followed in
-	the other direction.
+  We prove the statement by induction on the length of $w$. If $|w| = 0$, then $w =
+  \epsilon$. Let there be a path with start state $q' \in \mathcal{P}(Q)$, end state
+  $q'' \in \mathcal{P}(Q)$ and label $w = \epsilon$. Only trivial paths are labeled
+  with $\epsilon$. Therefore, $q' = q''$ and by definition $\delta^*(q', w) =
+  \delta^*(q', \epsilon) = q' = q''$. A similar argument follows in the other
+  direction. Otherwise, if $|w| > 0$, then $w = w'\sigma$ for $w' \in \Sigma^*$ and
+  $\sigma \in \Sigma$. Let there be a path with start state $q' \in \mathcal{P}(Q)$,
+  end state $q''' \in \mathcal{P}(Q)$ and label $w$. There exist a state $q'' \in
+  \mathcal{P}(Q)$ and a path with start state $q'$, end state $q''$ and label $w'$.
+  Furthermore, $\delta(q'', \sigma) = q'''$ by definition. By the inductive
+  hypothesis $\delta^*(q', w') = q''$. Therefore, by definition $\delta^*(q', w) =
+  \delta^*(q', w'\sigma) = \delta(\delta^*(q', w'), \sigma) = \delta(q'', \sigma) =
+  q'''$. Again, a similar argument can be followed in the other direction.
 \end{proof}
 
 \begin{definition}
-	The \emph{language recognized by a $k$-separated quasi-determini\-stic
-	finite-state automaton} $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau,
-	\rho, \eta, \eta_x \rangle$ is the set of all labels of successful paths
-	\begin{equation*}
-	\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists i \in \{ 1, 2,
-	\ldots, k \}(\delta^*(s, w)^i \in F_i) \}.
-	\end{equation*}
+  The \emph{language $\mathcal{L}_\mathcal{A}$ recognized by a $k$-separated
+  quasi-deterministic finite-state automaton} $\mathcal{A} = \langle \Sigma, Q, X, s,
+  F, \tau, \rho, \eta, \eta_x \rangle$ is the set of all labels of successful paths
+  \begin{equation*}
+    \{ w \in \Sigma^* \mid \exists i \in \{ 1, 2, \ldots, k \}(\delta^*(s, w)^i \in
+    F_i) \}.
+  \end{equation*}
 \end{definition}

@@ -1,47 +1,37 @@
 \chapter{Introduction}
 
 Finite-state devices are fundamental to computer science, finding applications in
-compiler design, natural language processing, and many other fields. Hopcroft,
-Motwani and Ullman \cite{hopcroft_motwani_ullman} give an extensive introduction to
-finite-state automata and their relation to the theory of computation. Mohri
-\cite{mohri_transducers} discusses applications of weighted finite-state automata and
-finite-state transducers in natural language processing. Mihov and Schulz
-\cite{mihov_schulz} present an overview of a generalized model of finite-state
-automata, finite-state transducers, and bimachines.
+compiler design \cite{aho_lam_sethi_ullman}, natural language processing
+\cite{mohri_applications}, and other fields. An introduction to finite-state
+automata and their relation to the theory of computation is given in
+\cite{hopcroft_motwani_ullman}. A generalized model of finite-state automata,
+finite-state transducers, and bimachines is presented in \cite{mihov_schulz}.
 \bigbreak
 A central problem in the theory of finite-state devices is that of non-determi\-nism
 and the existence of deterministic representations with similar expressive power. In
 their seminal work \cite{rabin_scott}, Rabin and Scott introduce the notion of
 non-deterministic finite-state automata, show that these devices are equivalent in
-their expressiveness to deterministic finite-state automata, and present an algorithm
-that constructs a deterministic finite-state automaton from a given non-deterministic
-finite-state automaton. Choffrut \cite{choffrut} proves that rational functions with
-bounded variation can be represented by a deterministic flavor of finite-state
-transducers. Mohri \cite{mohri_applications} shows that the determinization algorithm
-introduced by Rabin and Scoot can be generalized to work for this class of rational
-functions. While often good in practice, a downside to the algorithm is that in the
-worst case it produces a deterministic finite-state device with an exponential number
-of states compared to the input non-deterministic machine.
+their expressivity to deterministic finite-state automata, and present an algorithm
+that, given a non-deterministic finite-state automaton, constructs a deterministic
+finite-state automaton recognizing the same language. Mohri shows that this
+determinization algorithm can be generalized to rational functions of bounded
+variation \cite{mohri_applications}. While often good in practice, a downside to the
+algorithm is that in the worst case it produces a deterministic finite-state device
+with an exponential number of states compared to the input non-deterministic machine.
 \bigbreak
 A concept relevant to the representation of a finite-state device is that of a graph.
 Algorithms over graphs are studied outside the theory of finite-state devices but in
 many cases find applications to related problems. A class of efficient algorithms for
-graphs that contain a separator is based on the divide-and-conquer method. Lipton and
-Tarjan \cite{lipton_tarjan_theorem} show that every planar graph contains a separator
-of relatively small size, making these algorithms applicable to many practical
-problems \cite{lipton_tarjan_applications}. Similar results follow for other classes
-of graphs \cite{gilbert_hutchinson_tarjan} \cite{alon_seymour_thomas}.
+graphs that contain a separator is based on the divide-and-conquer method
+\cite{aho_hopcroft}. Lipton and Tarjan show that every planar graph contains a
+separator of relatively small size \cite{lipton_tarjan_theorem}, making these
+algorithms applicable to many practical problems \cite{lipton_tarjan_applications}.
+Similar results follow for other classes of graphs \cite{gilbert_hutchinson_tarjan}
+\cite{alon_seymour_thomas}.
 \bigbreak
 In this thesis, we take a look at graphs corresponding to finite-state automata and
 finite-state transducers. We show that the presence of a separator in the graph can
 lead to a more efficient deterministic representation of the finite-state device. We
-then observe that the graph corresponding to a finite-state automaton derived from a
-regular expression \cite{thompson} contains a separator of constant size and use it as an
-illustrative example for the new construction.
-\bigbreak
-The rest of the work is organized as follows. In \Cref{chapter:preliminaries} we
-provide formal preliminaries. \Cref{chapter:separators_finite_state_automata}
-introduces the notion of separated finite-state automata and describes an efficient
-deterministic representation of such devices.
-\Cref{chapter:separators_finite_state_transducers} extends these results to separated
-finite-state transducers.
+then observe that graphs corresponding to finite-state automata derived from regular
+expressions \cite{thompson} contain separators of constant size and use them as an
+illustrative example for the new construction. 

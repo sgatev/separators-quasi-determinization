@@ -22,8 +22,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage[hidelinks]{hyperref}
-\usepackage[linesnumbered,vlined,noline,noend]{algorithm2e}
-\usepackage[noend]{algpseudocode}
+\usepackage[algochapter,linesnumbered,noend,noline,vlined]{algorithm2e}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -34,11 +33,12 @@
 
 \DeclareMathOperator*{\argmax}{argmax}
 
+% algorithms
 \SetAlCapSty{}
 \SetAlCapSkip{1em}
 
 % theorems
-\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -49,16 +49,11 @@
 % paragraph settings
 \setlength{\parindent}{0em}
 
+% metadata
 \title{Separators for Quasi-Determinization of Finite-State Devices}
 \author{Stanislav Gatev}
 
 \begin{document}
-\emergencystretch 3em
-\maketitle
-\pagenumbering{roman}
-\tableofcontents
-\pagebreak
-\pagenumbering{arabic}
-\input{content.tex}
-\printbibliography[heading=bibintoc]
+  \emergencystretch 3em
+  \input{content.tex}
 \end{document}

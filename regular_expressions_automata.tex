@@ -22,15 +22,15 @@ guaranteed to find a separator of constant size in $\mathcal{O}(|Q|)$ time.
   embedded in a square so that the following properties hold.
   \begin{enumerate}
     \item Only the vertex corresponding to the single start state of $\mathcal{A}$ is
-	    mapped to a point that lies on the left side of the square,
+          mapped to a point that lies on the left side of the square,
     \item only the vertex corresponding to the single final state of $\mathcal{A}$ is
-	    mapped to a point that lies on the right side of the square,
+          mapped to a point that lies on the right side of the square,
     \item the vertices corresponding to all other states of $\mathcal{A}$ are mapped
-	    to points that lie properly inside the square,
+          to points that lie properly inside the square,
     \item edges that correspond to transitions of $\mathcal{A}$ are mapped to simple
-	    curves that lie properly inside the square,
+          curves that lie properly inside the square,
     \item curves intersect only at points corresponding to vertices of
-	    $\mathcal{G}_{\mathcal{A}}$.
+          $\mathcal{G}_{\mathcal{A}}$.
   \end{enumerate}
 
   \begin{case}[$\mathcal{E} = \emptyset$]
@@ -41,212 +41,212 @@ guaranteed to find a separator of constant size in $\mathcal{O}(|Q|)$ time.
     $\mathcal{G}_{\mathcal{A}}$ by construction. Properties 3, 4 and 5 hold for
     $\mathcal{G}_{\mathcal{A}}$ trivially.
 
-  \begin{figure}[!h]
-	\centering
-			\begin{tikzpicture}[on grid, auto, scale=0.5]
-				\draw[dotted] (-4, -4) rectangle (4, 4);
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}[on grid, auto, scale=0.5]
+        \draw[dotted] (-4, -4) rectangle (4, 4);
 
-				\node[state, fill=white, scale=0.75] (s) at
-					(-4, 0) {$s$};
-  				\node[state, fill=white, scale=0.75] (f)
-					at (4, 0) {$f$};
-			\end{tikzpicture}
-			\caption{Embedding of the graph corresponding to a Type 1
-				Thompson finite-state automaton in a square.}
-			\label{fig:f_thompson_1}
-		\end{figure}
-	\end{case}
+        \node[state, fill=white, scale=0.75] (s) at
+        (-4, 0) {$s$};
+        \node[state, fill=white, scale=0.75] (f)
+        at (4, 0) {$f$};
+      \end{tikzpicture}
+      \caption{Embedding of the graph corresponding to a Type 1
+        Thompson finite-state automaton in a square.}
+      \label{fig:f_thompson_1}
+    \end{figure}
+  \end{case}
 
-	\begin{case}[$\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
-		$\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
-		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in $\Cref{fig:f_thompson_2}$. There are two vertices
-		and a single edge in $\mathcal{G}_{\mathcal{A}}$. Properties 1, 2, 4
-		and 5 hold for $\mathcal{G}_{\mathcal{A}}$ by construction. Property
-		3 holds for $\mathcal{G}_{\mathcal{A}}$ trivially.
+  \begin{case}[$\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
+    $\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
+    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
+    presented in $\Cref{fig:f_thompson_2}$. There are two vertices
+    and a single edge in $\mathcal{G}_{\mathcal{A}}$. Properties 1, 2, 4
+    and 5 hold for $\mathcal{G}_{\mathcal{A}}$ by construction. Property
+    3 holds for $\mathcal{G}_{\mathcal{A}}$ trivially.
 
-		\begin{figure}[!h]
-			\centering
-			\begin{tikzpicture}[on grid, auto, scale=0.5]
-  				\draw[dotted] (-4, -4) rectangle (4, 4);
-  				\node[state, fill=white, scale=0.75] (s) at
-					(-4, 0) {$s$};
-  				\node[state, fill=white, scale=0.75] (f)
-					at (4, 0) {$f$};
-  				\path (s) edge node {} (f);
-			\end{tikzpicture}
-			\caption{Embedding of the graph corresponding to a Type 2
-				Thompson finite-state automaton in a square.}
-			\label{fig:f_thompson_2}
-		\end{figure}
-	\end{case}
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}[on grid, auto, scale=0.5]
+        \draw[dotted] (-4, -4) rectangle (4, 4);
+        \node[state, fill=white, scale=0.75] (s) at
+        (-4, 0) {$s$};
+        \node[state, fill=white, scale=0.75] (f)
+        at (4, 0) {$f$};
+        \path (s) edge node {} (f);
+      \end{tikzpicture}
+      \caption{Embedding of the graph corresponding to a Type 2
+        Thompson finite-state automaton in a square.}
+      \label{fig:f_thompson_2}
+    \end{figure}
+  \end{case}
 
-	\begin{case}[$\mathcal{E} = \mathcal{E}'.\mathcal{E}''$ where $\mathcal{E}'$
-		and $\mathcal{E}''$ are regular expressions]
-		$\mathcal{A}$ is a Type 3 Thompson finite-state automaton. The
-		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and
-		$\mathcal{A}''$ be the Thompson finite-state automata constructed
-		from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
-		properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
-		$\mathcal{G}_\mathcal{A''}$. Since property 1 holds for
-		$\mathcal{G}_\mathcal{A'}$ and property 2 holds for
-		$\mathcal{G}_\mathcal{A''}$ then, by construction, properties 1 and
-		2 hold for $\mathcal{G}_\mathcal{A}$. Also, since property 3 holds
-		for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$
-		then, by construction, it also holds for $\mathcal{G}_\mathcal{A}$.
-		Since property 4 holds for $\mathcal{G}_\mathcal{A'}$ and
-		$\mathcal{G}_\mathcal{A''}$, and the edge connecting $f'$ and $s''$
-		is mapped to a simple curve that lies properly inside the square
-		then property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, that
-		edge is mapped outside the square embeddings of the graphs
-		$\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Thus,
-		since properties 4 and 5 hold for them then property 5 also holds for
-		$\mathcal{G}_\mathcal{A}$.
+  \begin{case}[$\mathcal{E} = \mathcal{E}'.\mathcal{E}''$ where $\mathcal{E}'$
+      and $\mathcal{E}''$ are regular expressions]
+    $\mathcal{A}$ is a Type 3 Thompson finite-state automaton. The
+    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
+    presented in $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and
+    $\mathcal{A}''$ be the Thompson finite-state automata constructed
+    from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
+    properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
+    $\mathcal{G}_\mathcal{A''}$. Since property 1 holds for
+    $\mathcal{G}_\mathcal{A'}$ and property 2 holds for
+    $\mathcal{G}_\mathcal{A''}$ then, by construction, properties 1 and
+    2 hold for $\mathcal{G}_\mathcal{A}$. Also, since property 3 holds
+    for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$
+    then, by construction, it also holds for $\mathcal{G}_\mathcal{A}$.
+    Since property 4 holds for $\mathcal{G}_\mathcal{A'}$ and
+    $\mathcal{G}_\mathcal{A''}$, and the edge connecting $f'$ and $s''$
+    is mapped to a simple curve that lies properly inside the square
+    then property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, that
+    edge is mapped outside the square embeddings of the graphs
+    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Thus,
+    since properties 4 and 5 hold for them then property 5 also holds for
+    $\mathcal{G}_\mathcal{A}$.
 
-		\begin{figure}[!h]
-			\centering
-			\begin{tikzpicture}[on grid, auto, scale=0.25]
-  				\draw[dotted] (-8, -8) rectangle (8, 8);
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}[on grid, auto, scale=0.25]
+        \draw[dotted] (-8, -8) rectangle (8, 8);
 
-				\draw (-8, -3) rectangle (-2, 3);
-  				\node[state, fill=white, scale=0.75]
-					(s') at (-8, 0) {$s'$};
-  				\node[state, fill=white, scale=0.75]
-					(f') at (-2, 0) {$f'$};
+        \draw (-8, -3) rectangle (-2, 3);
+        \node[state, fill=white, scale=0.75]
+        (s') at (-8, 0) {$s'$};
+        \node[state, fill=white, scale=0.75]
+        (f') at (-2, 0) {$f'$};
 
-  				\draw (2, -3) rectangle (8, 3);
-  				\node[state, fill=white, scale=0.75]
-					(s'') at (2, 0) {$s''$};
-  				\node[state, fill=white, scale=0.75]
-					(f'') at (8, 0) {$f''$};
+        \draw (2, -3) rectangle (8, 3);
+        \node[state, fill=white, scale=0.75]
+        (s'') at (2, 0) {$s''$};
+        \node[state, fill=white, scale=0.75]
+        (f'') at (8, 0) {$f''$};
 
-  				\path (f') edge node {} (s'');
+        \path (f') edge node {} (s'');
 
-				\node[] at (-5, 0) {$\mathcal{G}_\mathcal{A'}$};
-				\node[] at (5, 0) {$\mathcal{G}_\mathcal{A''}$};
-			\end{tikzpicture}
-			\caption{Embedding of the graph corresponding to a Type 3
-				Thompson finite-state automaton in a square.}
-		\label{fig:f_thompson_3}
-		\end{figure}
-	\end{case}
+        \node[] at (-5, 0) {$\mathcal{G}_\mathcal{A'}$};
+        \node[] at (5, 0) {$\mathcal{G}_\mathcal{A''}$};
+      \end{tikzpicture}
+      \caption{Embedding of the graph corresponding to a Type 3
+        Thompson finite-state automaton in a square.}
+      \label{fig:f_thompson_3}
+    \end{figure}
+  \end{case}
 
-	\begin{case}[$\mathcal{E} = \mathcal{E}'+\mathcal{E}''$ where $\mathcal{E}'$
-		and $\mathcal{E}''$ are regular expressions]
-		$\mathcal{A}$ is a Type 4 Thompson finite-state automaton. The
-		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and
-		$\mathcal{A}''$ be the Thompson finite-state automata constructed
-		from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
-		properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
-		$\mathcal{G}_\mathcal{A''}$. Properties 1 and 2 hold for
-		$\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds
-		for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and
-		since no vertices are ever mapped to points that lie on the top or
-		bottom sides of a square then, by construction, it also holds for
-		$\mathcal{G}_\mathcal{A}$. Also, since properties 4 and 5 hold for
-		$\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and since
-		the edges that connect $s$ to $s'$ and $s''$, and $f$ to $f'$ and
-		$f''$ are mapped to curves that lie properly inside the square then
-		property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, since
-		these edges are mapped to simple curves that lie outside the square
-		embeddings of $\mathcal{G}_\mathcal{A'}$ and
-		$\mathcal{G}_\mathcal{A''}$, and since they intersect other curves
-		only at points where vertices of the graph are mapped to then
-		property 5 holds for $\mathcal{G}_\mathcal{A}$.
+  \begin{case}[$\mathcal{E} = \mathcal{E}'+\mathcal{E}''$ where $\mathcal{E}'$
+      and $\mathcal{E}''$ are regular expressions]
+    $\mathcal{A}$ is a Type 4 Thompson finite-state automaton. The
+    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
+    presented in $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and
+    $\mathcal{A}''$ be the Thompson finite-state automata constructed
+    from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
+    properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
+    $\mathcal{G}_\mathcal{A''}$. Properties 1 and 2 hold for
+    $\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds
+    for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and
+    since no vertices are ever mapped to points that lie on the top or
+    bottom sides of a square then, by construction, it also holds for
+    $\mathcal{G}_\mathcal{A}$. Also, since properties 4 and 5 hold for
+    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and since
+    the edges that connect $s$ to $s'$ and $s''$, and $f$ to $f'$ and
+    $f''$ are mapped to curves that lie properly inside the square then
+    property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, since
+    these edges are mapped to simple curves that lie outside the square
+    embeddings of $\mathcal{G}_\mathcal{A'}$ and
+    $\mathcal{G}_\mathcal{A''}$, and since they intersect other curves
+    only at points where vertices of the graph are mapped to then
+    property 5 holds for $\mathcal{G}_\mathcal{A}$.
 
-		\begin{figure}[!h]
-			\centering
-			\begin{tikzpicture}[on grid, auto, scale=0.25]
-  				\draw[dotted] (-8, -8) rectangle (8, 8);
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}[on grid, auto, scale=0.25]
+        \draw[dotted] (-8, -8) rectangle (8, 8);
 
-				\draw (-3, 8) rectangle (3, 2);
-  				\node[state, fill=white, scale=0.75]
-					(s') at (-3, 5) {$s'$};
-  				\node[state, fill=white, scale=0.75]
-					(f') at (3, 5) {$f'$};
+        \draw (-3, 8) rectangle (3, 2);
+        \node[state, fill=white, scale=0.75]
+        (s') at (-3, 5) {$s'$};
+        \node[state, fill=white, scale=0.75]
+        (f') at (3, 5) {$f'$};
 
-				\draw (-3, -8) rectangle (3, -2);
-  				\node[state, fill=white, scale=0.75]
-					(s'') at (-3, -5) {$s''$};
-  				\node[state, fill=white, scale=0.75]
-					(f'') at (3, -5) {$f''$};
+        \draw (-3, -8) rectangle (3, -2);
+        \node[state, fill=white, scale=0.75]
+        (s'') at (-3, -5) {$s''$};
+        \node[state, fill=white, scale=0.75]
+        (f'') at (3, -5) {$f''$};
 
-				\node[state, fill=white, scale=0.75]
-					(s) at (-8, 0) {$s$};
-				\node[state, fill=white, scale=0.75]
-					(f) at (8, 0) {$f$};
+        \node[state, fill=white, scale=0.75]
+        (s) at (-8, 0) {$s$};
+        \node[state, fill=white, scale=0.75]
+        (f) at (8, 0) {$f$};
 
-  				\path (s) edge node {} (s')
-					(s) edge node {} (s'')
-					(f') edge node {} (f)
-					(f'') edge node {} (f);
+        \path (s) edge node {} (s')
+        (s) edge node {} (s'')
+        (f') edge node {} (f)
+        (f'') edge node {} (f);
 
-				\node[] at (0, 5) {$\mathcal{G}_\mathcal{A'}$};
-				\node[] at (0, -5) {$\mathcal{G}_\mathcal{A''}$};
-			\end{tikzpicture}
-			\caption{Embedding of the graph corresponding to a Type 4
-				Thompson finite-state automaton in a square.}
-		\label{fig:f_thompson_4}
-		\end{figure}
-	\end{case}
+        \node[] at (0, 5) {$\mathcal{G}_\mathcal{A'}$};
+        \node[] at (0, -5) {$\mathcal{G}_\mathcal{A''}$};
+      \end{tikzpicture}
+      \caption{Embedding of the graph corresponding to a Type 4
+        Thompson finite-state automaton in a square.}
+      \label{fig:f_thompson_4}
+    \end{figure}
+  \end{case}
 
-	\begin{case}[$\mathcal{E} = \mathcal{E}'*$ where $\mathcal{E}'$ is a regular
-		expression]
-		$\mathcal{A}$ is a Type 5 Thompson finite-state automaton. The
-		embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-		presented in $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be
-		the Thompson finite-state automaton constructed from $\mathcal{E}'$.
-		Also, let properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$.
-		Properties 1 and 2 hold for $\mathcal{G}_{\mathcal{A}}$ by
-		construction. Since property 3 holds for $\mathcal{G}_\mathcal{A'}$
-		then, by construction, it also holds for $\mathcal{G}_\mathcal{A}$.
-		Also, since properties 4 and 5 hold for $\mathcal{G}_\mathcal{A'}$
-		and since the edges that connect $s$ to $s'$ and $f$, and $f'$ to
-		$s'$ and $f$ are mapped to curves that lie properly inside the
-		square then property 4 holds for $\mathcal{G}_\mathcal{A}$.
-		Moreover, since these edges are mapped to simple curves that lie
-		outside the square embedding of $\mathcal{G}_\mathcal{A'}$ and since
-		they intersect other curves only at points where vertices of the
-		graph are mapped to then property 5 holds for
-		$\mathcal{G}_\mathcal{A}$.
+  \begin{case}[$\mathcal{E} = \mathcal{E}'*$ where $\mathcal{E}'$ is a regular
+      expression]
+    $\mathcal{A}$ is a Type 5 Thompson finite-state automaton. The
+    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
+    presented in $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be
+    the Thompson finite-state automaton constructed from $\mathcal{E}'$.
+    Also, let properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$.
+    Properties 1 and 2 hold for $\mathcal{G}_{\mathcal{A}}$ by
+    construction. Since property 3 holds for $\mathcal{G}_\mathcal{A'}$
+    then, by construction, it also holds for $\mathcal{G}_\mathcal{A}$.
+    Also, since properties 4 and 5 hold for $\mathcal{G}_\mathcal{A'}$
+    and since the edges that connect $s$ to $s'$ and $f$, and $f'$ to
+    $s'$ and $f$ are mapped to curves that lie properly inside the
+    square then property 4 holds for $\mathcal{G}_\mathcal{A}$.
+    Moreover, since these edges are mapped to simple curves that lie
+    outside the square embedding of $\mathcal{G}_\mathcal{A'}$ and since
+    they intersect other curves only at points where vertices of the
+    graph are mapped to then property 5 holds for
+    $\mathcal{G}_\mathcal{A}$.
 
-		\begin{figure}[!h]
-			\centering
-			\begin{tikzpicture}[on grid, auto, scale=0.25]
-  				\draw[dotted] (-8, -8) rectangle (8, 8);
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}[on grid, auto, scale=0.25]
+        \draw[dotted] (-8, -8) rectangle (8, 8);
 
-  				\draw (-3, -3) rectangle (3, 3);
-  				\node[state, fill=white, scale=0.75]
-					(s) at (-8, 0) {$s$};
-  				\node[state, fill=white, scale=0.75]
-					(s') at (-3, 0) {$s'$};
-  				\node[state, fill=white, scale=0.75]
-					(f') at (3, 0) {$f'$};
-  				\node[state, fill=white, scale=0.75]
-					(f) at (8, 0) {$f$};
+        \draw (-3, -3) rectangle (3, 3);
+        \node[state, fill=white, scale=0.75]
+        (s) at (-8, 0) {$s$};
+        \node[state, fill=white, scale=0.75]
+        (s') at (-3, 0) {$s'$};
+        \node[state, fill=white, scale=0.75]
+        (f') at (3, 0) {$f'$};
+        \node[state, fill=white, scale=0.75]
+        (f) at (8, 0) {$f$};
 
-  				\path (s) edge node {} (s')
-    					(f') edge node {} (f)
-    					(f') edge [bend right=110, looseness=2]
-						node {} (s')
-    					(s) edge [bend right=50, looseness=1.5]
-						node {} (f);
+        \path (s) edge node {} (s')
+        (f') edge node {} (f)
+        (f') edge [bend right=110, looseness=2]
+        node {} (s')
+        (s) edge [bend right=50, looseness=1.5]
+        node {} (f);
 
-				\node[] at (0, 0) {$\mathcal{G}_\mathcal{A'}$};
-			\end{tikzpicture}
-			\caption{Embedding of the graph corresponding to a Type 5
-				Thompson finite-state automaton in a square.}
-			\label{fig:f_thompson_5}
-		\end{figure}
-	\end{case}
+        \node[] at (0, 0) {$\mathcal{G}_\mathcal{A'}$};
+      \end{tikzpicture}
+      \caption{Embedding of the graph corresponding to a Type 5
+        Thompson finite-state automaton in a square.}
+      \label{fig:f_thompson_5}
+    \end{figure}
+  \end{case}
 
-	Properties 1 through 5 guarantee that vertices of the graph are mapped to
-	points in the plane and that edges of the graph are mapped to simple curves
-	in the plane so that these curves intersect only at points where vertices
-	of the graph are mapped to. It follows that $\mathcal{G}_{\mathcal{A}}$ is
-	planar.
+  Properties 1 through 5 guarantee that vertices of the graph are mapped to
+  points in the plane and that edges of the graph are mapped to simple curves
+  in the plane so that these curves intersect only at points where vertices
+  of the graph are mapped to. It follows that $\mathcal{G}_{\mathcal{A}}$ is
+  planar.
 \end{proof}
 
 We will now show that there exists a specialized algorithm that finds a separator of
@@ -256,278 +256,278 @@ of the algorithm and providing a bound for the size of the resulting separator.
 
 \SetAlgoNoLine
 \begin{algorithm}[H]
-\caption{Finds a constant-size separator for the set of states of a Thompson
-finite-state automaton.}
-\label{alg:thompson_separator}
+  \caption{Finds a constant-size separator for the set of states of a Thompson
+    finite-state automaton.}
+  \label{alg:thompson_separator}
 
-\DontPrintSemicolon
-\KwIn{$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$}
-\KwOut{$\langle X, P_1, P_2 \rangle$}
-	$\mathcal{A}_c \gets \mathcal{A}$\;
-	$X \gets S_c \cup F_c$\;
-	$R \gets \emptyset$\;
+  \DontPrintSemicolon
+  \KwIn{$\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$}
+  \KwOut{$\langle X, P_1, P_2 \rangle$}
+  $\mathcal{A}_c \gets \mathcal{A}$\;
+  $X \gets S_c \cup F_c$\;
+  $R \gets \emptyset$\;
 
-	\While{$|Q_c| - |X| > \frac{2}{3} |Q|$}{
-		\Switch{$\mathcal{A}_c$}{
-			\uCase{Type 3}{
-				\uIf {$|Q_c'| \geq |Q_c''|$}{
-					$X \gets S_c' \cup F_c'$\;
-					$\mathcal{A}_c \gets \mathcal{A}_c'$\;
-					$R \gets R \cup Q_c''$\;
-				}
-				\Else{
-					$X \gets S_c'' \cup F_c''$\;
-					$\mathcal{A}_c \gets \mathcal{A}_c''$\;
-					$R \gets R \cup Q_c'$\;
-				}
-			}
-			\uCase{Type 4}{
-				\uIf {$|Q_c'| \geq |Q_c''|$}{
-					$X \gets S_c' \cup F_c'$\;
-					$\mathcal{A}_c \gets \mathcal{A}_c'$\;
-					$R \gets R \cup Q_c'' \cup S_c \cup F_c$\;
-				}
-				\Else {
-					$X \gets S_c'' \cup F_c''$\;
-					$\mathcal{A}_c \gets \mathcal{A}_c''$\;
-					$R \gets R \cup Q_c' \cup S_c \cup F_c$\;
-				}
-			}
-			\uCase{Type 5}{
-				$X \gets S_c' \cup F_c'$\;
-				$\mathcal{A}_c \gets \mathcal{A}_c'$\;
-				$R \gets R \cup S_c \cup F_c$\;
-			}
-        	}
-	}	
-	\Return $\langle X, Q_c \setminus X, R \rangle$
+  \While{$|Q_c| - |X| > \frac{2}{3} |Q|$}{
+    \Switch{$\mathcal{A}_c$}{
+      \uCase{Type 3}{
+        \uIf {$|Q_c'| \geq |Q_c''|$}{
+          $X \gets S_c' \cup F_c'$\;
+          $\mathcal{A}_c \gets \mathcal{A}_c'$\;
+          $R \gets R \cup Q_c''$\;
+        }
+        \Else{
+          $X \gets S_c'' \cup F_c''$\;
+          $\mathcal{A}_c \gets \mathcal{A}_c''$\;
+          $R \gets R \cup Q_c'$\;
+        }
+      }
+      \uCase{Type 4}{
+        \uIf {$|Q_c'| \geq |Q_c''|$}{
+          $X \gets S_c' \cup F_c'$\;
+          $\mathcal{A}_c \gets \mathcal{A}_c'$\;
+          $R \gets R \cup Q_c'' \cup S_c \cup F_c$\;
+        }
+        \Else {
+          $X \gets S_c'' \cup F_c''$\;
+          $\mathcal{A}_c \gets \mathcal{A}_c''$\;
+          $R \gets R \cup Q_c' \cup S_c \cup F_c$\;
+        }
+      }
+      \uCase{Type 5}{
+        $X \gets S_c' \cup F_c'$\;
+        $\mathcal{A}_c \gets \mathcal{A}_c'$\;
+        $R \gets R \cup S_c \cup F_c$\;
+      }
+    }
+  }
+  \Return $\langle X, Q_c \setminus X, R \rangle$
 \end{algorithm}
 
 \begin{proposition}\label{prop:thompson_sep_1}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then if $\mathcal{A}_c$ is Type 1 or Type 2 during
-	the execution of \Cref{alg:thompson_separator} on input
-	$\mathcal{A}$ the condition at line 4 is false.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. Then if $\mathcal{A}_c$ is Type 1 or Type 2 during
+  the execution of \Cref{alg:thompson_separator} on input
+  $\mathcal{A}$ the condition at line 4 is false.
 \end{proposition}
 
 \begin{proof}
-	Since $\mathcal{A}$ is a Thompson finite-state automaton then $|Q| \geq 2$.
-	If $\mathcal{A}_c$ is Type 1 or Type 2 then $|Q_c| - |X| = 0$. Therefore,
-	the condition at line 4 is false.
+  Since $\mathcal{A}$ is a Thompson finite-state automaton then $|Q| \geq 2$.
+  If $\mathcal{A}_c$ is Type 1 or Type 2 then $|Q_c| - |X| = 0$. Therefore,
+  the condition at line 4 is false.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_2}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then \Cref{alg:thompson_separator}
-	completes on input $\mathcal{A}$ in $\mathcal{O}(|Q|)$ time.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. Then \Cref{alg:thompson_separator}
+  completes on input $\mathcal{A}$ in $\mathcal{O}(|Q|)$ time.
 \end{proposition}
 
 \begin{proof}
-	$\mathcal{A}_c$ is set to $\mathcal{A}$ at line 1. If at any execution of
-	the condition at line 4 the Thompson finite-state automaton $\mathcal{A}_c$
-	is Type 1 or Type 2 then by \Cref{prop:thompson_sep_1} the loop
-	terminates. Otherwise, $\mathcal{A}_c$ is updated depending on its type.
-	Since $|Q_c|$ decreases after each iteration of the loop, eventually the
-	condition at line 4 will become false and the loop will not be executed
-	anymore. Therefore, \Cref{alg:thompson_separator} completes on
-	input $\mathcal{A}$. Moreover, the loop will be executed at most $|Q|$
-	times. Since lines 10, 14, 20, 24 and 29 represent unions of disjoint sets
-	the total time required to compute $R$ is $\mathcal{O}(|Q|)$. The rest of
-	the lines within the loop require a constant amount of time per iteration.
-	Therefore, \Cref{alg:thompson_separator} completes in
-	$\mathcal{O}(|Q|)$ time.
+  $\mathcal{A}_c$ is set to $\mathcal{A}$ at line 1. If at any execution of
+  the condition at line 4 the Thompson finite-state automaton $\mathcal{A}_c$
+  is Type 1 or Type 2 then by \Cref{prop:thompson_sep_1} the loop
+  terminates. Otherwise, $\mathcal{A}_c$ is updated depending on its type.
+  Since $|Q_c|$ decreases after each iteration of the loop, eventually the
+  condition at line 4 will become false and the loop will not be executed
+  anymore. Therefore, \Cref{alg:thompson_separator} completes on
+  input $\mathcal{A}$. Moreover, the loop will be executed at most $|Q|$
+  times. Since lines 10, 14, 20, 24 and 29 represent unions of disjoint sets
+  the total time required to compute $R$ is $\mathcal{O}(|Q|)$. The rest of
+  the lines within the loop require a constant amount of time per iteration.
+  Therefore, \Cref{alg:thompson_separator} completes in
+  $\mathcal{O}(|Q|)$ time.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_3}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$
-	during the execution of \Cref{alg:thompson_separator} on input
-	$\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. Then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$
+  during the execution of \Cref{alg:thompson_separator} on input
+  $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
-	$Q_c$ is set to $Q$ at line 1 and $R$ is set to $\emptyset$ at line 3.
-	Therefore, the first time the condition at line 4 is executed $Q = Q_c \cup
-	R$ and $Q_c \cap R = \emptyset$. After each iteration of the loop $Q_c$ and
-	$R$ are updated depending on the type of $\mathcal{A}_c$.
+  $Q_c$ is set to $Q$ at line 1 and $R$ is set to $\emptyset$ at line 3.
+  Therefore, the first time the condition at line 4 is executed $Q = Q_c \cup
+    R$ and $Q_c \cap R = \emptyset$. After each iteration of the loop $Q_c$ and
+  $R$ are updated depending on the type of $\mathcal{A}_c$.
 
-	\begin{case}[$\mathcal{A}_c$ is Type 3]
-		Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
-		assume that $|Q_c'| \geq |Q_c''|$. Let $Q_b$ be the value of $Q_c$
-		before line 9 is executed and let $R_b$ be the value of $R$ before
-		line 10 is executed. Then after line 10 we have $Q_c = Q_c'$ and $R
-		= R_b \cup Q_c''$. Also, $Q_b = Q_c' \cup Q_c''$ and $Q_c' \cap
-		Q_c'' = \emptyset$. Since $Q = Q_b \cup R_b$ and $Q_b \cap R_b =
-		\emptyset$ then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$.
-		Similar argument follows in case $|Q_c'| < |Q_c''|$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_c$ is Type 3]
+    Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
+    assume that $|Q_c'| \geq |Q_c''|$. Let $Q_b$ be the value of $Q_c$
+    before line 9 is executed and let $R_b$ be the value of $R$ before
+    line 10 is executed. Then after line 10 we have $Q_c = Q_c'$ and $R
+      = R_b \cup Q_c''$. Also, $Q_b = Q_c' \cup Q_c''$ and $Q_c' \cap
+      Q_c'' = \emptyset$. Since $Q = Q_b \cup R_b$ and $Q_b \cap R_b =
+      \emptyset$ then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$.
+    Similar argument follows in case $|Q_c'| < |Q_c''|$.
+  \end{case}
 
-	\begin{case}[$\mathcal{A}_c$ is Type 4]
-		Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
-		assume that $|Q_c'| \geq |Q_c''|$. Let $Q_b$ be the value of $Q_c$
-		before line 19 is executed and let $R_b$ be the value of $R$ before
-		line 20 is executed. Then after line 20 we have $Q_c = Q_c'$ and $R
-		= R_b \cup Q_c'' \cup S_c \cup F_c$. Also, $Q_b = Q_c' \cup Q_c''
-		\cup S_c \cup F_c$ and $Q_c' \cap (Q_c'' \cup S_c \cup F_c) =
-		\emptyset$. Since $Q = Q_b \cup R_b$ and $Q_b \cap R_b = \emptyset$
-		then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$. Similar argument
-		follows in case $|Q_c'| < |Q_c''|$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_c$ is Type 4]
+    Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
+    assume that $|Q_c'| \geq |Q_c''|$. Let $Q_b$ be the value of $Q_c$
+    before line 19 is executed and let $R_b$ be the value of $R$ before
+    line 20 is executed. Then after line 20 we have $Q_c = Q_c'$ and $R
+      = R_b \cup Q_c'' \cup S_c \cup F_c$. Also, $Q_b = Q_c' \cup Q_c''
+      \cup S_c \cup F_c$ and $Q_c' \cap (Q_c'' \cup S_c \cup F_c) =
+      \emptyset$. Since $Q = Q_b \cup R_b$ and $Q_b \cap R_b = \emptyset$
+    then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$. Similar argument
+    follows in case $|Q_c'| < |Q_c''|$.
+  \end{case}
 
-	\begin{case}[$\mathcal{A}_c$ is Type 5]
-		Let $Q_b$ be the value of $Q_c$ before line 28 is executed and let
-		$R_b$ be the value of $R$ before line 29 is executed. Then after
-		line 29 we have $Q_c = Q_c'$ and $R = R_b \cup S_c \cup F_c$. Also,
-		$Q_b = Q_c' \cup S_c \cup F_c$ and $Q_c' \cap (S_c \cup F_c) =
-		\emptyset$. Since $Q = Q_b \cup R_b$ and $Q_b \cap R_b = \emptyset$
-		then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_c$ is Type 5]
+    Let $Q_b$ be the value of $Q_c$ before line 28 is executed and let
+    $R_b$ be the value of $R$ before line 29 is executed. Then after
+    line 29 we have $Q_c = Q_c'$ and $R = R_b \cup S_c \cup F_c$. Also,
+    $Q_b = Q_c' \cup S_c \cup F_c$ and $Q_c' \cap (S_c \cup F_c) =
+      \emptyset$. Since $Q = Q_b \cup R_b$ and $Q_b \cap R_b = \emptyset$
+    then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$.
+  \end{case}
 
-	\noindent
-	Therefore, $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$ during the
-	execution of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  \noindent
+  Therefore, $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$ during the
+  execution of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_4}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then $|X| = 2$ during the execution of
-	\Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. Then $|X| = 2$ during the execution of
+  \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
-	Since $\mathcal{A}$ is a Thompson automaton then $|S| = |F| = 1$. Thus,
-	$|S_c| = |F_c| = 1$ and $|X| = 2$ at line 1. Therefore, the first time the
-	condition at line 4 is executed $|X| = 2$. Each time $X$ is updated within
-	the loop it is set to the union of the start states and the final states of
-	a sub-automaton of $\mathcal{A}$. Since every sub-automaton of $\mathcal{A}$
-	is a Thompson finite-state automaton then $|X| = 2$ after each update.
-	Therefore, $|X| = 2$ each time the condition at line 4 is executed and after
-	the last iteration of the loop $|X| = 2$ at line 32.
+  Since $\mathcal{A}$ is a Thompson automaton then $|S| = |F| = 1$. Thus,
+  $|S_c| = |F_c| = 1$ and $|X| = 2$ at line 1. Therefore, the first time the
+  condition at line 4 is executed $|X| = 2$. Each time $X$ is updated within
+  the loop it is set to the union of the start states and the final states of
+  a sub-automaton of $\mathcal{A}$. Since every sub-automaton of $\mathcal{A}$
+  is a Thompson finite-state automaton then $|X| = 2$ after each update.
+  Therefore, $|X| = 2$ each time the condition at line 4 is executed and after
+  the last iteration of the loop $|X| = 2$ at line 32.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_5}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then $|R| \leq \frac{2}{3} |Q|$ during the execution
-	of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. Then $|R| \leq \frac{2}{3} |Q|$ during the execution
+  of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
-	At line 3 $R$ is set to $\emptyset$ and since $|Q| \geq 2$ it follows that
-	$|R| \leq \frac{2}{3} |Q|$. After each iteration of the loop $|R|$ increases.
-	Let $\mathcal{A}_f$ be the value of $\mathcal{A}_c$ and $R_f$ be the value
-	of $R$ when the condition at line 4 is false. The loop will not be executed
-	anymore so $|R|$ will not increase further. Let us assume that $|R_f| >
-	\frac{2}{3} |Q|$. If $\mathcal{A}_f = \mathcal{A}$ then $|R_f| = 0$
-	and since $|Q| \geq 2$ this contradicts the assumption. Thus, there exists
-	an automaton $\mathcal{A}_b$ that is the value of $\mathcal{A}_c$ and a set
-	$R_b$ that is the value of $R$ just before $\mathcal{A}_c$ is set to
-	$\mathcal{A}_f$. Moreover, $\mathcal{A}_b$ cannot be Type 1 or Type 2.
+  At line 3 $R$ is set to $\emptyset$ and since $|Q| \geq 2$ it follows that
+  $|R| \leq \frac{2}{3} |Q|$. After each iteration of the loop $|R|$ increases.
+  Let $\mathcal{A}_f$ be the value of $\mathcal{A}_c$ and $R_f$ be the value
+  of $R$ when the condition at line 4 is false. The loop will not be executed
+  anymore so $|R|$ will not increase further. Let us assume that $|R_f| >
+    \frac{2}{3} |Q|$. If $\mathcal{A}_f = \mathcal{A}$ then $|R_f| = 0$
+  and since $|Q| \geq 2$ this contradicts the assumption. Thus, there exists
+  an automaton $\mathcal{A}_b$ that is the value of $\mathcal{A}_c$ and a set
+  $R_b$ that is the value of $R$ just before $\mathcal{A}_c$ is set to
+  $\mathcal{A}_f$. Moreover, $\mathcal{A}_b$ cannot be Type 1 or Type 2.
 
-	\begin{case}[$\mathcal{A}_b$ is Type 3]
-		Then either $\mathcal{A}_f = \mathcal{A}_b'$ or $\mathcal{A}_f =
-		\mathcal{A}_b''$. Let us assume that $\mathcal{A}_f =
-		\mathcal{A}_b'$. Then $|Q_b'| \geq |Q_b''|$. Also, since the
-		condition at line 4 is true for $Q_b$ it follows that $|Q_b| - 2 =
-		|Q_b'| + |Q_b''| - 2 > \frac{2}{3} |Q|$. Therefore, $|Q_b'| >
-		\frac{1}{3} |Q|$ and since $|Q_b'| + |Q_b''| + |R_b| = |Q|$ then
-		$|R_b| + |Q_b''| = |R_f| < \frac{2}{3} |Q|$ which contradicts the
-		assumption. Similar argument follows in case $\mathcal{A}_f =
-		\mathcal{A}_b''$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_b$ is Type 3]
+    Then either $\mathcal{A}_f = \mathcal{A}_b'$ or $\mathcal{A}_f =
+      \mathcal{A}_b''$. Let us assume that $\mathcal{A}_f =
+      \mathcal{A}_b'$. Then $|Q_b'| \geq |Q_b''|$. Also, since the
+    condition at line 4 is true for $Q_b$ it follows that $|Q_b| - 2 =
+      |Q_b'| + |Q_b''| - 2 > \frac{2}{3} |Q|$. Therefore, $|Q_b'| >
+      \frac{1}{3} |Q|$ and since $|Q_b'| + |Q_b''| + |R_b| = |Q|$ then
+    $|R_b| + |Q_b''| = |R_f| < \frac{2}{3} |Q|$ which contradicts the
+    assumption. Similar argument follows in case $\mathcal{A}_f =
+      \mathcal{A}_b''$.
+  \end{case}
 
-	\begin{case}[$\mathcal{A}_b$ is Type 4]
-		Then either $\mathcal{A}_f = \mathcal{A}_b'$ or $\mathcal{A}_f =
-		\mathcal{A}_b''$. Let us assume that $\mathcal{A}_f =
-		\mathcal{A}_b'$. Then $|Q_b'| \geq |Q_b''|$. Also, since the
-		condition at line 4 is true for $Q_b$ it follows that $|Q_b| - 2 =
-		|Q_b'| + |Q_b''| > \frac{2}{3} |Q|$. Therefore, $|Q_b'| >
-		\frac{1}{3} |Q|$ and since $|Q_b'| + |Q_b''| + |R_b| + 2 = |Q|$ then
-		$|R_b| + |Q_b''| + 2 = |R_f| < \frac{2}{3} |Q|$ which contradicts
-		the assumption. Similar argument follows in case $\mathcal{A}_f =
-		\mathcal{A}_b''$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_b$ is Type 4]
+    Then either $\mathcal{A}_f = \mathcal{A}_b'$ or $\mathcal{A}_f =
+      \mathcal{A}_b''$. Let us assume that $\mathcal{A}_f =
+      \mathcal{A}_b'$. Then $|Q_b'| \geq |Q_b''|$. Also, since the
+    condition at line 4 is true for $Q_b$ it follows that $|Q_b| - 2 =
+      |Q_b'| + |Q_b''| > \frac{2}{3} |Q|$. Therefore, $|Q_b'| >
+      \frac{1}{3} |Q|$ and since $|Q_b'| + |Q_b''| + |R_b| + 2 = |Q|$ then
+    $|R_b| + |Q_b''| + 2 = |R_f| < \frac{2}{3} |Q|$ which contradicts
+    the assumption. Similar argument follows in case $\mathcal{A}_f =
+      \mathcal{A}_b''$.
+  \end{case}
 
-	\begin{case}[$\mathcal{A}_b$ is Type 5]
-		Then $\mathcal{A}_f = \mathcal{A}_b'$. Since the condition at line 4
-		is true for $Q_b$ it follows that $|Q_b| - 2 = |Q_b'| > \frac{2}{3}
-		|Q|$. Therefore, $|R_f| = |R_b| + 2 = |Q| - |Q_b'| < \frac{1}{3}$
-		which contradicts the assumption.
-	\end{case}
+  \begin{case}[$\mathcal{A}_b$ is Type 5]
+    Then $\mathcal{A}_f = \mathcal{A}_b'$. Since the condition at line 4
+    is true for $Q_b$ it follows that $|Q_b| - 2 = |Q_b'| > \frac{2}{3}
+      |Q|$. Therefore, $|R_f| = |R_b| + 2 = |Q| - |Q_b'| < \frac{1}{3}$
+    which contradicts the assumption.
+  \end{case}
 
-	\noindent
-	Therefore, $|R| \leq \frac{2}{3} |Q|$ during the execution of
-	\Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  \noindent
+  Therefore, $|R| \leq \frac{2}{3} |Q|$ during the execution of
+  \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_6}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. Then $\Delta \cap (Q_c \setminus X \times
-	\Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon \times Q_c
-	\setminus X) = \emptyset$ during the execution of
-	\Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. Then $\Delta \cap (Q_c \setminus X \times
+    \Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon \times Q_c
+    \setminus X) = \emptyset$ during the execution of
+  \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
-	At line 3 $R$ is set to $\emptyset$. Therefore, before the first iteration
-	of the loop at line 4 we have $\Delta \cap (Q_c \setminus X \times
-	\Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon \times Q_c
-	\setminus X) = \emptyset$. After each iteration of the loop $Q_c$, $X$ and
-	$R$ are updated depending on the type of $\mathcal{A}_c$.
+  At line 3 $R$ is set to $\emptyset$. Therefore, before the first iteration
+  of the loop at line 4 we have $\Delta \cap (Q_c \setminus X \times
+    \Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon \times Q_c
+    \setminus X) = \emptyset$. After each iteration of the loop $Q_c$, $X$ and
+  $R$ are updated depending on the type of $\mathcal{A}_c$.
 
-	\begin{case}[$\mathcal{A}_c$ is Type 3]
-		Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
-		assume that $|Q_c'| \geq |Q_c''|$. Then $X = S_c' \cup F_c'$, $Q_c =
-		Q_c'$ and $R = R \cup Q_c''$. The only transition in $\Delta \cap
-		(Q_c \times \Sigma_\epsilon \times R)$ is $\langle f',
-		\epsilon, s'' \rangle$ where $f' \in F_c', \; s'' \in S_c''$.
-		However, $f' \not\in Q_c \setminus X$. Also, $\Delta \cap (R \times
-		\Sigma_\epsilon \times Q_c) = \emptyset$. Therefore,
-		$\Delta \cap (Q_c \setminus X \times \Sigma_\epsilon \times R) =
-		\Delta \cap (R \times \Sigma_\epsilon \times Q_c \setminus X) =
-		\emptyset$. Similar argument follows in case $|Q_c'| < |Q_c''|$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_c$ is Type 3]
+    Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
+    assume that $|Q_c'| \geq |Q_c''|$. Then $X = S_c' \cup F_c'$, $Q_c =
+      Q_c'$ and $R = R \cup Q_c''$. The only transition in $\Delta \cap
+      (Q_c \times \Sigma_\epsilon \times R)$ is $\langle f',
+      \epsilon, s'' \rangle$ where $f' \in F_c', \; s'' \in S_c''$.
+    However, $f' \not\in Q_c \setminus X$. Also, $\Delta \cap (R \times
+      \Sigma_\epsilon \times Q_c) = \emptyset$. Therefore,
+    $\Delta \cap (Q_c \setminus X \times \Sigma_\epsilon \times R) =
+      \Delta \cap (R \times \Sigma_\epsilon \times Q_c \setminus X) =
+      \emptyset$. Similar argument follows in case $|Q_c'| < |Q_c''|$.
+  \end{case}
 
-	\begin{case}[$\mathcal{A}_c$ is Type 4]
-		Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
-		assume that $|Q_c'| \geq |Q_c''|$. Then $X = S_c' \cup F_c'$, $Q_c =
-		Q_c'$ and $R = R \cup Q_c'' \cup S_c \cup F_c$. The only transition
-		in $\Delta \cap (R \times \Sigma_\epsilon \times Q_c)$ is $\langle
-		s, \epsilon, s' \rangle$ where $s \in S_c, \; s' \in S_c'$. The only
-		transition in $\Delta \cap (Q_c \times \Sigma_\epsilon \times R)$ is
-		$\langle f', \epsilon, f \rangle$ where $f' \in F_c', \; f \in F_c$.
-		However, $s', f' \not\in Q_c \setminus X$. Therefore, $\Delta \cap
-		(Q_c \setminus X \times \Sigma_\epsilon \times R) = \Delta \cap (R
-		\times \Sigma_\epsilon \times Q_c \setminus X) = \emptyset$.
-		Similar argument follows in case $|Q_c'| < |Q_c''|$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_c$ is Type 4]
+    Then either $|Q_c'| \geq |Q_c''|$ or $|Q_c'| < |Q_c''|$. Let us
+    assume that $|Q_c'| \geq |Q_c''|$. Then $X = S_c' \cup F_c'$, $Q_c =
+      Q_c'$ and $R = R \cup Q_c'' \cup S_c \cup F_c$. The only transition
+    in $\Delta \cap (R \times \Sigma_\epsilon \times Q_c)$ is $\langle
+      s, \epsilon, s' \rangle$ where $s \in S_c, \; s' \in S_c'$. The only
+    transition in $\Delta \cap (Q_c \times \Sigma_\epsilon \times R)$ is
+    $\langle f', \epsilon, f \rangle$ where $f' \in F_c', \; f \in F_c$.
+    However, $s', f' \not\in Q_c \setminus X$. Therefore, $\Delta \cap
+      (Q_c \setminus X \times \Sigma_\epsilon \times R) = \Delta \cap (R
+      \times \Sigma_\epsilon \times Q_c \setminus X) = \emptyset$.
+    Similar argument follows in case $|Q_c'| < |Q_c''|$.
+  \end{case}
 
-	\begin{case}[$\mathcal{A}_c$ is Type 5]
-		Then $X = S_c' \cup F_c'$, $Q_c = Q_c'$ and $R = R \cup S_c \cup
-		F_c$. The only transition in $\Delta \cap (R \times \Sigma_\epsilon
-		\times Q_c)$ is $\langle s, \epsilon, s' \rangle$ where $s \in S_c,
-		\; s' \in S_c'$. The only transition in $\Delta \cap (Q_c \times
-		\Sigma_\epsilon \times R)$ is $\langle f', \epsilon, f \rangle$
-		where $f' \in F_c', \; f \in F_c$. However, $s', f' \not\in Q_c
-		\setminus X$. Therefore, $\Delta \cap (Q_c \setminus X \times
-		\Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon
-		\times Q_c \setminus X) = \emptyset$.
-	\end{case}
+  \begin{case}[$\mathcal{A}_c$ is Type 5]
+    Then $X = S_c' \cup F_c'$, $Q_c = Q_c'$ and $R = R \cup S_c \cup
+      F_c$. The only transition in $\Delta \cap (R \times \Sigma_\epsilon
+      \times Q_c)$ is $\langle s, \epsilon, s' \rangle$ where $s \in S_c,
+      \; s' \in S_c'$. The only transition in $\Delta \cap (Q_c \times
+      \Sigma_\epsilon \times R)$ is $\langle f', \epsilon, f \rangle$
+    where $f' \in F_c', \; f \in F_c$. However, $s', f' \not\in Q_c
+      \setminus X$. Therefore, $\Delta \cap (Q_c \setminus X \times
+      \Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon
+      \times Q_c \setminus X) = \emptyset$.
+  \end{case}
 
-	\noindent
-	Therefore, $\Delta \cap (Q_c \setminus X \times \Sigma_\epsilon \times R) =
-	\Delta \cap (R \times \Sigma_\epsilon \times Q_c \setminus X) = \emptyset$
-	during the execution of \Cref{alg:thompson_separator} on input
-	$\mathcal{A}$.
+  \noindent
+  Therefore, $\Delta \cap (Q_c \setminus X \times \Sigma_\epsilon \times R) =
+    \Delta \cap (R \times \Sigma_\epsilon \times Q_c \setminus X) = \emptyset$
+  during the execution of \Cref{alg:thompson_separator} on input
+  $\mathcal{A}$.
 \end{proof}
 
 \begin{theorem}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-	finite-state automaton. There exist a state separator $X \subseteq Q$ and a
-	partition $P_Q = \{ X, P_1, P_2 \}$ such that $|X| = 2$ and $|P_i| \leq
-	\frac{2}{3} |Q|$ for $i \in \{ 1, 2 \}$. Moreover, there exists an
-	algorithm that finds $P_Q$ in $\mathcal{O}(|Q|)$ time.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
+  finite-state automaton. There exist a state separator $X \subseteq Q$ and a
+  partition $P_Q = \{ X, P_1, P_2 \}$ such that $|X| = 2$ and $|P_i| \leq
+    \frac{2}{3} |Q|$ for $i \in \{ 1, 2 \}$. Moreover, there exists an
+  algorithm that finds $P_Q$ in $\mathcal{O}(|Q|)$ time.
 \end{theorem}
 
 \begin{proof}
-	Follows directly from \Cref{prop:thompson_sep_2,prop:thompson_sep_4,prop:thompson_sep_5,prop:thompson_sep_6}.
+  Follows directly from \Cref{prop:thompson_sep_2,prop:thompson_sep_4,prop:thompson_sep_5,prop:thompson_sep_6}.
 \end{proof}

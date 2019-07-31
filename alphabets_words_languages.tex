@@ -1,13 +1,13 @@
 \section{Alphabets, words and languages}
 
 \begin{definition}
-	An \emph{alphabet} $\Sigma$ is a finite set.
+  An \emph{alphabet} $\Sigma$ is a finite set.
 \end{definition}
 
 \begin{definition}
-	A \emph{word} $w$ of length $n \in \mathbb{N}$ over an alphabet $\Sigma$ is
-	a tuple $\langle \sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ where
-	$\sigma_i \in \Sigma$ for $i \in \{ 1, 2, \ldots, n \}$.
+  A \emph{word} $w$ of length $n \in \mathbb{N}$ over an alphabet $\Sigma$ is a tuple
+  $\langle \sigma_1, \sigma_2, \ldots, \sigma_n \rangle$ where $\sigma_i \in \Sigma$
+  for $i \in \{ 1, 2, \ldots, n \}$.
 \end{definition}
 
 We shall prefer the notation $\sigma_1 \sigma_2 \ldots \sigma_n$ over $\langle
@@ -15,34 +15,34 @@ We shall prefer the notation $\sigma_1 \sigma_2 \ldots \sigma_n$ over $\langle
 for the unique word of length $0$ over any alphabet.
 
 \begin{definition}
-	Let $\Sigma$ be an alphabet. Then
-	\begin{itemize}
-	\item $\Sigma_\epsilon = \Sigma \cup \{ \epsilon \}$,
-	\item $\Sigma^0 = \{ \epsilon \}$,
-	\item $\Sigma^n = \Sigma^{n-1} \times \Sigma$ for $n > 0$,
-	\item $\Sigma^* = \bigcup_{n = 0}^{\infty} \Sigma^n$.
-	\end{itemize}
+  Let $\Sigma$ be an alphabet. Then
+  \begin{itemize}
+    \item $\Sigma_\epsilon = \Sigma \cup \{ \epsilon \}$,
+    \item $\Sigma^0 = \{ \epsilon \}$,
+    \item $\Sigma^n = \Sigma^{n-1} \times \Sigma$ for $n > 0$,
+    \item $\Sigma^* = \bigcup_{n = 0}^{\infty} \Sigma^n$.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	\emph{Concatenation of words} over an alphabet $\Sigma$ is the function
-	$\cdot : \Sigma^* \times \Sigma^* \rightarrow \Sigma^*$ defined as
-	\begin{equation*}
-	w' \cdot w'' = \sigma_1' \sigma_2' \ldots \sigma_n' \sigma_1'' \sigma_2''
-	\ldots \sigma_m''
-	\end{equation*}
-	where $w' = \sigma'_1 \sigma'_2 \ldots \sigma'_n$ and $w'' = \sigma''_1
-	\sigma''_2 \ldots \sigma''_m$ are respectively words of length $n \in
-	\mathbb{N}$ and $m \in \mathbb{N}$ over $\Sigma$.
+  \emph{Concatenation of words} over an alphabet $\Sigma$ is the function $\cdot :
+  \Sigma^* \times \Sigma^* \rightarrow \Sigma^*$ defined as
+  \begin{equation*}
+    w' \cdot w'' = \sigma_1' \sigma_2' \ldots \sigma_n' \sigma_1'' \sigma_2'' \ldots
+    \sigma_m''
+  \end{equation*}
+  where $w' = \sigma'_1 \sigma'_2 \ldots \sigma'_n$ and $w'' = \sigma''_1 \sigma''_2
+  \ldots \sigma''_m$ are respectively words of length $n \in \mathbb{N}$ and $m \in
+  \mathbb{N}$ over $\Sigma$.
 \end{definition}
 
 \iffalse
-\begin{corollary}
-	Let $w$ be a word over an alphabet $\Sigma$. Then
-	\begin{equation*}
-	w \cdot \epsilon = \epsilon \cdot w = w.
-	\end{equation*}
-\end{corollary}
+  \begin{corollary}
+    Let $w$ be a word over an alphabet $\Sigma$. Then
+    \begin{equation*}
+      w \cdot \epsilon = \epsilon \cdot w = w.
+    \end{equation*}
+  \end{corollary}
 \fi
 
 Concatenation of words is associative. That is, $u \cdot (v \cdot w) = (u \cdot v)
@@ -51,108 +51,87 @@ from now on write $uvw$ to denote the concatenation of $u$, $v$ and $w$ without
 causing ambiguity.
 
 \begin{definition}
-	Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a \emph{prefix} of
-	the word $w \in \Sigma^*$ if and only if $w = uv$ for some word $v \in
-	\Sigma^*$. The set of all prefixes of a word $w \in \Sigma^*$ is denoted by
-	\begin{equation*}
-	pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
-	\end{equation*}
+  Let $\Sigma$ be an alphabet. The word $u \in \Sigma^*$ is a \emph{prefix} of the
+  word $w \in \Sigma^*$ if and only if $w = uv$ for some word $v \in \Sigma^*$. The
+  set of all prefixes of a word $w \in \Sigma^*$ is denoted by
+  \begin{equation*}
+    pref(w) = \{ u \in \Sigma^* \mid \exists v \in \Sigma^* (w = uv) \}.
+  \end{equation*}
 \end{definition}
-
-\iffalse
-\begin{corollary}
-	Let $w$ be a word over an alphabet $\Sigma$. Then
-	\begin{equation*}
-	\epsilon \in pref(w).
-	\end{equation*}
-\end{corollary}
-\fi
 
 \begin{definition}
-	Let $w = uv$ be a word over an alphabet $\Sigma$. Then
-	\begin{equation*}
-	u^{-1}w = v.
-	\end{equation*}
+  Let $w = uv$ be a word over an alphabet $\Sigma$. Then
+  \begin{equation*}
+    u^{-1}w = v.
+  \end{equation*}
 \end{definition}
 
-\iffalse
-\begin{corollary}
-	Let $w$ be a word over an alphabet $\Sigma$. Then
-	\begin{equation*}
-	\epsilon^{-1}w = w.
-	\end{equation*}
-\end{corollary}
-\fi
-
 \begin{proposition}
-	Let $u$, $v$ and $w$ be words over an alphabet $\Sigma$. Then
-	\begin{equation*}
-	v^{-1}u^{-1}w = (uv)^{-1}w.
-	\end{equation*}
+  Let $u$, $v$ and $w$ be words over an alphabet $\Sigma$. Then
+  \begin{equation*}
+    v^{-1}u^{-1}w = (uv)^{-1}w.
+  \end{equation*}
 \end{proposition}
 
 \begin{proof}
-	We prove the statement by induction on the length of $v$. If $|v| = 0$, then
-	$v = \epsilon$ and
-	\begin{equation*}
-	v^{-1}u^{-1}w = \epsilon^{-1}u^{-1}w = u^{-1}w = (u\epsilon)^{-1}w =
-	(uv)^{-1}w.
-	\end{equation*}
-	Otherwise, if $|v| > 0$, then $v = v'\sigma$ where $v' \in \Sigma^*$ and
-	$\sigma \in \Sigma$. Let us assume that the statement holds for words of
-	size less than $|v|$. Then
-	\begin{align*}
-	v^{-1}u^{-1}w
-	= (v'\sigma)^{-1}u^{-1}w
-	&= \sigma^{-1}v'^{-1}u^{-1}w\\
-	&= \sigma^{-1}(uv')^{-1}w
-	= (uv'\sigma)^{-1}w
-	= (uv)^{-1}w.
-	\end{align*}
+  We prove the statement by induction on the length of $v$. If $|v| = 0$, then $v =
+  \epsilon$ and
+  \begin{equation*}
+    v^{-1}u^{-1}w = \epsilon^{-1}u^{-1}w = u^{-1}w = (u\epsilon)^{-1}w = (uv)^{-1}w.
+  \end{equation*}
+  Otherwise, if $|v| > 0$, then $v = v'\sigma$ where $v' \in \Sigma^*$ and $\sigma
+  \in \Sigma$. Let us assume that the statement holds for words of size less than
+  $|v|$. Then
+  \begin{align*}
+    v^{-1}u^{-1}w
+    = (v'\sigma)^{-1}u^{-1}w
+     & = \sigma^{-1}v'^{-1}u^{-1}w \\
+     & = \sigma^{-1}(uv')^{-1}w
+    = (uv'\sigma)^{-1}w
+    = (uv)^{-1}w.
+  \end{align*}
 \end{proof}
 
 \begin{definition}
-	The \emph{longest common prefix} of the words $w_1, w_2, \ldots, w_n$ over
-	an alphabet $\Sigma$ for $n > 0$ is the word
-	\begin{equation*}
-	\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n pref(w_i)} |u|.
-	\end{equation*}
+  The \emph{longest common prefix} of the words $w_1, w_2, \ldots, w_n$ over an
+  alphabet $\Sigma$ for $n > 0$ is the word
+  \begin{equation*}
+    \bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n pref(w_i)} |u|.
+  \end{equation*}
 \end{definition}
 
 We shall also use the notation $w_1 \wedge w_2 \wedge \ldots \wedge w_n$ to denote
 the longest common prefix of the words $w_1, w_2, \ldots, w_n$.
 
 \begin{definition}
-	\emph{Sequential distance of words} over an alphabet $\Sigma$ is the
-	function $d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$
-	defined as
-	\begin{equation*}
-	d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
-	\end{equation*}
+  \emph{Sequential distance of words} over an alphabet $\Sigma$ is the function
+  $d_\Sigma : \Sigma^* \times \Sigma^* \rightarrow \mathbb{N}$ defined as
+  \begin{equation*}
+    d_\Sigma(u, v) = |u| + |v| - 2|u \wedge v|.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^*
-	\rightarrow \Omega^*$ has \emph{bounded variation} if and only if
-	\begin{equation*}
-	\forall k \geq 0 \; \exists K \geq 0 \; \forall u, v \in dom(f) (d_\Sigma(u,
-	v) \leq k \implies d_\Omega(f(u), f(v)) \leq K).
-	\end{equation*}
+  Let $\Sigma$ and $\Omega$ be alphabets. A function $f : \Sigma^* \rightarrow
+  \Omega^*$ has \emph{bounded variation} if and only if
+  \begin{equation*}
+    \forall k \geq 0 \; \exists K \geq 0 \; \forall u, v \in dom(f) (d_\Sigma(u, v)
+    \leq k \implies d_\Omega(f(u), f(v)) \leq K).
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	A \emph{language} $\mathcal{L}$ over an alphabet $\Sigma$ is a subset
-	\begin{equation*}
-	\mathcal{L} \subseteq \Sigma^*.
-	\end{equation*}
+  A \emph{language} $\mathcal{L}$ over an alphabet $\Sigma$ is a subset
+  \begin{equation*}
+    \mathcal{L} \subseteq \Sigma^*.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. Then
-	\begin{itemize}
-	\item $\mathcal{L}^0 = \{ \epsilon \}$,
-	\item $\mathcal{L}^n = \mathcal{L}^{n-1}\;\hat{\cdot}\;\mathcal{L}$ for $n >
-		0$,
-	\item $\mathcal{L}^* = \bigcup_{n = 0}^{\infty} \mathcal{L}^n$.
-	\end{itemize}
+  Let $\mathcal{L}$ be a language over an alphabet $\Sigma$. Then
+  \begin{itemize}
+    \item $\mathcal{L}^0 = \{ \epsilon \}$,
+    \item $\mathcal{L}^n = \mathcal{L}^{n-1}\;\hat{\cdot}\;\mathcal{L}$ for $n > 0$,
+    \item $\mathcal{L}^* = \bigcup_{n = 0}^{\infty} \mathcal{L}^n$.
+  \end{itemize}
 \end{definition}

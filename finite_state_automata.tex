@@ -1,119 +1,115 @@
 \section{Finite-state automata}
 
 \begin{definition}
-	A \emph{finite-state automaton} $\mathcal{A}$ is a tuple
-	\begin{equation*}
-	\langle \Sigma, Q, S, F, \Delta \rangle
-	\end{equation*}
-	where
-	\begin{itemize}
-	\item $\Sigma$ is an alphabet,
-	\item $Q$ is a finite set of states,
-	\item $S \subseteq Q$ is a set of start states,
-	\item $F \subseteq Q$ is a set of final states,
-	\item $\Delta \subseteq Q \times \Sigma_\epsilon \times Q$ is a relation of
-		state transitions.
-	\end{itemize}
+  A \emph{finite-state automaton} $\mathcal{A}$ is a tuple
+  \begin{equation*}
+    \langle \Sigma, Q, S, F, \Delta \rangle
+  \end{equation*}
+  where
+  \begin{itemize}
+    \item $\Sigma$ is an alphabet,
+    \item $Q$ is a finite set of states,
+    \item $S \subseteq Q$ is a set of start states,
+    \item $F \subseteq Q$ is a set of final states,
+    \item $\Delta \subseteq Q \times \Sigma_\epsilon \times Q$ is a relation of state
+	    transitions.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The \emph{generalized relation of state transitions}
-	$\Delta^* \subseteq Q \times \Sigma^* \times Q$ is defined as the
-	inclusion-wise minimal set such that
-	\begin{itemize}
-	\item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
-	\item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle q', w,
-		q'' \rangle \in \Delta^*$ and $\langle q'', \sigma, q''' \rangle \in
-		\Delta$.
-	\end{itemize}
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton. The \emph{generalized relation of state transitions} $\Delta^*
+  \subseteq Q \times \Sigma^* \times Q$ is defined as the inclusion-wise minimal set
+  such that
+  \begin{itemize}
+    \item $\langle q, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
+    \item $\langle q', w\sigma, q''' \rangle \in \Delta^*$ for $\langle q', w, q''
+	    \rangle \in \Delta^*$ and $\langle q'', \sigma, q''' \rangle \in \Delta$.
+  \end{itemize}
 \end{definition}
 
 \begin{definition}
-	A \emph{path in a finite-state automaton} $\mathcal{A} = \langle \Sigma, Q,
-	S, F, \Delta \rangle$ is either trivial or non-trivial. A trivial path
-	$\pi_q$ in $\mathcal{A}$ is associated with every state $q \in Q$. The length
-	of $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of
-	$\pi_q$ is $q$. The label of $\pi_q$ is $\epsilon$. The path $\pi_q$ is
-	succsessful if and only if $q \in S \cap F$. A non-trivial path $\pi$
-	in $\mathcal{A}$ is a finite sequence of state transitions
-	\begin{equation*}
-	\langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle,
-	\dots, \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-	\end{equation*}
-	for $n > 1$ where $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i
-	\in \{ 1, 2, \ldots, n-1 \}$.
-	The length of $\pi$ is $n-1$. The start state of $\pi$ is $q_1$. The end
-	state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1 \sigma_2 \ldots
-	\sigma_{n-1}$. The path $\pi$ is successful if and only if $q_1 \in S$ and
-	$q_n \in F$.
+  A \emph{path in a finite-state automaton} $\mathcal{A} = \langle \Sigma, Q, S, F,
+  \Delta \rangle$ is either trivial or non-trivial. A trivial path $\pi_q$ in
+  $\mathcal{A}$ is associated with every state $q \in Q$. The length of $\pi_q$ is
+  $0$. The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label
+  of $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful if and only if $q \in S
+  \cap F$. A non-trivial path $\pi$ in $\mathcal{A}$ is a finite sequence of state
+  transitions
+  \begin{equation*}
+    \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \ldots,
+    \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
+  \end{equation*}
+  for $n > 1$ such that $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i
+  \in \{ 1, 2, \ldots, n-1 \}$. The length of $\pi$ is $n-1$. The start state of
+  $\pi$ is $q_1$. The end state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1
+  \sigma_2 \ldots \sigma_{n-1}$. The path $\pi$ is successful if and only if $q_1
+  \in S$ and $q_n \in F$.
 \end{definition}
 
 \begin{proposition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. There exists a path in $\mathcal{A}$ with start
-	state $q' \in Q$, end state $q'' \in Q$ and label $w \in \Sigma^*$ if and
-	only if $\langle q', w, q'' \rangle \in \Delta^*$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton. There exists a path in $\mathcal{A}$ with start state $q' \in Q$, end
+  state $q'' \in Q$ and label $w \in \Sigma^*$ if and only if $\langle q', w, q''
+  \rangle \in \Delta^*$.
 \end{proposition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The \emph{state transition function} $\Delta_f : Q
-	\times \Sigma_\epsilon \rightarrow 2^Q$ is defined as
-	\begin{equation*}
-	\Delta_f(q', \sigma) = \{ q'' \in Q \mid \langle q', \sigma, q'' \rangle \in
-	\Delta \}.
-	\end{equation*}
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton. The \emph{state transition function} $\Delta_f : Q \times
+  \Sigma_\epsilon \rightarrow 2^Q$ is defined as
+  \begin{equation*}
+    \Delta_f(q', \sigma) = \{ q'' \in Q \mid \langle q', \sigma, q'' \rangle \in
+    \Delta \}.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a
-	finite-state automaton. The \emph{state $\epsilon$-closure function}
-	$\Delta_\epsilon : Q \rightarrow 2^Q$ is defined as
-	\begin{equation*}
-	\Delta_\epsilon(q') = \{ q'' \in Q \mid \langle q', \epsilon, q'' \rangle
-	\in \Delta^* \}.
-	\end{equation*}
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton. The \emph{state $\epsilon$-closure function} $\Delta_\epsilon : Q
+  \rightarrow 2^Q$ is defined as
+  \begin{equation*}
+    \Delta_\epsilon(q') = \{ q'' \in Q \mid \langle q', \epsilon, q'' \rangle \in
+    \Delta^* \}.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	The \emph{language recognized by a finite-state automaton} $\mathcal{A} =
-	\langle \Sigma, Q, S, F, \Delta \rangle$ is the set of all labels of
-	successful paths
-	\begin{equation*}
-	\mathcal{L}_\mathcal{A} = \{ w \in \Sigma^* \mid \exists s \in S \; \exists
-	f \in F (\langle s, w, f \rangle \in \Delta^*) \}.
-	\end{equation*}
+  The \emph{language $\mathcal{L}_\mathcal{A}$ recognized by a finite-state
+  automaton} $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is the set of
+  all labels of successful paths
+  \begin{equation*}
+    \{ w \in \Sigma^* \mid \exists s \in S \; \exists f \in F (\langle s, w, f
+    \rangle \in \Delta^*) \}.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	The \emph{graph $\mathcal{G}_{\mathcal{A}}$ corresponding to a finite-state
-	automaton} $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is the
-	pair
-	\begin{equation*}
-	\langle Q, E \rangle
-	\end{equation*}
-	where
-	\begin{equation*}
-		E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon (\langle
-		q', \sigma, q'' \rangle \in \Delta) \}.
-	\end{equation*}
+  The \emph{graph $\mathcal{G}_{\mathcal{A}}$ corresponding to a finite-state
+  automaton} $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is the pair
+  \begin{equation*}
+    \langle Q, E \rangle
+  \end{equation*}
+  where
+  \begin{equation*}
+    E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon (\langle q', \sigma,
+    q'' \rangle \in \Delta) \}.
+  \end{equation*}
 \end{definition}
 
 \begin{definition}
-	A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-	\rangle$ is \emph{determi\-nistic} if and only if $S = \{ s \}$ and  $\Delta$
-	is the graph of a function $\delta : Q \times \Sigma \rightarrow Q$.
+  A finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is
+  \emph{determi\-nistic} if and only if $S = \{ s \}$ and  $\Delta$ is the graph of a
+  function $\delta : Q \times \Sigma \rightarrow Q$.
 \end{definition}
 
 We shall write $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ in case the
 finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is
 deterministic.
 
-\begin{theorem}[Rabin, Scott, see \cite{rabin_scott}]
-	\label{thm:rabin_scott}
-	Let $\mathcal{A}$ be a finite-state automaton. There exists a deterministic
-	finite-state automaton $\mathcal{A'}$ such that $\mathcal{L}_\mathcal{A'}
-	= \mathcal{L}_\mathcal{A}$. Furthermore, there exists an algorithm that
-	constructs $\mathcal{A'}$ given $\mathcal{A}$.
+\begin{theorem}[see \cite{rabin_scott}]
+  \label{thm:rabin_scott}
+  There exists an algorithm that, given a finite-state automaton $\mathcal{A}$,
+  constructs a deterministic finite-state automaton $\mathcal{A'}$ such that
+  $\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{A}$.
 \end{theorem}
