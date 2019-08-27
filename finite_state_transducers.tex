@@ -11,15 +11,15 @@
     \item $Q$ is a finite set of states,
     \item $S \subseteq Q$ is a set of start states,
     \item $F \subseteq Q$ is a set of final states,
-    \item $\Delta : Q \times \Sigma_\epsilon \times \Omega^* \times Q$ is a relation
-	    of state transitions.
+    \item $\Delta \subseteq Q \times \Sigma_\epsilon \times \Omega^* \times Q$ is a
+	    relation of state transitions.
   \end{itemize}
 \end{definition}
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
   finite-state transducer. The \emph{generalized relation of state transitions}
-  $\Delta^* : Q \times \Sigma^* \times \Omega^* \times Q$ is defined as the
+  $\Delta^* \subseteq Q \times \Sigma^* \times \Omega^* \times Q$ is defined as the
   inclusion-wise minimal set such that
   \begin{itemize}
     \item $\langle q, \epsilon, \epsilon, q \rangle \in \Delta^*$ for $q \in Q$,
@@ -57,11 +57,22 @@
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
-  finite-state transducer. The \emph{state $\epsilon$-closure function}
-  $\Delta_\epsilon : Q \rightarrow 2^{Q \times \Omega^*}$ is defined as
+  finite-state transducer. The \emph{state transition function} $\Delta_f : Q \times
+  \Sigma_\epsilon \rightarrow 2^{Q \times \Omega^*}$ is defined as
   \begin{equation*}
-    \Delta_\epsilon(q') = \{ \langle q'', w \rangle \in Q \times \Omega^* \mid
-    \langle q', \epsilon, w, q'' \rangle \in \Delta^* \}.
+    \Delta_f(q', \sigma) = \{ \langle q'', w \rangle \in Q \times \Omega^* \mid
+    \langle q', \sigma, w, q'' \rangle \in \Delta \}.
+  \end{equation*}
+\end{definition}
+
+\begin{definition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
+  finite-state transducer. The \emph{state output $\epsilon$-closure function}
+  $\Delta_\epsilon : Q \times \Omega^* \rightarrow 2^{Q \times \Omega^*}$ is defined
+  as
+  \begin{equation*}
+    \Delta_\epsilon(q', u) = \{ \langle q'', uv \rangle \in Q \times \Omega^* \mid
+    \exists v \in \Omega^* (\langle q', \epsilon, v, q'' \rangle \in \Delta^*) \}.
   \end{equation*}
 \end{definition}
 
@@ -117,7 +128,8 @@ $\mathcal{T}$ is a functional finite-state transducer.
   \end{equation*}
   where
   \begin{equation*}
-    E = \{ \{ q', q'' \} \mid \exists \sigma \in \Sigma_\epsilon \; \exists w \in
-    \Omega^* (\langle q', \sigma, w, q'' \rangle \in \Delta) \}.
+    E = \{ \{ q', q'' \} \mid \exists q', q'' \in Q \; \exists \sigma \in
+    \Sigma_\epsilon \; \exists w \in \Omega^* (\langle q', \sigma, w, q'' \rangle
+    \in \Delta) \}.
   \end{equation*}
 \end{definition}

@@ -25,11 +25,10 @@
 \begin{definition}
   A state in a $k$-separated quasi-deterministic finite-state automaton $\mathcal{A}
   = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ is an element of
-  the set $\prod_{i=1}^k{Q_i}$.
+  the set $\prod_{i=1}^k Q_i$.
 \end{definition}
 
-We shall denote the set of states $\prod_{i=1}^k{Q_i}$ by $\mathcal{P}(Q)$ and shall
-write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
+We shall write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
 
 \begin{definition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
@@ -45,7 +44,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
   a $k$-separated quasi-deterministic finite-state automaton. The \emph{separator
-  state transition function} $\delta_x : \mathcal{P}(Q) \times \Sigma \rightarrow X$
+  state transition function} $\delta_x : \prod_{i=1}^k Q_i \times \Sigma \rightarrow X$
   is defined as
   \begin{equation*}
     \delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)), \rho_2(\tau_2(q^2,
@@ -56,7 +55,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
   a $k$-separated quasi-deterministic finite-state automaton. The \emph{quasi-state
-  transition function} $\delta_i : \mathcal{P}(Q) \times \Sigma \rightarrow Q_i$ is
+  transition function} $\delta_i : \prod_{i=1}^k Q_i \times \Sigma \rightarrow Q_i$ is
   defined as
   \begin{equation*}
     \delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))
@@ -67,8 +66,8 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
   be a $k$-separated quasi-deterministic finite-state automaton. The \emph{state
-  transition function} $\delta : \mathcal{P}(Q) \times \Sigma \rightarrow
-  \mathcal{P}(Q)$ is defined as
+  transition function} $\delta : \prod_{i=1}^k Q_i \times \Sigma \rightarrow
+  \prod_{i=1}^k Q_i$ is defined as
   \begin{equation*}
     \delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
     \delta_k(q, \sigma) \rangle.
@@ -78,12 +77,12 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
   be a $k$-separated quasi-deterministic finite-state automaton. The
-  \emph{generalized state transition function} $\delta^* : \mathcal{P}(Q) \times
-  \Sigma^* \rightarrow \mathcal{P}(Q)$ is defined as
+  \emph{generalized state transition function} $\delta^* : \prod_{i=1}^k Q_i \times
+  \Sigma^* \rightarrow \prod_{i=1}^k Q_i$ is defined as
   \begin{itemize}
-    \item $\delta^*(q, \epsilon) = q$ for $q \in \mathcal{P}(Q)$,
+    \item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k Q_i$,
     \item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in
-            \mathcal{P}(Q)$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+            \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
   \end{itemize}
 \end{definition}
 
@@ -91,7 +90,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
   A \emph{path in a $k$-separated quasi-deterministic finite-state automaton}
   $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ is
   either trivial or non-trivial. A trivial path $\pi_q$ in $\mathcal{A}$ is
-  associated with every state $q \in \mathcal{P}(Q)$. The length of $\pi_q$ is $0$.
+  associated with every state $q \in \prod_{i=1}^k Q_i$. The length of $\pi_q$ is $0$.
   The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of
   $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful if and only if $q = s$ and
   $q^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. A non-trivial path $\pi$ in
@@ -110,20 +109,20 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{proposition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
   a $k$-separated quasi-deterministic finite-state automaton. There exists a path in
-  $\mathcal{A}$ with start state $q' \in \mathcal{P}(Q)$, end state $q'' \in
-  \mathcal{P}(Q)$ and label $w \in \Sigma^*$ if and only if $\delta^*(q', w) = q''$.
+  $\mathcal{A}$ with start state $q' \in \prod_{i=1}^k Q_i$, end state $q'' \in
+  \prod_{i=1}^k Q_i$ and label $w \in \Sigma^*$ if and only if $\delta^*(q', w) = q''$.
 \end{proposition}
 
 \begin{proof}
   We prove the statement by induction on the length of $w$. If $|w| = 0$, then $w =
-  \epsilon$. Let there be a path with start state $q' \in \mathcal{P}(Q)$, end state
-  $q'' \in \mathcal{P}(Q)$ and label $w = \epsilon$. Only trivial paths are labeled
+  \epsilon$. Let there be a path with start state $q' \in \prod_{i=1}^k Q_i$, end state
+  $q'' \in \prod_{i=1}^k Q_i$ and label $w = \epsilon$. Only trivial paths are labeled
   with $\epsilon$. Therefore, $q' = q''$ and by definition $\delta^*(q', w) =
   \delta^*(q', \epsilon) = q' = q''$. A similar argument follows in the other
   direction. Otherwise, if $|w| > 0$, then $w = w'\sigma$ for $w' \in \Sigma^*$ and
-  $\sigma \in \Sigma$. Let there be a path with start state $q' \in \mathcal{P}(Q)$,
-  end state $q''' \in \mathcal{P}(Q)$ and label $w$. There exist a state $q'' \in
-  \mathcal{P}(Q)$ and a path with start state $q'$, end state $q''$ and label $w'$.
+  $\sigma \in \Sigma$. Let there be a path with start state $q' \in \prod_{i=1}^k Q_i$,
+  end state $q''' \in \prod_{i=1}^k Q_i$ and label $w$. There exist a state $q'' \in
+  \prod_{i=1}^k Q_i$ and a path with start state $q'$, end state $q''$ and label $w'$.
   Furthermore, $\delta(q'', \sigma) = q'''$ by definition. By the inductive
   hypothesis $\delta^*(q', w') = q''$. Therefore, by definition $\delta^*(q', w) =
   \delta^*(q', w'\sigma) = \delta(\delta^*(q', w'), \sigma) = \delta(q'', \sigma) =

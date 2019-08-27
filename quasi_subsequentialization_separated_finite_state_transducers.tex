@@ -4,14 +4,13 @@ We now describe an inductive construction that, given a functional $k$-separated
 finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta
 \rangle$, produces a $k$-separated quasi-subsequential finite-state transducer
 $\mathcal{T}'$ such that $\mathcal{F}_{\mathcal{T}'} = \mathcal{F}_\mathcal{T}$.
-Let $P_i = Q_i \cup X$ for $i \in \{ 1, 2, \ldots, k \}$. The start state
-$s$ of the $k$-separated quasi-subsequential finite-state transducer $\mathcal{T}'$
-is defined as
+The start state $s$ of the $k$-separated quasi-subsequential finite-state transducer
+$\mathcal{T}'$ is defined as
 \begin{equation*}
   \langle s_1, s_2, \ldots, s_k \rangle
 \end{equation*}
-where $s^i = \hat{\Delta}_\epsilon^i(S)$ for $i \in \{ 1, 2, \ldots, k \}$.
-The base $k$-separated quasi-subsequential finite-state transducer
+where $s^i = \hat{\Delta}_\epsilon^i(S \times \{ \epsilon \})$ for $i \in \{ 1, 2,
+\ldots, k \}$. The base $k$-separated quasi-subsequential finite-state transducer
 $\mathcal{T}'^{(1)}$ is defined as
 \begin{equation*}
   \langle \Sigma, \Omega, Q'^{(1)}, 2^X, s, F'^{(1)}, \tau^{(1)}, \rho^{(1)},
@@ -24,29 +23,6 @@ The base set of states $R^{(1)}$ is defined as $\{ s \}$.
 Let us assume that $\mathcal{T}'^{(n)}$ and $R^{(n)}$ are constructed for $n > 0$.
 The set of states introduced at step $n$ is $R_n = R^{(n)} \setminus R^{(n-1)}$ where
 $R^{(0)} = \emptyset$.
-The longest common quasi-state transition output function $\lambda_i^{\wedge (n)} :
-Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ is defined as
-\begin{equation*}
-  \lambda_i^{\wedge (n)}(q, \sigma) = \begin{aligned}[t]
-    \bigwedge \{ &uvw \in \Omega^* \mid \exists \langle p', u \rangle \in q \;
-    \exists p'', p''' \in P_i\\
-    &\exists v, w \in \Omega^* (\langle p', \sigma, v, p'' \rangle \in \Delta \land
-    \langle p''', w \rangle \in \Delta_\epsilon^i(p'')) \}
-  \end{aligned}
-\end{equation*}
-for $i \in \{ 1, 2, \ldots, k \}$.
-The quasi-state successor function $\bar{\tau}_i^{(n)} : Q_i'^{(n)} \times \Sigma
-\rightarrow 2^{P_i \times \Omega^*}$ is defined as
-\begin{equation*}
-  \bar{\tau}_i^{(n)}(q, \sigma) = \begin{aligned}[t]
-    \{ &\langle p''', \lambda_i^{\wedge (n)}(q, \sigma)^{-1}uvw \rangle \in P_i
-    \times \Omega^* \mid \exists \langle p', u \rangle \in q \; \exists p'', p'''
-    \in P_i\\
-    &\exists v, w \in \Omega^* ( \langle p', \sigma, v, p'' \rangle \in \Delta \land
-    \langle p''', w \rangle \in \Delta_\epsilon^i(p'')) \}
-  \end{aligned}
-\end{equation*}
-for $i \in \{ 1, 2, \ldots, k \}$.
 The next set of final states $F_i'^{(n+1)}$ is defined as
 \begin{equation*}
   F_i'^{(n)} \cup \{ q^i \mid \exists q \in R_n \; \exists \langle p, w \rangle \in
@@ -61,13 +37,17 @@ The next final quasi-state output function $\psi_i^{(n+1)}$ is defined as
 for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state transition output function $\lambda_i^{(n+1)}$ is defined as
 \begin{equation*}
-  \lambda_i^{(n)} \cup \{ \langle q^i, \sigma, \lambda_i^{\wedge (n)}(q^i, \sigma)
+  \lambda_i^{(n)} \cup \{ \langle q^i, \sigma,
+  \bigwedge \{ w \mid \exists \langle p, w
+  \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \}
   \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}
 \end{equation*}
 for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state transition function $\tau_i^{(n+1)}$ is defined as
 \begin{equation*}
-  \tau_i^{(n)} \cup \{ \langle q^i, \sigma, \bar{\tau}_i^{(n)}(q^i, \sigma) \rangle \mid
+  \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
+  \{ \langle p, \lambda^{(n)}(q, \sigma)^{-1}w \rangle \mid \exists \langle
+  p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \} \rangle \mid
   \exists q \in R_n \; \exists \sigma \in \Sigma \}
 \end{equation*}
 for $i \in \{ 1, 2, \ldots, k \}$.
@@ -82,10 +62,9 @@ The next quasi-state extension function $\eta_i^{(n+1)}$ is defined as
   \eta_i^{(n)} \cup \begin{aligned}[t]
     \{ \langle &\tau_i^{(n+1)}(q^i, \sigma),
     \delta_x^{(n+1)}(q, \sigma),\\
-    &\tau_i^{(n+1)} (q^i, \sigma) \cup \{ \langle p'', uv \rangle \mid \exists
-    \langle p', u \rangle \in \delta_x^{(n+1)}(q, \sigma) \; \exists \langle p'', v
-    \rangle \in \Delta_\epsilon^i(p') \} \rangle \mid\\
-    &\exists q \in R_n \; \exists \sigma \in \Sigma \}
+    &\tau_i^{(n+1)} (q^i, \sigma) \cup \hat{\Delta}_\epsilon^i(\delta_x^{(n+1)}(q,
+    \sigma)) \rangle \mid
+    \exists q \in R_n \; \exists \sigma \in \Sigma \}
   \end{aligned}
 \end{equation*}
 for $i \in \{ 1, 2, \ldots, k \}$.
@@ -184,7 +163,7 @@ The next set of states $R^{(n+1)}$ is defined as
   \end{align*}
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lem:quasisubseq_completion}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
   functional $k$-separated finite-state transducer such that
   $\mathcal{F}_\mathcal{T}$ has bounded variation. Let $\mathcal{T'}^{(n)}$ and
@@ -240,4 +219,511 @@ The next set of states $R^{(n+1)}$ is defined as
   This contradicts the precondition that $\mathcal{F}_\mathcal{T}$ has bounded
   variation. Therefore, there exists $m \in \mathbb{N}$ such that $R^{(n)} =
   R^{(n+1)}$ and $\mathcal{T}'^{(n)} = \mathcal{T}'^{(n+1)}$ for $n > m$.
+\end{proof}
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
+  functional $k$-separated finite-state transducer such that
+  $\mathcal{F}_\mathcal{T}$ has bounded variation.
+  Let $\mathcal{T}' = \langle \Sigma, \Omega, Q', 2^X, s, F', \tau, \rho, \eta,
+  \eta_x, \lambda, \psi \rangle$ be the $k$-separated quasi-subsequential
+  finite-state transducer derived from $\mathcal{T}$ by applying the construction
+  described above. Then
+  \begin{align*}
+    \delta_x(q, \sigma) = \bigcup_{i=1}^k \{ &\langle p'', \lambda(q, \sigma)^{-1}uv
+    \rangle \in X \times \Omega^* \mid\\
+    &\exists \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
+    \Delta_\epsilon(\Delta_f(p', \sigma)) \}.
+  \end{align*}
+\end{proposition}
+
+\begin{proof}
+  \begin{align*}
+    \delta_x(q, \sigma)
+    &= \eta_x^k(\rho_1(\tau_1(q^1, \sigma)), \rho_2(\tau_2(q^2, \sigma)), \ldots,
+    \rho_k(\tau_k(q^k, \sigma)))\\
+    &= \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))\\
+    &= \bigcup_{i=1}^k \{ \langle p, w \rangle \in \tau_i(q^i, \sigma) \mid p \in X
+    \}\\
+    &= \bigcup_{i=1}^k \{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \in X \times
+    \Omega^* \mid \exists \langle p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma)
+    \}\\
+    &= \begin{aligned}[t]
+      \bigcup_{i=1}^k \{ &\langle p'', \lambda(q, \sigma)^{-1}uv \rangle \in X \times
+      \Omega^* \mid\\
+      &\exists \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
+      \Delta_\epsilon(\Delta_f(p', \sigma)) \}
+    \end{aligned}
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
+  functional $k$-separated finite-state transducer such that
+  $\mathcal{F}_\mathcal{T}$ has bounded variation.
+  Let $\mathcal{T}' = \langle \Sigma, \Omega, Q', 2^X, s, F', \tau, \rho, \eta,
+  \eta_x, \lambda, \psi \rangle$ be the $k$-separated quasi-subsequential
+  finite-state transducer derived from $\mathcal{T}$ by applying the construction
+  described above. Then
+  \begin{align*}
+    \delta_i(q, \sigma) = \bigcup_{j=1}^k \{ \langle p'', v \rangle \in
+    \Delta_\epsilon^i(p', \lambda(q, \sigma)^{-1}u) \mid \exists \langle p', u
+    \rangle \in \Delta_{f\epsilon}^j(q^j, \sigma) \}.
+  \end{align*}
+\end{proposition}
+
+\begin{proof}
+  \begin{align*}
+    \delta_i(q, \sigma)
+    &= \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))\\
+    &= \tau_i(q^i, \sigma) \cup \hat{\Delta}_\epsilon^i(\delta_x(q, \sigma))\\
+    &= \begin{aligned}[t]
+      &\{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \mid \exists \langle
+      p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \} \cup\\
+      &\{ \langle p'', v \rangle \in \Delta_\epsilon^i(p', u) \mid \exists \langle
+      p', u \rangle \in \delta_x(q, \sigma) \}
+    \end{aligned}\\
+    &= \begin{aligned}[t]
+      &\{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \mid \exists \langle
+      p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \} \cup\\
+      &\begin{aligned}[t]
+        \bigcup_{j=1}^k \{  \langle p'', v \rangle \in \Delta_\epsilon^i(p',
+        \lambda(q, \sigma)^{-1}u)
+	\mid \exists \langle p', u \rangle \in \Delta_{f\epsilon}^j(q^j, \sigma)
+        (p' \in X) \}
+      \end{aligned}
+    \end{aligned}\\
+    &= \begin{aligned}[t]
+      &\{ \langle p'', v \rangle \in \Delta_\epsilon^i(p', \lambda(q, \sigma)^{-1}u)
+      \mid \exists \langle p', u \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \}
+      \cup\\
+      &\begin{aligned}[t]
+        \bigcup_{j=1}^k \{  \langle p'', v \rangle \in \Delta_\epsilon^i(p',
+        \lambda(q, \sigma)^{-1}u)
+	\mid \exists \langle p', u \rangle \in \Delta_{f\epsilon}^j(q^j, \sigma)
+        (p' \in X) \}
+      \end{aligned}
+    \end{aligned}\\
+    &= \begin{aligned}[t]
+      \bigcup_{j=1}^k \{ \langle p'', v \rangle \in \Delta_\epsilon^i(p', \lambda(q,
+      \sigma)^{-1}u) \mid \exists \langle p', u \rangle \in \Delta_{f\epsilon}^j(q^j,
+      \sigma) \}.
+    \end{aligned}
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
+  functional $k$-separated finite-state transducer such that
+  $\mathcal{F}_\mathcal{T}$ has bounded variation.
+  Let $\mathcal{T}' = \langle \Sigma, \Omega, Q', 2^X, s, F', \tau, \rho, \eta,
+  \eta_x, \lambda, \psi \rangle$ be the $k$-separated quasi-subsequential
+  finite-state transducer derived from $\mathcal{T}$ by applying the construction
+  described above. Then
+  \begin{align*}
+    \bigcup_{i=1}^k \delta_i(q, \sigma) = \bigcup_{i=1}^k \{ \langle p'', \lambda(q,
+    \sigma)^{-1}v \rangle \mid \exists \langle p', u \rangle \in q^i \; \exists
+    \langle p'', v \rangle \in \hat{\Delta}_\epsilon(\Delta_f(p', u)) \}.
+  \end{align*}
+\end{proposition}
+
+\begin{proof}
+  \begin{align*}
+    \bigcup_{i=1}^k \delta_i(q, \sigma)
+    &= \bigcup_{i=1}^k \bigcup_{j=1}^k \{ \langle p'', v \rangle \in
+    \Delta_\epsilon^i(p', \lambda(q, \sigma)^{-1}u) \mid \exists \langle p', u
+    \rangle \in \Delta_{f\epsilon}^j(q^j, \sigma) \}\\
+    &= \bigcup_{i=1}^k \{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \mid \exists
+    \langle p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \}\\
+    &= \bigcup_{i=1}^k \{ \langle p'', \lambda(q, \sigma)^{-1}uv \rangle \mid \exists
+    \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
+    \hat{\Delta}_\epsilon(\Delta_f(p', \sigma)) \}.
+  \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lem:quasisubseq_inclusion_right}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
+  functional $k$-separated finite-state transducer such that
+  $\mathcal{F}_\mathcal{T}$ has bounded variation.
+  Let $\mathcal{T}' = \langle \Sigma, \Omega, Q', 2^X, s, F', \tau, \rho, \eta,
+  \eta_x, \lambda, \psi \rangle$ be the $k$-separated quasi-subsequential
+  finite-state transducer derived from $\mathcal{T}$ by applying the construction
+  described above. Then $\mathcal{F}_\mathcal{T} \subseteq \mathcal{F}_\mathcal{T'}$.
+\end{lemma}
+
+\begin{proof}
+  Let $\langle u, v \rangle \in \mathcal{F}_\mathcal{T}$.
+  There exists a successful path $\pi$ with label $\langle u, v \rangle$ in
+  $\mathcal{T}$.
+  Let the length of $\pi$ be $n-1 \in \mathbb{N}$.
+  Let $u = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
+  \Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
+  Let $v = v_1 v_2 \ldots v_{n-1}$ where $\sigma_i \in \Omega^*$ for $i \in \{ 1, 2,
+  \ldots, n-1 \}$.
+  Let $q' \in \mathcal{C}(Q_i)$ and $q'' \in \mathcal{C}(Q_j)$ be respectively the
+  start and end states of $\pi$ for $i, j \in \{ 1, 2, \ldots, k \}$.
+  If $\pi$ is trivial then $u = v = \epsilon$ and $q' = q'' \in S \cap F$. Thus,
+  $q' \in \hat{\Delta}_\epsilon^i(S) \cap F_i'$ and $\psi_i(q'^i) = \epsilon$.
+  Therefore, $\langle u, v \rangle \in \mathcal{F}_{\mathcal{T}'}$.
+  Otherwise, if $\pi$ is non-trivial, let
+  \begin{equation*}
+    \langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2, q_3
+    \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n \rangle
+  \end{equation*}
+  be the sequence of state transitions that constitutes $\pi$.
+  Since $\mathcal{T}$ is functional, $\pi$ is the unique path with label $\langle u,
+  v \rangle$.
+  Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of
+  indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if $i
+  \in I$.
+  Also, let $i_h < i_j$ if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
+  It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1 \sigma_2
+  \ldots \sigma_{n-1}$.
+  Let $p_1 = s$.
+  We have $\sigma_{i_1} \in \Sigma$ and if $i_1 > 1$, then $\sigma_j = \epsilon$ for
+  $j \in \{ 1, 2, \ldots i_1-1 \}$.
+  Therefore,
+  \begin{equation*}
+    \langle q_{i_1}, w_1 w_2 \ldots w_{i_1-1} \rangle \in \Delta_\epsilon(q_1)
+    \subseteq \hat{\Delta}_\epsilon(S \times \{ \epsilon \}) = \bigcup_{r=1}^k
+    \hat{\Delta}_\epsilon^r(S \times \{ \epsilon \}) = \bigcup_{r=1}^k p_1^r.
+  \end{equation*}
+  Let us assume that $\langle q_{i_h}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2}
+  \ldots \sigma_{i_{h-1}})^{-1}w_1 w_2 \ldots w_{i_h-1} \rangle \in
+  \bigcup_{r=1}^k{p_h^r}$ where $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+  \sigma_{i_{h-1}})$ for $h \in \{ 2, 3, \ldots, l \}$.
+  Let
+  \begin{equation*}
+    p_{h+1} = \delta(p_h, \sigma_{i_h}) = \langle p_{h+1}^1, p_{h+1}^2, \ldots,
+    p_{h+1}^k \rangle
+  \end{equation*}
+  where $p_{h+1}^j = \delta_j(p_h, \sigma_{i_h})$ for $j \in \{ 1, 2, \ldots, k \}$.
+  If $h < l$, then $\sigma_{i_{h+1}} \in \Sigma$ and if $i_{h+1} - i_h > 1$, then
+  $\sigma_j = \epsilon$ for $j \in \{ i_h+1, i_h+2, \ldots, i_{h+1}-1 \}$.
+  Therefore,
+  \begin{equation*}
+    \langle q_{i_{h+1}}, w_{i_h} w_{i_h+1} \ldots w_{i_{h+1}-1} \rangle \in
+    \hat{\Delta}_\epsilon(\Delta_f(q_{i_h}, \sigma_{i_h})).
+  \end{equation*}
+  By the inductive hypothesis,
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \{ \langle q'', uv \rangle \mid \exists \langle q', u \rangle
+    \in p_h^r \; \exists \langle q'', v \rangle \in
+    \hat{\Delta}_\epsilon(\Delta_f(q', \sigma_{i_h})) \}.
+  \end{align*}
+  Factoring the common output prefix,
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda(p_h, \sigma_{i_h})^{-1} \lambda^*(p_1,
+    \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \{ \langle q'', \lambda(p_h, \sigma_{i_h})^{-1} uv \rangle \mid
+    \exists \langle q', u \rangle \in p_h^r \; \exists \langle q'', v \rangle \in
+    \hat{\Delta}_\epsilon(\Delta_f(q', \sigma_{i_h})) \}.
+  \end{align*}
+  By \Cref{proposition:left_word_factor},
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \{ \langle q'', \lambda(p_h, \sigma_{i_h})^{-1} uv \rangle \mid
+    \exists \langle q', u \rangle \in p_h^r \; \exists \langle q'', v \rangle \in
+    \hat{\Delta}_\epsilon(\Delta_f(q', \sigma_{i_h})) \}.
+  \end{align*}
+  Therefore,
+  \begin{equation*}
+    \langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
+    \bigcup_{r=1}^k \delta_r(p_h, \sigma_{i_h}).
+  \end{equation*}
+
+\iffalse
+  By the inductive hypothesis,
+  \begin{equation*}
+    \langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in \bigcup_{j=1}^k
+    \bigcup_{r=1}^k \Delta_{f\epsilon}^j(p_h^r, \sigma_{i_h}).
+  \end{equation*}
+  Removing the common output prefix,
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda(p_h, \sigma_{i_h})^{-1} \lambda^*(p_1,
+    \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1} w_1 w_2
+    \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \bigcup_{j=1}^k \{ \langle p, \lambda(p_h, \sigma_{i_h})^{-1}w
+    \rangle \mid \exists \langle p, w \rangle \in \Delta_{f\epsilon}^j(p_h^r,
+    \sigma_{i_h}) \}
+  \end{align*}
+  By \Cref{prop:lambda_derivative} we get
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \bigcup_{j=1}^k \{ \langle p, \lambda(p_h, \sigma_{i_h})^{-1}w
+    \rangle \mid \exists \langle p, w \rangle \in \Delta_{f\epsilon}^j(p_h^r,
+    \sigma_{i_h}) \}
+  \end{align*}
+  By Y we get
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \tau_r(p_h^r, \sigma_{i_h}) \cup \bigcup_{j=1}^k \{ \langle p,
+    \lambda(p_h, \sigma_{i_h})^{-1}w \rangle \mid \exists \langle p, w \rangle \in
+    \Delta_{f\epsilon}^j(p_h^r, \sigma_{i_h}) \}
+  \end{align*}
+  By X we get
+  \begin{align*}
+    \langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in
+    \bigcup_{r=1}^k \delta_r(p_h, \sigma_{i_h}) = \bigcup_{r=1}^k p_{h+1}^r.
+  \end{align*}
+\fi
+
+
+
+\iffalse
+  \begin{align*}
+    \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_h})
+    &= \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}}) \cdot
+    \lambda(p_h, \sigma_{i_h})\\
+    &= \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}}) \cdot
+    \bigwedge_{j=1}^k \lambda_j(p_h^j, \sigma_{i_h})\\
+    &= \begin{aligned}[t]
+      &\Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}}) \cdot\\
+      &\bigwedge_{j=1}^k \{ w \mid \exists \langle p, w \rangle \in
+      \Delta_{f\epsilon}^j(p_h^j, \sigma_{i_h}) \}
+    \end{aligned}\\
+    &= \begin{aligned}[t]
+      &\Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}}) \cdot\\
+      &\bigwedge_{j=1}^k \{ uv \mid \exists \langle q', u \rangle \in p_h^j \;
+      \exists \langle q'', v \rangle \in
+      \Delta_\epsilon^i(\Delta_f(q', \sigma_{i_h})) \}
+    \end{aligned}
+  \end{align*}
+
+
+
+
+
+
+
+
+
+  \begin{align*}
+    \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_h})
+    &= \begin{aligned}[t]
+      \bigwedge \{ &v \in \Omega^* \mid \exists s \in S \; \exists q \in Q (\\
+      &\langle s, \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_h}, v, q \rangle \in
+      \Delta^*) \}
+    \end{aligned}\\
+    &= \begin{aligned}[t]
+      \bigwedge \{ &v'v'' \mid \exists s \in S \; \exists q', q'' \in Q \; \exists
+      v', v'' \in \Omega^* (\\
+      &\langle s, \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}}, v', q' \rangle
+      \in \Delta^* \land\\
+      &\langle q'', v'' \rangle \in \Delta_\epsilon(\Delta_f(q',
+      \sigma_{i_h}))) \}
+    \end{aligned}
+  \end{align*}
+
+
+
+
+
+  By the inductive hypothesis,
+  \begin{equation*}
+    \langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in \bigcup_{j=1}^k
+    \bigcup_{r=1}^k \Delta_{f\epsilon}^j(p_h^r, \sigma).
+  \end{equation*}
+  Substituting the left-hand side further,
+  \begin{equation*}
+    \langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_{h-1}})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in \bigcup_{j=1}^k
+    \bigcup_{r=1}^k \Delta_{f\epsilon}^j(p_h^r, \sigma).
+  \end{equation*}
+  Removing the common output prefix,
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda(p_h, \sigma_{i_h})^{-1} \lambda^*(p_1,
+    \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1} w_1 w_2
+    \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{j=1}^k \bigcup_{r=1}^k \{ \langle p, \lambda(p_h, \sigma_{i_h})^{-1}w
+    \rangle \mid \exists \langle p, w \rangle \in \Delta_{f\epsilon}^j(p_h^r, \sigma) \}
+  \end{align*}
+  By \Cref{prop:lambda_derivative} we get
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{j=1}^k \bigcup_{r=1}^k \{ \langle p, \lambda(p_h, \sigma_{i_h})^{-1}w
+    \rangle \mid \exists \langle p, w \rangle \in \Delta_{f\epsilon}^j(p_h^r, \sigma)
+    \}
+  \end{align*}
+  Substituting the left-hand side,
+  \begin{align*}
+    &\langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+    \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+    &\bigcup_{r=1}^k \{ \langle p, \lambda(p_h, \sigma_{i_h})^{-1}w \rangle \mid
+    \exists \langle p, w \rangle \in \Delta_{f\epsilon}^r(p_h^r, \sigma) \}
+  \end{align*}
+  Factorizing
+    \begin{gather*}
+      \langle q_{i_{h+1}}, \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
+      \sigma_{i_h})^{-1} w_1 w_2 \ldots w_{i_{h+1}-1} \rangle \in\\
+      \bigcup_{j=1}^k \bigcup_{r=1}^k \begin{aligned}[t] \{
+        \langle p''', \lambda(p_h^r, \sigma_{i_h})^{-1} uvw
+        \rangle \mid
+         & \exists \langle p', u \rangle \in p_h^r                  \\
+         & \exists \langle p', \sigma_{i_h}, v, p'' \rangle \in
+        \Delta                                                      \\
+         & \exists \langle p''', w \rangle \in \Delta_\epsilon(p'')
+        (p''' \in P_j) \}.
+      \end{aligned}.
+    \end{gather*}
+\fi
+\end{proof}
+
+\begin{lemma}\label{lem:quasisubseq_inclusion_left}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
+  functional $k$-separated finite-state transducer such that
+  $\mathcal{F}_\mathcal{T}$ has bounded variation.
+  Let $\mathcal{T}' = \langle \Sigma, \Omega, Q', 2^X, s, F', \tau, \rho, \eta,
+  \eta_x, \lambda, \psi \rangle$ be the $k$-separated quasi-subsequential
+  finite-state transducer derived from $\mathcal{T}$ by applying the construction
+  described above. Then $\mathcal{F}_{\mathcal{T}'} \subseteq
+  \mathcal{F}_\mathcal{T}$.
+\end{lemma}
+
+\begin{proof}
+  Let $\langle u, v \rangle \in \mathcal{F}_{\mathcal{T}'}$.
+  There exists $i \in \{ 1, 2, \ldots, k \}$ such that $\delta^*(s, u)^i \in F_i'$
+  and $v = \lambda^*(s, u) \psi_i(\delta^*(s, u)^i)$.
+  Let $v' = \lambda^*(s, u)$.
+  There exists a successful path $\pi$ with label $\langle u, v' \rangle$ in
+  $\mathcal{T}'$.
+  Let the length of $\pi$ be $n-1 \in \mathbb{N}$.
+  Let $u = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
+  \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
+  Let $v' = v_1 v_2 \ldots v_{n-1}$ where $v_i \in \Omega^*$ for $i \in \{ 1, 2,
+  \ldots, n-1 \}$.
+  Let $v_n = \psi_i(\delta^*(s, u)^i)$.
+  If $\pi$ is trivial, then $u = v' = \epsilon$ and $\delta^*(s, u) = s$.
+  There exists $f' \in F$ such that $\langle f', v_n \rangle \in s^i$.
+  Therefore, there exists $s' \in S$ such that $\langle s', \epsilon, v_n, f' \rangle
+  \in \Delta^*$.
+  Therefore, $\langle \epsilon, v_n \rangle = \langle u, v \rangle \in
+  \mathcal{F}_\mathcal{T}$.
+  Otherwise, if $\pi$ is non-trivial, let
+  \begin{equation*}
+    \langle p_1, \sigma_1, v_1, p_2 \rangle, \langle p_2, \sigma_2, v_2,
+    p_3 \rangle, \ldots, \langle p_{n-1}, \sigma_{n-1}, v_{n-1}, p_n
+    \rangle
+  \end{equation*}
+  be the sequence of state transitions that constitutes $\pi$.
+  There exists $q_n \in F$ such that $\langle q_n, v_n \rangle \in p_n^i$.
+  Let $x_n = \epsilon$.
+  Since $p_n^i = \delta_i(p_{n-1}, \sigma_{n-1})$, there exist $j \in \{ 1, 2,
+  \ldots, k \}$, $x_{n-1}, y_{n-1} \in \Omega^*$ and $q_{n-1} \in Q$ such that
+  $\langle q_{n-1}, x_{n-1} \rangle \in p_{n-1}^j$, $x_{n-1} y_{n-1} = v_n x_n$ and
+  $\langle q_{n-1}, \sigma_{n-1}, y_{n-1}, q_n \rangle \in \Delta^*$.
+  Let us assume there exist $j \in \{ 1, 2, \ldots, k \}$, $q_i \in Q$ and
+  $x_i, y_i \in \Omega^*$ such that $\langle q_i, x_i \rangle \in p_i^j$,
+  $x_i y_i = v_i x_{i+1}$ and $\langle q_i, \sigma_i, y_i, q_{i+1} \rangle
+  \in \Delta^*$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
+  However,
+  \begin{align*}
+    p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
+    &= \bigcup_{r=1}^k \{ \langle p'', w \rangle \in \Delta_\epsilon^j(p',
+    \lambda(p_{i-1}, \sigma_{i-1})^{-1}w') \mid \exists \langle p', w' \rangle \in
+    \Delta_{f\epsilon}^r(p_{i-1}^r, \sigma_{i-1}) \}\\
+    &= \begin{aligned}[t]
+      \bigcup_{r=1}^k \{ &\langle p''', w \rangle \in \Delta_\epsilon^j(p',
+      v_{i-1}^{-1}w'w''') \mid\\
+      &\exists \langle p', w' \rangle \in p_{i-1}^r \; \exists \langle p'', w''
+      \rangle \in \Delta_f(p', \sigma_{i-1}) \; \exists \langle p''', w''' \rangle
+      \in \Delta_\epsilon(p'', w'') \}
+    \end{aligned}
+  \end{align*}
+  Therefore, there exist $r \in \{ 1, 2, \ldots, k \}$, $\langle q_{i-1}, x_{i-1}
+  \rangle \in  p_{i-1}^r$, $y_{i-1} \in \Omega^*$ such that $x_i = v_{i-1}^{-1}
+  x_{i-1} y_{i-1}$ and $\langle q_{i-1}, \sigma_{i-1}, y_{i-1}, q_i \rangle \in
+  \Delta^*$. Thus, $x_{i-1} y_{i-1} = v_{i-1} x_i$.
+  Therefore, $y_i = x_i^{-1} v_i x_{i+1}$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
+  Therefore,
+  \begin{equation*}
+    y_1 y_2 \ldots y_{n-1} = x_1^{-1} v_1 x_2 x_2^{-1} v_2 x_3 \ldots x_{n-1}^{-1}
+    v_{n-1} x_n = v_1 v_2 \ldots v_{n-1} = v'.
+  \end{equation*}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  \iffalse
+  
+  We will show that $\langle u, v \rangle \in \mathcal{F}_\mathcal{T}$ by induction
+  on the length of $u$.
+  If $|u| = 0$, then $u = \epsilon$.
+  Therefore, $\delta^*(s, u)^i = s^i$ and $v = \psi_i(s^i)$.
+  By definition,
+  \begin{equation*}
+    s^i = \{ \langle q'', w \rangle \in \mathcal{C}(Q_i) \times \Omega^* \mid
+    \exists s' \in S (\langle s', \epsilon, w, q'' \rangle \in \Delta^*) \}.
+  \end{equation*}
+  Since $s^i \in F_i'$, then
+  \begin{equation*}
+    \{ \langle f', w \rangle \in F \times \Omega^* \mid \exists s' \in S (\langle s',
+    \epsilon, w, f' \rangle \in \Delta^*) \} \neq \emptyset.
+  \end{equation*}
+  Since $\mathcal{T}$ is functional, then
+  \begin{equation*}
+    |\{ w \in \Omega^* \mid \exists s' \in S \; \exists f' \in F \; (\langle s',
+    \epsilon, w, f' \rangle \in \Delta^*) \}| \leq 1.
+  \end{equation*}
+  Thus, there exist $s' \in S$ and $f' \in F$ such that $\langle s', \epsilon,
+  v, f' \rangle \in \Delta^*$.
+  Therefore, $\langle u, v \rangle \in \mathcal{F}_\mathcal{T}$.
+  Otherwise, if $|u| > 0$, then $u = u'\sigma$ where $\sigma \in \Sigma$.
+  \fi
+
+
+  %Therefore, $v = \psi_i(s^i) = \epsilon$. Since $s^i = \delta^*(s, u)^i \in F_i'$,
+  %then $\hat{\Delta}_\epsilon^i(S) \cap F
+
+  \iffalse
+  There exists a successful path $\pi$ with label $\langle u, v' \rangle$ in
+  $\mathcal{T}'$ and end state $f \in \prod_{i=1}^k Q_i'$ for $v' \in \Omega^*$.
+  Furthermore, there exists $i \in \{ 1, 2, \ldots, k \}$ such that $f^i \in F_i'$
+  and $\psi_i(f^i) = v'^{-1}v$.
+  Let the length of $\pi$ be $n-1 \in \mathbb{N}$.
+  Let $u = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
+  \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$.
+  Let $v' = v_1 v_2 \ldots v_{n-1}$ where $v_i \in \Omega^*$ for $i \in \{ 1, 2,
+  \ldots, n-1 \}$.
+  \fi
+
+  %If $\pi$ is trivial, then $u = v = \epsilon$, $s = f$ and $f^i \in F_i'$ for $i \in
+  %\{ 1, 2, \ldots, k \}$.
+  %Thus,
+  %$q' \in \hat{\Delta}_\epsilon^i(S) \cap F_i'$ and $\psi_i(q'^i) = \epsilon$.
+  %Therefore, $\langle u, v \rangle \in \mathcal{F}_{\mathcal{T}'}$.
+  %Otherwise, if $\pi$ is non-trivial, let
+\end{proof}
+
+\begin{theorem}
+  For every trimmed functional $k$-separated finite-state transducer $\mathcal{T}$
+  such that $\mathcal{F}_\mathcal{T}$ has bounded variation there exists a 
+  $k$-separated quasi-subsequential finite-state transducer $\mathcal{T'}$ such that
+  $\mathcal{F}_{\mathcal{T}'} = \mathcal{F}_\mathcal{T}$.
+\end{theorem}
+
+\begin{proof}
+  Follows from \Cref{lem:quasisubseq_completion,lem:quasisubseq_inclusion_right,lem:quasisubseq_inclusion_left}.
 \end{proof}

@@ -167,7 +167,8 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
   \in I$.
   Also, let $i_h < i_j$ if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
   It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1 \sigma_2
-  \ldots \sigma_{n-1}$. Let $p_1 = s$.
+  \ldots \sigma_{n-1}$.
+  Let $p_1 = s$.
   We have $\sigma_{i_1} \in \Sigma$ and if $i_1 > 1$, then $\sigma_j = \epsilon$ for
   $j \in \{ 1, 2, \ldots, i_1-1 \}$.
   Therefore,
@@ -177,7 +178,8 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
   \end{equation*}
   Let us assume that $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
   \sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$ for $h \in \{ 1, 2,
-  \ldots, l \}$. Let
+  \ldots, l \}$.
+  Let
   \begin{equation*}
     p_{h+1} = \delta(p_h, \sigma_{i_h}) = \langle p_{h+1}^1,
     p_{h+1}^2, \ldots, p_{h+1}^k \rangle
@@ -247,8 +249,8 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
   Let $w \in \mathcal{L}_{\mathcal{A}'}$. Therefore, there exists a successful path
   $\pi$ with label $w$ in $\mathcal{A}'$. Let the length of $\pi$ be $n-1 \in
   \mathbb{N}$. Let $w = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
-  \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$. Let $p', p'' \in \mathcal{P}(Q')$ be
-  respectively the start and end states of $\pi$.
+  \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$. Let $p', p'' \in \prod_{i=1}^k Q_i'$
+  be respectively the start and end states of $\pi$.
   If $\pi$ is trivial, then $w = \epsilon$, $p' = p'' = s$ and $s^i \cap F_i' \neq
   \emptyset$ for some $i \in \{ 1, 2, \ldots, k \}$. Therefore, $S \cap F \neq
   \emptyset$ and thus, $w \in \mathcal{L}_\mathcal{A}$.
@@ -312,7 +314,7 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
 \end{theorem}
 
 \begin{proof}
-  Follows directly from \Cref{lem:quasidet_completion,lem:quasidet_inclusion_right,lem:quasidet_inclusion_left}.
+  Follows from \Cref{lem:quasidet_completion,lem:quasidet_inclusion_right,lem:quasidet_inclusion_left}.
 \end{proof}
 
 \iffalse

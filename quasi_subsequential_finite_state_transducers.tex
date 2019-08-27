@@ -26,11 +26,10 @@
 \begin{definition}
   A state in a $k$-separated quasi-subsequential finite-state transducer $\mathcal{T}
   = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi
-  \rangle$ is an element of the set $\prod_{i=1}^k{Q_i}$.
+  \rangle$ is an element of the set $\prod_{i=1}^k Q_i$.
 \end{definition}
 
-We shall denote the set of states $\prod_{i=1}^k{Q_i}$ by $\mathcal{P}(Q)$ and shall
-write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
+We write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
@@ -47,7 +46,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
-  transducer. The \emph{separator transition function} $\delta_x : \mathcal{P}(Q)
+  transducer. The \emph{separator transition function} $\delta_x : \prod_{i=1}^k Q_i
   \times \Sigma \rightarrow X$ is defined as
   \begin{equation*}
     \delta_x(q, \sigma) = \eta_x^k(\rho_1(\tau_1(q^1, \sigma)), \rho_2(\tau_2(q^2,
@@ -58,7 +57,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
-  transducer. The \emph{quasi-state transition function} $\delta_i : \mathcal{P}(Q)
+  transducer. The \emph{quasi-state transition function} $\delta_i : \prod_{i=1}^k Q_i
   \times \Sigma \rightarrow Q_i$ is defined as
   \begin{equation*}
     \delta_i(q, \sigma) = \eta_i(\tau_i(q^i, \sigma), \delta_x(q, \sigma))
@@ -69,8 +68,8 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
-  transducer. The \emph{state transition function} $\delta : \mathcal{P}(Q) \times
-  \Sigma \rightarrow \mathcal{P}(Q)$ is defined as
+  transducer. The \emph{state transition function} $\delta : \prod_{i=1}^k Q_i \times
+  \Sigma \rightarrow \prod_{i=1}^k Q_i$ is defined as
   \begin{equation*}
     \delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
     \delta_k(q, \sigma) \rangle.
@@ -81,18 +80,18 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
   transducer. The \emph{generalized state transition function} $\delta^* :
-  \mathcal{P}(Q) \times \Sigma^* \rightarrow \mathcal{P}(Q)$ is defined as
+  \prod_{i=1}^k Q_i \times \Sigma^* \rightarrow \prod_{i=1}^k Q_i$ is defined as
   \begin{itemize}
-    \item $\delta^*(q, \epsilon) = q$ for $q \in \mathcal{P}(Q)$,
+    \item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k Q_i$,
     \item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in
-	    \mathcal{P}(Q)$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	    \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
   \end{itemize}
 \end{definition}
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
-  transducer. The \emph{state transition output function} $\lambda : \mathcal{P}(Q)
+  transducer. The \emph{state transition output function} $\lambda : \prod_{i=1}^k Q_i
   \times \Sigma \rightarrow \Omega^*$ is defined as
   \begin{equation*}
     \lambda(q, \sigma) = \bigwedge_{i=1}^k{\lambda_i(q^i, \sigma)}.
@@ -103,11 +102,11 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
   transducer. The \emph{generalized state transition output function} $\lambda^* :
-  \mathcal{P}(Q) \times \Sigma^* \rightarrow \Omega^*$ is defined as
+  \prod_{i=1}^k Q_i \times \Sigma^* \rightarrow \Omega^*$ is defined as
   \begin{itemize}
-    \item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in \mathcal{P}(Q)$,
+    \item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in \prod_{i=1}^k Q_i$,
     \item $\lambda^*(q, w\sigma) = \lambda^*(q, w)\lambda(\delta^*(q, w), \sigma)$
-	    for $q \in \mathcal{P}(Q)$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	    for $q \in \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
   \end{itemize}
 \end{definition}
 
@@ -119,7 +118,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
     \lambda(\delta^*(q, u), \sigma)^{-1} \lambda^*(q, u)^{-1} u = \lambda^*(q, u
     \sigma)^{-1} v
   \end{equation*}
-  for $q \in \mathcal{P}(Q)$, $u \in \Sigma^*$, $\sigma \in \Sigma$ and $v \in
+  for $q \in \prod_{i=1}^k Q_i$, $u \in \Sigma^*$, $\sigma \in \Sigma$ and $v \in
   \Omega^*$.
 \end{proposition}
 
@@ -135,7 +134,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
   A \emph{path in a $k$-separated quasi-subsequential finite-state transducer}
   $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ is either trivial or non-trivial. A trivial path $\pi_q$ in
-  $\mathcal{T}$ is associated with every state $q \in \mathcal{P}(Q)$. The length of
+  $\mathcal{T}$ is associated with every state $q \in \prod_{i=1}^k Q_i$. The length of
   $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$.
   The label of $\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is
   succsessful if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2,
@@ -157,23 +156,23 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separa\-ted quasi-subsequential finite-state
   transducer. There exists a path in $\mathcal{T}$ with start state $q' \in
-  \mathcal{P}(Q)$, end state $q'' \in \mathcal{P}(Q)$ and label $\langle u, v \rangle
+  \prod_{i=1}^k Q_i$, end state $q'' \in \prod_{i=1}^k Q_i$ and label $\langle u, v \rangle
   \in \Sigma^* \times \Omega^*$ if and only if $\delta^*(q', u) = q''$ and
   $\lambda^*(q', u) = v$.
 \end{proposition}
 
 \begin{proof}
   We prove the statement by induction on the length of $u$. If $|u| = 0$, then $u =
-  \epsilon$. Let there be a path with start state $q' \in \mathcal{P}(Q)$, end state
-  $q'' \in \mathcal{P}(Q)$ and label $\langle u, v \rangle = \langle \epsilon, v
+  \epsilon$. Let there be a path with start state $q' \in \prod_{i=1}^k Q_i$, end state
+  $q'' \in \prod_{i=1}^k Q_i$ and label $\langle u, v \rangle = \langle \epsilon, v
   \rangle$. Only trivial paths have a component of their label equal to $\epsilon$.
   Therefore, $q' = q''$, $v = \epsilon$ and by definition $\delta^*(q', u) =
   \delta^*(q', \epsilon) = q' = q''$ and $\lambda^*(q', u) = \lambda^*(q', \epsilon)
   = \epsilon = v$. A similar argument follows in the other direction. Otherwise, if
   $|u| > 0$, then $u = u'\sigma$ for $u' \in \Sigma^*$ and $\sigma \in \Sigma$. Let
-  there be a path with start state $q' \in \mathcal{P}(Q)$, end state $q''' \in
-  \mathcal{P}(Q)$ and label $\langle u, v \rangle$. There exist a state $q'' \in
-  \mathcal{P}(Q)$ and a path with start state $q'$, end state $q''$ and label
+  there be a path with start state $q' \in \prod_{i=1}^k Q_i$, end state $q''' \in
+  \prod_{i=1}^k Q_i$ and label $\langle u, v \rangle$. There exist a state $q'' \in
+  \prod_{i=1}^k Q_i$ and a path with start state $q'$, end state $q''$ and label
   $\langle u', v' \rangle$ where $v' \in pref(v)$. By definition $\delta(q'', \sigma)
   = q'''$ and $\lambda(q'', \sigma) = v'^{-1}v$. By the inductive hypothesis
   $\delta^*(q', u') = q''$ and $\lambda^*(q', u') = v'$. Therefore, by definition
@@ -195,147 +194,6 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
 \end{definition}
 
 \iffalse
-  We now describe a construction that produces a quasi-subsequential $k$-separa\-ted
-  finite-state transducer $\mathcal{T'}$ from a trimmed functional $k$-separated
-  finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta
-    \rangle$ if $\mathcal{F}_\mathcal{T}$ has bounded variation. Let $P_i = Q_i \cup X$
-  for $i \in \{ 1, 2, \ldots, k \}$. The quasi-subsequential $k$-separated finite-state
-  transducer $\mathcal{T}'$ and the set of states $R$ are constructed by induction. Let
-  $\mathcal{T}'^{(1)} = \langle \Sigma, \Omega, Q'^{(1)}, 2^X, s, F'^{(1)}, \tau^{(1)},
-    \rho^{(1)}, \eta^{(1)}, \emptyset, \lambda^{(1)}, \psi^{(1)} \rangle$, $R^{(0)} =
-    \emptyset$ and $R^{(1)} = \{ s \}$ where
-  \begin{itemize}
-    \item $s^i = \{ \langle q, u \rangle \in \hat{\Delta}_\epsilon(S) \mid q \in P_i \}$,
-    \item $Q_i'^{(1)} = \{ s^i \}$,
-    \item $F_i'^{(1)} = \tau_i^{(1)} = \rho_i^{(1)} = \eta_i^{(1)} =  \lambda_i^{(1)} =
-            \psi_i^{(1)} = \emptyset$
-  \end{itemize}
-  for $i \in \{ 1, 2, \ldots, k \}$. Let us assume that $\mathcal{T}'^{(n)}$ and
-  $R^{(n)}$ are constructed for $n > 0$.
-  The set of states introduced at step $n$ is
-  \begin{align*}
-    R_n = R^{(n)} \setminus R^{(n-1)}.
-  \end{align*}
-  The longest common quasi-state transition output function $\lambda_i^{\wedge (n)} :
-    Q_i'^{(n)} \times \Sigma \rightarrow \Omega^*$ is defined as
-  \begin{equation*}
-    \lambda_i^{\wedge (n)}(q, \sigma) = \bigwedge \{ uv \mid \exists \langle p', u
-    \rangle \in q \; \exists p'' \in P_i \; \exists v \in \Omega^* (\langle p', \sigma,
-    v, p'' \rangle \in \Delta) \}
-  \end{equation*}
-  for $i \in \{ 1, 2, \ldots, k \}$.
-  The quasi-state successor function $succ_i^{(n)} : Q_i'^{(n)} \times
-    \Sigma \rightarrow 2^{P_i \times \Omega^*}$ is defined as
-  \begin{equation*}
-    succ_i^{(n)}(q, \sigma) = \begin{aligned}[t]
-      \{ & \langle p''', \lambda_i^{\wedge (n)}(q, \sigma)^{-1}uvw \rangle \mid
-      \exists \langle p', u \rangle \in q \; \exists p'', p''' \in P_i               \\
-         & \exists v, w \in \Omega^* ( \langle p', \sigma, v, p'' \rangle \in \Delta
-      \land \langle p''', w \rangle \in \Delta_\epsilon^i(p'')) \}
-    \end{aligned}
-  \end{equation*}
-  for $i \in \{ 1, 2, \ldots, k \}$.
-  Let $\mathcal{T}'^{(n+1)} = \langle \Sigma, \Omega, Q'^{(n+1)}, 2^X, s, F'^{(n+1)},
-    \tau^{(n+1)}, \rho^{(n+1)},\\\eta^{(n+1)}, \eta_x^{(n+1)}, \lambda^{(n+1)},
-    \psi^{(n+1)} \rangle$ and $R^{(n+1)} = R^{(n)} \cup \{ \delta^{(n+1)}(q, \sigma)
-    \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}$ where
-  \begin{itemize}
-    \item $F_i'^{(n+1)} = F_i'^{(n)} \cup \{ q^i \mid \exists q \in R_n \; \exists
-            \langle p, w \rangle \in q^i (p \in F) \}$,
-    \item $\psi_i^{(n+1)} = \psi_i^{(n)} \cup \{ \langle q^i, w \rangle
-            \mid \exists q \in R_n \; \exists \langle p, w \rangle \in q^i
-            (p \in F)\}$,
-    \item $\lambda_i^{(n+1)} = \lambda_i^{(n)} \cup \{ \langle q^i,
-            \sigma, \lambda_i^{\wedge (n)}(q^i, \sigma) \rangle \mid
-            \exists q \in R_n \; \exists \sigma \in \Sigma \}$,
-    \item $\tau_i^{(n+1)} = \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
-            succ_i^{(n)}(q^i, \sigma) \rangle \mid \exists q \in R_n \;
-            \exists \sigma \in \Sigma \}$,
-    \item $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \begin{aligned}[t]
-              \{ & \langle q, \langle p, w \rangle \rangle \mid \exists q \in
-              rng(\tau_i^{(n+1)}) \setminus rng(\tau_i^{(n)})                 \\
-                 & \exists \langle p, w \rangle \in q (p \in X) \},
-            \end{aligned}$
-    \item $\eta_i^{(n+1)} = \eta_i^{(n)} \cup \begin{aligned}[t]
-              \{ & \langle \tau_i^{(n+1)} (q^i, \sigma), \eta_x^{(n+1)}(q),
-              \tau_i^{(n+1)} (q^i, \sigma) \cup \hat{\Delta}_\epsilon^i(
-              \eta_x^{(n+1)}(q)) \rangle \mid                               \\
-                 & \exists q \in R_n \; \exists \sigma \in \Sigma \},
-            \end{aligned}$
-    \item $Q_i'^{(n+1)} = Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup
-            rng(\eta_i^{(n+1)})$
-  \end{itemize}
-  for $i \in \{ 1, 2, \ldots, k \}$ and
-  \begin{itemize}
-    \item $\begin{aligned}[t]
-              \eta_x^{(n+1)} = \eta_x^{(n)} \cup \{ & \langle \eta_x^{i (n)}(p^1,
-              p^2, \ldots, p^i), p^{i+1}, \eta_x^{i (n)}(p^1, p^2, \ldots, p^i)
-              \cup p^{i+1} \rangle \mid                                                                                  \\
-                                                    & \exists q \in R_n \; \exists \sigma \in \Sigma \; \exists i \in \{
-              1, 2, \ldots, k-1 \}(                                                                                      \\
-                                                    & p^i = \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^{i+1}, \sigma))) \}.
-            \end{aligned}$
-  \end{itemize}
-
-  \begin{lemma}
-    Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
-    trimmed functional $k$-separated finite-state transducer such that
-    $\mathcal{F}_\mathcal{T}$ has bounded variation. Let $\mathcal{T'}^{(i)}$
-    and $R^{(i)}$ be respectively the quasi-subsequential $k$-separated
-    finite-state transducer and the set of states derived from $\mathcal{T}$ by
-    applying the construction described above for $i > 0$. There exists $n \in
-      \mathbb{N}$ such that $R^{(i)} = R^{(i+1)}$ and $\mathcal{T'}^{(i)} =
-      \mathcal{T'}^{(i+1)}$ for $i > n$.
-  \end{lemma}
-
-  \begin{proof}
-    If $R^{(n)} = R^{(n+1)}$ for some $n \in \mathbb{N}$ then $R_{n+1} =
-      \emptyset$. Thus, $\mathcal{T}'^{(n+2)} = \mathcal{T}'^{(n+1)}$ and
-    $R^{(n+2)} = R^{(n+1)}$. It follows that $R^{(i)} = R^{(i+1)}$ and
-    $\mathcal{T}^{(i)} = \mathcal{T}^{(i+1)}$ for $i > n$.
-    Let us assume that such $n$ does not exist. It follows that $R_i \neq
-      \emptyset$ for $i > 0$. Let us assign each state $q \in Q$ a path
-    $\langle q, w_q, v_q, f_q \rangle \in \Delta^*$ for some $f_q \in F$. Such
-    paths exist because $\mathcal{T}$ is trimmed. Let $W = \max_{q \in
-        Q}{|w_q|}$ and $V = \max_{q \in Q}{|v_q|}$. $\mathcal{F}_\mathcal{T}$ has
-    bounded variation, therefore, for $k = 2W$ there exists $K \geq
-      0$ such that $d_\Sigma(w', w''') \leq k$ implies
-    $d_\Sigma(\mathcal{F}_\mathcal{T}(w'), \mathcal{F}_\mathcal{T}(w'')) \leq
-      K$ for every $w', w'' \in \Sigma^*$. Since $R_i \neq \emptyset$ for $i > 0$
-    and $Q$ is finite there exist $i > 0$, $q_i \in
-      R_i$, $j \in \{ 1, 2, \ldots, k \}$ and $\langle p', u' \rangle \in q_i^j$ such
-    that $|u'| >
-      K + V$. Also, by construction, there exists $w \in \Sigma^*$ such that $q_i
-      = \delta^{(i)*}(s, w)$. Since $u' \neq \epsilon$, it follows that there
-    exists $\langle p'', u'' \rangle \in q_i^j$ such that $u' \wedge u'' =
-      \epsilon$. Therefore, there exist $s', s'' \in S$  such that $\langle s', w,
-      \lambda^{(i)*}(s, w)u', p' \rangle \in \Delta^*$ and $\langle s'', w,
-      \lambda^{(i)*}(s, w)u'', p'' \rangle \in \Delta^*$. Moreover, we have
-    $\langle p', w_{p'}, v_{p'}, f_{p'} \rangle \in \Delta^*$ and $\langle p'',
-      w_{p''}, v_{p''}, f_{p''} \rangle \in \Delta^*$. We have $d_\Sigma(ww_{p'},
-      ww_{p''}) \leq |w_{p'}| + |w_{p''}| \leq 2W = k$. If $u'' = \epsilon$ then
-    \begin{align*}
-      d_\Sigma(\lambda^{(i)*}(s, w)u'v', \lambda^{(i)*}(s, w)u''v'')
-       & = d_\Sigma(u'v', v'') \\
-       & > (K + V + |v'|) - V  \\
-       & > K.
-    \end{align*}
-    Otherwise,
-    \begin{align*}
-      d_\Sigma(\lambda^{(i)*}(s, w)u'v', \lambda^{(i)*}(s, w)u''v'')
-       & = |u'| + |v'| + |u''| + |v''| \\
-       & > |u'|                        \\
-       & > K + V                       \\
-       & > K.
-    \end{align*}
-    This contradicts the precondition that $\mathcal{F}_\mathcal{T}$ has
-    bounded variation. Therefore, there exists $n \in \mathbb{N}$ such that
-    $R^{(i)} = R^{(i+1)}$ and $\mathcal{T'}^{(i)} = \mathcal{T'}^{(i+1)}$ for
-    $i > n$.
-  \end{proof}
-
-  %-----
-
   \begin{theorem}
     Let $\mathcal{T}$ be a trimmed functional $k$-separated finite-state
     transducer such that $\mathcal{F}_\mathcal{T}$ has bounded variation. Let
@@ -344,42 +202,7 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
     above. Then $\mathcal{F}_\mathcal{T'} = \mathcal{F}_\mathcal{T}$.
   \end{theorem}
 
-  \begin{proof}
-    We show that every pair of words recognized by $\mathcal{T}$ is also
-    recognized by $\mathcal{T'}$ by induction on the length of a successful
-    path. Let
-    \begin{align*}
-      \langle \sigma_1 \sigma_2 \ldots \sigma_{n-1}, w_1 w_2 \ldots
-      w_{n-1} \rangle \in \mathcal{F}_\mathcal{T}
-    \end{align*}
-    for $n \in \mathbb{N}$. Let
-    \begin{align*}
-      \langle q_1, \sigma_1, w_1, q_2 \rangle, \langle q_2, \sigma_2, w_2,
-      q_3 \rangle, \ldots, \langle q_{n-1}, \sigma_{n-1}, w_{n-1}, q_n
-      \rangle
-    \end{align*}
-    be a successful path in $\mathcal{T}$. Since $\mathcal{T}$ is functional
-    this path is unique. Let $I = \{ i_1, i_2, \ldots, i_l \}
-      \subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of indexes for $l \in
-      \interval{1}{n-1}$ such that $\sigma_{i_j} \in \Sigma$ for $j \in
-      \interval{1}{l}$ and $i_h < i_j$ if $h < j$ for $h, j \in \interval{1}{l}$.
-    Let $p_1 = s$. We have $\sigma_{i_1} \in \Sigma$ and
-    if $i_1 > 1$ then $\sigma_j = \epsilon$ for $j \in \interval{1}{i_1-1}$.
-    Therefore,
-    \begin{align*}
-      \langle q_{i_1}, w_1 w_2 \ldots w_{i_1-1} \rangle
-      \in \Delta_\epsilon(q_1)
-       & \subseteq \hat{\Delta}_\epsilon(S)            \\
-       & = \bigcup_{r=1}^k \{ \langle q, u \rangle \in
-      \hat{\Delta}_\epsilon(S) \mid q \in P_r \}       \\
-       & = \bigcup_{r=1}^k p_1^r.
-    \end{align*}
-    Let us assume that $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-      \sigma_{i_{h-1}})$, $\lambda^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-      \sigma_{i_{h-1}}) = \Delta_\wedge(\sigma_{i_1} \sigma_{i_2} \ldots
-      \sigma_{i_{h-1}})$ and $\langle q_{i_h}, \Delta_\wedge(\sigma_{i_1}
-      \sigma_{i_2} \ldots \sigma_{i_{h-1}})^{-1}w_1 w_2 \ldots w_{i_h-1} \rangle
-      \in \bigcup_{r=1}^k{p_h^r}$ for $h \in \interval{2}{l}$.
+  \begin{proof}  
     We define $p_{h+1} = \delta(p_h, \sigma_{i_h}) =
       \langle p_{h+1}^1, p_{h+1}^2, \ldots, p_{h+1}^k \rangle$ where
     \begin{align*}
@@ -628,6 +451,11 @@ write $q^i$ for the $i$-th element of a state $q \in \mathcal{P}(Q)$.
        & \langle \sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l}, w_1 w_2
       \ldots w_{n-1} \rangle \in \mathcal{F}_\mathcal{T'}.
     \end{align*}
+
+
+
+
+
 
     Similarly, we show that every pair of words recognized by $\mathcal{T'}$
     is also recognized by $\mathcal{T}$. Let

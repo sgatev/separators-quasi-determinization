@@ -67,6 +67,7 @@ causing ambiguity.
 \end{definition}
 
 \begin{proposition}
+  \label{proposition:left_word_factor}
   Let $u$, $v$ and $w$ be words over an alphabet $\Sigma$. Then
   \begin{equation*}
     v^{-1}u^{-1}w = (uv)^{-1}w.
@@ -96,7 +97,9 @@ causing ambiguity.
   The \emph{longest common prefix} of the words $w_1, w_2, \ldots, w_n$ over an
   alphabet $\Sigma$ for $n > 0$ is the word
   \begin{equation*}
-    \bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n pref(w_i)} |u|.
+    %\bigwedge_{i=1}^n w_i = \argmax_{u \in \bigcap_{i=1}^n pref(w_i)} |u|.
+    \bigwedge_{i=1}^n w_i = \argmax \{ u \in \Sigma^* \mid \forall i \in \{ 1, 2,
+    \ldots, n \} (u \in pref(w_i)) \}.
   \end{equation*}
 \end{definition}
 
