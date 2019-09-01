@@ -1,7 +1,8 @@
 \section{Traversal of quasi-subsequential finite-state transducers}
 
 \Cref{alg:qsfst_traversal} represents a deterministic procedure that translates an
-input word using a $k$-separated quasi-subsequential finite-state transducer.
+input word using a $k$-separated quasi-subsequential finite-state transducer. The
+output of the procedure is one of the possible translations of the input word.
 
 \begin{algorithm}[h]
   \DontPrintSemicolon
@@ -51,16 +52,16 @@ input word using a $k$-separated quasi-subsequential finite-state transducer.
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
   \lambda, \psi \rangle$ be a $k$-separa\-ted quasi-subsequential finite-state
   transducer. Let $u = \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in
-  \mathbb{N}$ over $\Sigma$ and $v$ be a word of length $m \in \mathbb{N}$ over
-  $\Omega$ such that $\mathcal{F}_\mathcal{T}(u) = v$. Then
+  \mathbb{N}$ over $\Sigma$ and $m = \max \{ |v| \mid \exists v \in \Omega^* (
+  \langle u, v \rangle \in \mathcal{R}_\mathcal{T}) \}$. Then
   \Cref{alg:qsfst_traversal} completes on input $\mathcal{T}$ and $u$ in
   $\mathcal{O}(k(n+m))$ time.
 \end{proposition}
 
 \begin{proof}
   Lines $1-2$ are executed once and require $\mathcal{O}(1)$ time.
-  Line $3$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
-  Lines $6-10$ are executed at most $kn$ times require $\mathcal{O}(1)$ time.
+  Line $4$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
+  Lines $7-10$ are executed at most $kn$ times require $\mathcal{O}(1)$ time.
   Line $11$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
   Line $13$ is executed at most $n$ times and assuming $lcp_k$ requires
   $\mathcal{O}(kl)$ time where $l = \min_{i=1}^k |l_i|$, the execution over all

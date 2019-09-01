@@ -15,9 +15,12 @@ the languages recognized by deterministic finite-state automata, and present an
 algorithm that, given a non-deterministic finite-state automaton, constructs a
 deterministic finite-state automaton recognizing the same language. Mohri shows that
 this determinization algorithm can be generalized to rational functions of bounded
-variation \cite{mohri_applications}. While often good in practice, a downside to the
-algorithm is that in the worst case it produces a deterministic finite-state device
-with an exponential number of states compared to the input non-deterministic machine.
+variation \cite{mohri_applications}. Beal et al. present simple algorithms for
+deciding whether the relation represented by a finite-state transducer is a function
+of bounded variation \cite{beal}. While often good in practice, a downside to the
+determinization algorithm is that in the worst case it produces a deterministic
+finite-state device with an exponential number of states compared to the input
+non-deterministic machine.
 \bigbreak
 A concept relevant to the representation of a finite-state device is that of a graph.
 Algorithms over graphs are studied outside the theory of finite-state devices but in
