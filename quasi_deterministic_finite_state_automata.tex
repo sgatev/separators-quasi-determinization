@@ -1,12 +1,12 @@
 \section{Quasi-deterministic finite-state automata}
 
 \begin{definition}
-  A \emph{$k$-separated quasi-deterministic finite-state automaton}
-  $\mathcal{A}$ is a tuple
+  A \emph{$k$-separated quasi-deterministic finite-state automaton} $\mathcal{A}$ is
+  a tuple
   \begin{equation*}
     \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle
   \end{equation*}
-  where
+  for $k > 0$ where
   \begin{itemize}
     \item $Q, s, F, \tau, \rho$ and $\eta$ are tuples of $k$ elements,
     \item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
@@ -28,7 +28,9 @@
   the set $\prod_{i=1}^k Q_i$.
 \end{definition}
 
-We shall write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
+We shall write $q^i$ for the $i$-th element of a state $q$ of a $k$-separated
+quasi-deterministic finite-state automaton $\mathcal{A} = \langle \Sigma, Q, X, s,
+F, \tau, \rho, \eta, \eta_x \rangle$.
 
 \begin{definition}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be

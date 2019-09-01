@@ -11,21 +11,29 @@ input word using a $k$-separated quasi-subsequential finite-state transducer.
   $o \gets \epsilon$\;
   $q \gets s$\;
   \For {$i \in \{ 1, 2, \ldots, n \}$} {
+    $hasTransition \gets \textbf{false}$\;
     \For {$j \in \{ 1, 2, \ldots, k \}$} {
-      \If {$\tau_j(q_j, \sigma_i)$ is \textbf{undefined}} {
-        \Return \textbf{undefined}
+      \If {$\tau_j(q_j, \sigma_i)$ is \textbf{defined}} {
+	$hasTransition \gets \textbf{true}$\;
+        $l_j \gets \lambda_j(q_j, \sigma_j)$\;
+        $t_j \gets \tau_j(q_j, \sigma_i)$\;
+        $r_j \gets \rho_j(t_j)$\;
       }
-      $o_j \gets \lambda_j(q_j, \sigma_j)$\;
-      $t_j \gets \tau_j(q_j, \sigma_i)$\;
-      $r_j \gets \rho_j(t_j)$\;
     }
-    $o \gets o \cdot lcp_k(o_1, o_2, \ldots, o_k)$\;
+    \If {$hasTransition$ is \textbf{false}} {
+      \Return \textbf{undefined}
+    }
+    $o \gets o \cdot lcp_k(l_1, l_2, \ldots, l_k)$\;
     $x \gets r_1$\;
     \For {$j \in \{ 2, 3, \ldots, k \}$} {
-      $x \gets \eta_x(x, r_j)$\;
+      \If {$r_j$ is \textbf{defined}} {
+        $x \gets \eta_x(x, r_j)$\;
+      }
     }
     \For {$j \in \{ 1, 2, \ldots, k \}$} {
-      $q_j \gets \eta_j(t_j, x)$\;
+      \If {$t_j$ is \textbf{defined}} {
+        $q_j \gets \eta_j(t_j, x)$\;
+      }
     }
   }
   \For {$i \in \{ 1, 2, \ldots, k \}$} {
@@ -35,7 +43,7 @@ input word using a $k$-separated quasi-subsequential finite-state transducer.
   }
   \Return \textbf{undefined}
 
-  \caption{Traversal of a quasi-subsequential finite-state transducer.}
+  \caption{Traversal of a $k$-separated quasi-subsequential finite-state transducer.}
   \label{alg:qsfst_traversal}
 \end{algorithm}
 
@@ -51,24 +59,25 @@ input word using a $k$-separated quasi-subsequential finite-state transducer.
 
 \begin{proof}
   Lines $1-2$ are executed once and require $\mathcal{O}(1)$ time.
-  Line $5$ is executed at most $kn$ times and requires $\mathcal{O}(1)$ time.
-  Lines $7-9$ are executed at most $kn$ times require $\mathcal{O}(1)$ time.
-  Line $10$ is executed at most $n$ times and assuming $lcp_k$ requires
-  $\mathcal{O}(ko)$ time where $o = \min_{i=1}^k |o_i|$, the execution over all
-  iteration requires $\mathcal{O}(km+n)$ time in total.
+  Line $3$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
+  Lines $6-10$ are executed at most $kn$ times require $\mathcal{O}(1)$ time.
   Line $11$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
-  Line $13$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$
+  Line $13$ is executed at most $n$ times and assuming $lcp_k$ requires
+  $\mathcal{O}(kl)$ time where $l = \min_{i=1}^k |l_i|$, the execution over all
+  iteration requires $\mathcal{O}(km+n)$ time in total.
+  Line $14$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
+  Line $17$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$
   time.
-  Line $15$ is executed at most $kn$ times and requires $\mathcal{O}(1)$ time.
-  Line $17$ is executed at most $k$ times and requires $\mathcal{O}(1)$ time.
-  Line $18$ is executed at most once and requires $\mathcal{O}(1)$ time.
+  Line $20$ is executed at most $kn$ times and requires $\mathcal{O}(1)$ time.
+  Line $22$ is executed at most $k$ times and requires $\mathcal{O}(1)$ time.
+  Line $23$ is executed at most once and requires $\mathcal{O}(1)$ time.
   Therefore, the total runtime complexity bound for \Cref{alg:qsfst_traversal}
   is $\mathcal{O}(k(n+m))$.
 \end{proof}
 
 The complexity bound for \Cref{alg:qsfst_traversal} depends on the ability to compute
 longest common prefixes of $k$ words in $\mathcal{O}(km)$ time where $m$ is the
-length of the smallest of these words. \Cref{alg:lcp} represents one possible way of
+length of the shortest of these words. \Cref{alg:lcp} represents one possible way of
 doing that.
 
 \begin{algorithm}[h]
@@ -83,17 +92,14 @@ doing that.
   }
 
   $p \gets \epsilon$\;
-  $i \gets 0$\;
-
-  \While {$i \leq n$} {
+  \For {$i \in \{ 1, 2, \ldots, n \}$} {
     \For {$j \in \{ 2, 3, \ldots, k \}$} {
       \If {$w_j[i] \neq w_{j-1}[i]$} {
-        $\textbf{break}$
+        \Return $p$
       }
     }
   
     $p \gets p \cdot w_1[i]$\;
-    $i \gets i + 1$\;
   }
 
   \Return $p$
@@ -104,20 +110,21 @@ doing that.
 
 \begin{proposition}
   Let $w_1, w_2, \ldots, w_k$ be words over an alphabet $\Sigma$ for $k \in
-  \mathbb{N}$ such that $w_i = \sigma_1 \sigma_2 \ldots \sigma_{n_i}$ for $i \in \{
-  1, 2, \ldots, k \}$. Then \Cref{alg:lcp} completes on input $w_1, w_2, \ldots, w_k$
-  in $\mathcal{O}(kn)$ time where $n = \min_{i=1}^k n_i$.
+  \mathbb{N}$ such that $w_i = \sigma_1 \sigma_2 \ldots \sigma_{n_i}$ where $n_i \in
+  \mathbb{N}$ for $i \in \{ 1, 2, \ldots, k \}$. Then \Cref{alg:lcp} completes on
+  input $w_1, w_2, \ldots, w_k$ in $\mathcal{O}(kn)$ time where $n = \min_{i=1}^k
+  n_i$.
 \end{proposition}
 
 \begin{proof}
   Line $1$ is executed once and requires $\mathcal{O}(1)$ time.
   Line $3$ is executed $k-1$ times and requires $\mathcal{O}(1)$ time.
   Line $4$ is executed at most $k-1$ times and requires $\mathcal{O}(1)$ time.
-  Lines $5-6$ are executed once and require $\mathcal{O}(1)$ time.
-  Line $9$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$ time.
-  Lines $11-12$ are executed at most $n$ times and assuming that concatenation
-  of words requires $\mathcal{O}(1)$ time, then each execution of these lines
-  requires at most $\mathcal{O}(1)$ time.
+  Line $5$ is executed once and requires $\mathcal{O}(1)$ time.
+  Line $8$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$ time.
+  Line $10$ is executed at most $n$ times and assuming that concatenation
+  of words requires $\mathcal{O}(1)$ time, then each execution of this line requires
+  at most $\mathcal{O}(1)$ time.
   Therefore, the total runtime complexity bound for \Cref{alg:lcp} is
   $\mathcal{O}(kn)$.
 \end{proof}

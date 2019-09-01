@@ -1,4 +1,4 @@
-\section{Quasi-subsequentialization of separated finite-state transducers}
+\section{Quasi-subsequentialization of functional separated finite-state transducers}
 
 We now describe an inductive construction that, given a functional $k$-separated
 finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta
@@ -23,7 +23,7 @@ The base set of states $R^{(1)}$ is defined as $\{ s \}$.
 Let us assume that $\mathcal{T}'^{(n)}$ and $R^{(n)}$ are constructed for $n > 0$.
 The set of states introduced at step $n$ is $R_n = R^{(n)} \setminus R^{(n-1)}$ where
 $R^{(0)} = \emptyset$.
-The next set of final states $F_i'^{(n+1)}$ is defined as
+The next set of final quasi-states $F_i'^{(n+1)}$ is defined as
 \begin{equation*}
   F_i'^{(n)} \cup \{ q^i \mid \exists q \in R_n \; \exists \langle p, w \rangle \in
   q^i (p \in F) \}
@@ -36,20 +36,23 @@ The next final quasi-state output function $\psi_i^{(n+1)}$ is defined as
 \end{equation*}
 for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state transition output function $\lambda_i^{(n+1)}$ is defined as
-\begin{equation*}
-  \lambda_i^{(n)} \cup \{ \langle q^i, \sigma,
+\begin{align*}
+  \lambda_i^{(n)} \cup \{ &\langle q^i, \sigma,
   \bigwedge \{ w \mid \exists \langle p, w
   \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \}
-  \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}
-\end{equation*}
+  \rangle \mid\\
+  &\exists q \in R_n \; \exists \sigma \in \Sigma
+  (\Delta_{f\epsilon}^i(q^i, \sigma) \neq \emptyset) \}
+\end{align*}
 for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state transition function $\tau_i^{(n+1)}$ is defined as
-\begin{equation*}
-  \tau_i^{(n)} \cup \{ \langle q^i, \sigma,
+\begin{align*}
+  \tau_i^{(n)} \cup \{ &\langle q^i, \sigma,
   \{ \langle p, \lambda^{(n)}(q, \sigma)^{-1}w \rangle \mid \exists \langle
-  p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \} \rangle \mid
-  \exists q \in R_n \; \exists \sigma \in \Sigma \}
-\end{equation*}
+  p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \} \rangle \mid\\
+  &\exists q \in R_n \; \exists \sigma \in \Sigma (\Delta_{f\epsilon}^i(q^i, \sigma)
+  \neq \emptyset) \}
+\end{align*}
 for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state reduction function $\rho_i^{(n+1)}$ is defined as
 \begin{equation*}
@@ -59,25 +62,20 @@ The next quasi-state reduction function $\rho_i^{(n+1)}$ is defined as
 for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state extension function $\eta_i^{(n+1)}$ is defined as
 \begin{equation*}
-  \eta_i^{(n)} \cup \begin{aligned}[t]
-    \{ \langle &\tau_i^{(n+1)}(q^i, \sigma),
-    \delta_x^{(n+1)}(q, \sigma),\\
-    &\tau_i^{(n+1)} (q^i, \sigma) \cup \hat{\Delta}_\epsilon^i(\delta_x^{(n+1)}(q,
-    \sigma)) \rangle \mid
-    \exists q \in R_n \; \exists \sigma \in \Sigma \}
-  \end{aligned}
+  \eta_i^{(n)} \cup \{ \langle t_i(q, \sigma), x(q, \sigma),
+  t_i(q, \sigma) \cup \hat{\Delta}_\epsilon^i(x(q, \sigma))
+  \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}
 \end{equation*}
-for $i \in \{ 1, 2, \ldots, k \}$.
+where $t_i(q, \sigma) = \tau_i^{(n+1)}(q^i, \sigma)$ and $x(q, \sigma) =
+\delta_x^{(n+1)}(q, \sigma)$ for $i \in \{ 1, 2, \ldots, k \}$.
 The next separator extension function $\eta_x^{(n+1)}$ is defined as
 \begin{equation*}
-  \eta_x^{(n)} \cup \bigcup_{i=1}^{k-1} \begin{aligned}[t]
-    \{ \langle
-     & \bigcup_{j=1}^i \rho_j^{(n+1)}(\tau_j^{(n+1)}(q^j, \sigma)),
-    \rho_{i+1}^{(n+1)}(\tau_{i+1}^{(n+1)}(q^{i+1}, \sigma)),           \\
-     & \bigcup_{j=1}^{i+1} \rho_j^{(n+1)}(\tau_j^{(n+1)}(q^j, \sigma))
-    \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}.
-  \end{aligned}
+  \eta_x^{(n)} \cup \bigcup_{i=1}^{k-1} \{ \langle \bigcup_{j=1}^i r_j(q, \sigma),
+  r_{i+1}(q, \sigma), \bigcup_{j=1}^{i+1} r_j(q, \sigma) \rangle \mid \exists q \in
+  R_n \; \exists \sigma \in \Sigma \}
 \end{equation*}
+where $r_i(q, \sigma) = \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))$ for $i \in \{
+1, 2, \ldots, k \}$.
 The next set of states $Q_i'^{(n+1)}$ is defined as
 \begin{equation*}
   Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup rng(\eta_i^{(n+1)})
@@ -98,23 +96,21 @@ The next set of states $R^{(n+1)}$ is defined as
 \begin{proposition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
   $k$-separated finite-state transducer. Let $\mathcal{T}'^{(n)}$ be the
-  quasi-subsequential $k$-separated finite-state transducer derived from
+  $k$-separated quasi-subsequential finite-state transducer derived from
   $\mathcal{T}$ by applying the construction described above for $n > 0$. Then
-  $\tau_i, \rho_i, \eta_i, \lambda_i, \psi_i$ for $i \in \{ 1, 2, \ldots, k \}$ and
-  $\eta_x$ are functions.
+  $\tau_i^{(n)}, \rho_i^{(n)}, \eta_i^{(n)}, \lambda_i^{(n)}$ for $i \in \{ 1, 2,
+  \ldots, k \}$ and $\eta_x^{(n)}$ are functions.
 \end{proposition}
 
 \begin{proof}
-  Since $\lambda_i^{\wedge (n)}$ and $\bar{\tau}_i^{(n)}$ are functions, then
-  $\tau_i^{(n)}$ is also a function for $i \in \{ 1, 2, \ldots, k \}$. By
-  construction, $\rho_i^{(n)}$ is a function for $i \in \{ 1, 2, \ldots, k \}$. Since
-  $\tau_i^{(n)}$ and $\rho_i^{(n)}$ are functions for $i \in \{ 1, 2, \ldots, k \}$,
-  then $\eta_x^{(n)}$ is also a function. Since $\tau_i^{(n)}$ is a function for $i
+  Since $\Delta_{f\epsilon}^i$ is a function, then $\lambda_i^{(n)}$ is also a
+  function for $i \in \{ 1, 2, \ldots, k \}$. Therefore, $\tau_i^{(n)}$ is a
+  function for $i \in \{ 1, 2, \ldots, k \}$. By construction, $\rho_i^{(n)}$ is a
+  function for $i \in \{ 1, 2, \ldots, k \}$. Since $\tau_i^{(n)}$ and
+  $\rho_i^{(n)}$ are functions for $i \in \{ 1, 2, \ldots, k \}$, then
+  $\eta_x^{(n)}$ is also a function. Since $\tau_i^{(n)}$ is a function for $i
   \in \{ 1, 2, \ldots, k \}$ and $\eta_x^{(n)}$ is a function, then $\eta_i^{(n)}$
-  is also a function for $i \in \{ 1, 2, \ldots, k \}$. Since
-  $\lambda_i^{\wedge (n)}$ is a function, then $\lambda_i^{(n)}$ is also a function
-  for $i \in \{ 1, 2, \ldots, k \}$. By construction, $\psi_i^{(n)}$ is a function
-  for $i \in \{ 1, 2, \ldots, k \}$.
+  is also a function for $i \in \{ 1, 2, \ldots, k \}$.
 \end{proof}
 
 \begin{proposition}
@@ -170,7 +166,7 @@ The next set of states $R^{(n+1)}$ is defined as
   $R^{(n)}$ be respectively the $k$-separated quasi-subsequential finite-state
   transducer and the set of states derived from $\mathcal{T}$ by applying the
   construction described above for $n > 0$. There exists $m \in \mathbb{N}$ such that
-  $R^{(n)} = R^{(n+1)}$ and $\mathcal{T'}^{(n)} = \mathcal{T'}^{(n+1)}$ for $n > m$.
+  $R^{(n)} = R^{(n+1)}$ and $\mathcal{T}'^{(n)} = \mathcal{T}'^{(n+1)}$ for $n > m$.
 \end{lemma}
 
 \begin{proof}
@@ -185,8 +181,8 @@ The next set of states $R^{(n+1)}$ is defined as
   Such paths exist because $\mathcal{T}$ is trimmed.
   Let $W = \max_{q \in Q}{|w_q|}$ and $V = \max_{q \in Q}{|v_q|}$.
   Since $\mathcal{F}_\mathcal{T}$ has bounded variation, then for $k = 2W$ there
-  exists $K \geq 0$ such that $d_\Sigma(w', w''') \leq k$ implies
-  $d_\Sigma(\mathcal{F}_\mathcal{T}(w'), \mathcal{F}_\mathcal{T}(w'')) \leq K$ for
+  exists $K \geq 0$ such that $d_\Sigma(w', w'') \leq k$ implies
+  $d_\Omega(\mathcal{F}_\mathcal{T}(w'), \mathcal{F}_\mathcal{T}(w'')) \leq K$ for
   all words $w', w'' \in \Sigma^*$.
   Since $R_n \neq \emptyset$ for $n > 0$ and $Q$ is finite, there exist $n > 0$, $q_n
   \in R_n$, $j \in \{ 1, 2, \ldots, k \}$ and $\langle p', u' \rangle \in q_n^j$ such
@@ -195,31 +191,29 @@ The next set of states $R^{(n+1)}$ is defined as
   \delta^{(n)*}(s, w)$.
   Since $u' \neq \epsilon$, it follows that there exists $\langle p'', u'' \rangle
   \in q_n^j$ such that $u' \wedge u'' = \epsilon$.
-  Therefore, there exist $s', s'' \in S$  such that $\langle s', w, \lambda^{(i)*}(s,
-  w)u', p' \rangle \in \Delta^*$ and $\langle s'', w, \lambda^{(i)*}(s, w)u'', p''
+  Therefore, there exist $s', s'' \in S$  such that $\langle s', w, \lambda^{(n)*}(s,
+  w)u', p' \rangle \in \Delta^*$ and $\langle s'', w, \lambda^{(n)*}(s, w)u'', p''
   \rangle \in \Delta^*$.
   Moreover, we have $\langle p', w_{p'}, v_{p'}, f_{p'} \rangle \in \Delta^*$ and
-  $\langle p'', w_{p''}, v_{p''}, f_{p''} \rangle \in \Delta^*$. We have
-  $d_\Sigma(ww_{p'}, ww_{p''}) \leq |w_{p'}| + |w_{p''}| \leq 2W = k$. If $u'' =
-  \epsilon$, then
-  \begin{align*}
-    d_\Sigma(\lambda^{(n)*}(s, w)u'v', \lambda^{(n)*}(s, w)u''v'')
-    &= d_\Sigma(u'v', v'')\\
-    &> (K + V + |v'|) - V
-    > K.
-  \end{align*}
+  $\langle p'', w_{p''}, v_{p''}, f_{p''} \rangle \in \Delta^*$.
+  Thus, $d_\Sigma(ww_{p'}, ww_{p''}) \leq |w_{p'}| + |w_{p''}| \leq 2W = k$. If $u''
+  = \epsilon$, then
+  \begin{equation*}
+    d_\Omega(\lambda^{(n)*}(s, w)u'v_{p'}, \lambda^{(n)*}(s, w)u''v_{p''}) > (K + V
+    + |v_{p'}|) - V > K.
+  \end{equation*}
   Otherwise,
-  \begin{align*}
-    d_\Sigma(\lambda^{(n)*}(s, w)u'v', \lambda^{(n)*}(s, w)u''v'')
-    &= |u'| + |v'| + |u''| + |v''|\\
-    &> |u'|
-    > K + V
-    > K.
-  \end{align*}
-  This contradicts the precondition that $\mathcal{F}_\mathcal{T}$ has bounded
+  \begin{equation*}
+    d_\Omega(\lambda^{(n)*}(s, w)u'v_{p'}, \lambda^{(n)*}(s, w)u''v_{p''}) \geq |u'|
+    + |u''| > |u'| > K + V > K.
+  \end{equation*}
+  This contradicts the assumption that $\mathcal{F}_\mathcal{T}$ has bounded
   variation. Therefore, there exists $m \in \mathbb{N}$ such that $R^{(n)} =
   R^{(n+1)}$ and $\mathcal{T}'^{(n)} = \mathcal{T}'^{(n+1)}$ for $n > m$.
 \end{proof}
+
+For the smallest $n > 0$ such that $\mathcal{T}'^{(n)} = \mathcal{T}'^{(n+1)}$ we
+define $\mathcal{T}' = \mathcal{T}'^{(n)}$ and $R = R^{(n)}$.
 
 \begin{proposition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a trimmed
@@ -229,12 +223,11 @@ The next set of states $R^{(n+1)}$ is defined as
   \eta_x, \lambda, \psi \rangle$ be the $k$-separated quasi-subsequential
   finite-state transducer derived from $\mathcal{T}$ by applying the construction
   described above. Then
-  \begin{align*}
-    \delta_x(q, \sigma) = \bigcup_{i=1}^k \{ &\langle p'', \lambda(q, \sigma)^{-1}uv
-    \rangle \in X \times \Omega^* \mid\\
-    &\exists \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
-    \Delta_\epsilon(\Delta_f(p', \sigma)) \}.
-  \end{align*}
+  \begin{equation*}
+    \delta_x(q, \sigma) = \bigcup_{i=1}^k \{ \langle p'', \lambda(q, \sigma)^{-1}uv
+    \rangle \mid \exists \langle p', u \rangle \in q^i \; \exists \langle p'', v
+    \rangle \in \Delta_{f\epsilon}(p', \sigma) (p'' \in X) \}.
+  \end{equation*}
 \end{proposition}
 
 \begin{proof}
@@ -245,14 +238,12 @@ The next set of states $R^{(n+1)}$ is defined as
     &= \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))\\
     &= \bigcup_{i=1}^k \{ \langle p, w \rangle \in \tau_i(q^i, \sigma) \mid p \in X
     \}\\
-    &= \bigcup_{i=1}^k \{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \in X \times
-    \Omega^* \mid \exists \langle p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma)
-    \}\\
+    &= \bigcup_{i=1}^k \{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \mid \exists
+    \langle p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) (p \in X) \}\\
     &= \begin{aligned}[t]
-      \bigcup_{i=1}^k \{ &\langle p'', \lambda(q, \sigma)^{-1}uv \rangle \in X \times
-      \Omega^* \mid\\
-      &\exists \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
-      \Delta_\epsilon(\Delta_f(p', \sigma)) \}
+      \bigcup_{i=1}^k \{ &\langle p'', \lambda(q, \sigma)^{-1}uv \rangle \mid
+      \exists \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
+      \Delta_{f\epsilon}(p', \sigma) (p'' \in X) \}
     \end{aligned}
   \end{align*}
 \end{proof}
@@ -284,16 +275,6 @@ The next set of states $R^{(n+1)}$ is defined as
       p', u \rangle \in \delta_x(q, \sigma) \}
     \end{aligned}\\
     &= \begin{aligned}[t]
-      &\{ \langle p, \lambda(q, \sigma)^{-1}w \rangle \mid \exists \langle
-      p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \} \cup\\
-      &\begin{aligned}[t]
-        \bigcup_{j=1}^k \{  \langle p'', v \rangle \in \Delta_\epsilon^i(p',
-        \lambda(q, \sigma)^{-1}u)
-	\mid \exists \langle p', u \rangle \in \Delta_{f\epsilon}^j(q^j, \sigma)
-        (p' \in X) \}
-      \end{aligned}
-    \end{aligned}\\
-    &= \begin{aligned}[t]
       &\{ \langle p'', v \rangle \in \Delta_\epsilon^i(p', \lambda(q, \sigma)^{-1}u)
       \mid \exists \langle p', u \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \}
       \cup\\
@@ -323,7 +304,7 @@ The next set of states $R^{(n+1)}$ is defined as
   \begin{align*}
     \bigcup_{i=1}^k \delta_i(q, \sigma) = \bigcup_{i=1}^k \{ \langle p'', \lambda(q,
     \sigma)^{-1}v \rangle \mid \exists \langle p', u \rangle \in q^i \; \exists
-    \langle p'', v \rangle \in \hat{\Delta}_\epsilon(\Delta_f(p', u)) \}.
+    \langle p'', v \rangle \in \Delta_{f\epsilon}(p', u) \}.
   \end{align*}
 \end{proposition}
 
@@ -337,7 +318,7 @@ The next set of states $R^{(n+1)}$ is defined as
     \langle p, w \rangle \in \Delta_{f\epsilon}^i(q^i, \sigma) \}\\
     &= \bigcup_{i=1}^k \{ \langle p'', \lambda(q, \sigma)^{-1}uv \rangle \mid \exists
     \langle p', u \rangle \in q^i \; \exists \langle p'', v \rangle \in
-    \hat{\Delta}_\epsilon(\Delta_f(p', \sigma)) \}.
+    \Delta_{f\epsilon}(p', \sigma) \}.
   \end{align*}
 \end{proof}
 
@@ -374,9 +355,9 @@ The next set of states $R^{(n+1)}$ is defined as
   Since $\mathcal{T}$ is functional, $\pi$ is the unique path with label $\langle u,
   v \rangle$.
   Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of
-  indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if $i
-  \in I$.
-  Also, let $i_h < i_j$ if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
+  indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if and
+  only if $i \in I$.
+  Also, let $i_h < i_j$ if and only if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
   It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1 \sigma_2
   \ldots \sigma_{n-1}$.
   Let $p_1 = s$.

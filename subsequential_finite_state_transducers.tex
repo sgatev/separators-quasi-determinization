@@ -72,8 +72,8 @@
   finite-state transducer} $\mathcal{T} = \langle \Sigma, \Omega, Q, s, F, \delta,
   \lambda, \psi \rangle$ is the set of all labels of successful paths
   \begin{equation*}
-    \{ \langle w, \lambda^*(w) \psi(f) \rangle \in \Sigma^* \times \Omega^* \mid
-    \exists f \in F (\delta^*(s, w) = f) \}.
+    \{ \langle w, \lambda^*(s, w) \psi(f) \rangle \mid
+    \exists w \in \Sigma^* \; \exists f \in F (\delta^*(s, w) = f) \}.
   \end{equation*}
 \end{definition}
 

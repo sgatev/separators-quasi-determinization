@@ -22,7 +22,7 @@ The base set of states $R^{(1)}$ is defined as $\{ s \}$.
 Let us assume that $\mathcal{A}'^{(n)}$ and $R^{(n)}$ are constructed for $n > 0$.
 The set of states introduced at step $n$ is $R_n = R^{(n)} \setminus R^{(n-1)}$ where
 $R^{(0)} = \emptyset$.
-The next set of final states $F_i'^{(n+1)}$ is defined as
+The next set of final quasi-states $F_i'^{(n+1)}$ is defined as
 \begin{align*}
   F_i'^{(n)} \cup \{ q^i \mid \exists q \in R_n(q^i \cap F \neq \emptyset) \}
 \end{align*}
@@ -43,22 +43,21 @@ for $i \in \{ 1, 2, \ldots, k \}$.
 The next quasi-state extension function $\eta_i^{(n+1)}$ is defined as
 \begin{align*}
   \eta_i^{(n)} \cup
-    \{ &\langle \tau_i^{(n+1)}(q^i, \sigma),
-    \delta_x^{(n+1)}(q, \sigma),\\
-    &\tau_i^{(n+1)} (q^i, \sigma) \cup
-    \hat{\Delta}_\epsilon^i(\delta_x^{(n+1)}(q, \sigma)) \rangle \mid \\
-       & \exists q \in R_n \; \exists \sigma \in \Sigma \}
+    \{ &\langle t_i(q, \sigma), x(q, \sigma), t_i(q, \sigma) \cup
+    \hat{\Delta}_\epsilon^i(x(q, \sigma)) \rangle \mid \exists q \in R_n \; \exists
+    \sigma \in \Sigma \}
 \end{align*}
-for $i \in \{ 1, 2, \ldots, k \}$.
+where $t_i(q, \sigma) = \tau_i^{(n+1)}(q^i, \sigma)$ and $x(q, \sigma) =
+\delta_x^{(n+1)}(q, \sigma)$ for $i \in \{ 1, 2, \ldots, k \}$.
 The next separator extension function $\eta_x^{(n+1)}$ is defined as
 \begin{align*}
   \eta_x^{(n)} \cup \bigcup_{i=1}^{k-1}
-    \{ \langle
-     & \bigcup_{j=1}^i \rho_j^{(n+1)}(\tau_j^{(n+1)}(q^j, \sigma)),
-    \rho_{i+1}^{(n+1)}(\tau_{i+1}^{(n+1)}(q^{i+1}, \sigma)),           \\
-     & \bigcup_{j=1}^{i+1} \rho_j^{(n+1)}(\tau_j^{(n+1)}(q^j, \sigma))
-    \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}.
+    \{ \langle \bigcup_{j=1}^i r_j(q, \sigma), r_{i+1}(q, \sigma),
+    \bigcup_{j=1}^{i+1} r_j(q, \sigma)
+    \rangle \mid \exists q \in R_n \; \exists \sigma \in \Sigma \}
 \end{align*}
+where $r_i(q, \sigma) = \rho_i^{(n+1)}(\tau_i^{(n+1)}(q^i, \sigma))$ for $i \in \{
+1, 2, \ldots, k \}$.
 The next set of states $Q_i'^{(n+1)}$ is defined as
 \begin{equation*}
   Q_i'^{(n)} \cup rng(\tau_i^{(n+1)}) \cup rng(\eta_i^{(n+1)})
@@ -136,7 +135,7 @@ The next set of states $R^{(n+1)}$ is defined as
 \end{proof}
 
 For the smallest $n > 0$ such that $\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$ we
-define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
+define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
 
 \begin{lemma}\label{lem:quasidet_inclusion_right}
   Let $\mathcal{A}' = \langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x
@@ -163,9 +162,9 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
   \end{equation*}
   be the sequence of state transitions that constitutes $\pi$.
   Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of
-  indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if $i
-  \in I$.
-  Also, let $i_h < i_j$ if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
+  indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if and
+  only if $i \in I$.
+  Also, let $i_h < i_j$ if and only if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
   It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1 \sigma_2
   \ldots \sigma_{n-1}$.
   Let $p_1 = s$.
@@ -217,12 +216,17 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
     \bigcup_{j=1}^k \bigcup_{r=1}^k \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^r, \{
     \sigma_{i_l} \}))\\
     &= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^j, \{
-    \sigma_{i_l} \})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k
+    \sigma_{i_l} \})) \cup \bigcup_{r=1}^k
     \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^r, \{ \sigma_{i_l} \})) \big]\\
     &= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^j, \{
     \sigma_{i_l} \})) \cup \bigcup_{r=1}^k
     \hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
     (p_l^r, \{\sigma_{i_l} \})) \cap X) \big]\\
+    &= \bigcup_{j=1}^k \big[ \tau_j(p_l^j, \sigma_{i_l}) \cup \bigcup_{r=1}^k
+    \hat{\Delta}_\epsilon^j(\rho_r(\tau_r(p_l^r, \sigma_{i_l})))
+    \big]\\
+    &= \bigcup_{j=1}^k \big[ \tau_j(p_l^j, \sigma_{i_l}) \cup
+    \hat{\Delta}_\epsilon^j(\delta_x(p_l, \sigma_{i_l})) \big]\\
     &= \bigcup_{j=1}^k \delta_j(p_l, \sigma_{i_l})
     = \bigcup_{j=1}^k p_{l+1}^j.
   \end{align*}
@@ -251,10 +255,9 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
   \mathbb{N}$. Let $w = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
   \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$. Let $p', p'' \in \prod_{i=1}^k Q_i'$
   be respectively the start and end states of $\pi$.
-  If $\pi$ is trivial, then $w = \epsilon$, $p' = p'' = s$ and $s^i \cap F_i' \neq
-  \emptyset$ for some $i \in \{ 1, 2, \ldots, k \}$. Therefore, $S \cap F \neq
-  \emptyset$ and thus, $w \in \mathcal{L}_\mathcal{A}$.
-  Otherwise, if $\pi$ is non-trivial, let
+  If $\pi$ is trivial, then $w = \epsilon$, $p' = p'' = s$ and $s^i \in F_i'$ for
+  some $i \in \{ 1, 2, \ldots, k \}$. Therefore, $S \cap F \neq \emptyset$ and thus,
+  $w \in \mathcal{L}_\mathcal{A}$. Otherwise, if $\pi$ is non-trivial, let
   \begin{equation*}
     \langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3 \rangle, \ldots,
     \langle p_{n-1}, \sigma_{n-1}, p_n \rangle
@@ -317,7 +320,6 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
   Follows from \Cref{lem:quasidet_completion,lem:quasidet_inclusion_right,lem:quasidet_inclusion_left}.
 \end{proof}
 
-\iffalse
   \begin{proposition}\label{prop:quasidet_auto_1}
     Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
     $k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)} = \langle
@@ -537,4 +539,3 @@ define $R = R^{(n)}$ and $\mathcal{A}' = \mathcal{A}'^{(n+1)}$.
     $n+r$. Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x
       \rangle = \mathcal{A}'$ at line 40.
   \end{proof}
-\fi

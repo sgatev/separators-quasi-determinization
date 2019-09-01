@@ -13,7 +13,7 @@ a word is recognized by a $k$-separated quasi-deterministic finite-state automat
   \For {$i \in \{ 1, 2, \ldots, n \}$} {
     \For {$j \in \{ 1, 2, \ldots, k \}$} {
       \If {$\tau_j(q_j, \sigma_i)$ is \textbf{undefined}} {
-        \Return \textbf{undefined}
+        \Return \textbf{false}
       }
       $t_j \gets \tau_j(q_j, \sigma_i)$\;
       $r_j \gets \rho_j(t_j)$\;

@@ -29,7 +29,9 @@
   \rangle$ is an element of the set $\prod_{i=1}^k Q_i$.
 \end{definition}
 
-We write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
+We shall write $q^i$ for the $i$-th element of a state $q$ of a $k$-separated
+quasi-subsequential finite-state transducer $\mathcal{T} = \langle \Sigma, \Omega,
+Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$.
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
@@ -115,7 +117,7 @@ We write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
   \lambda, \psi \rangle$ be a $k$-separated quasi-subsequential finite-state
   transducer. Then
   \begin{equation*}
-    \lambda(\delta^*(q, u), \sigma)^{-1} \lambda^*(q, u)^{-1} u = \lambda^*(q, u
+    \lambda(\delta^*(q, u), \sigma)^{-1} \lambda^*(q, u)^{-1} v = \lambda^*(q, u
     \sigma)^{-1} v
   \end{equation*}
   for $q \in \prod_{i=1}^k Q_i$, $u \in \Sigma^*$, $\sigma \in \Sigma$ and $v \in
@@ -123,11 +125,10 @@ We write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
 \end{proposition}
 
 \begin{proof}
-  \begin{align*}
-    \lambda(\delta^*(q, u), \sigma)^{-1} \lambda^*(q, u)^{-1} v
-     & = (\lambda^*(q, u) \lambda(\delta^*(q, u), \sigma))^{-1} v \\
-     & = \lambda^*(q, u \sigma)^{-1} v.
-  \end{align*}
+  \begin{equation*}
+    \lambda(\delta^*(q, u), \sigma)^{-1} \lambda^*(q, u)^{-1} v = (\lambda^*(q, u)
+    \lambda(\delta^*(q, u), \sigma))^{-1} v = \lambda^*(q, u \sigma)^{-1} v.
+  \end{equation*}
 \end{proof}
 
 \begin{definition}
@@ -184,13 +185,14 @@ We write $q^i$ for the $i$-th element of a state $q \in \prod_{i=1}^k Q_i$.
 \end{proof}
 
 \begin{definition}
-  The \emph{function recognized by a $k$-separated quasi-subsequential finite-state
-  transducer} $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta,
-  \eta_x, \lambda, \psi \rangle$ is the set of all labels of successful paths
-  \begin{align*}
-    \mathcal{F}_\mathcal{T} = \{ \langle w, \lambda^*(s, w) \psi_i(\delta^*(s, w)^i)
-    \rangle \mid \exists i \in \{ 1, 2, \ldots, k \}(\delta^*(s, w)^i \in F_i) \}.
-  \end{align*}
+  The \emph{function $\mathcal{F}_\mathcal{T}$ recognized by a $k$-separated
+  quasi-subsequential finite-state transducer} $\mathcal{T} = \langle \Sigma,
+  \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$ is the set of
+  all labels of successful paths
+  \begin{equation*}
+    \{ \langle w, \lambda^*(s, w) \psi_i(\delta^*(s, w)^i) \rangle \mid \exists w
+    \in \Sigma^* \; \exists i \in \{ 1, 2, \ldots, k \}(\delta^*(s, w)^i \in F_i) \}.
+  \end{equation*}
 \end{definition}
 
 \iffalse

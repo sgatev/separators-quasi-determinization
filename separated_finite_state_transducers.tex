@@ -36,15 +36,15 @@ $k$-separated.
 \end{proof}
 
 \begin{definition}
-  A \emph{component in a $k$-separated finite-state transducer} $\mathcal{T} =
-  \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ is a set $Q_i \cup X$ for $i
-  \in \{ 1, 2, \ldots, k \}$.
+  A \emph{component $\mathcal{C}(Q_i)$ in a $k$-separated finite-state transducer}
+  $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ is the set $Q_i
+  \cup X$ for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{proposition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
   $k$-separated finite-state transducer. Then $\Delta \subseteq \bigcup_{i=1}^k
-  (Q_i \cup X) \times \Sigma_\epsilon \times \Omega^* \times (Q_i \cup X)$.
+  \mathcal{C}(Q_i) \times \Sigma_\epsilon \times \Omega^* \times \mathcal{C}(Q_i)$.
 \end{proposition}
 
 \begin{proof}
@@ -75,22 +75,21 @@ $k$-separated.
       \times \Omega^* \times X) \cup
       (X \times \Sigma_\epsilon \times \Omega^* \times X)
     \end{aligned}                           & \\
-           & = \bigcup_{i=1}^k ((Q_i \cup X) \times \Sigma_\epsilon \times
-    \Omega^* \times Q_i) \cup \bigcup_{i=1}^k ((Q_i \cup X) \times
+           & = \bigcup_{i=1}^k (\mathcal{C}(Q_i) \times \Sigma_\epsilon \times
+    \Omega^* \times Q_i) \cup \bigcup_{i=1}^k (\mathcal{C}(Q_i) \times
     \Sigma_\epsilon \times \Omega^* \times X)                                \\
-           & = \bigcup_{i=1}^k (Q_i \cup X) \times \Sigma_\epsilon \times
-    \Omega^* \times (Q_i \cup X).
+           & = \bigcup_{i=1}^k \mathcal{C}(Q_i) \times \Sigma_\epsilon \times
+    \Omega^* \times \mathcal{C}(Q_i).
   \end{align*}
 \end{proof}
 
 \begin{proposition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
   $k$-separated finite-state transducer. Let $\langle q', u, v, q'' \rangle
-    \in \Delta^*$ for $q' \in Q_i \cup X$
-  and $q'' \in Q_j \cup X$ where $i, j \in \{ 1, 2, \ldots, k \}$ and $i \neq
-    j$. There exist $u', u'' \in \Sigma^*$, $v', v'' \in \Omega^*$ and $x \in X$
-  such that $u = u'u''$, $v = v'v''$ and $\langle q', u', v', x \rangle,
-    \langle x, u'', v'', q'' \rangle \in \Delta^*$.
+  \in \Delta^*$ for $q' \in \mathcal{C}(Q_i)$ and $q'' \in \mathcal{C}(Q_j)$ where
+  $i, j \in \{ 1, 2, \ldots, k \}$ and $i \neq j$. There exist $u', u'' \in
+  \Sigma^*$, $v', v'' \in \Omega^*$ and $x \in X$ such that $u = u'u''$, $v = v'v''$
+  and $\langle q', u', v', x \rangle, \langle x, u'', v'', q'' \rangle \in \Delta^*$.
 \end{proposition}
 
 \begin{proof}
@@ -125,31 +124,28 @@ $k$-separated.
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
-  $k$-separated finite-state transducer. The \emph{component $\epsilon$-closure
-  function} $\Delta_\epsilon^i : \bigcup_{j=1}^k (Q_j \cup X) \times \Omega^*
-  \rightarrow 2^{(Q_i \cup X) \times \Omega^*}$ is defined as
+  $k$-separated finite-state transducer. The \emph{component state output
+  $\epsilon$-closure function} $\Delta_\epsilon^i : \bigcup_{j=1}^k \mathcal{C}(Q_j)
+  \times \Omega^* \rightarrow 2^{\mathcal{C}(Q_i) \times \Omega^*}$ is defined as
   \begin{align*}
     \Delta_\epsilon^i(q', u) = \{ \langle q'', v \rangle \in \Delta_\epsilon(q', u)
-    \mid q'' \in Q_i \cup X \}
+    \mid q'' \in \mathcal{C}(Q_i) \}
   \end{align*}
   for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
-  $k$-separated finite-state transducer. The \emph{component transition
-  $\epsilon$-closure function} $\Delta_{f\epsilon}^i : 2^{(Q_i \cup X) \times
-  \Omega^*} \times \Sigma_\epsilon \rightarrow 2^{(Q_i \cup X) \times \Omega^*}$
+  $k$-separated finite-state transducer. The \emph{component state transition
+  $\epsilon$-closure function} $\Delta_{f\epsilon}^i : 2^{\mathcal{C}(Q_i) \times
+  \Omega^*} \times \Sigma_\epsilon \rightarrow 2^{\mathcal{C}(Q_i) \times \Omega^*}$
   is defined as
   \begin{equation*}
-    \Delta_{f\epsilon}^i(q, \sigma) = \{ \langle p'', uv \rangle \mid \exists \langle
-    p', u \rangle \in q \; \exists \langle p'', v \rangle \in
-    \Delta_\epsilon^i(\Delta_f(p', \sigma)) \}
+    \Delta_{f\epsilon}^i(q', \sigma) = \{ \langle q'', w \rangle \in
+    \hat{\Delta}_{f\epsilon}(q', \sigma) \mid q'' \in \mathcal{C}(Q_i) \}
   \end{equation*}
   for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
-
-\pagebreak
 
 \iffalse
 \begin{proposition}

@@ -1,19 +1,13 @@
 % !TEX encoding = UTF-8 Unicode
 % !TEX program = xelatex
-\documentclass[a4paper]{report}
+\documentclass[12pt,a4paper]{report}
 
 % Format the heading of the chapters.
 \usepackage{titlesec}
-\titleformat{\chapter}[display]
-  {\Huge\bfseries}
-  {}
-  {0pt}
-  {\thechapter.\ }
-\titleformat{name=\chapter,numberless}[display]
-  {\Huge\bfseries}
-  {}
-  {0pt}
-  {}
+\titleformat{\chapter}[display]{\Huge\bfseries}{}{0pt}{\thechapter.\ }
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+\titleformat{name=\chapter,numberless}[display]{\Huge\bfseries}{}{0pt}{}
+\titlespacing*{name=\chapter,numberless}{0pt}{0pt}{20pt}
 
 % Add bibliography.
 \usepackage{biblatex}

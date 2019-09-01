@@ -12,7 +12,7 @@
     \item $S \subseteq Q$ is a set of start states,
     \item $F \subseteq Q$ is a set of final states,
     \item $\Delta \subseteq Q \times \Sigma_\epsilon \times \Omega^* \times Q$ is a
-	    relation of state transitions.
+	    finite relation of state transitions.
   \end{itemize}
 \end{definition}
 
@@ -71,8 +71,18 @@
   $\Delta_\epsilon : Q \times \Omega^* \rightarrow 2^{Q \times \Omega^*}$ is defined
   as
   \begin{equation*}
-    \Delta_\epsilon(q', u) = \{ \langle q'', uv \rangle \in Q \times \Omega^* \mid
+    \Delta_\epsilon(q', u) = \{ \langle q'', uv \rangle \mid \exists q'' \in Q \;
     \exists v \in \Omega^* (\langle q', \epsilon, v, q'' \rangle \in \Delta^*) \}.
+  \end{equation*}
+\end{definition}
+
+\begin{definition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
+  finite-state transducer. The \emph{state transition $\epsilon$-closure function}
+  $\Delta_{f\epsilon} : Q \times \Sigma_\epsilon \rightarrow 2^{Q \times \Omega^*}$
+  is defined as
+  \begin{equation*}
+    \Delta_{f\epsilon}(q, \sigma) = \hat{\Delta}_\epsilon(\Delta_f(q, \sigma)).
   \end{equation*}
 \end{definition}
 

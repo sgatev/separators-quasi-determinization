@@ -55,7 +55,7 @@
   expressions over $\Sigma$.
 \end{definition}
 
-\begin{theorem}[Thompson, see \cite{thompson}]
+\begin{theorem}[see \cite{thompson}]
   \label{thm:thompson}
   There exists an algorithm that, given a regular expression $\mathcal{E}$ over an
   alphabet $\Sigma$, constructs a finite-state automaton $\mathcal{A}$ such that
@@ -95,13 +95,9 @@ If $\mathcal{E} = (\mathcal{E}'*)$, then $\mathcal{A}_\mathcal{E} = \langle \Sig
 Q_{\mathcal{E}'} \cup \{ s, f \}, \{ s \}, \{ f \}, \Delta_\mathcal{E} \rangle$ is
 the Type 5 finite-state automaton constructed from $\mathcal{E}$ where
 \begin{equation*}
-  \Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup \{ \langle s, \epsilon, s' \rangle,
-  \langle s, \epsilon, f \rangle, \langle f', \epsilon, f \rangle, \langle f',
-  \epsilon, s' \rangle \mid \exists s' \in S_{\mathcal{E}'} \; \exists f' \in
-  F_{\mathcal{E}'} \}.
+  \Delta_\mathcal{E} = \Delta_{\mathcal{E}'} \cup ((F_{\mathcal{E}'} \cup \{ s \})
+  \times \{ \epsilon \} \times (S_{\mathcal{E}'} \cup \{ f \}))
 \end{equation*}
-\Cref{figure:thompson_automaton} shows the finite-state automaton constructed from
-the regular expression $(0+1)*$ using the described algorithm.
 
 \begin{figure}[!h]
   \centering
@@ -119,24 +115,30 @@ the regular expression $(0+1)*$ using the described algorithm.
     \node[state, fill=white, scale=0.375]
     (s6) at (2, -2) {};
     \node[state, fill=white, scale=0.375]
-    (s7) at (6, 0) {};
+    (s7) at (6, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s8) at (6, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s9) at (10, 0) {};
     \node[state, accepting, fill=white, scale=0.375]
-    (s8) at (10, 0) {};
+    (s10) at (14, 0) {};
 
-    \draw
+    \draw [->]
     (s1) edge node{$\epsilon$} (s2)
     (s2) edge node{$\epsilon$} (s3)
     (s2) edge node{$\epsilon$} (s4)
     (s3) edge node{$0$} (s5)
+    (s5) edge node{$1$} (s7)
     (s4) edge node{$1$} (s6)
-    (s5) edge node{$\epsilon$} (s7)
-    (s6) edge node{$\epsilon$} (s7)
-    (s7) edge node{$\epsilon$} (s8)
-    (s1) edge[bend right=40] node{$\epsilon$} (s8)
-    (s7) edge[bend left=-80] node[above]{$\epsilon$} (s2);
+    (s6) edge node{$0$} (s8)
+    (s7) edge node{$\epsilon$} (s9)
+    (s8) edge node{$\epsilon$} (s9)
+    (s9) edge node{$\epsilon$} (s10)
+    (s1) edge[bend right=40] node{$\epsilon$} (s10)
+    (s9) edge[bend left=-80] node[above]{$\epsilon$} (s2);
   \end{tikzpicture}
-  \caption{Finite-state automaton derived from the regular expression $(0+1)*$ by
-  	applying the construction described in \Cref{thm:thompson}.}
+  \caption{Finite-state automaton derived from the regular expression $(((0\;.\;1) +
+  (1\;.\;0))*)$ by applying the construction described in \Cref{thm:thompson}.}
   \label{figure:thompson_automaton}
 \end{figure}
 
