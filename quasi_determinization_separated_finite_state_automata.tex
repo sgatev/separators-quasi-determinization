@@ -385,31 +385,32 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
       }
 
       \For {$\sigma \in \Sigma$} {
-        $e_x \gets \emptyset$\;
         \For {$i \in \{ 1, 2, \ldots, k \}$} {
+          $Updated \gets Updated$ or $\langle q_i, \sigma \rangle \not\in
+            dom(\tau_i)$\;
           $t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{
             \sigma \})) \cap P_i$\;
-          $Updated \gets Updated$ or $\langle q_i, \sigma \rangle \in
-            dom(\tau_i)$\;
           $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i
             \rangle \}$\;
           $Q_i' \gets Q_i' \cup \{ t_i \}$\;
           $r_i \gets t_i \cap X$\;
           $\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle
             \}$\;
+        }
+
+	$e_x \gets r_1$\;
+	\For {$i \in \{ 2, 3, \ldots, k \}$} {
+          $Updated \gets Updated$ or $\langle e_x, r_i \rangle \not\in dom(\eta_x)$\;
+          $\eta_x \gets \eta_x \cup \{ \langle e_x, r_i, e_x \cup r_i \rangle \}$\; 
           $e_x \gets e_x \cup r_i$\;
         }
 
-        $Updated \gets Updated$ or $q \in dom(\eta_x)$\;
-        $\eta_x \gets \eta_x \cup \{ \langle q, e_x \rangle \}$\;
-
         \For {$i \in \{ 1, 2, \ldots, k \}$} {
-          $e_i \gets t_i \cup e_x$\;
-          $Q_i' \gets Q_i' \cup \{ e_i \}$\;
-          $Updated \gets Updated$ or $\langle t_i, e_x \rangle \in
+          $Updated \gets Updated$ or $\langle t_i, e_x \rangle \not\in
             dom(\eta_i)$\;
-          $\eta_i \gets \eta_i \cup \{ \langle t_i, e_x, e_i
-            \rangle \}$\;
+          $e_i \gets t_i \cup e_x$\;
+          $\eta_i \gets \eta_i \cup \{ \langle t_i, e_x, e_i \rangle \}$\;    
+          $Q_i' \gets Q_i' \cup \{ e_i \}$\;
         }
 
         \If {$\delta(q, \sigma) \not\in Visited$} {
