@@ -103,39 +103,45 @@ the Type 5 finite-state automaton constructed from $\mathcal{E}$ where
   \centering
   \begin{tikzpicture}[on grid, auto, scale=0.35]
     \node[state, initial, fill=white, scale=0.375]
-    (s1) at (-10, 0) {};
+    (s1) at (-14, 0) {};
     \node[state, fill=white, scale=0.375]
-    (s2) at (-6, 0) {};
+    (s2) at (-10, 0) {};
     \node[state, fill=white, scale=0.375]
-    (s3) at (-2, 2) {};
+    (s3) at (-6, 2) {};
     \node[state, fill=white, scale=0.375]
-    (s4) at (-2, -2) {};
+    (s4) at (-6, -2) {};
     \node[state, fill=white, scale=0.375]
-    (s5) at (2, 2) {};
+    (s5) at (-2, 2) {};
     \node[state, fill=white, scale=0.375]
-    (s6) at (2, -2) {};
+    (s6) at (-2, -2) {};
     \node[state, fill=white, scale=0.375]
-    (s7) at (6, 2) {};
+    (s7) at (2, 2) {};
     \node[state, fill=white, scale=0.375]
-    (s8) at (6, -2) {};
+    (s8) at (2, -2) {};
     \node[state, fill=white, scale=0.375]
-    (s9) at (10, 0) {};
+    (s9) at (6, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s10) at (6, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s11) at (10, 0) {};
     \node[state, accepting, fill=white, scale=0.375]
-    (s10) at (14, 0) {};
+    (s12) at (14, 0) {};
 
     \draw [->]
     (s1) edge node{$\epsilon$} (s2)
     (s2) edge node{$\epsilon$} (s3)
     (s2) edge node{$\epsilon$} (s4)
     (s3) edge node{$0$} (s5)
-    (s5) edge node{$1$} (s7)
+    (s5) edge node{$\epsilon$} (s7)
+    (s7) edge node{$1$} (s9)
     (s4) edge node{$1$} (s6)
-    (s6) edge node{$0$} (s8)
-    (s7) edge node{$\epsilon$} (s9)
-    (s8) edge node{$\epsilon$} (s9)
-    (s9) edge node{$\epsilon$} (s10)
-    (s1) edge[bend right=40] node{$\epsilon$} (s10)
-    (s9) edge[bend left=-80] node[above]{$\epsilon$} (s2);
+    (s6) edge node{$\epsilon$} (s8)
+    (s8) edge node{$0$} (s10)
+    (s9) edge node{$\epsilon$} (s11)
+    (s10) edge node{$\epsilon$} (s11)
+    (s11) edge node{$\epsilon$} (s12)
+    (s1) edge[bend right=40] node{$\epsilon$} (s12)
+    (s11) edge[bend left=-80] node[above]{$\epsilon$} (s2);
   \end{tikzpicture}
   \caption{Finite-state automaton derived from the regular expression $(((0\;.\;1) +
   (1\;.\;0))*)$ by applying the construction described in \Cref{thm:thompson}.}

@@ -15,9 +15,9 @@
 
 \begin{definition}
   A graph $\mathcal{G} = \langle V, E \rangle$ is \emph{planar} if and only if there
-  exist an injective function $f_v$ that maps vertices of the graph to distinct
-  points in the real plane and an injective function $f_e$ that maps edges of the
-  graph to simple curves in the real plane such that
+  exist a total injective function $f_v$ that maps vertices of the graph to distinct
+  points in the real plane, and a total injective function $f_e$ that maps edges of the
+  graph to simple curves in the real plane, such that
   \begin{itemize}
     \item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and $f_v(v'')$ for
 	    $\{ v', v'' \} \in E$,
@@ -39,7 +39,7 @@
 \begin{theorem}[Lipton, Tarjan, see \cite{lipton_tarjan_theorem}]
   \label{thm:lipton_tarjan}
   There exists an algorithm that, given a planar graph $\mathcal{G} = \langle V, E
-  \rangle$, finds a separator $X$ and a partition $\{ X, V_1, V_2 \}_V$ such that
-  $|X| \leq 2 \sqrt{2|V|}$ and $|V_i| \leq \frac{2}{3} |V|$ for $i \in \{ 1, 2 \}$ in
-  $\mathcal{O}(|V|)$ time.
+  \rangle$, finds a separator $X$ and a partition $\{ X, V_1, V_2 \}_V$, such that
+  $|X| \leq 2 \sqrt{2|V|}$ and $|V_i| \leq \frac{2}{3} |V|$ for $i \in \{ 1, 2 \}$,
+  in $\mathcal{O}(|V|)$ time.
 \end{theorem}

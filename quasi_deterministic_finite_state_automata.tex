@@ -66,7 +66,7 @@ F, \tau, \rho, \eta, \eta_x \rangle$.
   for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{definition:quasidet_delta}
   Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$
   be a $k$-separated quasi-deterministic finite-state automaton. The \emph{state
   transition function} $\delta : \prod_{i=1}^k Q_i \times \Sigma \rightarrow
@@ -141,3 +141,69 @@ F, \tau, \rho, \eta, \eta_x \rangle$.
     F_i) \}.
   \end{equation*}
 \end{definition}
+
+\begin{lemma}\label{lem:quasidet_equiv_left}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, s, F, \tau, \rho, \eta, \eta_x \rangle$ be
+  a $k$-separated quasi-deterministic finite-state automaton. There exists a
+  deterministic finite-state automaton $\mathcal{A}'$ such that
+  $\mathcal{L}_\mathcal{A'} = \mathcal{L}_\mathcal{A}$.
+\end{lemma}
+
+\begin{proof}
+  Let $\mathcal{A}' = \langle \Sigma, Q', s, F', \delta \rangle$ where
+  \begin{itemize}
+    \item $Q' = \prod_{i=1}^k Q_i$,
+    \item $F' = \bigcup_{i=1}^k Q_1 \times \ldots \times Q_{i-1} \times F_i \times
+      Q_{i+1} \times \ldots \times Q_k$.
+  \end{itemize}
+  By definition, $s_i \in Q_i$ for $i \in \{ 1, 2, \ldots, k \}$. Thus, $s \in Q'$.
+  Also, since $F_i \subseteq Q_i$ for $i \in \{ 1, 2, \ldots, k \}$, then $F'
+  \subseteq Q'$. Furthermore, $\delta : Q' \times \Sigma \rightarrow Q'$ by
+  \Cref{definition:quasidet_delta}. Therefore, $\mathcal{A}'$ is a deterministic
+  finite-state automaton and
+  \begin{align*}
+    \mathcal{L}_\mathcal{A'} &= \{ w \in \Sigma^* \mid \delta^*(s, w) \in F' \}\\
+    &= \{ w \in \Sigma^* \mid \exists i \in \{ 1, 2, \ldots, k \} (\delta^*(s, w)^i
+    \in F_i) \} = \mathcal{L}_\mathcal{A}.
+  \end{align*}
+\end{proof}
+
+\begin{lemma}\label{lem:quasidet_equiv_right}
+  Let $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ be a deterministic
+  finite-state automaton. There exists a $k$-separated quasi-deterministic
+  finite-state automaton $\mathcal{A}'$ such that $\mathcal{L}_\mathcal{A'} =
+  \mathcal{L}_\mathcal{A}$.
+\end{lemma}
+
+\begin{proof}
+  Let $\mathcal{A}' = \langle \Sigma, \langle
+  Q \rangle, Q, \langle s \rangle, \langle F \rangle, \langle \delta \rangle,
+  \langle \rho \rangle, \langle \eta \rangle, \eta_x \rangle$ where
+  \begin{itemize}
+    \item $\rho : Q \rightarrow Q$ is a restricted identity function such that
+      $dom(\rho) = rng(\delta)$,
+    \item $\eta_x : Q \times Q \rightarrow Q$ is defined as $\eta_x(q, p) = q$ for
+      $q \in Q$,
+    \item $\eta : Q \times Q \rightarrow Q$ is defined as $\eta(q, p) = q$ for $q, p
+      \in Q$.
+  \end{itemize}
+  By definition, $\mathcal{A}'$ is a $1$-separated quasi-deterministic finite-state
+  automaton. Also, $\delta'(\langle q \rangle, \sigma) = \langle \eta(\delta(q,
+  \sigma), \delta_x(\langle q \rangle, \sigma)) \rangle = \langle \delta(q, \sigma)
+  \rangle$. Thus, $\delta'^*(\langle q \rangle, w) = \langle \delta^*(q, w) \rangle$.
+  Therefore,
+  \begin{equation*}
+    \mathcal{L}_\mathcal{A'} = \{ w \in \Sigma^* \mid \delta'^*(\langle s \rangle,
+    w)^1 \in F \} = \{ w \in \Sigma^* \mid \delta^*(s, w) \in F \} =
+    \mathcal{L}_\mathcal{A}.
+  \end{equation*}
+\end{proof}
+
+\begin{theorem}
+  The class of $k$-separated quasi-deterministic finite-state automata is equivalent
+  to the class of deterministic finite-state automata.
+\end{theorem}
+
+\begin{proof}
+  Follows from \Cref{lem:quasidet_equiv_left,lem:quasidet_equiv_right}.
+\end{proof}

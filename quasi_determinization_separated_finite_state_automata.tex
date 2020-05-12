@@ -205,8 +205,8 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
     &= \bigcup_{j=1}^k \big[ \tau_j(p_h^j, \sigma_{i_h}) \cup
     \hat{\Delta}_\epsilon^j(\delta_x(p_h, \sigma_{i_h})) \big]\\
     &= \bigcup_{j=1}^k \eta_j(\tau_j(p_h^j, \sigma_{i_h}), \delta_x(p_h,
-    \sigma_{i_h}))\\
-    &= \bigcup_{j=1}^k \delta_j(p_h, \sigma_{i_h})
+    \sigma_{i_h}))
+    = \bigcup_{j=1}^k \delta_j(p_h, \sigma_{i_h})
     = \bigcup_{j=1}^k p_{h+1}^j.
   \end{align*}
   Otherwise, $h = l$ and if $n - i_l > 1$, then $\sigma_j = \epsilon$ for $j \in \{
@@ -320,37 +320,10 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
   Follows from \Cref{lem:quasidet_completion,lem:quasidet_inclusion_right,lem:quasidet_inclusion_left}.
 \end{proof}
 
-  \begin{proposition}\label{prop:quasidet_auto_1}
-    Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-    $k$-separated finite-state automaton. Let $\mathcal{A'}^{(n)} = \langle
-      \Sigma, Q'^{(n)}, 2^X, s, F'^{(n)}, \tau^{(n)}, \rho^{(n)}, \eta^{(n)},
-      \eta_x^{(n)} \rangle$ and $R^{(n)}$ be respectively the quasi-deterministic
-    $k$-separated finite-state automaton and the set of states derived from
-    $\mathcal{A}$ by applying the construction described above for $n > 0$. Let
-    $dom(\eta_x^{(n+1)}) = dom(\eta_x^{(n)})$ and $dom(\tau_i^{(n+1)}) =
-      dom(\tau_i^{(n)})$, $dom(\eta_i^{(n+1)}) = dom(\eta_i^{(n)})$ for $i \in \{
-      1, 2, \ldots, k \}$. Then $R^{(n+1)} = R^{(n)}$.
-  \end{proposition}
-
-  \begin{proof}
-    Since $dom(\eta_x^{(n+1)}) = dom(\eta_x^{(n)})$ then $rng(\eta_x^{(n+1)}) =
-      rng(\eta_x^{(n)})$. Since $dom(\tau_i^{(n+1)}) = dom(\tau_i^{(n)})$ and
-    $dom(\eta_i^{(n+1)}) = dom(\eta_i^{(n)})$ then $rng(\tau_i^{(n+1)}) =
-      rng(\tau_i^{(n)})$ and $rng(\eta_i^{(n+1)}) = rng(\eta_i^{(n)})$ for $i \in
-      \{ 1, 2, \ldots, k \}$. Therefore, $\rho_i^{(n+1)} = \rho_i^{(n)} \cup \{
-      \langle q,  q \cap X \rangle \in P_i \times X \mid \exists q \in
-      rng(\tau_i^{(n+1)}) \setminus rng(\tau_i^{(n)}) \} = \rho_i^{(n)}$ for $i
-      \in \{ 1, 2, \ldots, k \}$. Since $\eta_x^{(n+1)} = \eta_x^{(n)}$ and
-    $\tau_i^{(n+1)} = \tau_i^{(n)}$, $\rho_i^{(n+1)} = \rho_i^{(n)}$,
-    $\eta_i^{(n+1)} = \eta_i^{(n)}$ for $i \in \{ 1, 2, \ldots, k \}$ then
-    $\delta^{(n+1)} = \delta^{(n)}$. Therefore, $R^{(n+1)} = R^{(n)} \cup \{ q''
-      \mid \exists \langle q', \sigma, q'' \rangle \in \delta^{(n+1)}
-      \setminus \delta^{(n)} \} = R^{(n)}$.
-  \end{proof}
-
-  The construction described above and \Cref{prop:quasidet_auto_1} inspire
-  \Cref{alg:quasi_det_sfsa} for quasi-determinization of finite-state
-  automata. We shall now prove its correctness and provide a runtime complexity bound.
+The construction described above inspires \Cref{alg:quasi_det_sfsa} for
+quasi-determinization of finite-state automata. We shall now prove its correctness
+and provide a runtime complexity bound.
+\pagebreak
 
   \SetAlgoNoLine
   \begin{algorithm}[H]
@@ -372,12 +345,11 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
     }
     $\eta_x \gets \emptyset$\;
 
-    $Next \gets \{ s \}$, $Visited \gets \emptyset$, $Updated \gets True$\;
+    $Next \gets \{ s \}$, $Visited \gets \emptyset$\;
 
-    \While {$Next \neq \emptyset$ and $Updated$} {
-      $Updated \gets False$\;
-
+    \While {$Next \neq \emptyset$} {
       $q \gets Extract(Next)$\;
+      $Visited \gets Visited \cup \{ q \}$\;
       \For {$i \in \{ 1, 2, \ldots, k \}$} {
         \If {$q_i \cap F \neq \emptyset$} {
           $F_i' \gets F_i' \cup \{ q_i \}$\;
@@ -386,8 +358,6 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
 
       \For {$\sigma \in \Sigma$} {
         \For {$i \in \{ 1, 2, \ldots, k \}$} {
-          $Updated \gets Updated$ or $\langle q_i, \sigma \rangle \not\in
-            dom(\tau_i)$\;
           $t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{
             \sigma \})) \cap P_i$\;
           $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i
@@ -400,15 +370,12 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
 
 	$e_x \gets r_1$\;
 	\For {$i \in \{ 2, 3, \ldots, k \}$} {
-          $Updated \gets Updated$ or $\langle e_x, r_i \rangle \not\in dom(\eta_x)$\;
           $\eta_x \gets \eta_x \cup \{ \langle e_x, r_i, e_x \cup r_i \rangle \}$\; 
           $e_x \gets e_x \cup r_i$\;
         }
 
         \For {$i \in \{ 1, 2, \ldots, k \}$} {
-          $Updated \gets Updated$ or $\langle t_i, e_x \rangle \not\in
-            dom(\eta_i)$\;
-          $e_i \gets t_i \cup e_x$\;
+          $e_i \gets t_i \cup \hat{\Delta}_\epsilon(e_x)$\;
           $\eta_i \gets \eta_i \cup \{ \langle t_i, e_x, e_i \rangle \}$\;    
           $Q_i' \gets Q_i' \cup \{ e_i \}$\;
         }

@@ -2,22 +2,74 @@
 
 In this section, we show that finite-state automata constructed from regular
 expressions using the algorithm described in \Cref{thm:thompson} are $k$-separated
-for $k > 1$. We first prove that the graph corresponding to such finite-state
-automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is planar. As a
-consequence, the algorithm described in \Cref{thm:lipton_tarjan} can be applied to
-find a separator of size $\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We
-then present a specialized algorithm that is guaranteed to find a separator of
-constant size in $\mathcal{O}(|Q|)$ time.
+for $k > 1$. We first prove that the graph $\mathcal{G}_{\mathcal{A}}$ corresponding
+to such finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
+\rangle$ is planar. As a consequence, the algorithm described in
+\Cref{thm:lipton_tarjan} can be applied to find a separator of size
+$\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We then describe a specialized
+algorithm that is guaranteed to find a separator of constant size in
+$\mathcal{O}(|Q|)$ time. An example of such separator is presented in
+\Cref{figure:separator_thompson_automaton}.
+
+\begin{figure}[!h]
+  \centering
+  \begin{tikzpicture}[on grid, auto, scale=0.35]
+    \node[state, initial, fill=white, scale=0.375]
+    (s1) at (-14, 0) {};
+    \node[state, fill=white, scale=0.375]
+    (s2) at (-10, 0) {};
+    \node[state, fill=black, scale=0.375]
+    (s3) at (-6, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s4) at (-6, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s5) at (-2, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s6) at (-2, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s7) at (2, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s8) at (2, -2) {};
+    \node[state, fill=black, scale=0.375]
+    (s9) at (6, 2) {};
+    \node[state, fill=white, scale=0.375]
+    (s10) at (6, -2) {};
+    \node[state, fill=white, scale=0.375]
+    (s11) at (10, 0) {};
+    \node[state, accepting, fill=white, scale=0.375]
+    (s12) at (14, 0) {};
+
+    \draw [->]
+    (s1) edge node{$\epsilon$} (s2)
+    (s2) edge node{$\epsilon$} (s3)
+    (s2) edge node{$\epsilon$} (s4)
+    (s3) edge node{$0$} (s5)
+    (s5) edge node{$\epsilon$} (s7)
+    (s7) edge node{$1$} (s9)
+    (s4) edge node{$1$} (s6)
+    (s6) edge node{$\epsilon$} (s8)
+    (s8) edge node{$0$} (s10)
+    (s9) edge node{$\epsilon$} (s11)
+    (s10) edge node{$\epsilon$} (s11)
+    (s11) edge node{$\epsilon$} (s12)
+    (s1) edge[bend right=40] node{$\epsilon$} (s12)
+    (s11) edge[bend left=-80] node[above]{$\epsilon$} (s2);
+  \end{tikzpicture}
+  \caption{Separator (colored in black) in a finite-state automaton derived from the
+  regular expression $(((0\;.\;1) + (1\;.\;0))*)$ by applying the construction
+  described in \Cref{thm:thompson}.}
+  \label{figure:separator_thompson_automaton}
+\end{figure}
 
 \begin{proposition}
-  Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$ and
+  Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$ and let
   $\mathcal{A}$ be the finite-state automaton constructed from $\mathcal{E}$ by
   applying the algorithm described in $\Cref{thm:thompson}$. Then
   $\mathcal{G}_\mathcal{A}$ is planar.
 \end{proposition}
 
 \begin{proof}
-  We show by induction on the construction of the Thompson finite-state automaton
+  We show by induction on the construction of the finite-state automaton
   $\mathcal{A}$ that its corresponding graph $\mathcal{G}_{\mathcal{A}}$ can be
   embedded in a square so that the following properties hold.
   \begin{enumerate}
@@ -34,7 +86,7 @@ constant size in $\mathcal{O}(|Q|)$ time.
   \end{enumerate}
 
   \begin{case}[$\mathcal{E} = \emptyset$]
-    $\mathcal{A}$ is a Type 1 Thompson finite-state automaton. The embedding of the
+    Then $\mathcal{A}$ is a Type 1 finite-state automaton. The embedding of the
     graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
     $\Cref{fig:f_thompson_1}$. There are two vertices and no edges in
     $\mathcal{G}_{\mathcal{A}}$. Properties 1 and 2 hold for
@@ -51,19 +103,19 @@ constant size in $\mathcal{O}(|Q|)$ time.
         \node[state, fill=white, scale=0.75] (f)
         at (4, 0) {$f$};
       \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 1
-        Thompson finite-state automaton in a square.}
+      \caption{Embedding of the graph corresponding to a Type 1 finite-state
+      automaton in a square.}
       \label{fig:f_thompson_1}
     \end{figure}
   \end{case}
 
   \begin{case}[$\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
-    $\mathcal{A}$ is a Type 2 Thompson finite-state automaton. The
-    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-    presented in $\Cref{fig:f_thompson_2}$. There are two vertices
-    and a single edge in $\mathcal{G}_{\mathcal{A}}$. Properties 1, 2, 4
-    and 5 hold for $\mathcal{G}_{\mathcal{A}}$ by construction. Property
-    3 holds for $\mathcal{G}_{\mathcal{A}}$ trivially.
+    Then $\mathcal{A}$ is a Type 2 finite-state automaton. The embedding of the
+    graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
+    $\Cref{fig:f_thompson_2}$. There are two vertices and a single edge in
+    $\mathcal{G}_{\mathcal{A}}$. Properties 1, 2, 4 and 5 hold for
+    $\mathcal{G}_{\mathcal{A}}$ by construction. Property 3 holds for
+    $\mathcal{G}_{\mathcal{A}}$ trivially.
 
     \begin{figure}[!h]
       \centering
@@ -75,22 +127,21 @@ constant size in $\mathcal{O}(|Q|)$ time.
         at (4, 0) {$f$};
         \path (s) edge node {} (f);
       \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 2
-        Thompson finite-state automaton in a square.}
+      \caption{Embedding of the graph corresponding to a Type 2 finite-state
+      automaton in a square.}
       \label{fig:f_thompson_2}
     \end{figure}
   \end{case}
 
-  \begin{case}[$\mathcal{E} = \mathcal{E}'.\mathcal{E}''$ where $\mathcal{E}'$
-      and $\mathcal{E}''$ are regular expressions]
-    $\mathcal{A}$ is a Type 3 Thompson finite-state automaton. The
-    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-    presented in $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and
-    $\mathcal{A}''$ be the Thompson finite-state automata constructed
-    from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
-    properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
-    $\mathcal{G}_\mathcal{A''}$. Since property 1 holds for
-    $\mathcal{G}_\mathcal{A'}$ and property 2 holds for
+  \begin{case}[$\mathcal{E} = \mathcal{E}'.\mathcal{E}''$ where $\mathcal{E}'$ and
+    $\mathcal{E}''$ are regular expressions]
+    Then $\mathcal{A}$ is a Type 3 finite-state automaton. The embedding of the graph
+    $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
+    $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and $\mathcal{A}''$ be the
+    finite-state automata constructed from $\mathcal{E}'$ and $\mathcal{E}''$
+    respectively. Also, let properties 1 through 5 hold for
+    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Since property 1
+    holds for $\mathcal{G}_\mathcal{A'}$ and property 2 holds for
     $\mathcal{G}_\mathcal{A''}$ then, by construction, properties 1 and
     2 hold for $\mathcal{G}_\mathcal{A}$. Also, since property 3 holds
     for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$
@@ -101,7 +152,7 @@ constant size in $\mathcal{O}(|Q|)$ time.
     then property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, that
     edge is mapped outside the square embeddings of the graphs
     $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Thus,
-    since properties 4 and 5 hold for them then property 5 also holds for
+    since properties 4 and 5 hold for them, then property 5 also holds for
     $\mathcal{G}_\mathcal{A}$.
 
     \begin{figure}[!h]
@@ -126,35 +177,33 @@ constant size in $\mathcal{O}(|Q|)$ time.
         \node[] at (-5, 0) {$\mathcal{G}_\mathcal{A'}$};
         \node[] at (5, 0) {$\mathcal{G}_\mathcal{A''}$};
       \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 3
-        Thompson finite-state automaton in a square.}
+      \caption{Embedding of the graph corresponding to a Type 3 finite-state
+      automaton in a square.}
       \label{fig:f_thompson_3}
     \end{figure}
   \end{case}
 
-  \begin{case}[$\mathcal{E} = \mathcal{E}'+\mathcal{E}''$ where $\mathcal{E}'$
-      and $\mathcal{E}''$ are regular expressions]
-    $\mathcal{A}$ is a Type 4 Thompson finite-state automaton. The
-    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-    presented in $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and
-    $\mathcal{A}''$ be the Thompson finite-state automata constructed
-    from $\mathcal{E}'$ and $\mathcal{E}''$ respectively. Also, let
-    properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$ and
-    $\mathcal{G}_\mathcal{A''}$. Properties 1 and 2 hold for
-    $\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds
+  \begin{case}[$\mathcal{E} = \mathcal{E}'+\mathcal{E}''$ where $\mathcal{E}'$ and
+    $\mathcal{E}''$ are regular expressions]
+    Then $\mathcal{A}$ is a Type 4 finite-state automaton. The embedding of the
+    graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
+    $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and $\mathcal{A}''$ be the
+    finite-state automata constructed from $\mathcal{E}'$ and $\mathcal{E}''$
+    respectively. Also, let properties 1 through 5 hold for
+    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Properties 1 and 2
+    hold for $\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds
     for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and
     since no vertices are ever mapped to points that lie on the top or
     bottom sides of a square then, by construction, it also holds for
     $\mathcal{G}_\mathcal{A}$. Also, since properties 4 and 5 hold for
-    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and since
-    the edges that connect $s$ to $s'$ and $s''$, and $f$ to $f'$ and
-    $f''$ are mapped to curves that lie properly inside the square then
-    property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, since
-    these edges are mapped to simple curves that lie outside the square
-    embeddings of $\mathcal{G}_\mathcal{A'}$ and
-    $\mathcal{G}_\mathcal{A''}$, and since they intersect other curves
-    only at points where vertices of the graph are mapped to then
-    property 5 holds for $\mathcal{G}_\mathcal{A}$.
+    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and since the edges
+    that connect $s$ to $s'$ and $s''$, and $f$ to $f'$ and $f''$ are mapped to
+    curves that lie properly inside the square then property 4 holds for
+    $\mathcal{G}_\mathcal{A}$. Moreover, since these edges are mapped to simple
+    curves that lie outside the square embeddings of $\mathcal{G}_\mathcal{A'}$ and
+    $\mathcal{G}_\mathcal{A''}$, and since they intersect other curves only at points
+    where vertices of the graph are mapped to, then property 5 holds for
+    $\mathcal{G}_\mathcal{A}$.
 
     \begin{figure}[!h]
       \centering
@@ -186,30 +235,28 @@ constant size in $\mathcal{O}(|Q|)$ time.
         \node[] at (0, 5) {$\mathcal{G}_\mathcal{A'}$};
         \node[] at (0, -5) {$\mathcal{G}_\mathcal{A''}$};
       \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 4
-        Thompson finite-state automaton in a square.}
+      \caption{Embedding of the graph corresponding to a Type 4 finite-state
+      automaton in a square.}
       \label{fig:f_thompson_4}
     \end{figure}
   \end{case}
 
   \begin{case}[$\mathcal{E} = \mathcal{E}'*$ where $\mathcal{E}'$ is a regular
-      expression]
-    $\mathcal{A}$ is a Type 5 Thompson finite-state automaton. The
-    embedding of the graph $\mathcal{G}_{\mathcal{A}}$ in a square is
-    presented in $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be
-    the Thompson finite-state automaton constructed from $\mathcal{E}'$.
-    Also, let properties 1 through 5 hold for $\mathcal{G}_\mathcal{A'}$.
-    Properties 1 and 2 hold for $\mathcal{G}_{\mathcal{A}}$ by
-    construction. Since property 3 holds for $\mathcal{G}_\mathcal{A'}$
-    then, by construction, it also holds for $\mathcal{G}_\mathcal{A}$.
-    Also, since properties 4 and 5 hold for $\mathcal{G}_\mathcal{A'}$
-    and since the edges that connect $s$ to $s'$ and $f$, and $f'$ to
-    $s'$ and $f$ are mapped to curves that lie properly inside the
-    square then property 4 holds for $\mathcal{G}_\mathcal{A}$.
-    Moreover, since these edges are mapped to simple curves that lie
-    outside the square embedding of $\mathcal{G}_\mathcal{A'}$ and since
-    they intersect other curves only at points where vertices of the
-    graph are mapped to then property 5 holds for
+    expression]
+    Then $\mathcal{A}$ is a Type 5 finite-state automaton. The embedding of the graph
+    $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
+    $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be the finite-state automaton
+    constructed from $\mathcal{E}'$. Also, let properties 1 through 5 hold for
+    $\mathcal{G}_\mathcal{A'}$. Properties 1 and 2 hold for
+    $\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds for
+    $\mathcal{G}_\mathcal{A'}$ then, by construction, it also holds for
+    $\mathcal{G}_\mathcal{A}$. Also, since properties 4 and 5 hold for
+    $\mathcal{G}_\mathcal{A'}$ and since the edges that connect $s$ to $s'$ and $f$,
+    and $f'$ to $s'$ and $f$ are mapped to curves that lie properly inside the square
+    then property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, since these edges
+    are mapped to simple curves that lie outside the square embedding of
+    $\mathcal{G}_\mathcal{A'}$ and since they intersect other curves only at points
+    where vertices of the graph are mapped to, then property 5 holds for
     $\mathcal{G}_\mathcal{A}$.
 
     \begin{figure}[!h]
@@ -236,8 +283,8 @@ constant size in $\mathcal{O}(|Q|)$ time.
 
         \node[] at (0, 0) {$\mathcal{G}_\mathcal{A'}$};
       \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 5
-        Thompson finite-state automaton in a square.}
+      \caption{Embedding of the graph corresponding to a Type 5 finite-state
+      automaton in a square.}
       \label{fig:f_thompson_5}
     \end{figure}
   \end{case}
@@ -249,15 +296,16 @@ constant size in $\mathcal{O}(|Q|)$ time.
   planar.
 \end{proof}
 
-We will now show that there exists a specialized algorithm that finds a separator of
-constant size in a Thompson finite-state automaton. The main procedure is described
-in \Cref{alg:thompson_separator}. We proceed with proving the correctness
-of the algorithm and providing a bound for the size of the resulting separator.
+We now show a specialized algorithm that finds a separator of constant size in a
+finite-state automaton constructed using the algorithm described in
+\Cref{thm:thompson}. The main procedure is described in
+\Cref{alg:thompson_separator}. We proceed with proving the correctness of the
+algorithm and providing a bound for the size of the resulting separator.
 
-\SetAlgoNoLine
-\begin{algorithm}[H]
-  \caption{Finds a constant-size separator for the set of states of a Thompson
-    finite-state automaton.}
+\begin{algorithm}
+  \caption{Finds a constant-size separator for the set of states of a finite-state
+  automaton $\mathcal{A}$ constructed from a regular expression using the algorithm
+  described in \Cref{thm:thompson}.}
   \label{alg:thompson_separator}
 
   \DontPrintSemicolon
@@ -304,27 +352,29 @@ of the algorithm and providing a bound for the size of the resulting separator.
 \end{algorithm}
 
 \begin{proposition}\label{prop:thompson_sep_1}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. Then if $\mathcal{A}_c$ is Type 1 or Type 2 during
-  the execution of \Cref{alg:thompson_separator} on input
-  $\mathcal{A}$ the condition at line 4 is false.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then,
+  if $\mathcal{A}_c$ is Type 1 or Type 2 during the execution of
+  \Cref{alg:thompson_separator} on input $\mathcal{A}$, the condition at line 4 is
+  false.
 \end{proposition}
 
 \begin{proof}
-  Since $\mathcal{A}$ is a Thompson finite-state automaton then $|Q| \geq 2$.
-  If $\mathcal{A}_c$ is Type 1 or Type 2 then $|Q_c| - |X| = 0$. Therefore,
-  the condition at line 4 is false.
+  Since $\mathcal{A}$ is a finite-state automaton constructed using the algorithm
+  described in \Cref{thm:thompson}, then $|Q| \geq 2$. If $\mathcal{A}_c$ is Type 1
+  or Type 2, then $|Q_c| - |X| = 0$. Therefore, the condition at line 4 is false.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_2}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. Then \Cref{alg:thompson_separator}
-  completes on input $\mathcal{A}$ in $\mathcal{O}(|Q|)$ time.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then
+  \Cref{alg:thompson_separator} completes on input $\mathcal{A}$ in
+  $\mathcal{O}(|Q|)$ time.
 \end{proposition}
 
 \begin{proof}
   $\mathcal{A}_c$ is set to $\mathcal{A}$ at line 1. If at any execution of
-  the condition at line 4 the Thompson finite-state automaton $\mathcal{A}_c$
+  the condition at line 4 the finite-state automaton $\mathcal{A}_c$
   is Type 1 or Type 2 then by \Cref{prop:thompson_sep_1} the loop
   terminates. Otherwise, $\mathcal{A}_c$ is updated depending on its type.
   Since $|Q_c|$ decreases after each iteration of the loop, eventually the
@@ -339,10 +389,10 @@ of the algorithm and providing a bound for the size of the resulting separator.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_3}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. Then $Q = Q_c \cup R$ and $Q_c \cap R = \emptyset$
-  during the execution of \Cref{alg:thompson_separator} on input
-  $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then $Q
+  = Q_c \cup R$ and $Q_c \cap R = \emptyset$ during the execution of
+  \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
@@ -389,26 +439,29 @@ of the algorithm and providing a bound for the size of the resulting separator.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_4}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. Then $|X| = 2$ during the execution of
-  \Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then
+  $|X| = 2$ during the execution of \Cref{alg:thompson_separator} on input
+  $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
-  Since $\mathcal{A}$ is a Thompson automaton then $|S| = |F| = 1$. Thus,
-  $|S_c| = |F_c| = 1$ and $|X| = 2$ at line 1. Therefore, the first time the
-  condition at line 4 is executed $|X| = 2$. Each time $X$ is updated within
-  the loop it is set to the union of the start states and the final states of
-  a sub-automaton of $\mathcal{A}$. Since every sub-automaton of $\mathcal{A}$
-  is a Thompson finite-state automaton then $|X| = 2$ after each update.
-  Therefore, $|X| = 2$ each time the condition at line 4 is executed and after
-  the last iteration of the loop $|X| = 2$ at line 32.
+  Since $\mathcal{A}$ is a constructed using the algorithm described in
+  \Cref{thm:thompson}, then $|S| = |F| = 1$. Thus, $|S_c| = |F_c| = 1$ and $|X| = 2$
+  at line 1. Therefore, the first time the condition at line 4 is executed $|X| = 2$.
+  Each time $X$ is updated within the loop it is set to the union of the start states
+  and the final states of a sub-automaton of $\mathcal{A}$. Since every sub-automaton
+  of $\mathcal{A}$ is also constructed using the algorithm described in
+  \Cref{thm:thompson}, then $|X| = 2$ after each update. Therefore, $|X| = 2$ each
+  time the condition at line 4 is executed and after the last iteration of the loop
+  $|X| = 2$ at line 32.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_5}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. Then $|R| \leq \frac{2}{3} |Q|$ during the execution
-  of \Cref{alg:thompson_separator} on input $\mathcal{A}$.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then
+  $|R| \leq \frac{2}{3} |Q|$ during the execution of \Cref{alg:thompson_separator} on
+  input $\mathcal{A}$.
 \end{proposition}
 
 \begin{proof}
@@ -460,10 +513,10 @@ of the algorithm and providing a bound for the size of the resulting separator.
 \end{proof}
 
 \begin{proposition}\label{prop:thompson_sep_6}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. Then $\Delta \cap (Q_c \setminus X \times
-    \Sigma_\epsilon \times R) = \Delta \cap (R \times \Sigma_\epsilon \times Q_c
-    \setminus X) = \emptyset$ during the execution of
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then
+  $\Delta \cap (Q_c \setminus X \times \Sigma_\epsilon \times R) = \Delta \cap (R
+  \times \Sigma_\epsilon \times Q_c \setminus X) = \emptyset$ during the execution of
   \Cref{alg:thompson_separator} on input $\mathcal{A}$.
 \end{proposition}
 
@@ -521,11 +574,11 @@ of the algorithm and providing a bound for the size of the resulting separator.
 \end{proof}
 
 \begin{theorem}
-  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a Thompson
-  finite-state automaton. There exist a state separator $X \subseteq Q$ and a
-  partition $P_Q = \{ X, P_1, P_2 \}$ such that $|X| = 2$ and $|P_i| \leq
-    \frac{2}{3} |Q|$ for $i \in \{ 1, 2 \}$. Moreover, there exists an
-  algorithm that finds $P_Q$ in $\mathcal{O}(|Q|)$ time.
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}.
+  There exists an algorithm that, given $\mathcal{A}$, finds a separator $X$ and a
+  partition $\{ X, Q_1, Q_2 \}_Q$ such that $|X| = 2$ and $|Q_i| \leq \frac{2}{3}
+  |Q|$ for $i \in \{ 1, 2 \}$ in $\mathcal{O}(|Q|)$ time.
 \end{theorem}
 
 \begin{proof}

@@ -1,0 +1,61 @@
+\section{Comparison results}
+
+In this section, we compare the sizes of finite-state devices constructed from
+regular expressions. For this purpose, we construct a finite-state automaton (NFA)
+using the algorithm described in \Cref{thm:thompson}, a deterministic finite-state
+automaton (DFA) using the algorithm described in \Cref{thm:rabin_scott}, a
+$2$-separated quasi-deterministic finite-state automaton (2-QDFA) and a
+$3$-separated quasi-deterministic finite-state automaton (3-QDFA) using
+\Cref{alg:quasi_det_sfsa}. The separator set used for  $k$-QDFA is constructed
+using \Cref{alg:thompson_separator}.
+\bigbreak
+\Cref{tbl:state_comparison} presents a comparison of the number of states of
+finite-state devices constructed from regular expressions. For NFA and DFA the number
+of states is the cardinality of the set $Q$. For $k$-QDFA the number of states is the
+sum of the cardinalities of the sets $Q_1, Q_2, \ldots, Q_k$.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{||c c c c c||} 
+    \hline
+    Expression & NFA & DFA & 2-QDFA & 3-QDFA \\ [0.5ex] 
+    \hline
+    $(a.b.c...)$ & 52 & 27 & 31 & 36 \\
+    \hline
+    $(a|b|c|...).(a|b|c|...)*$ & 206 & 53 & 57 & 43 \\
+    \hline
+    $(0|\epsilon).(1|\epsilon)...$ & 60 & 11 & 15 & 20 \\
+    \hline
+    $(0|1)*.0.(0|1)^{16}$ & 106 & 131073 & 2305 & 830 \\
+    \hline
+  \end{tabular}
+  \caption{Comparison of the number of states of finite-state devices constructed
+    from a regular expression.}
+  \label{tbl:state_comparison}
+\end{table}
+
+\Cref{tbl:transition_comparison} presents a comparison of the number of transitions
+of finite-state devices constructed from regular expressions. For NFA and DFA the
+number of transitions are respectively the cardinality of the sets $\Delta$ and
+$\delta$. For $k$-QDFA the number of transitions is the sum of the cardinalities of
+the sets $\tau_1, \tau_2, \ldots, \tau_k, \eta_x, \eta_1, \eta_2, \ldots, \eta_k$.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{||c c c c c||} 
+    \hline
+    Expression & NFA & DFA & 2-QDFA & 3-QDFA \\ [0.5ex] 
+    \hline
+    $(a.b.c...)$ & 51 & 728 & 837 & 973 \\
+    \hline
+    $(a|b|c|...).(a|b|c|...)*$ & 257 & 1378 & 784 & 144 \\
+    \hline
+    $(0|\epsilon).(1|\epsilon)...$ & 69 & 55 & 50 & 50 \\
+    \hline
+    $(0|1)*.0.(0|1)^{16}$ & 124 & 262146 & 6903 & 2464 \\
+    \hline
+  \end{tabular}
+  \caption{Comparison of the number of transitions of finite-state devices
+    constructed from a regular expression.}
+  \label{tbl:transition_comparison}
+\end{table}
