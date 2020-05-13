@@ -9,7 +9,7 @@
   \begin{itemize}
     \item $\Sigma$ is an alphabet,
     \item $Q$ is a finite set of states,
-    \item $S \subseteq Q$ is a set of start states,
+    \item $S \subseteq Q$ is a set of initial states,
     \item $F \subseteq Q$ is a set of final states,
     \item $\Delta \subseteq Q \times \Sigma_\epsilon \times Q$ is a relation of state
 	    transitions.
@@ -30,27 +30,27 @@
 
 \begin{definition}
   A \emph{path in a finite-state automaton} $\mathcal{A} = \langle \Sigma, Q, S, F,
-  \Delta \rangle$ is either trivial or non-trivial. A trivial path $\pi_q$ in
-  $\mathcal{A}$ is associated with every state $q \in Q$. The length of $\pi_q$ is
-  $0$. The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label
-  of $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful if and only if $q \in S
-  \cap F$. A non-trivial path $\pi$ in $\mathcal{A}$ is a finite sequence of state
+  \Delta \rangle$ is either trivial or non-trivial. A \emph{trivial path} $\pi_q$ in
+  $\mathcal{A}$ is associated with every state $q \in Q$. The \emph{length} of $\pi_q$ is
+  $0$. The \emph{start state} of $\pi_q$ is $q$. The \emph{end state} of $\pi_q$ is $q$. The \emph{label}
+  of $\pi_q$ is $\epsilon$. The path $\pi_q$ is \emph{succsessful} if and only if $q \in S
+  \cap F$. A \emph{non-trivial path} $\pi$ in $\mathcal{A}$ is a finite sequence of state
   transitions
   \begin{equation*}
     \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \ldots,
     \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
   \end{equation*}
   for $n > 1$ such that $\langle q_i, \sigma_i, q_{i+1} \rangle \in \Delta$ for $i
-  \in \{ 1, 2, \ldots, n-1 \}$. The length of $\pi$ is $n-1$. The start state of
-  $\pi$ is $q_1$. The end state of $\pi$ is $q_n$. The label of $\pi$ is $\sigma_1
-  \sigma_2 \ldots \sigma_{n-1}$. The path $\pi$ is successful if and only if $q_1
+  \in \{ 1, 2, \ldots, n-1 \}$. The \emph{length} of $\pi$ is $n-1$. The \emph{start state} of
+  $\pi$ is $q_1$. The \emph{end state} of $\pi$ is $q_n$. The \emph{label} of $\pi$ is $\sigma_1
+  \sigma_2 \ldots \sigma_{n-1}$. The path $\pi$ is \emph{successful} if and only if $q_1
   \in S$ and $q_n \in F$.
 \end{definition}
 
 \begin{proposition}
   Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
   automaton. There exists a path in $\mathcal{A}$ with start state $q' \in Q$, end
-  state $q'' \in Q$ and label $w \in \Sigma^*$ if and only if $\langle q', w, q''
+  state $q'' \in Q$, and label $w \in \Sigma^*$ if and only if $\langle q', w, q''
   \rangle \in \Delta^*$.
 \end{proposition}
 
@@ -77,7 +77,7 @@
 \begin{definition}
   The \emph{language $\mathcal{L}_\mathcal{A}$ recognized by a finite-state
   automaton} $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is the set of
-  all labels of successful paths
+  labels of all successful paths
   \begin{equation*}
     \{ w \in \Sigma^* \mid \exists s \in S \; \exists f \in F (\langle s, w, f
     \rangle \in \Delta^*) \}.
@@ -107,7 +107,7 @@ We shall write $\mathcal{A} = \langle \Sigma, Q, s, F, \delta \rangle$ in case t
 finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ is
 deterministic.
 
-\begin{theorem}[see \cite{rabin_scott}]
+\begin{theorem}[Rabin, Scott, see \cite{rabin_scott}]
   \label{thm:rabin_scott}
   There exists an algorithm that, given a finite-state automaton $\mathcal{A}$,
   constructs a deterministic finite-state automaton $\mathcal{A'}$ such that
