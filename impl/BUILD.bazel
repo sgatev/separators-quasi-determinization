@@ -1,0 +1,275 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cc"],
+    deps = [
+        ":determinize",
+        ":dfa",
+        ":eager_quasi_determinize",
+        ":epsilon",
+        ":nfa",
+        ":parser",
+        ":qdfa",
+        ":quasi_determinize",
+        ":regex",
+        ":separator",
+        ":thompson_description",
+        ":thompson_nfa_builder",
+        ":timer",
+    ],
+)
+
+cc_library(
+    name = "bit_set",
+    hdrs = ["bit_set.h"],
+    deps = ["@absl//absl/base:core_headers"],
+)
+
+cc_library(
+    name = "composite_state",
+    hdrs = ["composite_state.h"],
+    deps = [
+        "@absl//absl/base:core_headers",
+        "@absl//absl/hash",
+    ],
+)
+
+cc_library(
+    name = "determinize",
+    srcs = ["determinize.cc"],
+    hdrs = ["determinize.h"],
+    deps = [
+        ":composite_state",
+        ":dfa",
+        ":nfa",
+        ":pool",
+        "@absl//absl/base:core_headers",
+        "@absl//absl/container:flat_hash_map",
+    ],
+)
+
+cc_test(
+    name = "determinize_test",
+    srcs = ["determinize_test.cc"],
+    deps = [
+        ":test_util",
+        ":determinize",
+        ":dfa",
+        ":nfa",
+        ":parser",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "dfa",
+    srcs = ["dfa.cc"],
+    hdrs = ["dfa.h"],
+    deps = [
+        ":transitions",
+        ":types",
+        "@absl//absl/base:core_headers",
+    ],
+)
+
+cc_library(
+    name = "nfa",
+    srcs = ["nfa.cc"],
+    hdrs = ["nfa.h"],
+    deps = [
+        ":bit_set",
+        ":overload",
+        ":pool",
+        ":transitions",
+        ":types",
+        "@absl//absl/container:flat_hash_set",
+    ],
+)
+
+cc_library(
+    name = "thompson_description",
+    hdrs = ["thompson_description.h"],
+    deps = [":types"],
+)
+
+cc_library(
+    name = "thompson_nfa_builder",
+    srcs = ["thompson_nfa_builder.cc"],
+    hdrs = ["thompson_nfa_builder.h"],
+    deps = [
+        ":nfa",
+        ":thompson_description",
+        ":transitions",
+        ":types",
+        "@absl//absl/container:flat_hash_set",
+    ],
+)
+
+cc_library(
+    name = "overload",
+    hdrs = ["overload.h"],
+)
+
+cc_library(
+    name = "parser",
+    hdrs = ["parser.h"],
+    deps = [":overload"],
+)
+
+cc_library(
+    name = "pool",
+    hdrs = ["pool.h"],
+    deps = ["@absl//absl/base:core_headers"],
+)
+
+cc_library(
+    name = "regex",
+    srcs = ["regex.cc"],
+    hdrs = ["regex.h"],
+    deps = [
+        ":overload",
+        "@absl//absl/strings",
+    ],
+)
+
+cc_library(
+    name = "separator",
+    srcs = ["separator.cc"],
+    hdrs = ["separator.h"],
+    deps = [
+        ":nfa",
+        ":thompson_description",
+        ":types",
+        "@absl//absl/base:core_headers",
+    ],
+)
+
+cc_library(
+    name = "timer",
+    hdrs = ["timer.h"],
+)
+
+cc_library(
+    name = "transitions",
+    hdrs = ["transitions.h"],
+    deps = [
+        ":types",
+        "@absl//absl/base:core_headers",
+    ],
+)
+
+cc_library(
+    name = "types",
+    hdrs = ["types.h"],
+)
+
+cc_library(
+    name = "qdfa",
+    hdrs = ["qdfa.h"],
+    deps = [
+        ":qdfa_component",
+        ":transitions",
+        ":types",
+    ],
+)
+
+cc_library(
+    name = "qdfa_component",
+    srcs = ["qdfa_component.cc"],
+    hdrs = ["qdfa_component.h"],
+    deps = [
+        ":transitions",
+        ":types",
+        "@absl//absl/base:core_headers",
+    ],
+)
+
+cc_library(
+    name = "quasi_determinize",
+    hdrs = ["quasi_determinize.h"],
+    deps = [
+        ":composite_state",
+        ":nfa",
+        ":pool",
+        ":qdfa",
+        ":separator",
+        ":types",
+        "@absl//absl/algorithm:container",
+        "@absl//absl/base:core_headers",
+        "@absl//absl/container:flat_hash_map",
+        "@absl//absl/container:flat_hash_set",
+    ],
+)
+
+cc_test(
+    name = "quasi_determinize_test",
+    srcs = ["quasi_determinize_test.cc"],
+    deps = [
+        ":test_util",
+        ":epsilon",
+        ":nfa",
+        ":parser",
+        ":qdfa",
+        ":quasi_determinize",
+        ":separator",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "eager_quasi_determinize",
+    hdrs = ["eager_quasi_determinize.h"],
+    deps = [
+        ":composite_state",
+        ":nfa",
+        ":pool",
+        ":qdfa",
+        ":separator",
+        "@absl//absl/algorithm:container",
+        "@absl//absl/base:core_headers",
+        "@absl//absl/container:flat_hash_map",
+        "@absl//absl/container:flat_hash_set",
+    ],
+)
+
+cc_test(
+    name = "eager_quasi_determinize_test",
+    srcs = ["eager_quasi_determinize_test.cc"],
+    deps = [
+        ":test_util",
+        ":epsilon",
+        ":eager_quasi_determinize",
+        ":nfa",
+        ":parser",
+        ":qdfa",
+        ":separator",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "epsilon",
+    hdrs = ["epsilon.h"],
+    deps = [
+        ":nfa",
+        ":transitions",
+        ":types",
+    ],
+)
+
+cc_library(
+    name = "test_util",
+    testonly = True,
+    hdrs = ["test_util.h"],
+    deps = [
+        ":nfa",
+        ":parser",
+        ":thompson_description",
+        ":thompson_nfa_builder",
+        "@gtest",
+    ],
+)

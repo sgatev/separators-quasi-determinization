@@ -1,0 +1,196 @@
+#include <chrono>
+#include <cinttypes>
+#include <initializer_list>
+#include <iostream>
+#include <optional>
+#include <ratio>
+#include <string>
+#include <string_view>
+#include <utility>
+#include <vector>
+
+#include "determinize.h"
+#include "dfa.h"
+#include "eager_quasi_determinize.h"
+#include "epsilon.h"
+#include "nfa.h"
+#include "parser.h"
+#include "qdfa.h"
+#include "quasi_determinize.h"
+#include "regex.h"
+#include "separator.h"
+#include "thompson_description.h"
+#include "thompson_nfa_builder.h"
+#include "timer.h"
+
+namespace sqdfa {
+namespace {
+
+using namespace std::chrono_literals;
+
+Timer MakeTimer(const std::string_view description) {
+  return Timer(
+      [description](std::chrono::duration<uint64_t, std::nano> elapsed_time) {
+        std::cout << "[timer] " << description << ": ";
+        if (elapsed_time >= 1s) {
+          std::cout << std::chrono::duration_cast<std::chrono::seconds>(
+                           elapsed_time)
+                           .count()
+                    << "s";
+        } else if (elapsed_time >= 1ms) {
+          std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(
+                           elapsed_time)
+                           .count()
+                    << "ms";
+        } else if (elapsed_time >= 1us) {
+          std::cout << std::chrono::duration_cast<std::chrono::microseconds>(
+                           elapsed_time)
+                           .count()
+                    << "us";
+        } else {
+          std::cout << elapsed_time.count() << "ns";
+        }
+        std::cout << std::endl;
+      });
+}
+
+}  // namespace
+
+std::pair<Nfa, ThompsonDescription> RunNfa(const std::string_view expression) {
+  const Timer timer = MakeTimer("NFA construction");
+
+  ThompsonNfaBuilder builder;
+  const std::optional<std::string> parse_error =
+      Parser<uint32_t, ThompsonNfaBuilder>::Parse(expression, &builder);
+  if (parse_error) {
+    std::cout << "error: " << *parse_error << std::endl;
+    return std::make_pair(Nfa(), ThompsonDescription());
+  }
+
+  auto [nfa, description] = builder.Build();
+  std::cout << "nfa: " << nfa.StatesCount() << " states, "
+            << nfa.TransitionsCount() << " transitions" << std::endl;
+  return std::make_pair(nfa, description);
+}
+
+void RunDfa(const Nfa& nfa) {
+  const Timer timer = MakeTimer("DFA construction");
+
+  const Dfa dfa = Determinize(nfa);
+  std::cout << "dfa: " << dfa.StatesCount() << " states, "
+            << dfa.TransitionsCount() << " transitions" << std::endl;
+}
+
+template <int K>
+void RunQdfa(Nfa nfa, ThompsonDescription description) {
+  static_assert(K >= 1, "number of QDFA components has to be at least 1");
+
+  SeparatedStates<K> separated_states;
+  {
+    const Timer timer = MakeTimer("separator construction");
+    separated_states = SeparateStates<K>(description);
+  }
+
+  const Timer timer = MakeTimer("QDFA construction");
+  const Qdfa<K> qdfa = QuasiDeterminize<K>(nfa, separated_states);
+  std::cout << K << "-qdfa: " << qdfa.StatesCount() << " states, "
+            << qdfa.TransitionsCount() << " transitions" << std::endl;
+}
+
+template <int K>
+void RunEagerQdfa(Nfa nfa, ThompsonDescription description) {
+  static_assert(K >= 1, "number of QDFA components has to be at least 1");
+
+  SeparatedStates<K> separated_states;
+  {
+    Timer timer = MakeTimer("separator construction");
+    separated_states = SeparateStates<K>(description);
+  }
+
+  ComputeEpsilonClosure(&nfa);
+
+  Timer timer = MakeTimer("eager QDFA construction");
+  const Qdfa<K> qdfa = EagerQuasiDeterminize<K>(nfa, separated_states);
+  std::cout << K << "-qdfa: " << qdfa.StatesCount() << " states, "
+            << qdfa.TransitionsCount() << " transitions" << std::endl;
+}
+
+Union LatinAlphabetUnion() {
+  return Union({
+      Char('a'), Char('b'), Char('c'), Char('d'), Char('e'), Char('f'),
+      Char('g'), Char('h'), Char('i'), Char('j'), Char('k'), Char('l'),
+      Char('m'), Char('n'), Char('o'), Char('p'), Char('q'), Char('r'),
+      Char('s'), Char('t'), Char('u'), Char('v'), Char('w'), Char('x'),
+      Char('y'), Char('z'),
+  });
+}
+
+Union DigitsUnion() {
+  return Union({
+      Char('0'),
+      Char('1'),
+      Char('2'),
+      Char('3'),
+      Char('4'),
+      Char('5'),
+      Char('6'),
+      Char('7'),
+      Char('8'),
+      Char('9'),
+  });
+}
+
+Union BinaryUnion() { return Union(Char('0'), Char('1')); }
+
+Union Maybe(Regex regex) { return Union(regex, Char('~')); }
+
+void Run() {
+  // The expressions of the comparison tables in the thesis.
+  std::vector<Regex> regexes;
+  regexes.emplace_back(Concat(
+      Char('a'), Char('b'), Char('c'), Char('d'), Char('e'), Char('f'),
+      Char('g'), Char('h'), Char('i'), Char('j'), Char('k'), Char('l'),
+      Char('m'), Char('n'), Char('o'), Char('p'), Char('q'), Char('r'),
+      Char('s'), Char('t'), Char('u'), Char('v'), Char('w'), Char('x'),
+      Char('y'), Char('z')));
+  regexes.emplace_back(
+      Concat(LatinAlphabetUnion(), Iter(LatinAlphabetUnion())));
+  regexes.emplace_back(Concat(Maybe(Char('0')), Maybe(Char('1')),
+                              Maybe(Char('2')), Maybe(Char('3')),
+                              Maybe(Char('4')), Maybe(Char('5')),
+                              Maybe(Char('6')), Maybe(Char('7')),
+                              Maybe(Char('8')), Maybe(Char('9'))));
+  regexes.emplace_back(
+      Concat(Iter(BinaryUnion()), Char('0'), Times(BinaryUnion(), 16)));
+
+  for (const Regex& regex : regexes) {
+    const std::string expression = RegexToString(&regex);
+    std::cout << "expression: " << expression << std::endl;
+    std::cout << std::endl;
+
+    auto [nfa, description] = RunNfa(expression);
+    std::cout << std::endl;
+
+    RunDfa(nfa);
+    std::cout << std::endl;
+
+    RunQdfa<2>(nfa, description);
+    std::cout << std::endl;
+
+    RunEagerQdfa<2>(nfa, description);
+    std::cout << std::endl;
+
+    RunQdfa<3>(nfa, description);
+    std::cout << std::endl;
+
+    RunEagerQdfa<3>(nfa, description);
+    std::cout << std::endl;
+  }
+}
+
+}  // namespace sqdfa
+
+int main() {
+  sqdfa::Run();
+  return 0;
+}
