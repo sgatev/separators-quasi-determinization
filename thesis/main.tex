@@ -4,13 +4,14 @@
 
 % Format the heading of the chapters.
 \usepackage{titlesec}
-\titleformat{\chapter}[display]{\Huge\bfseries}{}{0pt}{\thechapter\ }
+\titleformat{\chapter}[display]{\Huge\bfseries\raggedright}{}{0pt}{\thechapter\ }
 \titlespacing*{\chapter}{0pt}{0pt}{20pt}
-\titleformat{name=\chapter,numberless}[display]{\Huge\bfseries}{}{0pt}{}
+\titleformat{name=\chapter,numberless}[display]{\Huge\bfseries\raggedright}{}{0pt}{}
 \titlespacing*{name=\chapter,numberless}{0pt}{0pt}{20pt}
 
 % Add bibliography.
-\usepackage{biblatex}
+\usepackage{csquotes}
+\usepackage[backend=bibtex]{biblatex}
 \bibliography{bibliography}
 
 \usepackage{fontenc}
@@ -21,6 +22,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage[nameinlink]{cleveref}
 \usepackage{longtable}
 

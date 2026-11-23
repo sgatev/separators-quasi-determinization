@@ -4,7 +4,7 @@
 input word using a $k$-separated quasi-subsequential finite-state transducer. The
 output of the procedure is one of the possible translations of the input word.
 
-\begin{algorithm}[h]
+\begin{algorithm}[ht]
   \DontPrintSemicolon
   \KwIn{$\langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi
       \rangle, \sigma_1 \sigma_2 \ldots \sigma_n$}
@@ -58,7 +58,7 @@ longest common prefixes of at most $k$ words in time proportional to $k$ times t
 length of the result. \Cref{alg:lcp} represents one possible way of doing that: it
 compares the words column by column and stops at the first mismatch.
 
-\begin{algorithm}[h]
+\begin{algorithm}[ht]
   \DontPrintSemicolon
   \KwIn{$w_1, w_2, \ldots, w_k$}
 

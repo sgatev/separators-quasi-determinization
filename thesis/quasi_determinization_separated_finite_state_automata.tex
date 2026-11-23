@@ -164,11 +164,12 @@ the part of $Reach(w)$ that lies in the component $\mathcal{C}(Q_i)$.
 \begin{proof}
   We prove the statement by induction on the length of $w$. If $|w| = 0$, then $w =
   \epsilon$ and
-  \begin{equation*}
-    \delta^*(s, \epsilon)^i = s^i = \hat{\Delta}_\epsilon^i(S) = \{ q \in
+  \begin{align*}
+    \delta^*(s, \epsilon)^i = s^i = \hat{\Delta}_\epsilon^i(S) &= \{ q \in
     \mathcal{C}(Q_i) \mid \exists s' \in S (\langle s', \epsilon, q \rangle \in
-    \Delta^*) \} = Reach(\epsilon) \cap \mathcal{C}(Q_i).
-  \end{equation*}
+    \Delta^*) \}\\
+    &= Reach(\epsilon) \cap \mathcal{C}(Q_i).
+  \end{align*}
   Otherwise, $w = u\sigma$ for $u \in \Sigma^*$ and $\sigma \in \Sigma$. Let $p =
   \delta^*(s, u)$. By the inductive hypothesis, $p^r = Reach(u) \cap
   \mathcal{C}(Q_r)$ for $r \in \{ 1, 2, \ldots, k \}$. By construction,
@@ -344,11 +345,12 @@ and provide a runtime complexity bound.
 
     Consider the iteration of the while loop in which a state $q$ is extracted.
     Lines~\ref{alg:qd:t}--\ref{alg:qd:rho} compute, for each $\sigma \in \Sigma$,
-    \begin{equation*}
-      t_i = \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{ \sigma \})) \cap P_i =
+    \begin{align*}
+      t_i &= \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{ \sigma \})) \cap P_i =
       \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(q^i, \{ \sigma \})) = \tau_i(q^i,
-      \sigma), \qquad r_i = t_i \cap X = \rho_i(t_i).
-    \end{equation*}
+      \sigma),\\
+      r_i &= t_i \cap X = \rho_i(t_i).
+    \end{align*}
     Lines~\ref{alg:qd:ex_begin}--\ref{alg:qd:ex_end} compute $e_x = \bigcup_{i=1}^k
     r_i = \delta_x(q, \sigma)$ and add the entries of $\eta_x$ for its prefixes, and
     lines~\ref{alg:qd:e}--\ref{alg:qd:e_end} compute $e_i = t_i \cup
