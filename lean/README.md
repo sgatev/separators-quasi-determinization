@@ -72,18 +72,19 @@ Files: `Complexity/Traversal.lean` and `Complexity/QuasiDet.lean`.
 ### Per-component quasi-determinization (new; not in the original thesis)
 
 The new construction explores each component on its own, closing over **all** separator
-values `x ⊆ X`. This avoids the global-state blow-up of Alg. `quasi_det_sfsa`. File:
-`PerComponent.lean`; the write-up is Alg. `quasi_det_sfsa_components` in §3.5.
+values `x ⊆ X`. This avoids the global-state blow-up of Alg. `quasi_det_sfsa`. It matches the
+eager variant in `impl/eager_quasi_determinize.h`. File: `PerComponent.lean`; the write-up is
+Alg. `quasi_det_sfsa_components` in §3.5.
 
 | Statement | Lean |
 |---|---|
-| `U_i`: closure of `sⁱ` under `τ_i(·, σ)` and `η_i(·, x)` for all `x ⊆ X` | `FSA.compClosure` |
+| `U_i`: closure of `sⁱ` under `P ↦ η_i(τ_i(P, σ), x)` for all `σ` and `x ⊆ X`; `T_i`: results of `τ_i` on `U_i` | `FSA.compClosure`, `FSA.tauImage` |
 | Reachable states have components in `U_i` | `FSA.deltaStar_mem_compClosure` |
-| `𝒜''` (tables restricted to `U_i`) behaves like `𝒜'` and recognizes `𝓛_A` | `FSA.perComponent_deltaStar`, `perComponent_language` |
-| `|U_i| ≤ 2^{|Q_i| + |X|}` | `FSA.ncard_compClosure_le` |
+| `𝒜''` (quasi-states `U_i ∪ T_i`, `τ_i` on `U_i`, `η_i` on `T_i`) behaves like `𝒜'` and recognizes `𝓛_A` | `FSA.perComponent_deltaStar`, `perComponent_language` |
+| `|U_i|, |T_i|, |U_i ∪ T_i| ≤ 2^{|Q_i| + |X|}` | `FSA.ncard_quasiStates_le` |
 | The worklist processes each element of `U_i` exactly once | `FSA.perComponent_iterations` |
 | Cost `O((|Σ| + 2^{|X|})·|Q|·2^{|X|}·Σᵢ2^{|Q_i|})` | `FSA.perComponentCost_le` |
-| `blowup k`: `|U_i| ≤ 4`, while Alg. `quasi_det_sfsa` needs `≥ 2^k` iterations | `FSA.blowup_perComponent` |
+| `blowup k`: `|U_i ∪ T_i| ≤ 4`, while Alg. `quasi_det_sfsa` needs `≥ 2^k` iterations | `FSA.blowup_perComponent` |
 
 
 ## Modelling choices

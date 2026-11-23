@@ -23,7 +23,8 @@ namespace sqdfa {
 // automaton.
 template <int K>
 ABSL_MUST_USE_RESULT Qdfa<K> QuasiDeterminize(
-    const Nfa &nfa, const SeparatedStates<K> &separated_states) {
+    const Nfa &nfa, const SeparatedStates<K> &separated_states,
+    uint64_t *iterations = nullptr) {
   std::array<std::vector<uint32_t>, K> parts;
   for (int i = 0; i < K; i++) {
     absl::c_set_union(separated_states.components[i],
@@ -71,10 +72,14 @@ ABSL_MUST_USE_RESULT Qdfa<K> QuasiDeterminize(
   pending.push(start_states);
 
   while (!pending.empty()) {
-    visited.insert(pending.top());
-
     const std::array<CompositeState, K> state = pending.top();
     pending.pop();
+    if (!visited.insert(state).second) {
+      continue;
+    }
+    if (iterations != nullptr) {
+      ++*iterations;
+    }
 
     for (int i = 0; i < K; i++) {
       if (std::binary_search(std::begin(state[i]), std::end(state[i]),

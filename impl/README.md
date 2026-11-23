@@ -25,4 +25,9 @@ Requires Bazel 7 or later (Bzlmod); dependencies come from the Bazel Central Reg
 - Fixed a missing `#include <stack>` and a `-Wrange-loop-construct` warning.
 - Updated the tests to the current API. They now check that the DFA and both QDFA
   constructions (with 2 and 3 components) agree with the NFA on all words up to length 10.
-- `main` runs the four expressions of the thesis' comparison tables.
+- `main` runs the expressions of the thesis' comparison tables, including the larger
+  `(0|1)*.0.(0|1)^20`, and prints the number of main-loop iterations of both algorithms.
+- Both algorithms skip quasi-states that were already processed. Previously a state pushed
+  twice before being processed was processed twice; the resulting tables were the same.
+- The per-component algorithm computes the `eta` entries once per distinct result of `tau`,
+  instead of once per (quasi-state, symbol) pair. The constructed device is unchanged.

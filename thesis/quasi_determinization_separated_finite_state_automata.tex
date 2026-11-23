@@ -471,47 +471,51 @@ $\sigma \in \Sigma$ and $x \subseteq X$, as in the construction above. For $i \i
 2, \ldots, k \}$ let $U_i$ be the smallest set such that
 \begin{itemize}
   \item $s^i \in U_i$,
-  \item $\tau_i(P, \sigma) \in U_i$ for $P \in U_i$ and $\sigma \in \Sigma$,
-  \item $\eta_i(P, x) \in U_i$ for $P \in U_i$ and $x \subseteq X$.
+  \item $\eta_i(\tau_i(P, \sigma), x) \in U_i$ for $P \in U_i$, $\sigma \in \Sigma$ and
+    $x \subseteq X$,
 \end{itemize}
-Since $U_i \subseteq 2^{\mathcal{C}(Q_i)}$, we have $|U_i| \leq 2^{|Q_i| + |X|}$. Let
+and let $T_i = \{ \tau_i(P, \sigma) \mid P \in U_i, \sigma \in \Sigma \}$. Since $U_i
+\cup T_i \subseteq 2^{\mathcal{C}(Q_i)}$, we have $|U_i \cup T_i| \leq 2^{|Q_i| +
+|X|}$. Let
 \begin{equation*}
-  \mathcal{A}'' = \langle \Sigma, U, 2^X, s, F'', \tau'', \rho'', \eta'', \eta_x''
+  \mathcal{A}'' = \langle \Sigma, Q'', 2^X, s, F'', \tau'', \rho'', \eta'', \eta_x''
   \rangle
 \end{equation*}
-where $U = \langle U_1, U_2, \ldots, U_k \rangle$, and for $i \in \{ 1, 2, \ldots, k \}$
+where, for $i \in \{ 1, 2, \ldots, k \}$,
 \begin{itemize}
+  \item $Q_i'' = U_i \cup T_i$,
   \item $F_i'' = \{ P \in U_i \mid P \cap F \neq \emptyset \}$,
   \item $\tau_i''$ is the restriction of $\tau_i$ to $U_i \times \Sigma$,
-  \item $\rho_i''(t) = t \cap X$ for $t \in rng(\tau_i'')$,
-  \item $\eta_i''$ is the restriction of $\eta_i$ to $U_i \times 2^X$,
+  \item $\rho_i''(t) = t \cap X$ for $t \in T_i = rng(\tau_i'')$,
+  \item $\eta_i''$ is the restriction of $\eta_i$ to $T_i \times 2^X$,
   \item $\eta_x''(x, y) = x \cup y$ for $x, y \subseteq X$.
 \end{itemize}
-By definition of $U_i$, these functions map into $U_i$ and $2^X$ respectively, so
+By definition, $\tau_i''$ maps into $T_i$ and $\eta_i''$ maps into $U_i$, so
 $\mathcal{A}''$ is a $k$-separated quasi-deterministic finite-state automaton.
 
 \begin{lemma}\label{lem:quasidet_components}
   Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
-  finite-state automaton. Then $\delta''^*(s, w)^i = Reach(w) \cap \mathcal{C}(Q_i)$ for
-  $w \in \Sigma^*$ and $i \in \{ 1, 2, \ldots, k \}$, and $\mathcal{L}_{\mathcal{A}''} =
-  \mathcal{L}_\mathcal{A}$.
+  finite-state automaton. Then $\delta''^*(s, w)^i = Reach(w) \cap \mathcal{C}(Q_i) \in
+  U_i$ for $w \in \Sigma^*$ and $i \in \{ 1, 2, \ldots, k \}$, and
+  $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A}$.
 \end{lemma}
 
 \begin{proof}
   Let $q \in \prod_{i=1}^k U_i$ and $\sigma \in \Sigma$. Then $\tau_i''(q^i, \sigma) =
-  \tau_i(q^i, \sigma) \in U_i$, $\delta_x''(q, \sigma) = \bigcup_{i=1}^k (\tau_i(q^i,
+  \tau_i(q^i, \sigma) \in T_i$, $\delta_x''(q, \sigma) = \bigcup_{i=1}^k (\tau_i(q^i,
   \sigma) \cap X) \subseteq X$, and $\delta_i''(q, \sigma) = \eta_i(\tau_i(q^i, \sigma),
-  \delta_x''(q, \sigma)) \in U_i$. These are the formulas used in the proof of
+  \delta_x''(q, \sigma)) \in U_i$. Thus, all values are defined and $\delta''(q, \sigma)
+  \in \prod_{i=1}^k U_i$. They are given by the formulas used in the proof of
   \Cref{lem:quasidet_invariant}, and $s \in \prod_{i=1}^k U_i$. Therefore, the proof of
-  \Cref{lem:quasidet_invariant} applies verbatim to $\mathcal{A}''$, and
-  $\delta''^*(s, w)^i = Reach(w) \cap \mathcal{C}(Q_i)$. Since $F_i''$ contains exactly
-  the quasi-states in $U_i$ that intersect $F$, the proofs of
+  \Cref{lem:quasidet_invariant} applies verbatim to $\mathcal{A}''$, and $\delta''^*(s,
+  w)^i = Reach(w) \cap \mathcal{C}(Q_i) \in U_i$. Since $F_i''$ contains exactly the
+  quasi-states in $U_i$ that intersect $F$, the proofs of
   \Cref{lem:quasidet_inclusion_right,lem:quasidet_inclusion_left} also apply verbatim,
   and $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A}$.
 \end{proof}
 
 In particular, $\delta''^*(s, w) = \delta^*(s, w)$ for $w \in \Sigma^*$, so
-$\mathcal{A}''$ behaves exactly like $\mathcal{A}'$. However, $U_i$ may contain
+$\mathcal{A}''$ behaves exactly like $\mathcal{A}'$. However, $U_i \cup T_i$ may contain
 quasi-states that are not components of any reachable state, so $\mathcal{A}''$ may have
 more quasi-states than $\mathcal{A}'$. Both are bounded by $2^{|Q_i| + |X|}$ in each
 component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
@@ -524,7 +528,7 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
 
     \DontPrintSemicolon
     \KwIn{$\langle \Sigma, Q, X, S, F, \Delta \rangle$}
-    \KwOut{$\langle \Sigma, U, 2^X, s, F'', \tau'', \rho'', \eta'', \eta_x'' \rangle$}
+    \KwOut{$\langle \Sigma, Q'', 2^X, s, F'', \tau'', \rho'', \eta'', \eta_x'' \rangle$}
 
     $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;\nllabel{alg:qdc:init}
     $\eta_x'' \gets \{ \langle x, y, x \cup y \rangle \mid x, y \subseteq X
@@ -533,12 +537,14 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
     \For {$i \in \{ 1, 2, \ldots, k \}$} {
       $P_i \gets Q_i \cup X$\;\nllabel{alg:qdc:comp_begin}
       $s_i \gets S_\epsilon \cap P_i$\;
-      $U_i \gets \{ s_i \}$, $Next \gets \{ s_i \}$\;
+      $Q_i'' \gets \{ s_i \}$, $Next \gets \{ s_i \}$, $Visited \gets \emptyset$,
+      $Extended \gets \emptyset$\;
       $F_i'' \gets \emptyset$, $\tau_i'' \gets \emptyset$, $\rho_i'' \gets \emptyset$,
       $\eta_i'' \gets \emptyset$\;\nllabel{alg:qdc:comp_init_end}
 
       \While {$Next \neq \emptyset$} {
         $P \gets Extract(Next)$\;\nllabel{alg:qdc:extract}
+        $Visited \gets Visited \cup \{ P \}$\;
         \If {$P \cap F \neq \emptyset$} {
           $F_i'' \gets F_i'' \cup \{ P \}$\;\nllabel{alg:qdc:final}
         }
@@ -547,47 +553,50 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
             P_i$\;\nllabel{alg:qdc:t}
           $\tau_i'' \gets \tau_i'' \cup \{ \langle P, \sigma, t \rangle \}$\;
           $\rho_i'' \gets \rho_i'' \cup \{ \langle t, t \cap X \rangle \}$\;
-          \If {$t \not\in U_i$} {
-            $U_i \gets U_i \cup \{ t \}$, $Next \gets Next \cup \{ t
-              \}$\;\nllabel{alg:qdc:t_next}
-          }
-        }
-        \For {$x \subseteq X$} {
-          $e \gets P \cup (\hat{\Delta}_\epsilon(x) \cap P_i)$\;\nllabel{alg:qdc:e}
-          $\eta_i'' \gets \eta_i'' \cup \{ \langle P, x, e \rangle \}$\;
-          \If {$e \not\in U_i$} {
-            $U_i \gets U_i \cup \{ e \}$, $Next \gets Next \cup \{ e
-              \}$\;\nllabel{alg:qdc:e_next}
+          $Q_i'' \gets Q_i'' \cup \{ t \}$\;\nllabel{alg:qdc:t_end}
+          \If {$t \not\in Extended$} {\nllabel{alg:qdc:extended}
+            $Extended \gets Extended \cup \{ t \}$\;
+            \For {$x \subseteq X$} {
+              $e \gets t \cup (\hat{\Delta}_\epsilon(x) \cap P_i)$\;\nllabel{alg:qdc:e}
+              $\eta_i'' \gets \eta_i'' \cup \{ \langle t, x, e \rangle \}$\;
+              $Q_i'' \gets Q_i'' \cup \{ e \}$\;
+              \If {$e \not\in Visited$} {
+                $Next \gets Next \cup \{ e \}$\;\nllabel{alg:qdc:e_next}
+              }
+            }
           }
         }
       }
     }
 
-    \Return $\langle \Sigma, U, 2^X, s, F'', \tau'', \rho'', \eta'', \eta_x'' \rangle$
+    \Return $\langle \Sigma, Q'', 2^X, s, F'', \tau'', \rho'', \eta'', \eta_x'' \rangle$
   \end{algorithm}
 
   \begin{proposition}\label{prop:quasidet_components_algorithm}
     Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
     $k$-separated finite-state automaton. Then \Cref{alg:quasi_det_sfsa_components}
-    returns $\mathcal{A}''$ on input $\mathcal{A}$, and for each $i \in \{ 1, 2, \ldots,
-    k \}$ every element of $U_i$ is extracted at line~\ref{alg:qdc:extract} exactly
-    once.
+    returns $\mathcal{A}''$ on input $\mathcal{A}$. Moreover, for each $i \in \{ 1, 2,
+    \ldots, k \}$, every element of $U_i$ is extracted at line~\ref{alg:qdc:extract}
+    exactly once, no other quasi-state is extracted, and every element of $T_i$ is
+    added to $Extended$ at line~\ref{alg:qdc:extended} exactly once.
   \end{proposition}
 
   \begin{proof}
-    Let $i \in \{ 1, 2, \ldots, k \}$. A quasi-state is added to $Next$ only together
-    with its addition to $U_i$, and only if it is not yet in $U_i$. Since quasi-states
-    are never removed from $U_i$, each of them is extracted at most once. When $P$ is
-    extracted, lines~\ref{alg:qdc:t}--\ref{alg:qdc:e_next} compute $t =
+    Let $i \in \{ 1, 2, \ldots, k \}$. A quasi-state is added to $Next$ only if it is
+    not in $Visited$, and every extracted quasi-state is added to $Visited$ and never
+    removed. Therefore, no quasi-state is extracted twice. When $P$ is extracted,
+    lines~\ref{alg:qdc:t}--\ref{alg:qdc:t_end} compute $t =
     \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(P, \{ \sigma \})) = \tau_i(P, \sigma)$ for
-    every $\sigma \in \Sigma$ and $e = P \cup \hat{\Delta}_\epsilon^i(x) = \eta_i(P, x)$
-    for every $x \subseteq X$, add the corresponding table entries, and add $t$ and $e$
-    to $U_i$. Therefore, after the while loop, the computed set $U_i$ contains $s_i =
-    s^i$ and is closed under $\tau_i$ and $\eta_i$, and every element of it was
-    obtained from $s^i$ by applications of $\tau_i$ and $\eta_i$. Thus, it is the
-    smallest such set. The tables computed for component $i$ are exactly those of
-    $\mathcal{A}''$, and so is the table of $\eta_x''$ computed at
-    line~\ref{alg:qdc:etax}.
+    every $\sigma \in \Sigma$ and add the corresponding entries. If $t$ has not been
+    extended before, lines~\ref{alg:qdc:e}--\ref{alg:qdc:e_next} compute $e = t \cup
+    \hat{\Delta}_\epsilon^i(x) = \eta_i(t, x)$ for every $x \subseteq X$, add the
+    corresponding entries, and add $e$ to $Next$ unless it has already been extracted.
+    Otherwise, these entries have been added and these quasi-states have been added to
+    $Next$ before. Therefore, the extracted quasi-states are exactly those obtained from
+    $s_i = s^i$ by applications of $P \mapsto \eta_i(\tau_i(P, \sigma), x)$, that is,
+    the elements of $U_i$; the extended quasi-states are exactly the elements of $T_i$;
+    and the computed tables of component $i$ are those of $\mathcal{A}''$. So is the
+    table of $\eta_x''$ computed at line~\ref{alg:qdc:etax}.
   \end{proof}
 
   \begin{proposition}\label{prop:quasidet_components_complexity}
@@ -606,12 +615,12 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
     Lines~\ref{alg:qdc:comp_begin}--\ref{alg:qdc:comp_init_end} are executed $k$ times
     and require $\mathcal{O}(|Q|)$ time.
     By \Cref{prop:quasidet_components_algorithm}, the body of the while loop is executed
-    $|U_i| \leq 2^{|Q_i| + |X|}$ times for component $i$. Each execution requires
-    $\mathcal{O}(|Q|)$ time for lines~\ref{alg:qdc:extract}--\ref{alg:qdc:final},
-    $\mathcal{O}(|\Sigma| |Q|)$ time for lines~\ref{alg:qdc:t}--\ref{alg:qdc:t_next},
-    and $\mathcal{O}(2^{|X|} |Q|)$ time for lines~\ref{alg:qdc:e}--\ref{alg:qdc:e_next}.
-    Therefore, the total runtime complexity bound for
-    \Cref{alg:quasi_det_sfsa_components} is
+    $|U_i| \leq 2^{|Q_i| + |X|}$ times for component $i$, and each execution requires
+    $\mathcal{O}(|\Sigma| |Q|)$ time outside of
+    lines~\ref{alg:qdc:e}--\ref{alg:qdc:e_next}. These lines are executed for $|T_i|
+    \leq 2^{|Q_i| + |X|}$ quasi-states $t$ of component $i$, and require
+    $\mathcal{O}(2^{|X|} |Q|)$ time for each of them. Therefore, the total runtime
+    complexity bound for \Cref{alg:quasi_det_sfsa_components} is
     \begin{align*}
       &\mathcal{O}(2^{|X|} 2^{|X|} |Q| + k |Q| + (|\Sigma| + 2^{|X|}) |Q|
       \sum_{i=1}^k 2^{|Q_i| + |X|})\\
@@ -635,7 +644,7 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
   \end{proof}
 
   Unlike \Cref{prop:quasidet_complexity}, this bound does not depend on $D$. For the
-  finite-state automata $\mathcal{A}_k$ above, $|U_i| \leq 4$, and
+  finite-state automata $\mathcal{A}_k$ above, $|U_i \cup T_i| \leq 4$, and
   \Cref{alg:quasi_det_sfsa_components} completes in time polynomial in $k$, whereas
   \Cref{alg:quasi_det_sfsa} executes at least $2^k$ iterations. If the size of the
   separator is bounded by a constant, as for the finite-state automata constructed from

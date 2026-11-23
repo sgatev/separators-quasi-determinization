@@ -22,7 +22,8 @@ namespace sqdfa {
 
 template <int K>
 ABSL_MUST_USE_RESULT Qdfa<K> EagerQuasiDeterminize(
-    const Nfa &nfa, const SeparatedStates<K> &separated_states) {
+    const Nfa &nfa, const SeparatedStates<K> &separated_states,
+    uint64_t *iterations = nullptr) {
   std::array<std::vector<uint32_t>, K> parts;
   for (int i = 0; i < K; i++) {
     absl::c_set_union(separated_states.components[i],
@@ -34,6 +35,8 @@ ABSL_MUST_USE_RESULT Qdfa<K> EagerQuasiDeterminize(
   Pool<std::vector<uint32_t>> nfa_states_pool(
       [](std::vector<uint32_t> *states) { states->clear(); });
   absl::flat_hash_set<std::pair<CompositeState, int>> visited;
+  // Results of tau whose eta transitions have already been added.
+  absl::flat_hash_set<std::pair<CompositeState, int>> extended;
 
   Qdfa<K> qdfa;
 
@@ -99,10 +102,14 @@ ABSL_MUST_USE_RESULT Qdfa<K> EagerQuasiDeterminize(
   }
 
   while (!pending.empty()) {
-    visited.insert(pending.top());
-
     const auto [state, i] = pending.top();
     pending.pop();
+    if (!visited.insert(std::make_pair(state, i)).second) {
+      continue;
+    }
+    if (iterations != nullptr) {
+      ++*iterations;
+    }
 
     if (std::binary_search(std::begin(state), std::end(state),
                            nfa.final_state)) {
@@ -135,6 +142,9 @@ ABSL_MUST_USE_RESULT Qdfa<K> EagerQuasiDeterminize(
       qdfa.components_[i].AddRhoTransition(composite_states[i][tau],
                                            composite_separator_states[rho]);
 
+      if (!extended.insert(std::make_pair(tau, i)).second) {
+        continue;
+      }
       for (const auto& [eta_x, eta_x_idx] : composite_separator_states) {
         PoolItem<std::vector<uint32_t>> nfa_states = nfa_states_pool.Request();
         nfa_states->insert(std::begin(*nfa_states), std::begin(eta_x),

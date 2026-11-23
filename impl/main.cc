@@ -92,9 +92,11 @@ void RunQdfa(Nfa nfa, ThompsonDescription description) {
   }
 
   const Timer timer = MakeTimer("QDFA construction");
-  const Qdfa<K> qdfa = QuasiDeterminize<K>(nfa, separated_states);
+  uint64_t iterations = 0;
+  const Qdfa<K> qdfa = QuasiDeterminize<K>(nfa, separated_states, &iterations);
   std::cout << K << "-qdfa: " << qdfa.StatesCount() << " states, "
-            << qdfa.TransitionsCount() << " transitions" << std::endl;
+            << qdfa.TransitionsCount() << " transitions, " << iterations
+            << " iterations" << std::endl;
 }
 
 template <int K>
@@ -110,9 +112,12 @@ void RunEagerQdfa(Nfa nfa, ThompsonDescription description) {
   ComputeEpsilonClosure(&nfa);
 
   Timer timer = MakeTimer("eager QDFA construction");
-  const Qdfa<K> qdfa = EagerQuasiDeterminize<K>(nfa, separated_states);
-  std::cout << K << "-qdfa: " << qdfa.StatesCount() << " states, "
-            << qdfa.TransitionsCount() << " transitions" << std::endl;
+  uint64_t iterations = 0;
+  const Qdfa<K> qdfa =
+      EagerQuasiDeterminize<K>(nfa, separated_states, &iterations);
+  std::cout << K << "-eager-qdfa: " << qdfa.StatesCount() << " states, "
+            << qdfa.TransitionsCount() << " transitions, " << iterations
+            << " iterations" << std::endl;
 }
 
 Union LatinAlphabetUnion() {
@@ -162,6 +167,9 @@ void Run() {
                               Maybe(Char('8')), Maybe(Char('9'))));
   regexes.emplace_back(
       Concat(Iter(BinaryUnion()), Char('0'), Times(BinaryUnion(), 16)));
+  // A larger instance of the previous expression.
+  regexes.emplace_back(
+      Concat(Iter(BinaryUnion()), Char('0'), Times(BinaryUnion(), 20)));
 
   for (const Regex& regex : regexes) {
     const std::string expression = RegexToString(&regex);

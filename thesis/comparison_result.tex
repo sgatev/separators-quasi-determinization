@@ -1,32 +1,44 @@
 \section{Comparison results}
 
-In this section, we compare the sizes of finite-state devices constructed from
-regular expressions. For this purpose, we construct a finite-state automaton (NFA)
-using the algorithm described in \Cref{thm:thompson}, a deterministic finite-state
-automaton (DFA) using the algorithm described in \Cref{thm:rabin_scott}, a
-$2$-separated quasi-deterministic finite-state automaton (2-QDFA) and a
-$3$-separated quasi-deterministic finite-state automaton (3-QDFA) using
-\Cref{alg:quasi_det_sfsa}. The separator set used for  $k$-QDFA is constructed
-using \Cref{alg:thompson_separator}.
+In this section, we compare the finite-state devices constructed from regular
+expressions by the implementation in the directory \texttt{impl} of the accompanying
+repository. For each expression, we construct
+\begin{itemize}
+  \item a finite-state automaton (NFA) using the algorithm described in
+    \Cref{thm:thompson},
+  \item a deterministic finite-state automaton (DFA) using the algorithm described in
+    \Cref{thm:rabin_scott}, restricted to the states reachable from the initial state,
+  \item $2$-separated and $3$-separated quasi-deterministic finite-state automata
+    (2-QDFA, 3-QDFA) using \Cref{alg:quasi_det_sfsa},
+  \item $2$-separated and $3$-separated quasi-deterministic finite-state automata
+    (2-QDFA'', 3-QDFA'') using \Cref{alg:quasi_det_sfsa_components}.
+\end{itemize}
+The separator set used for the quasi-deterministic finite-state automata is
+constructed using \Cref{alg:thompson_separator}. The last expression is a larger
+instance of the previous one.
 \bigbreak
-\Cref{tbl:state_comparison} presents a comparison of the number of states of
-finite-state devices constructed from regular expressions. For NFA and DFA the number
-of states is the cardinality of the set $Q$. For $k$-QDFA the number of states is the
-sum of the cardinalities of the sets $Q_1, Q_2, \ldots, Q_k$.
+\Cref{tbl:state_comparison} presents the number of states. For NFA and DFA it is the
+cardinality of the set $Q$. For the quasi-deterministic finite-state automata it is the
+sum of the cardinalities of the sets of quasi-states of the components, including the
+empty quasi-state of each component.
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{||c c c c c||} 
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{||c c c c c c c||}
     \hline
-    Expression & NFA & DFA & 2-QDFA & 3-QDFA \\ [0.5ex] 
+    Expression & NFA & DFA & 2-QDFA & 3-QDFA & 2-QDFA'' & 3-QDFA'' \\ [0.5ex]
     \hline
-    $(a.b.c...)$ & 52 & 27 & 31 & 36 \\
+    $(a.b.c...)$ & 52 & 27 & 31 & 36 & 108 & 216 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 206 & 53 & 57 & 43 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 206 & 53 & 57 & 43 & 85 & 110 \\
     \hline
-    $(0|\epsilon).(1|\epsilon)...$ & 60 & 11 & 15 & 20 \\
+    $(0|\epsilon).(1|\epsilon)...$ & 60 & 11 & 15 & 20 & 29 & 40 \\
     \hline
-    $(0|1)*.0.(0|1)^{16}$ & 106 & 131073 & 2305 & 830 \\
+    $(0|1)*.0.(0|1)^{16}$ & 106 & 131073 & 12353 & 1488 & 24670 & 3442 \\
+    \hline
+    $(0|1)*.0.(0|1)^{20}$ & 130 & 2097153 & 49409 & 3232 & 98686 & 7282 \\
     \hline
   \end{tabular}
   \caption{Comparison of the number of states of finite-state devices constructed
@@ -34,25 +46,29 @@ sum of the cardinalities of the sets $Q_1, Q_2, \ldots, Q_k$.
   \label{tbl:state_comparison}
 \end{table}
 
-\Cref{tbl:transition_comparison} presents a comparison of the number of transitions
-of finite-state devices constructed from regular expressions. For NFA and DFA the
-number of transitions are respectively the cardinality of the sets $\Delta$ and
-$\delta$. For $k$-QDFA the number of transitions is the sum of the cardinalities of
-the sets $\tau_1, \tau_2, \ldots, \tau_k, \eta_x, \eta_1, \eta_2, \ldots, \eta_k$.
+\Cref{tbl:transition_comparison} presents the number of transitions. For NFA and DFA
+it is respectively the cardinality of the sets $\Delta$ and $\delta$. For the
+quasi-deterministic finite-state automata it is the number of entries of the functions
+$\tau_1, \ldots, \tau_k$ with nonempty values, plus the number of entries of $\eta_1,
+\ldots, \eta_k$ and $\eta_x$.
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{||c c c c c||} 
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{||c c c c c c c||}
     \hline
-    Expression & NFA & DFA & 2-QDFA & 3-QDFA \\ [0.5ex] 
+    Expression & NFA & DFA & 2-QDFA & 3-QDFA & 2-QDFA'' & 3-QDFA'' \\ [0.5ex]
     \hline
-    $(a.b.c...)$ & 51 & 728 & 837 & 973 \\
+    $(a.b.c...)$ & 51 & 26 & 57 & 63 & 278 & 588 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 257 & 1378 & 784 & 144 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 257 & 1378 & 784 & 147 & 1636 & 1177 \\
     \hline
-    $(0|\epsilon).(1|\epsilon)...$ & 69 & 55 & 50 & 50 \\
+    $(0|\epsilon).(1|\epsilon)...$ & 69 & 55 & 52 & 53 & 168 & 260 \\
     \hline
-    $(0|1)*.0.(0|1)^{16}$ & 124 & 262146 & 6903 & 2464 \\
+    $(0|1)*.0.(0|1)^{16}$ & 124 & 262146 & 24770 & 3644 & 82238 & 11506 \\
+    \hline
+    $(0|1)*.0.(0|1)^{20}$ & 152 & 4194306 & 99074 & 8060 & 328958 & 24306 \\
     \hline
   \end{tabular}
   \caption{Comparison of the number of transitions of finite-state devices
@@ -60,15 +76,44 @@ the sets $\tau_1, \tau_2, \ldots, \tau_k, \eta_x, \eta_1, \eta_2, \ldots, \eta_k
   \label{tbl:transition_comparison}
 \end{table}
 
-The numbers above measure the size of the constructed devices. They do not measure
-the time needed to construct them. By \Cref{prop:quasidet_iterations},
-\Cref{alg:quasi_det_sfsa} processes as many states as the deterministic finite-state
-automaton has. For example, for the expression $(0|1)*.0.(0|1)^{16}$ it executes one
-iteration of its main loop for each of the $131073$ states of the DFA in
-\Cref{tbl:state_comparison}, although the resulting $2$-QDFA and $3$-QDFA have only
-$2305$ and $830$ quasi-states respectively.
-\Cref{alg:quasi_det_sfsa_components} avoids this cost, since its running time depends
-only on the sizes of the components and the separator. The devices it constructs may
-contain additional quasi-states that are not components of reachable states, so their
-sizes may exceed those in the tables above, but they are subject to the same bound
-$2^{|Q_i| + |X|}$ per component.
+\Cref{alg:quasi_det_sfsa_components} produces larger devices than
+\Cref{alg:quasi_det_sfsa}, since it also tabulates quasi-states that are not
+components of reachable states. Both are subject to the bound $2^{|Q_i| + |X|}$ per
+component, and both are much smaller than the DFA for the last two expressions.
+\bigbreak
+\Cref{tbl:time_comparison} presents the construction effort. By
+\Cref{prop:quasidet_iterations}, the main loop of \Cref{alg:quasi_det_sfsa} executes
+exactly one iteration per state of the DFA. The main loop of
+\Cref{alg:quasi_det_sfsa_components} executes $\sum_{i=1}^k |U_i|$ iterations
+(\Cref{prop:quasidet_components_algorithm}). The running times were measured on a
+single run on an Apple silicon laptop and are only indicative.
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{||c c c c c||}
+    \hline
+    Expression & 2-QDFA & 3-QDFA & 2-QDFA'' & 3-QDFA'' \\ [0.5ex]
+    \hline
+    $(a.b.c...)$ & 28 & 28 & 108 & 216 \\
+    \hline
+    $(a|b|c|...).(a|b|c|...)*$ & 53 & 37 & 85 & 110 \\
+    \hline
+    $(0|\epsilon).(1|\epsilon)...$ & 12 & 12 & 29 & 40 \\
+    \hline
+    $(0|1)*.0.(0|1)^{16}$ & 131073 & 131073 & 24669 & 3441 \\
+     & 484 ms & 638 ms & 45 ms & 5 ms \\
+    \hline
+    $(0|1)*.0.(0|1)^{20}$ & 2097153 & 2097153 & 98685 & 7281 \\
+     & 9 s & 11 s & 206 ms & 12 ms \\
+    \hline
+  \end{tabular}
+  \caption{Number of iterations of the main loop and, for the larger expressions,
+    construction time.}
+  \label{tbl:time_comparison}
+\end{table}
+
+For the first three expressions both algorithms complete in a few milliseconds. For
+the last two, the number of iterations of \Cref{alg:quasi_det_sfsa} grows with the
+size of the DFA, whereas \Cref{alg:quasi_det_sfsa_components} only depends on the
+sizes of the components and the separator. For $(0|1)*.0.(0|1)^{20}$ and $k = 3$, it
+constructs the quasi-deterministic finite-state automaton about $900$ times faster.
