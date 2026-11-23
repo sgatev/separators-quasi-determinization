@@ -59,3 +59,11 @@ the sets $\tau_1, \tau_2, \ldots, \tau_k, \eta_x, \eta_1, \eta_2, \ldots, \eta_k
     constructed from a regular expression.}
   \label{tbl:transition_comparison}
 \end{table}
+
+The numbers above measure the size of the constructed devices. They do not measure
+the time needed to construct them. By \Cref{prop:quasidet_iterations},
+\Cref{alg:quasi_det_sfsa} processes as many states as the deterministic finite-state
+automaton has. For example, for the expression $(0|1)*.0.(0|1)^{16}$ it executes one
+iteration of its main loop for each of the $131073$ states of the DFA in
+\Cref{tbl:state_comparison}, although the resulting $2$-QDFA and $3$-QDFA have only
+$2305$ and $830$ quasi-states respectively.

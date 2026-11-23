@@ -28,12 +28,8 @@
 \begin{definition}
   The set $X$ is a \emph{separator in a graph} $\mathcal{G} = \langle V, E \rangle$
   if and only if there exists a partition ${\{ X, V_1, \ldots, V_n \}}_V$ for $n > 1$
-  such that
-  \begin{equation*}
-    E \cap \{ \{ v', v'' \} \mid \exists v' \in V_i \; \exists v'' \in V_j \} =
-    \emptyset
-  \end{equation*}
-  if $i \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
+  such that $\{ v', v'' \} \not\in E$ for $v' \in V_i$ and $v'' \in V_j$ if $i
+  \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
 \begin{theorem}[Lipton, Tarjan, see \cite{lipton_tarjan_theorem}]

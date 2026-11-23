@@ -13,8 +13,7 @@
     \item $\mathcal{A}_i = \langle \Sigma, Q_i, s_i, F_i, \tau_i \rangle$ is a
           deterministic finite-state automaton for $i \in \{ 1, 2, \ldots, k
             \}$,
-    \item $X$ is a separator set such that $X \subseteq Q_i$ for $i \in \{ 1, 2,
-            \ldots, k \}$,
+    \item $X$ is a finite set of separator states,
     \item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function such
           that $dom(\rho_i) = rng(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$,
     \item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state extension
@@ -95,7 +94,7 @@ F, \tau, \rho, \eta, \eta_x \rangle$.
   either trivial or non-trivial. A trivial path $\pi_q$ in $\mathcal{A}$ is
   associated with every state $q \in \prod_{i=1}^k Q_i$. The length of $\pi_q$ is $0$.
   The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$. The label of
-  $\pi_q$ is $\epsilon$. The path $\pi_q$ is succsessful if and only if $q = s$ and
+  $\pi_q$ is $\epsilon$. The path $\pi_q$ is successful if and only if $q = s$ and
   $q^i \in F_i$ for some $i \in \{ 1, 2, \ldots, k \}$. A non-trivial path $\pi$ in
   $\mathcal{A}$ is a finite sequence of state transitions
   \begin{equation*}

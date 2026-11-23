@@ -10,18 +10,30 @@
   for $k > 0$ where
   \begin{itemize}
     \item $Q, s, F, \tau, \rho, \eta, \lambda$ and $\psi$ are tuples of $k$ elements,
-    \item $\mathcal{T}_i = \langle \Sigma, \Omega, Q_i, s_i, F_i, \tau_i, \lambda_i,
-	    \psi_i \rangle$ is a subsequential finite-state transducer for $i \in \{
-	    1, 2, \ldots, k \}$,
-    \item $X$ is a separator set such that $X \subseteq Q_i$ for $i \in \{ 1, 2,
-            \ldots, k \}$,
-    \item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function such that
-	    $dom(\rho_i) = rng(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$,
+    \item $Q_i$ is a finite set of quasi-states, $s_i \in Q_i$ is an initial
+	    quasi-state and $F_i \subseteq Q_i$ is a set of final quasi-states for $i
+	    \in \{ 1, 2, \ldots, k \}$,
+    \item $\tau_i : Q_i \times \Sigma \rightarrow Q_i$ is a quasi-state transition
+	    function for $i \in \{ 1, 2, \ldots, k \}$,
+    \item $\lambda_i : Q_i \times \Sigma \rightarrow \Omega^*$ is a partial
+	    quasi-state transition output function for $i \in \{ 1, 2, \ldots, k \}$,
+    \item $\psi_i : F_i \rightarrow \Omega^*$ is a final quasi-state output function
+	    for $i \in \{ 1, 2, \ldots, k \}$,
+    \item $X$ is a set of separator states,
+    \item $\rho_i : Q_i \rightarrow X$ is a quasi-state reduction function for $i \in
+	    \{ 1, 2, \ldots, k \}$,
     \item $\eta_i : Q_i \times X \rightarrow Q_i$ is a quasi-state extension function
 	    for $i \in \{ 1, 2, \ldots, k \}$,
     \item $\eta_x : X \times X \rightarrow X$ is a separator extension function.
   \end{itemize}
 \end{definition}
+
+Unlike in a subsequential finite-state transducer, the quasi-state transition functions
+$\tau_i$ are total, while the output functions $\lambda_i$ may be undefined. An
+undefined $\lambda_i(q^i, \sigma)$ indicates that the $i$-th component has no
+transition with $\sigma$. In the construction of
+\Cref{section:quasi_subsequentialization}, $\tau_i(q^i, \sigma)$ is then the empty
+quasi-state.
 
 \begin{definition}
   A state in a $k$-separated quasi-subsequential finite-state transducer $\mathcal{T}
@@ -74,8 +86,9 @@ Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$.
   \Sigma \rightarrow \prod_{i=1}^k Q_i$ is defined as
   \begin{equation*}
     \delta(q, \sigma) = \langle \delta_1(q, \sigma), \delta_2(q, \sigma), \ldots,
-    \delta_k(q, \sigma) \rangle.
+    \delta_k(q, \sigma) \rangle
   \end{equation*}
+  if $\lambda(q, \sigma)$ is defined, and $\delta(q, \sigma)$ is undefined otherwise.
 \end{definition}
 
 \begin{definition}
@@ -86,7 +99,8 @@ Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$.
   \begin{itemize}
     \item $\delta^*(q, \epsilon) = q$ for $q \in \prod_{i=1}^k Q_i$,
     \item $\delta^*(q, w\sigma) = \delta(\delta^*(q, w), \sigma)$ for $q \in
-	    \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	    \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$, if the
+	    right-hand side is defined; otherwise $\delta^*(q, w\sigma)$ is undefined.
   \end{itemize}
 \end{definition}
 
@@ -96,8 +110,11 @@ Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$.
   transducer. The \emph{state transition output function} $\lambda : \prod_{i=1}^k Q_i
   \times \Sigma \rightarrow \Omega^*$ is defined as
   \begin{equation*}
-    \lambda(q, \sigma) = \bigwedge_{i=1}^k{\lambda_i(q^i, \sigma)}.
+    \lambda(q, \sigma) = \bigwedge \{ \lambda_i(q^i, \sigma) \mid i \in \{ 1, 2,
+    \ldots, k \}, \langle q^i, \sigma \rangle \in dom(\lambda_i) \}
   \end{equation*}
+  if $\langle q^i, \sigma \rangle \in dom(\lambda_i)$ for some $i \in \{ 1, 2, \ldots,
+  k \}$, and $\lambda(q, \sigma)$ is undefined otherwise.
 \end{definition}
 
 \begin{definition}
@@ -108,8 +125,11 @@ Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$.
   \begin{itemize}
     \item $\lambda^*(q, \epsilon) = \epsilon$ for $q \in \prod_{i=1}^k Q_i$,
     \item $\lambda^*(q, w\sigma) = \lambda^*(q, w)\lambda(\delta^*(q, w), \sigma)$
-	    for $q \in \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$.
+	    for $q \in \prod_{i=1}^k Q_i$, $w \in \Sigma^*$ and $\sigma \in \Sigma$, if
+	    the right-hand side is defined; otherwise $\lambda^*(q, w\sigma)$ is
+	    undefined.
   \end{itemize}
+  Note that $\lambda^*(q, w)$ is defined if and only if $\delta^*(q, w)$ is defined.
 \end{definition}
 
 \begin{proposition}
@@ -138,7 +158,7 @@ Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi \rangle$.
   $\mathcal{T}$ is associated with every state $q \in \prod_{i=1}^k Q_i$. The length of
   $\pi_q$ is $0$. The start state of $\pi_q$ is $q$. The end state of $\pi_q$ is $q$.
   The label of $\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is
-  succsessful if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2,
+  successful if and only if $q = s$ and $q^i \in F_i$ for some $i \in \{ 1, 2,
   \ldots, k \}$. A non-trivial path $\pi$ in $\mathcal{T}$ is a finite sequence of
   state transitions
   \begin{align*}

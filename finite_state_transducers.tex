@@ -34,7 +34,7 @@
   Q, S, F, \Delta \rangle$ is either trivial or non-trivial. A \emph{trivial path} $\pi_q$
   in $\mathcal{T}$ is associated with every state $q \in Q$. The \emph{length} of $\pi_q$ is
   $0$. The \emph{start state} of $\pi_q$ is $q$. The \emph{end state} of $\pi_q$ is $q$. The \emph{label}
-  of $\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is \emph{succsessful}
+  of $\pi_q$ is $\langle \epsilon, \epsilon \rangle$. The path $\pi_q$ is \emph{successful}
   if and only if $q \in S \cap F$. A \emph{non-trivial path} $\pi$ in $\mathcal{T}$ is a
   finite sequence of state transitions
   \begin{equation*}
@@ -71,19 +71,22 @@
   $\Delta_\epsilon : Q \times \Omega^* \rightarrow 2^{Q \times \Omega^*}$ is defined
   as
   \begin{equation*}
-    \Delta_\epsilon(q', u) = \{ \langle q'', uv \rangle \mid \exists q'' \in Q \;
-    \exists v \in \Omega^* (\langle q', \epsilon, v, q'' \rangle \in \Delta^*) \}.
+    \Delta_\epsilon(q', u) = \{ \langle q'', uv \rangle \in Q \times \Omega^* \mid
+    \langle q', \epsilon, v, q'' \rangle \in \Delta^* \}.
   \end{equation*}
 \end{definition}
 
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, S, F, \Delta \rangle$ be a
   finite-state transducer. The \emph{state transition $\epsilon$-closure function}
-  $\Delta_{f\epsilon} : Q \times \Sigma_\epsilon \rightarrow 2^{Q \times \Omega^*}$
-  is defined as
+  $\Delta_{f\epsilon} : (Q \times \Omega^*) \times \Sigma \rightarrow 2^{Q \times
+  \Omega^*}$ is defined as
   \begin{equation*}
-    \Delta_{f\epsilon} = \Delta_f \circ \hat{\Delta}_\epsilon.
+    \Delta_{f\epsilon}(\langle q', u \rangle, \sigma) = \{ \langle q'', uv \rangle \in
+    Q \times \Omega^* \mid \langle q', \sigma, v, q'' \rangle \in \Delta^* \}.
   \end{equation*}
+  That is, $\Delta_{f\epsilon}$ reads the symbol $\sigma$ together with any
+  $\epsilon$-transitions before and after it, and appends the produced output to $u$.
 \end{definition}
 
 \begin{definition}

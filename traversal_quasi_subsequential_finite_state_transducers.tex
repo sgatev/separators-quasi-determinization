@@ -9,98 +9,75 @@ output of the procedure is one of the possible translations of the input word.
   \KwIn{$\langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x, \lambda, \psi
       \rangle, \sigma_1 \sigma_2 \ldots \sigma_n$}
 
-  $o \gets \epsilon$\;
-  $q \gets s$\;
+  $o \gets \epsilon$\;\nllabel{alg:qsfst:init_begin}
+  $q \gets s$\;\nllabel{alg:qsfst:init_end}
   \For {$i \in \{ 1, 2, \ldots, n \}$} {
-    $hasTransition \gets \textbf{false}$\;
+    $L \gets \langle \rangle$\;\nllabel{alg:qsfst:l_init}
     \For {$j \in \{ 1, 2, \ldots, k \}$} {
-      \If {$\tau_j(q_j, \sigma_i)$ is \textbf{defined}} {
-	$hasTransition \gets \textbf{true}$\;
-        $l_j \gets \lambda_j(q_j, \sigma_j)$\;
-        $t_j \gets \tau_j(q_j, \sigma_i)$\;
-        $r_j \gets \rho_j(t_j)$\;
+      $t_j \gets \tau_j(q_j, \sigma_i)$\;\nllabel{alg:qsfst:t}
+      $r_j \gets \rho_j(t_j)$\;\nllabel{alg:qsfst:r}
+      \If {$\lambda_j(q_j, \sigma_i)$ is \textbf{defined}} {
+        $L \gets L \cdot \langle \lambda_j(q_j, \sigma_i) \rangle$\;\nllabel{alg:qsfst:l}
       }
     }
-    \If {$hasTransition$ is \textbf{false}} {
-      \Return \textbf{undefined}
+    \If {$L = \langle \rangle$} {
+      \Return \textbf{undefined}\;\nllabel{alg:qsfst:undefined}
     }
-    $o \gets o \cdot lcp_k(l_1, l_2, \ldots, l_k)$\;
-    $x \gets r_1$\;
+    $o \gets o \cdot lcp(L)$\;\nllabel{alg:qsfst:lcp}
+    $x \gets r_1$\;\nllabel{alg:qsfst:x_begin}
     \For {$j \in \{ 2, 3, \ldots, k \}$} {
-      \If {$r_j$ is \textbf{defined}} {
-        $x \gets \eta_x(x, r_j)$\;
-      }
+      $x \gets \eta_x(x, r_j)$\;\nllabel{alg:qsfst:x_end}
     }
     \For {$j \in \{ 1, 2, \ldots, k \}$} {
-      \If {$t_j$ is \textbf{defined}} {
-        $q_j \gets \eta_j(t_j, x)$\;
-      }
+      $q_j \gets \eta_j(t_j, x)$\;\nllabel{alg:qsfst:eta}
     }
   }
   \For {$i \in \{ 1, 2, \ldots, k \}$} {
     \If {$q_i \in F_i$} {
-      \Return $o \cdot \psi_i(q_i)$
+      \Return $o \cdot \psi_i(q_i)$\;\nllabel{alg:qsfst:final}
     }
   }
-  \Return \textbf{undefined}
+  \Return \textbf{undefined}\;
 
   \caption{Traversal of a $k$-separated quasi-subsequential finite-state transducer.}
   \label{alg:qsfst_traversal}
 \end{algorithm}
 
-\begin{proposition}
-  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
-  \lambda, \psi \rangle$ be a $k$-separa\-ted quasi-subsequential finite-state
-  transducer. Let $u = \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in
-  \mathbb{N}$ over $\Sigma$ and $m = \max \{ |v| \mid \exists v \in \Omega^* (
-  \langle u, v \rangle \in \mathcal{R}_\mathcal{T}) \}$. Then
-  \Cref{alg:qsfst_traversal} completes on input $\mathcal{T}$ and $u$ in
-  $\mathcal{O}(k(n+m))$ time.
-\end{proposition}
-
-\begin{proof}
-  Lines $1-2$ are executed once and require $\mathcal{O}(1)$ time.
-  Line $4$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
-  Lines $7-10$ are executed at most $kn$ times require $\mathcal{O}(1)$ time.
-  Line $11$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
-  Line $13$ is executed at most $n$ times and assuming $lcp_k$ requires
-  $\mathcal{O}(kl)$ time where $l = \min_{i=1}^k |l_i|$, the execution over all
-  iteration requires $\mathcal{O}(km+n)$ time in total.
-  Line $14$ is executed at most $n$ times and requires $\mathcal{O}(1)$ time.
-  Line $17$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$
-  time.
-  Line $20$ is executed at most $kn$ times and requires $\mathcal{O}(1)$ time.
-  Line $22$ is executed at most $k$ times and requires $\mathcal{O}(1)$ time.
-  Line $23$ is executed at most once and requires $\mathcal{O}(1)$ time.
-  Therefore, the total runtime complexity bound for \Cref{alg:qsfst_traversal}
-  is $\mathcal{O}(k(n+m))$.
-\end{proof}
+Here, $L$ is the list of the defined outputs $\lambda_j(q_j, \sigma_i)$, and
+$lcp(L)$ is their longest common prefix, computed by \Cref{alg:lcp} below. By
+definition, at the beginning of the $i$-th iteration of the outer loop $q =
+\delta^*(s, \sigma_1 \ldots \sigma_{i-1})$ and $o = \lambda^*(s, \sigma_1 \ldots
+\sigma_{i-1})$, and line~\ref{alg:qsfst:undefined} is reached if and only if
+$\lambda(q, \sigma_i)$ is undefined. Therefore, if \Cref{alg:qsfst_traversal} returns
+$v$, then $\langle \sigma_1 \sigma_2 \ldots \sigma_n, v \rangle \in
+\mathcal{R}_\mathcal{T}$, and if $\sigma_1 \sigma_2 \ldots \sigma_n$ has a translation,
+then \Cref{alg:qsfst_traversal} returns one.
 
 The complexity bound for \Cref{alg:qsfst_traversal} depends on the ability to compute
-longest common prefixes of $k$ words in $\mathcal{O}(km)$ time where $m$ is the
-length of the shortest of these words. \Cref{alg:lcp} represents one possible way of
-doing that.
+longest common prefixes of at most $k$ words in time proportional to $k$ times the
+length of the result. \Cref{alg:lcp} represents one possible way of doing that: it
+compares the words column by column and stops at the first mismatch.
 
 \begin{algorithm}[h]
   \DontPrintSemicolon
   \KwIn{$w_1, w_2, \ldots, w_k$}
 
-  $n \gets |w_1|$\;
+  $n \gets |w_1|$\;\nllabel{alg:lcp:min_begin}
   \For {$j \in \{ 2, 3, \ldots, k \}$} {
     \If {$|w_j| < n$} {
-      $n \gets |w_j|$
+      $n \gets |w_j|$\;\nllabel{alg:lcp:min_end}
     }
   }
 
   $p \gets \epsilon$\;
   \For {$i \in \{ 1, 2, \ldots, n \}$} {
     \For {$j \in \{ 2, 3, \ldots, k \}$} {
-      \If {$w_j[i] \neq w_{j-1}[i]$} {
+      \If {$w_j[i] \neq w_{j-1}[i]$} {\nllabel{alg:lcp:compare}
         \Return $p$
       }
     }
-  
-    $p \gets p \cdot w_1[i]$\;
+
+    $p \gets p \cdot w_1[i]$\;\nllabel{alg:lcp:append}
   }
 
   \Return $p$
@@ -109,23 +86,71 @@ doing that.
   \label{alg:lcp}
 \end{algorithm}
 
-\begin{proposition}
-  Let $w_1, w_2, \ldots, w_k$ be words over an alphabet $\Sigma$ for $k \in
-  \mathbb{N}$ such that $w_i = \sigma_1 \sigma_2 \ldots \sigma_{n_i}$ where $n_i \in
-  \mathbb{N}$ for $i \in \{ 1, 2, \ldots, k \}$. Then \Cref{alg:lcp} completes on
-  input $w_1, w_2, \ldots, w_k$ in $\mathcal{O}(kn)$ time where $n = \min_{i=1}^k
-  n_i$.
+\begin{proposition}\label{prop:lcp_complexity}
+  Let $w_1, w_2, \ldots, w_k$ be words over an alphabet $\Sigma$ for $k > 0$ and let
+  $n = \min_{i=1}^k |w_i|$. Then \Cref{alg:lcp} returns $p = \bigwedge_{i=1}^k w_i$
+  on input $w_1, w_2, \ldots, w_k$ and completes in $\mathcal{O}(k(|p| + 1))$ time.
+  In particular, it completes in $\mathcal{O}(k(n + 1))$ time.
 \end{proposition}
 
 \begin{proof}
-  Line $1$ is executed once and requires $\mathcal{O}(1)$ time.
-  Line $3$ is executed $k-1$ times and requires $\mathcal{O}(1)$ time.
-  Line $4$ is executed at most $k-1$ times and requires $\mathcal{O}(1)$ time.
-  Line $5$ is executed once and requires $\mathcal{O}(1)$ time.
-  Line $8$ is executed at most $(k-1)n$ times and requires $\mathcal{O}(1)$ time.
-  Line $10$ is executed at most $n$ times and assuming that concatenation
-  of words requires $\mathcal{O}(1)$ time, then each execution of this line requires
-  at most $\mathcal{O}(1)$ time.
-  Therefore, the total runtime complexity bound for \Cref{alg:lcp} is
-  $\mathcal{O}(kn)$.
+  At the beginning of the $i$-th iteration of the outer loop, $p = w_1[1] \ldots
+  w_1[i-1]$ is a common prefix of $w_1, w_2, \ldots, w_k$. The iteration either
+  returns $p$ because two of the words differ at position $i$, in which case $p$ is
+  the longest common prefix, or extends $p$ by the common symbol at position $i$. If
+  the loop completes, then $p = w_1[1] \ldots w_1[n]$ is a common prefix of length
+  $n$, which is the longest possible. Therefore, $p = \bigwedge_{i=1}^k w_i$.
+  Lines~\ref{alg:lcp:min_begin}--\ref{alg:lcp:min_end} require $\mathcal{O}(k)$ time.
+  The outer loop completes at most $|p|$ iterations and performs at most one further,
+  interrupted iteration. Each iteration executes line~\ref{alg:lcp:compare} at most
+  $k - 1$ times and line~\ref{alg:lcp:append} at most once, each in $\mathcal{O}(1)$
+  time, assuming that concatenation with a single symbol requires $\mathcal{O}(1)$
+  time. Therefore, the total runtime complexity bound for \Cref{alg:lcp} is
+  $\mathcal{O}(k(|p| + 1))$. Since $p$ is a prefix of every $w_i$, $|p| \leq n$.
 \end{proof}
+
+The term $\mathcal{O}(k)$ cannot be omitted: lines~\ref{alg:lcp:min_begin}--%
+\ref{alg:lcp:min_end} require $k - 1$ steps even if $n = 0$.
+
+\begin{proposition}
+  Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, s, F, \tau, \rho, \eta, \eta_x,
+  \lambda, \psi \rangle$ be a $k$-separa\-ted quasi-subsequential finite-state
+  transducer. Let $u = \sigma_1 \sigma_2 \ldots \sigma_n$ be a word of length $n \in
+  \mathbb{N}$ over $\Sigma$ such that $\langle u, v \rangle \in \mathcal{R}_\mathcal{T}$
+  for some $v \in \Omega^*$, and let $m = \max \{ |v| \mid \exists v \in \Omega^* (
+  \langle u, v \rangle \in \mathcal{R}_\mathcal{T}) \}$. Then
+  \Cref{alg:qsfst_traversal} completes on input $\mathcal{T}$ and $u$ in
+  $\mathcal{O}(k(n+m))$ time.
+\end{proposition}
+
+\begin{proof}
+  Let $p_i$ be the longest common prefix computed at line~\ref{alg:qsfst:lcp} in the
+  $i$-th iteration of the outer loop. Since $u$ has a translation,
+  line~\ref{alg:qsfst:undefined} is never reached, and \Cref{alg:qsfst_traversal}
+  returns $v = p_1 p_2 \ldots p_n \psi_j(q_j)$ for some $j \in \{ 1, 2, \ldots, k \}$.
+  Thus, $\sum_{i=1}^n |p_i| \leq |v| \leq m$.
+  Lines~\ref{alg:qsfst:init_begin}--\ref{alg:qsfst:init_end} are executed once and
+  require $\mathcal{O}(1)$ time.
+  Line~\ref{alg:qsfst:l_init} is executed $n$ times and requires $\mathcal{O}(1)$ time.
+  Lines~\ref{alg:qsfst:t}--\ref{alg:qsfst:l} are executed $kn$ times and require
+  $\mathcal{O}(1)$ time.
+  Line~\ref{alg:qsfst:lcp} is executed $n$ times. By \Cref{prop:lcp_complexity}, its
+  $i$-th execution requires $\mathcal{O}(k(|p_i| + 1))$ time, assuming that
+  concatenation of words requires time proportional to the length of the appended
+  word. Over all iterations, this is $\mathcal{O}(k(n + \sum_{i=1}^n |p_i|)) \subseteq
+  \mathcal{O}(k(n + m))$ time.
+  Lines~\ref{alg:qsfst:x_begin}--\ref{alg:qsfst:x_end} are executed at most $kn$
+  times and require $\mathcal{O}(1)$ time.
+  Line~\ref{alg:qsfst:eta} is executed $kn$ times and requires $\mathcal{O}(1)$ time.
+  The final loop is executed at most $k$ times, and line~\ref{alg:qsfst:final}
+  requires $\mathcal{O}(m)$ time.
+  Therefore, the total runtime complexity bound for \Cref{alg:qsfst_traversal} is
+  $\mathcal{O}(k(n+m))$.
+\end{proof}
+
+The early termination of \Cref{alg:lcp} is essential for this bound. A bound of
+$\mathcal{O}(k \min_j |\lambda_j(q_j, \sigma_i)|)$ per execution of
+line~\ref{alg:qsfst:lcp} would not suffice, because the shortest output of a
+component can be much longer than the common prefix that is appended to $o$. If $u$
+has no translation, the same argument bounds the running time by $\mathcal{O}(k(n +
+|o|))$, where $o$ is the output computed before the procedure returns.

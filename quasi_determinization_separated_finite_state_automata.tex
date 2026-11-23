@@ -137,6 +137,81 @@ The next set of states $R^{(n+1)}$ is defined as
 For the smallest $n > 0$ such that $\mathcal{A}'^{(n)} = \mathcal{A}'^{(n+1)}$ we
 define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
 
+By construction, $s \in R$, and whenever a state $q$ is introduced in $R_n$, the
+entries for $q$ and every $\sigma \in \Sigma$ are added at step $n + 1$ and $\delta(q,
+\sigma) \in R^{(n+1)}$. Therefore, $\delta^*(s, w)$ is defined for every $w \in
+\Sigma^*$, and $R = \{ \delta^*(s, w) \mid w \in \Sigma^* \}$.
+For $w \in \Sigma^*$ let
+\begin{equation*}
+  Reach(w) = \{ q \in Q \mid \exists s' \in S (\langle s', w, q \rangle \in \Delta^*)
+  \}
+\end{equation*}
+be the set of states reachable from an initial state of $\mathcal{A}$ by reading $w$.
+The following lemma shows that the $i$-th quasi-state of $\delta^*(s, w)$ is exactly
+the part of $Reach(w)$ that lies in the component $\mathcal{C}(Q_i)$.
+
+\begin{lemma}\label{lem:quasidet_invariant}
+  Let $\mathcal{A}' = \langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x
+  \rangle$ be the $k$-separated quasi-deterministic finite-state automaton derived
+  from the $k$-separated finite-state automaton $\mathcal{A} = \langle \Sigma, Q, X,
+  S, F, \Delta \rangle$ by applying the construction described above. Then
+  \begin{equation*}
+    \delta^*(s, w)^i = Reach(w) \cap \mathcal{C}(Q_i)
+  \end{equation*}
+  for $w \in \Sigma^*$ and $i \in \{ 1, 2, \ldots, k \}$.
+\end{lemma}
+
+\begin{proof}
+  We prove the statement by induction on the length of $w$. If $|w| = 0$, then $w =
+  \epsilon$ and
+  \begin{equation*}
+    \delta^*(s, \epsilon)^i = s^i = \hat{\Delta}_\epsilon^i(S) = \{ q \in
+    \mathcal{C}(Q_i) \mid \exists s' \in S (\langle s', \epsilon, q \rangle \in
+    \Delta^*) \} = Reach(\epsilon) \cap \mathcal{C}(Q_i).
+  \end{equation*}
+  Otherwise, $w = u\sigma$ for $u \in \Sigma^*$ and $\sigma \in \Sigma$. Let $p =
+  \delta^*(s, u)$. By the inductive hypothesis, $p^r = Reach(u) \cap
+  \mathcal{C}(Q_r)$ for $r \in \{ 1, 2, \ldots, k \}$. By construction,
+  \begin{align*}
+    \delta^*(s, w)^i = \delta_i(p, \sigma) &= \tau_i(p^i, \sigma) \cup
+    \hat{\Delta}_\epsilon^i(\delta_x(p, \sigma)),\\
+    \tau_r(p^r, \sigma) &= \hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p^r, \{ \sigma
+    \})),\\
+    \delta_x(p, \sigma) &= \bigcup_{r=1}^k (\tau_r(p^r, \sigma) \cap X).
+  \end{align*}
+  Observe that $\tau_r(p^r, \sigma) \subseteq Reach(w)$ for $r \in \{ 1, 2, \ldots, k
+  \}$. Indeed, if $q \in \tau_r(p^r, \sigma)$, then there exist $q' \in p^r \subseteq
+  Reach(u)$ and $q'' \in Q$ such that $\langle q', \sigma, q'' \rangle \in \Delta$ and
+  $\langle q'', \epsilon, q \rangle \in \Delta^*$, and thus $q \in Reach(u\sigma)$.
+
+  First, let $q \in \delta^*(s, w)^i$. Then $q \in \mathcal{C}(Q_i)$. If $q \in
+  \tau_i(p^i, \sigma)$, then $q \in Reach(w)$ by the observation above. Otherwise, $q
+  \in \hat{\Delta}_\epsilon^i(\delta_x(p, \sigma))$ and there exist $r \in \{ 1, 2,
+  \ldots, k \}$ and $x \in \tau_r(p^r, \sigma) \cap X$ such that $\langle x,
+  \epsilon, q \rangle \in \Delta^*$. Since $x \in Reach(w)$, also $q \in Reach(w)$.
+
+  Conversely, let $q \in Reach(w) \cap \mathcal{C}(Q_i)$. Consider a path with label
+  $w$ from an initial state to $q$, and the last transition on it labelled with
+  $\sigma$. There exist $s' \in S$ and $q', q'' \in Q$ such that $\langle s', u, q'
+  \rangle \in \Delta^*$, $\langle q', \sigma, q'' \rangle \in \Delta$ and $\langle
+  q'', \epsilon, q \rangle \in \Delta^*$. In particular, $q' \in Reach(u)$. If $q'
+  \in \mathcal{C}(Q_i)$, then $q' \in p^i$ and thus $q \in \tau_i(p^i, \sigma)
+  \subseteq \delta^*(s, w)^i$. Otherwise, $q' \in Q_r$ for some $r \neq i$. Since
+  $\mathcal{A}$ is $k$-separated, $q'' \not\in Q_j$ for $j \neq r$, and thus $q'' \in
+  \mathcal{C}(Q_r)$. Since $q'' \in \mathcal{C}(Q_r)$, $q \in \mathcal{C}(Q_i)$ and $r
+  \neq i$, by \Cref{prop:separator_path} there exist $w', w'' \in \Sigma^*$ and $x \in
+  X$ such that $\epsilon = w'w''$ and $\langle q'', w', x \rangle, \langle x, w'', q
+  \rangle \in \Delta^*$. Thus, $w' = w'' = \epsilon$. Since $q' \in Reach(u) \cap
+  \mathcal{C}(Q_r) = p^r$ and $x \in X \subseteq \mathcal{C}(Q_r)$, we have $x \in
+  \tau_r(p^r, \sigma) \cap X \subseteq \delta_x(p, \sigma)$. Therefore, $q \in
+  \hat{\Delta}_\epsilon^i(\delta_x(p, \sigma)) \subseteq \delta^*(s, w)^i$.
+\end{proof}
+
+In particular, $\delta^*(s, w)^i \cap X = \delta^*(s, w)^j \cap X = Reach(w) \cap X$
+for $i, j \in \{ 1, 2, \ldots, k \}$: every reachable separator state belongs to all
+quasi-states. The separator transition function $\delta_x$ keeps the components
+synchronized in this way.
+
 \begin{lemma}\label{lem:quasidet_inclusion_right}
   Let $\mathcal{A}' = \langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x
   \rangle$ be the $k$-separated quasi-deterministic finite-state automaton derived
@@ -146,98 +221,12 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
 \end{lemma}
 
 \begin{proof}
-  Let $w \in \mathcal{L}_\mathcal{A}$. There exists a successful path
-  $\pi$ with label $w$ in $\mathcal{A}$. Let the length of $\pi$ be $n-1 \in
-  \mathbb{N}$. Let $w = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
-  \Sigma_\epsilon$ for $i \in \{ 1, 2, \ldots, n-1 \}$. Let $q' \in \mathcal{C}(Q_i)$
-  and $q'' \in \mathcal{C}(Q_j)$ be respectively the start and end states of $\pi$
-  for $i, j \in \{ 1, 2, \ldots, k \}$.
-  If $\pi$ is trivial then $w = \epsilon$ and $q' = q'' \in S \cap F$. Thus,
-  $q' \in \hat{\Delta}_\epsilon^i(S) \cap F_i'$ and therefore, $w \in
-  \mathcal{L}_\mathcal{A}'$.
-  Otherwise, if $\pi$ is non-trivial, let
-  \begin{equation*}
-    \langle q_1, \sigma_1, q_2 \rangle, \langle q_2, \sigma_2, q_3 \rangle, \ldots,
-    \langle q_{n-1}, \sigma_{n-1}, q_n \rangle
-  \end{equation*}
-  be the sequence of state transitions that constitutes $\pi$.
-  Let $I = \{ i_1, i_2, \ldots, i_l \} \subseteq \{ 1, 2, \ldots, n-1 \}$ be a set of
-  indexes for $l \in \{ 1, 2, \ldots, n-1 \}$ such that $\sigma_i \in \Sigma$ if and
-  only if $i \in I$.
-  Also, let $i_h < i_j$ if and only if $h < j$ for $h, j \in \{ 1, 2, \ldots, l \}$.
-  It follows that $\sigma_{i_1} \sigma_{i_2} \ldots \sigma_{i_l} = \sigma_1 \sigma_2
-  \ldots \sigma_{n-1}$.
-  Let $p_1 = s$.
-  We have $\sigma_{i_1} \in \Sigma$ and if $i_1 > 1$, then $\sigma_j = \epsilon$ for
-  $j \in \{ 1, 2, \ldots, i_1-1 \}$.
-  Therefore,
-  \begin{equation*}
-    q_{i_1} \in \Delta_\epsilon(q_1) \subseteq \hat{\Delta}_\epsilon(S) =
-    \bigcup_{j=1}^k \hat{\Delta}_\epsilon^j(S) = \bigcup_{j=1}^k p_1^j.
-  \end{equation*}
-  Let us assume that $p_h = \delta^*(p_1, \sigma_{i_1} \sigma_{i_2} \ldots
-  \sigma_{i_{h-1}})$ and $q_{i_h} \in \bigcup_{j=1}^k{p_h^j}$ for $h \in \{ 1, 2,
-  \ldots, l \}$.
-  Let
-  \begin{equation*}
-    p_{h+1} = \delta(p_h, \sigma_{i_h}) = \langle p_{h+1}^1,
-    p_{h+1}^2, \ldots, p_{h+1}^k \rangle
-  \end{equation*}
-  where $p_{h+1}^j = \delta_j(p_h, \sigma_{i_h})$ for $j \in \{ 1, 2, \ldots, k \}$.
-  If $h < l$, then $\sigma_{i_{h+1}} \in \Sigma$ and if $i_{h+1} - i_h > 1$, then
-  $\sigma_j = \epsilon$ for $j \in \{ i_h+1, i_h+2, \ldots, i_{h+1}-1 \}$.
-  Therefore,
-  \begin{align*}
-    q_{i_{h+1}} &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_h}, \sigma_{i_h})) \subseteq
-    \bigcup_{j=1}^k \bigcup_{r=1}^k \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^r, \{
-    \sigma_{i_h} \}))\\
-    &= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^j, \{
-    \sigma_{i_h} \})) \cup \bigcup_{r=1}^k
-    \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^r, \{ \sigma_{i_h} \}))
-    \big]\\
-    &= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_h^j, \{
-    \sigma_{i_h} \})) \cup \bigcup_{r=1}^k
-    \hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
-    (p_h^r, \{\sigma_{i_h} \})) \cap X) \big]\\
-    &= \bigcup_{j=1}^k \big[ \tau_j(p_h^j, \sigma_{i_h}) \cup \bigcup_{r=1}^k
-    \hat{\Delta}_\epsilon^j(\rho_r(\tau_r(p_h^r, \sigma_{i_h})))
-    \big]\\
-    &= \bigcup_{j=1}^k \big[ \tau_j(p_h^j, \sigma_{i_h}) \cup
-    \hat{\Delta}_\epsilon^j(\delta_x(p_h, \sigma_{i_h})) \big]\\
-    &= \bigcup_{j=1}^k \eta_j(\tau_j(p_h^j, \sigma_{i_h}), \delta_x(p_h,
-    \sigma_{i_h}))
-    = \bigcup_{j=1}^k \delta_j(p_h, \sigma_{i_h})
-    = \bigcup_{j=1}^k p_{h+1}^j.
-  \end{align*}
-  Otherwise, $h = l$ and if $n - i_l > 1$, then $\sigma_j = \epsilon$ for $j \in \{
-  i_l+1, i_l+2, \ldots, n-1 \}$. Therefore,
-  \begin{align*}
-    q_n &\in \hat{\Delta}_\epsilon(\Delta_f(q_{i_l}, \sigma_{i_l})) \subseteq
-    \bigcup_{j=1}^k \bigcup_{r=1}^k \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^r, \{
-    \sigma_{i_l} \}))\\
-    &= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^j, \{
-    \sigma_{i_l} \})) \cup \bigcup_{r=1}^k
-    \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^r, \{ \sigma_{i_l} \})) \big]\\
-    &= \bigcup_{j=1}^k \big[ \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_l^j, \{
-    \sigma_{i_l} \})) \cup \bigcup_{r=1}^k
-    \hat{\Delta}_\epsilon^j(\hat{\Delta}_\epsilon^r(\hat{\Delta}_f
-    (p_l^r, \{\sigma_{i_l} \})) \cap X) \big]\\
-    &= \bigcup_{j=1}^k \big[ \tau_j(p_l^j, \sigma_{i_l}) \cup \bigcup_{r=1}^k
-    \hat{\Delta}_\epsilon^j(\rho_r(\tau_r(p_l^r, \sigma_{i_l})))
-    \big]\\
-    &= \bigcup_{j=1}^k \big[ \tau_j(p_l^j, \sigma_{i_l}) \cup
-    \hat{\Delta}_\epsilon^j(\delta_x(p_l, \sigma_{i_l})) \big]\\
-    &= \bigcup_{j=1}^k \delta_j(p_l, \sigma_{i_l})
-    = \bigcup_{j=1}^k p_{l+1}^j.
-  \end{align*}
-  It follows that $q_n \in \bigcup_{j=1}^k{p_{l+1}^j}$ and $q_n \in F$.
-  Therefore, $p_{l+1}^j \cap F \neq \emptyset$ and thus, $p_{l+1}^j \in F_j'$ for
-  some $j \in \{ 1, 2, \ldots, k \}$. Therefore,
-  \begin{align*}
-    \langle p_1, \sigma_{i_1}, p_2 \rangle, \langle p_2, \sigma_{i_2}, p_3 \rangle,
-    \ldots, \langle p_l, \sigma_{i_l}, p_{l+1} \rangle
-  \end{align*}
-  is a successful path in $\mathcal{A'}$ and thus, $w \in
+  Let $w \in \mathcal{L}_\mathcal{A}$. There exist $s' \in S$ and $f \in F$ such that
+  $\langle s', w, f \rangle \in \Delta^*$. Thus, $f \in Reach(w)$. Since $Q = X \cup
+  \bigcup_{i=1}^k Q_i$, there exists $i \in \{ 1, 2, \ldots, k \}$ such that $f \in
+  \mathcal{C}(Q_i)$. By \Cref{lem:quasidet_invariant}, $f \in \delta^*(s, w)^i$, and
+  thus $\delta^*(s, w)^i \cap F \neq \emptyset$. Since $\delta^*(s, w) \in R$, by
+  construction $\delta^*(s, w)^i \in F_i'$. Therefore, $w \in
   \mathcal{L}_{\mathcal{A}'}$.
 \end{proof}
 
@@ -250,64 +239,12 @@ define $\mathcal{A}' = \mathcal{A}'^{(n)}$ and $R = R^{(n)}$.
 \end{lemma}
 
 \begin{proof}
-  Let $w \in \mathcal{L}_{\mathcal{A}'}$. Therefore, there exists a successful path
-  $\pi$ with label $w$ in $\mathcal{A}'$. Let the length of $\pi$ be $n-1 \in
-  \mathbb{N}$. Let $w = \sigma_1 \sigma_2 \ldots \sigma_{n-1}$ where $\sigma_i \in
-  \Sigma$ for $i \in \{ 1, 2, \ldots, n-1 \}$. Let $p', p'' \in \prod_{i=1}^k Q_i'$
-  be respectively the start and end states of $\pi$.
-  If $\pi$ is trivial, then $w = \epsilon$, $p' = p'' = s$ and $s^i \in F_i'$ for
-  some $i \in \{ 1, 2, \ldots, k \}$. Therefore, $S \cap F \neq \emptyset$ and thus,
-  $w \in \mathcal{L}_\mathcal{A}$. Otherwise, if $\pi$ is non-trivial, let
-  \begin{equation*}
-    \langle p_1, \sigma_1, p_2 \rangle, \langle p_2, \sigma_2, p_3 \rangle, \ldots,
-    \langle p_{n-1}, \sigma_{n-1}, p_n \rangle
-  \end{equation*}
-  be the sequence of state transitions that constitutes $\pi$.
-  Since $\pi$ is successful, there exists $j \in \{ 1, 2, \ldots, k \}$ such that
-  $p_n^j \in  F_j'$ and thus, $p_n^j \cap F \neq \emptyset$. Therefore, there exists
-  $q_n \in p_n^j \cap F$.
-  Let us assume there exist $q_i \in Q$ and $j \in \{ 1, 2, \ldots, k \}$ such that
-  $q_i \in p_i^j$ for $i \in \{ 2, 3, \ldots, n \}$.
-  By definition, $p_{i} = \delta(p_{i-1}, \sigma_{i-1}) = \langle p_i^1, p_i^2,
-  \ldots, p_i^k \rangle$ where
-  \begin{align*}
-    p_i^j &= \delta_j(p_{i-1}, \sigma_{i-1})\\
-    &= \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_{i-1}^j, \{
-    \sigma_{i-1} \})) \cup \bigcup_{r=1}^k{\hat{\Delta}_\epsilon^j(
-    \hat{\Delta}_\epsilon^r(\hat{\Delta}_f (p_{i-1}^r, \{ \sigma_{i-1}
-    \})) \cap X)}\\
-    &= \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_{i-1}^j, \{ \sigma_{i-1}
-    \})) \cup \bigcup_{\substack{r=1\\r \neq j}}^k{
-    \hat{\Delta}_\epsilon^j(\hat{\Delta}_f(p_{i-1}^r, \{ \sigma_{i-1}
-    \}))}\\
-    &= \bigcup_{r=1}^k{\hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p_{i-1}^r,
-    \{ \sigma_{i-1} \}))}
-  \end{align*}
-  Since $q_i \in p_i^j$ implies $p_i^j \neq \emptyset$, there exists $r \in \{ 1, 2,
-  \ldots, k \}$ such that $p_{i-1}^r \neq \emptyset$.
-  Therefore, there exists $q_{i-1} \in p_{i-1}^r$.
-  Also, since $q_i \in \hat{\Delta}_\epsilon^r(\hat{\Delta}_f(p_{i-1}^r, \{
-  \sigma_{i-1} \}))$, there exist $l_{i-1} > 0$ and a sequence of states $q_{i-1, h}
-  \in Q$ for $h \in \{ 1, 2, \ldots, l_{i-1} \}$ such that $\langle q_{i-1},
-  \sigma_{i-1}, q_{i-1, 1} \rangle \in \Delta$, $\langle q_{i-1, h}, \epsilon,
-  q_{i-1, h+1} \rangle \in \Delta$ for $h \in \{ 1, 2, \ldots, l_{i-1}-1 \}$ and
-  $q_{i-1, l_{i-1}} = q_i$.
-  Specifically, in case $l_{i-1} = 1$ we have $\langle q_{i-1}, \sigma_{i-1}, q_i
-  \rangle \in \Delta$. There exist $q_1 \in Q$ and $j \in \{ 1, 2, \ldots, k \}$
-  such that $q_1 \in p_1^j$ and thus $q_1 \in S$.
-  Therefore,
-  \begin{align*}
-    &\langle q_1, \sigma_1, q_{1,1} \rangle, \langle q_{1,1}, \epsilon,
-    q_{1,2} \rangle, \ldots, \langle q_{1,l_1-1}, \epsilon, q_2 \rangle,\\
-    &\langle q_2, \sigma_2, q_{2,1} \rangle, \langle q_{2,1}, \epsilon,
-    q_{2,2} \rangle, \ldots, \langle q_{2,l_2-1}, \epsilon, q_3 \rangle,\\
-    &\ldots,\\
-    &\langle q_{n-1}, \sigma_{n-1}, q_{n-1,1} \rangle, \langle
-    q_{n-1,1}, \epsilon, q_{n-1,2} \rangle, \ldots, \langle
-    q_{n-1,l_{n-1}-1}, \epsilon, q_n \rangle
-  \end{align*}
-  is a successful path in $\mathcal{A}$ and thus, $w = \sigma_1 \sigma_2 \ldots
-  \sigma_{n-1} \in \mathcal{L}_\mathcal{A}$.
+  Let $w \in \mathcal{L}_{\mathcal{A}'}$. There exists $i \in \{ 1, 2, \ldots, k \}$
+  such that $\delta^*(s, w)^i \in F_i'$. By construction, every element of $F_i'$
+  intersects $F$. Thus, there exists $f \in \delta^*(s, w)^i \cap F$. By
+  \Cref{lem:quasidet_invariant}, $f \in Reach(w)$, and thus there exists $s' \in S$
+  such that $\langle s', w, f \rangle \in \Delta^*$. Therefore, $w \in
+  \mathcal{L}_\mathcal{A}$.
 \end{proof}
 
 \begin{theorem}
@@ -334,7 +271,7 @@ and provide a runtime complexity bound.
     \KwIn{$\langle \Sigma, Q, X, S, F, \Delta \rangle$}
     \KwOut{$\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$}
 
-    $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;
+    $S_\epsilon \gets \hat{\Delta}_\epsilon(S)$\;\nllabel{alg:qd:init_begin}
 
     \For {$i \in \{ 1, 2, \ldots, k \}$} {
       $P_i \gets Q_i \cup X$\;
@@ -345,43 +282,44 @@ and provide a runtime complexity bound.
     }
     $\eta_x \gets \emptyset$\;
 
-    $Next \gets \{ s \}$, $Visited \gets \emptyset$\;
+    $Next \gets \{ s \}$, $Visited \gets \emptyset$\;\nllabel{alg:qd:init_end}
 
     \While {$Next \neq \emptyset$} {
-      $q \gets Extract(Next)$\;
-      $Visited \gets Visited \cup \{ q \}$\;
+      $q \gets Extract(Next)$\;\nllabel{alg:qd:extract}
+      $Visited \gets Visited \cup \{ q \}$\;\nllabel{alg:qd:visited}
       \For {$i \in \{ 1, 2, \ldots, k \}$} {
         \If {$q_i \cap F \neq \emptyset$} {
-          $F_i' \gets F_i' \cup \{ q_i \}$\;
+          $F_i' \gets F_i' \cup \{ q_i \}$\;\nllabel{alg:qd:final}
         }
       }
 
       \For {$\sigma \in \Sigma$} {
         \For {$i \in \{ 1, 2, \ldots, k \}$} {
           $t_i \gets \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{
-            \sigma \})) \cap P_i$\;
+            \sigma \})) \cap P_i$\;\nllabel{alg:qd:t}
           $\tau_i \gets \tau_i \cup \{ \langle q_i, \sigma, t_i
             \rangle \}$\;
           $Q_i' \gets Q_i' \cup \{ t_i \}$\;
           $r_i \gets t_i \cap X$\;
           $\rho_i \gets \rho_i \cup \{ \langle t_i, r_i \rangle
-            \}$\;
+            \}$\;\nllabel{alg:qd:rho}
         }
 
-	$e_x \gets r_1$\;
-	\For {$i \in \{ 2, 3, \ldots, k \}$} {
-          $\eta_x \gets \eta_x \cup \{ \langle e_x, r_i, e_x \cup r_i \rangle \}$\; 
-          $e_x \gets e_x \cup r_i$\;
+        $e_x \gets r_1$\;\nllabel{alg:qd:ex_begin}
+        \For {$i \in \{ 2, 3, \ldots, k \}$} {
+          $\eta_x \gets \eta_x \cup \{ \langle e_x, r_i, e_x \cup r_i \rangle \}$\;
+          $e_x \gets e_x \cup r_i$\;\nllabel{alg:qd:ex_end}
         }
 
         \For {$i \in \{ 1, 2, \ldots, k \}$} {
-          $e_i \gets t_i \cup \hat{\Delta}_\epsilon(e_x)$\;
-          $\eta_i \gets \eta_i \cup \{ \langle t_i, e_x, e_i \rangle \}$\;    
-          $Q_i' \gets Q_i' \cup \{ e_i \}$\;
+          $e_i \gets t_i \cup (\hat{\Delta}_\epsilon(e_x) \cap P_i)$\;\nllabel{alg:qd:e}
+          $\eta_i \gets \eta_i \cup \{ \langle t_i, e_x, e_i \rangle \}$\;
+          $Q_i' \gets Q_i' \cup \{ e_i \}$\;\nllabel{alg:qd:e_end}
         }
 
-        \If {$\delta(q, \sigma) \not\in Visited$} {
-          $Next \gets Next \cup \{ \delta(q, \sigma) \}$\;
+        \If {$\langle e_1, e_2, \ldots, e_k \rangle \not\in Visited$} {
+          $Next \gets Next \cup \{ \langle e_1, e_2, \ldots, e_k \rangle
+            \}$\;\nllabel{alg:qd:next}
         }
       }
     }
@@ -389,121 +327,133 @@ and provide a runtime complexity bound.
     \Return $\langle \Sigma, Q', s, F', \tau, \rho, \eta, \eta_x \rangle$
   \end{algorithm}
 
-  \begin{proposition}\label{prop:quasidet_auto_2}
-    Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-    $k$-separated finite-state automaton. Then $Visited_x = rng(\eta_x)$ and
-    $Visited_i = dom(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$ during the execution
-    of \Cref{alg:quasi_det_sfsa} on input $\mathcal{A}$.
-  \end{proposition}
-
-  \begin{proof}
-    The first time the condition at line 10 is executed $Visited_x = rng(\eta_x)
-      = \emptyset$ and $Visited_i = dom(\tau_i)$ for $i \in \{ 1, 2, \ldots, k \}$ for
-    $i \in \{ 1, 2, \ldots, k \}$. The only time $Visited_x$ and $\eta_x$ are modified
-    inside the while loop is at lines 28 and 29. If $Visited_x = rng(\eta_x)$
-    before the execution of line 28 then $Visited_x = rng(\eta_x)$ after the
-    execution of line 29. The only time $Visited_i$ and $\tau_i$ are modified
-    inside the while loop for $i \in \{ 1, 2, \ldots, k \}$ is at lines 22 and 26.
-    If $Visited_i = dom(\tau_i)$ before the execution of line 22 then $Visited_i
-      = dom(\tau_i)$ after the execution of line 26 for $i \in \{ 1, 2, \ldots, k \}$.
-    Therefore, $Visited_x = rng(\eta_x)$ and $Visited_i = dom(\tau_i)$ for $i
-      \in \{ 1, 2, \ldots, k \}$ during the execution of \Cref{alg:quasi_det_sfsa}
-    on input $\mathcal{A}$.
-  \end{proof}
-
-  \begin{proposition}
-    Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
-    $k$-separated finite-state automaton. \Cref{alg:quasi_det_sfsa}
-    completes on input $\mathcal{A}$ in $\mathcal{O}(k |\Sigma| |Q| 2^{|X|}
-      \sum_{i=1}^k 2^{|Q_i|})$ time.
-  \end{proposition}
-
-  \begin{proof}
-    The first time the condition at line 10 is executed $Next = \{ s \}$,
-    $Visited_x = \emptyset$ and $Visited_i = \emptyset$ for $i \in
-      \{ 1, 2, \ldots, k \}$. The only time $Next$ is modified inside the while loop is
-    at line 36 where $\delta(q, \sigma)$ is added to $Next$ for $q \in Next$ and
-    $\sigma \in \Sigma$. However, this happens only if $\langle e_i, \sigma
-      \rangle \not\in Visited_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $e \not\in
-      Visited_x$. By construction, $e = \delta_x(q, \sigma)$ and $e_i =
-      \delta_i(q, \sigma) = \delta(q, \sigma)^i$. Therefore, based on
-    \Cref{prop:quasidet_auto_1,prop:quasidet_auto_2} the condition at line 10
-    is true at most $2^{|X|} + \sum_{i=1}^k 2^{|Q_i| + |X|} = 2^{|X|}(1 +
-      \sum_{i=1}^k 2^{|Q_i|})$ times. Therefore, \Cref{alg:quasi_det_sfsa}
-    completes on input $\mathcal{A}$.
-    Line $1$ is executed once and requires at most $\mathcal{O}(|Q|)$ time.
-    Lines $3-6$ are executed $k$ times and require at most $\mathcal{O}(|Q|)$
-    time per iteration. Lines $8-9$ are executed once and require
-    $\mathcal{O}(1)$ time. Line $11$ is executed at most $2^{|X|} (1 +
-      \sum_{i=1}^k 2^{|Q_i|})$ times and requires $\mathcal{O}(1)$ time per
-    iteration. Lines $13-15$ are executed at most $k 2^{|X|} (1 + \sum_{i=1}^k
-      2^{|Q_i|})$ times and require at most $\mathcal{O}(|Q|)$ time per iteration.
-    Line $18$ is executed at most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$
-    times and requires $\mathcal{O}(1)$ time per iteration. Lines $20-26$ are
-    executed at most $k |\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and
-    require at most $\mathcal{O}(|Q|)$ time per iteration. Lines $28-29$ are
-    executed at most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and
-    require $\mathcal{O}(1)$ time per iteration. Lines $31-33$ are executed at
-    most $k |\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and require at
-    most $\mathcal{O}(|Q|)$ time per iteration. Lines $35-37$ are executed at
-    most $|\Sigma| 2^{|X|} (1 + \sum_{i=1}^k 2^{|Q_i|})$ times and require
-    $\mathcal{O}(k)$ time per iteration. Therefore, the total runtime complexity
-    bound for \Cref{alg:quasi_det_sfsa} is $\mathcal{O}(k |\Sigma| |Q|
-      2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$.
-  \end{proof}
-
-  \begin{proposition}
+  \begin{proposition}\label{prop:quasidet_algorithm}
     Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
     $k$-separated finite-state automaton. Let $\mathcal{A}_c$ be the
     quasi-deterministic $k$-separated finite-state automaton produced by
-    \Cref{alg:quasi_det_sfsa} on input $\mathcal{A}$. Then
-    $\mathcal{A}_c = \mathcal{A}'$.
+    \Cref{alg:quasi_det_sfsa} on input $\mathcal{A}$. Then every state of $R$ is
+    extracted from $Next$ at line~\ref{alg:qd:extract} exactly once, no other state is
+    extracted, and $\mathcal{A}_c = \mathcal{A}'$.
   \end{proposition}
 
   \begin{proof}
-    The first time the condition at line 10 is executed $Next = \{ s \}$,
-    $\eta_x = \emptyset$, $s_i = \hat{\Delta}_\epsilon(S) \cap P_i$ and $F_i' =
-      \tau_i = \rho_i = \eta_i = \emptyset$ for $i \in \{ 1, 2, \ldots, k \}$.
-    Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle
-      = \mathcal{A}'^{(1)}$ and $Next = R_1$. Let us assume that after $n > 0$
-    iterations of the while loop $\langle \Sigma, Q', 2^X, s, F', \tau, \rho,
-      \eta, \eta_x \rangle = \mathcal{A}'^{(n+1)}$ and that $Next = R_{n+1}$. Let
-    $r = |Next|$. At each iteration of the while loop a single element $q$ is
-    extracted from $Next$ in a first-in-first-out order and is then processed
-    at lines 12 through 38. The only time $F'$ is updated within the while
-    loop is at line 14 where $q_i$ is added to $F'_i$ if $q_i \cap F \neq
-      \emptyset$ for $i \in \{ 1, 2, \ldots, k \}$. Therefore, after $n+r$ iterations of
-    the while loop $F' = F'^{(n+r+1)}$. The only time $\tau$ is updated within
-    the while loop is at line 22 where $\langle q_i, \sigma,
-      \hat{\Delta}_\epsilon(\hat{\Delta}_f(q^i, \{ \sigma \})) \cap P_i \rangle$
-    is added to $\tau_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in \Sigma$.
-    Therefore, after $n+r$ iterations of the while loop $\tau =
-      \tau^{(n+r+1)}$. The only time $\rho$ is updated within the while loop
-    is at line 24 where $\langle \tau_i(q^i, \sigma), \tau_i(q^i, \sigma) \cap X
-      \rangle$ is added to $\rho_i$ for $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in
-      \Sigma$. Therefore, after $n+r$ iterations of the while loop $\rho =
-      \rho^{(n+r+1)}$. At line 18 we have $e = \emptyset$. The value of $e$
-    is updated at line 25 where $\rho_i(\tau_i(q^i, \sigma))$ is added to it for
-    $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in \Sigma$. Therefore, at line 28 we
-    have $e = \bigcup_{i=1}^k \rho_i(\tau_i(q^i, \sigma))$ for $\sigma \in
-      \Sigma$. The only time $\eta_x$ is updated within the while loop is at line
-    28 where $\langle q, e \rangle$ is added to it. Therefore, after $n+r$
-    iterations of the while loop $\eta_x = \eta_x^{(n+r+1)}$. The only time
-    $\eta$ is updated within the while loop is at line 33 where $\langle
-      \tau_i(q^i, \sigma), \eta_x(q, \sigma), \tau_i(q^i, \sigma) \cup \eta_x(q,
-      \sigma) \rangle$ is added to it for $i \in \{ 1, 2, \ldots, k \}$ and $\sigma \in
-      \Sigma$. Therefore, after $n+r$ iterations of the while loop $\eta =
-      \eta^{(n+r+1)}$. The only times $Q'$ is updated within the while
-    loop is at line 21 where $\tau_i(q^i, \sigma)$ is added to it and at line
-    32 where $\tau_i(q^i, \sigma), \eta_x(q, \sigma)$ is added to it. Therefore,
-    after $n+r$ iterations of the while loop $Q' = Q'^{(n+r+1)}$.
-    Therefore, after $n+r$ iterations of the while loop $\langle \Sigma,
-      Q', 2^X, s, F', \tau, \rho, \eta, \eta_x \rangle = \mathcal{A}'^{(n+r+1)}$.
-    The only time $Next$ is updated within the while loop is at line 32 where
-    $\delta(q, \sigma)$ is added to it for $\sigma \in \Sigma$. Therefore, after
-    $n+r$ iterations of the while loop $\langle \Sigma, Q', 2^X, s, F', \tau,
-      \rho, \eta, \eta_x \rangle = \mathcal{A}'^{(n+r+1)}$ and $Next = R_{n+r+1}$.
-    Moreover, the condition at line 10 is false for iterations $n+1$ through
-    $n+r$. Therefore, $\langle \Sigma, Q', 2^X, s, F', \tau, \rho, \eta, \eta_x
-      \rangle = \mathcal{A}'$ at line 40.
+    A state is added to $Next$ only at line~\ref{alg:qd:next}, and only if it is not
+    in $Visited$. Every extracted state is added to $Visited$ at
+    line~\ref{alg:qd:visited} and is never removed from it. Therefore, no state is
+    extracted twice.
+
+    Consider the iteration of the while loop in which a state $q$ is extracted.
+    Lines~\ref{alg:qd:t}--\ref{alg:qd:rho} compute, for each $\sigma \in \Sigma$,
+    \begin{equation*}
+      t_i = \hat{\Delta}_\epsilon(\hat{\Delta}_f(q_i, \{ \sigma \})) \cap P_i =
+      \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(q^i, \{ \sigma \})) = \tau_i(q^i,
+      \sigma), \qquad r_i = t_i \cap X = \rho_i(t_i).
+    \end{equation*}
+    Lines~\ref{alg:qd:ex_begin}--\ref{alg:qd:ex_end} compute $e_x = \bigcup_{i=1}^k
+    r_i = \delta_x(q, \sigma)$ and add the entries of $\eta_x$ for its prefixes, and
+    lines~\ref{alg:qd:e}--\ref{alg:qd:e_end} compute $e_i = t_i \cup
+    \hat{\Delta}_\epsilon^i(e_x) = \eta_i(t_i, e_x) = \delta_i(q, \sigma)$. Thus, the
+    state considered at line~\ref{alg:qd:next} is $\delta(q, \sigma)$. Moreover, the
+    entries added to $F'$, $\tau$, $\rho$, $\eta$, $\eta_x$ and $Q'$ in this iteration
+    are exactly the entries that the construction adds for the state $q$.
+
+    Every extracted state belongs to $R$, since $s \in R$ and $\delta(q, \sigma) \in R$
+    for $q \in R$ and $\sigma \in \Sigma$. Conversely, every state $\delta^*(s, w) \in
+    R$ is extracted. We show this by induction on the length of $w$. The state $s$ is
+    extracted in the first iteration. If $\delta^*(s, u)$ is extracted, then in that
+    iteration $\delta^*(s, u\sigma) = \delta(\delta^*(s, u), \sigma)$ is either already
+    in $Visited$, in which case it has been extracted, or it is added to $Next$. Since
+    the while loop terminates only when $Next = \emptyset$, it is extracted in a later
+    iteration. The loop terminates, because each iteration extracts a different state of
+    the finite set $R$.
+
+    Therefore, \Cref{alg:quasi_det_sfsa} processes each state of $R$ exactly once and
+    adds exactly the entries that the construction adds for the states of $R$. Since
+    the construction adds entries only for states of $R$, $\mathcal{A}_c =
+    \mathcal{A}'$.
   \end{proof}
+
+  Let
+  \begin{equation*}
+    D = |\{ Reach(w) \mid w \in \Sigma^* \}|.
+  \end{equation*}
+  By definition, $D$ is the number of states reachable from the initial state of the
+  deterministic finite-state automaton obtained from $\mathcal{A}$ by the construction
+  of \Cref{thm:rabin_scott}.
+
+  \begin{proposition}\label{prop:quasidet_iterations}
+    Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+    $k$-separated finite-state automaton. Then $|R| = D \leq 2^{|Q|}$. Consequently,
+    the while loop of \Cref{alg:quasi_det_sfsa} executes exactly $D$ iterations on
+    input $\mathcal{A}$.
+  \end{proposition}
+
+  \begin{proof}
+    By \Cref{lem:quasidet_invariant}, $\delta^*(s, w) = \langle Reach(w) \cap
+    \mathcal{C}(Q_1), \ldots, Reach(w) \cap \mathcal{C}(Q_k) \rangle$ for $w \in
+    \Sigma^*$. Since $Q = \bigcup_{i=1}^k \mathcal{C}(Q_i)$, also $Reach(w) =
+    \bigcup_{i=1}^k \delta^*(s, w)^i$. Therefore, the map $\delta^*(s, w) \mapsto
+    Reach(w)$ is a well-defined bijection between $R = \{ \delta^*(s, w) \mid w \in
+    \Sigma^* \}$ and $\{ Reach(w) \mid w \in \Sigma^* \}$, and $|R| = D$. Clearly, $D
+    \leq |2^Q| = 2^{|Q|}$. By \Cref{prop:quasidet_algorithm}, the while loop executes
+    exactly $|R|$ iterations.
+  \end{proof}
+
+  \begin{proposition}\label{prop:quasidet_complexity}
+    Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a
+    $k$-separated finite-state automaton. Then \Cref{alg:quasi_det_sfsa} completes on
+    input $\mathcal{A}$ in $\mathcal{O}(k |\Sigma| |Q| D)$ time. In particular, it
+    completes in $\mathcal{O}(k |\Sigma| |Q| 2^{|Q|})$ time.
+  \end{proposition}
+
+  \begin{proof}
+    We assume that every operation on subsets of $Q$ (union, intersection, membership
+    test, set-lifted transition and $\epsilon$-closure, and table look-up) takes
+    $\mathcal{O}(|Q|)$ time. Look-ups and insertions of $k$-tuples of such subsets
+    (lines~\ref{alg:qd:extract}, \ref{alg:qd:visited} and~\ref{alg:qd:next}) take
+    $\mathcal{O}(k |Q|)$ time.
+    Lines~\ref{alg:qd:init_begin}--\ref{alg:qd:init_end} are executed once and require
+    $\mathcal{O}(k |Q|)$ time.
+    By \Cref{prop:quasidet_iterations}, the body of the while loop is executed $D$
+    times. In each execution, lines~\ref{alg:qd:extract}--\ref{alg:qd:final} require
+    $\mathcal{O}(k |Q|)$ time. For each of the $|\Sigma|$ symbols,
+    lines~\ref{alg:qd:t}--\ref{alg:qd:rho} are executed $k$ times,
+    lines~\ref{alg:qd:ex_begin}--\ref{alg:qd:ex_end} at most $k$ times,
+    lines~\ref{alg:qd:e}--\ref{alg:qd:e_end} $k$ times, and each of these executions
+    requires $\mathcal{O}(|Q|)$ time; line~\ref{alg:qd:next} and the test before it
+    require $\mathcal{O}(k |Q|)$ time. Thus, each iteration of the while loop requires
+    $\mathcal{O}(k |\Sigma| |Q|)$ time. Therefore, the total runtime complexity bound
+    for \Cref{alg:quasi_det_sfsa} is $\mathcal{O}(k |Q| + D k |\Sigma| |Q|) =
+    \mathcal{O}(k |\Sigma| |Q| D)$. By \Cref{prop:quasidet_iterations}, $D \leq
+    2^{|Q|}$.
+  \end{proof}
+
+  The size of the constructed device is bounded in terms of the components:
+  $|Q_i'| \leq 2^{|\mathcal{C}(Q_i)|} = 2^{|Q_i| + |X|}$ for $i \in \{ 1, 2, \ldots, k
+  \}$. The running time of \Cref{alg:quasi_det_sfsa}, however, depends on $D$, the
+  number of states of the deterministic finite-state automaton that the construction
+  avoids representing. This cannot be improved by a better analysis of the algorithm:
+  the while loop ranges over the states of $\mathcal{A}'$, which are $k$-tuples of
+  quasi-states, and by \Cref{prop:quasidet_iterations} there are exactly $D$ of them.
+  The following example shows that $D$ can be exponentially larger than the sizes of
+  the components.
+
+  For $k > 1$, let $\mathcal{A}_k = \langle \Sigma_k, Q, X, S, F, \Delta \rangle$ where
+  $\Sigma_k = \{ a_1, a_2, \ldots, a_k \}$, $Q = \{ x, q_1, q_2, \ldots, q_k \}$, $X =
+  \{ x \}$, $Q_i = \{ q_i \}$ for $i \in \{ 1, 2, \ldots, k \}$, $S = \{ x \}$, $F = \{
+  q_1, q_2, \ldots, q_k \}$, and
+  \begin{equation*}
+    \Delta = \{ \langle x, \epsilon, q_i \rangle \mid i \in \{ 1, 2, \ldots, k \} \}
+    \cup \{ \langle q_i, a_j, q_i \rangle \mid i, j \in \{ 1, 2, \ldots, k \}, i \neq
+    j \}.
+  \end{equation*}
+  The finite-state automaton $\mathcal{A}_k$ is $k$-separated with $|X| = |Q_i| = 1$,
+  and it recognizes the words in which some symbol of $\Sigma_k$ does not occur. For $J
+  \subseteq \{ 1, 2, \ldots, k \}$ let $w_J$ be a word in which exactly the symbols
+  $a_j$ for $j \in J$ occur. Then $q_i \in Reach(w_J)$ if and only if $i \not\in J$.
+  Thus, the sets $Reach(w_J)$ are pairwise different, and $D \geq 2^k$. On the other
+  hand, $|Q_i'| \leq 2^{|Q_i| + |X|} = 4$, so $\mathcal{A}_k'$ is described by tables
+  over at most $4k$ quasi-states. On input $\mathcal{A}_k$,
+  \Cref{alg:quasi_det_sfsa} executes at least $2^k$ iterations. In particular, its
+  running time cannot be bounded by a polynomial in $k |\Sigma_k| |Q| 2^{|X|}
+  \sum_{i=1}^k 2^{|Q_i|} = 4k^3(k+1)$.

@@ -28,9 +28,10 @@ $k$-separated.
 
 \begin{proof}
   Let $X$ be a separator in $\mathcal{G}_\mathcal{T} = \langle Q, E \rangle$. There
-  exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $E \cap \{
-  \{ q', q'' \} \mid \exists q' \in Q_i \; \exists q'' \in Q_j \} = \emptyset$ if $i
-  \neq j$ for $i, j \in \{ 1, 2, \ldots, k \}$. Thus, $\Delta \cap (Q_i \times
+  exists a partition $\{ X, Q_1, \ldots, Q_k \}_Q$ for $k > 1$ such that $\{
+  q', q'' \} \not\in E$ for $q' \in Q_i$ and $q'' \in Q_j$ if $i \neq j$ for $i, j
+  \in \{ 1, 2, \ldots, k \}$. Since every transition $\langle q', \sigma, w, q''
+  \rangle \in \Delta$ induces the edge $\{ q', q'' \} \in E$, it follows that $\Delta \cap (Q_i \times
   \Sigma_\epsilon \times \Omega^* \times Q_j) = \emptyset$ if $i \neq j$ for $i, j
   \in \{ 1, 2, \ldots, k \}$. Therefore, $X$ is a separator in $\mathcal{T}$.
 \end{proof}
@@ -83,7 +84,7 @@ $k$-separated.
   \end{align*}
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{prop:fst_separator_path}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
   $k$-separated finite-state transducer. Let $\langle q', u, v, q'' \rangle
   \in \Delta^*$ for $q' \in \mathcal{C}(Q_i)$ and $q'' \in \mathcal{C}(Q_j)$ where
@@ -137,12 +138,11 @@ $k$-separated.
 \begin{definition}
   Let $\mathcal{T} = \langle \Sigma, \Omega, Q, X, S, F, \Delta \rangle$ be a
   $k$-separated finite-state transducer. The \emph{component state transition
-  $\epsilon$-closure function} $\Delta_{f\epsilon}^i : 2^{\mathcal{C}(Q_i) \times
-  \Omega^*} \times \Sigma_\epsilon \rightarrow 2^{\mathcal{C}(Q_i) \times \Omega^*}$
-  is defined as
+  $\epsilon$-closure function} $\Delta_{f\epsilon}^i : 2^{Q \times \Omega^*} \times
+  \Sigma \rightarrow 2^{\mathcal{C}(Q_i) \times \Omega^*}$ is defined as
   \begin{equation*}
-    \Delta_{f\epsilon}^i(q', \sigma) = \{ \langle q'', w \rangle \in
-    \hat{\Delta}_{f\epsilon}(q', \sigma) \mid q'' \in \mathcal{C}(Q_i) \}
+    \Delta_{f\epsilon}^i(P, \sigma) = \{ \langle q'', w \rangle \in
+    \hat{\Delta}_{f\epsilon}(P, \sigma) \mid q'' \in \mathcal{C}(Q_i) \}
   \end{equation*}
   for $i \in \{ 1, 2, \ldots, k \}$.
 \end{definition}
