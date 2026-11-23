@@ -29,6 +29,13 @@ def reachable : Set S := {p | ∃ w : List α, p = w.foldl δ s}
 
 variable {δ s}
 
+theorem start_mem_reachable : s ∈ reachable δ s := ⟨[], rfl⟩
+
+/-- The reachable states are closed under transitions. -/
+theorem mem_reachable_step {p : S} (hp : p ∈ reachable δ s) (a : α) : δ p a ∈ reachable δ s := by
+  obtain ⟨w, rfl⟩ := hp
+  exact ⟨w ++ [a], by simp⟩
+
 theorem reachSeq_snd (n : ℕ) : (reachSeq δ s (n + 1)).2 = reachR δ s n := by
   cases n <;> rfl
 

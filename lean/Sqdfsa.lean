@@ -11,3 +11,4 @@ import Sqdfsa.QSFST
 import Sqdfsa.QuasiSubseq
 import Sqdfsa.Complexity.Traversal
 import Sqdfsa.Complexity.QuasiDet
+import Sqdfsa.PerComponent

@@ -67,3 +67,8 @@ automaton has. For example, for the expression $(0|1)*.0.(0|1)^{16}$ it executes
 iteration of its main loop for each of the $131073$ states of the DFA in
 \Cref{tbl:state_comparison}, although the resulting $2$-QDFA and $3$-QDFA have only
 $2305$ and $830$ quasi-states respectively.
+\Cref{alg:quasi_det_sfsa_components} avoids this cost, since its running time depends
+only on the sizes of the components and the separator. The devices it constructs may
+contain additional quasi-states that are not components of reachable states, so their
+sizes may exceed those in the tables above, but they are subject to the same bound
+$2^{|Q_i| + |X|}$ per component.
