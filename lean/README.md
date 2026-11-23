@@ -30,9 +30,27 @@ No `sorry`s; the main theorems depend only on `propext`, `Classical.choice`, `Qu
 | Lemmas `quasidet_equiv_left/right`, Thm. QDFA ≡ DFA | `QDFA.toDFA_accepts`, `QDFA.ofDFA_language`, `qdfa_iff_dfa` | `QDFA.lean` |
 | Alg. `qdfsa_traversal` (correctness only) | `QDFA.traverse`, `QDFA.traverse_iff` | `QDFA.lean` |
 | Construction `𝒜'` | `FSA.quasiDet` | `QuasiDet.lean` |
-| Lemma `quasidet_completion` | `FSA.R`, `FSA.R_succ_eq`, `FSA.reach_stabilizes` | `QuasiDet.lean` |
+| Lemma `quasidet_completion` | `FSA.reach_stabilizes` (via generic `reachR_succ_eq`, `reachR_stabilizes`) | `QuasiDet.lean`, `Reach.lean` |
 | Lemmas `quasidet_inclusion_right/left` | `FSA.delta_quasiDet_reach`, `FSA.deltaStar_quasiDet` | `QuasiDet.lean` |
 | Thm. quasi-determinization | `FSA.quasiDet_language`, `FSA.exists_quasiDet` (includes the `2^{|Q_i|+|X|}` state bound) | `QuasiDet.lean` |
+
+### Chapter 4 (transducers)
+
+| Thesis | Lean | File |
+|---|---|---|
+| Longest common prefix `⋀`, sequential distance, bounded variation | `lcp`, `prefix_lcp_iff`, `IsLcp`/`setLcp`, `dist`, `BoundedVariation` | `Lcp.lean` |
+| FST, `Δ*`, prop. path ⇔ `Δ*` | `FST`, `FST.Star`, `FST.star_iff_exists_path` | `FST.lean` |
+| `𝓡_T`, functional, trimmed, `𝒢_T` | `FST.relation`, `IsFunctional`, `IsTrimmed`, `graphEdges` | `FST.lean` |
+| Subsequential FST, `δ*`, `λ*`, prop. path ⇔ `δ*, λ*`, `𝓕_T` | `SST`, `SST.lamStar_append_singleton`, `SST.isPath_iff`, `SST.relation` | `SST.lean` |
+| Separator in an FST; props. graph ⇒ FST separator, small `Δ`, runs cross `X` | `FST.IsSeparator`, `isSeparator_of_graph`, `small_delta`, `exists_sep_of_star` | `FST.lean` |
+| `Δᵢ_ε`, `Δᵢ_{fε}` | `FST.compClose`, `FST.compStep` | `FST.lean` |
+| QSFST, `δ`, `λ = ⋀λᵢ`, `λ*`, `𝓡_T` | `QSFST` (extends `QDFA`), `olam`, `lamStar`, `relation` | `QSFST.lean` |
+| Prop. `λ(δ*(q,u),σ)⁻¹λ*(q,u)⁻¹v ≃ λ*(q,uσ)⁻¹v`; prop. path ⇔ `δ*, λ*` | `QSFST.lquot_lamStar`, `QSFST.isPath_iff` | `QSFST.lean` |
+| Alg. `qsfst_traversal`, Alg. `lcp` (correctness only) | `QSFST.traverse_sound`, `traverse_complete`, `prefix_lcpK_iff` | `QSFST.lean` |
+| Construction `𝒯'` (repaired, see below) | `FST.quasiSubseq` | `QuasiSubseq.lean` |
+| Lemmas `quasisubseq_inclusion_right/left` | `FST.step_some`, `FST.deltaStar_quasiSubseq`, `FST.quasiSubseq_relation_subset` | `QuasiSubseq.lean` |
+| Lemma `quasisubseq_completion` | `FST.pending_bounded`, `reachable_quasiSubseq_finite`, `quasisubseq_completion` | `QuasiSubseq.lean` |
+| Thm. quasi-subsequentialization | `FST.quasiSubseq_relation`, `FST.exists_quasiSubseq` | `QuasiSubseq.lean` |
 
 ## Modelling choices
 
@@ -44,6 +62,17 @@ No `sorry`s; the main theorems depend only on `propext`, `Classical.choice`, `Qu
   restriction to `R^{(n)}`; `reach_stabilizes` shows `R^{(n)}` stabilizes at the reachable set.
   Therefore the propositions that `τ_i^{(n)}, ρ_i^{(n)}, …` are functions with
   `dom(ρ_i) = rng(τ_i)` hold by construction and are not stated separately.
+
+Chapter 4:
+
+- QSFST: `τ_i` is total and `λ_i` returns `Option` (`none` = no transition). The global
+  `λ(q,σ)` ignores undefined components; `λ*` is `none` once a step has no transition at all.
+- `ψ_i` picks some final pair's pending output; on reachable states the choice doesn't
+  matter, because the transducer is functional.
+- Bounded variation is stated for the relation `𝓡_T`. For functional `T` this is the thesis'
+  definition. Termination (`pending_bounded`) uses only trimmedness and bounded variation, not
+  functionality.
+- The output alphabet `Ω` is assumed finite for termination (`[Finite β]`), as in the thesis.
 
 ## Note on the thesis proof of `quasidet_inclusion_right`
 
@@ -60,9 +89,53 @@ The Lean proof gets this from a stronger invariant (`deltaStar_quasiDet`):
 so each quasi-state is exactly the projection of the subset-construction state onto its
 component.
 
+## Problem in §4.4: the construction of `𝒯'` is not well-defined
+
+The thesis sets `τ_i(qⁱ, σ) = {⟨p, λ(q,σ)⁻¹w⟩ | ⟨p,w⟩ ∈ Δⁱ_{fε}(qⁱ, σ)}` with
+`λ(q,σ) = ⋀ⱼ λⱼ(qʲ, σ)`. The value depends on all components of `q`, but `τ_i` is keyed by
+`qⁱ` alone. So the proposition "`τ_i^{(n)}` are functions" is false.
+
+Counterexample (trimmed, functional, finite domain, `k = 2`, `X = {x}`):
+
+- `S = {a0, b0, x}`, `F = {af, bf, x}`.
+- `Q₁`: `a0 -c/ε→ a1`, `a0 -d/ε→ a1`, `a1 -σ/z→ a2`, `a2 -e/y→ af`.
+- `Q₂`: `b0 -c/ε→ b1 -σ/ε→ b3 -e/zy→ bf`, and `b0 -d/ε→ b2 -σ/zy→ b4 -e/ε→ bf`.
+- The relation is `{ε ↦ ε, cσe ↦ zy, dσe ↦ zy}`.
+
+After `c` and after `d`, the first component is `{⟨a1, ε⟩}` in both cases. On `σ`:
+
+- After `c`: `λ = z ∧ ε = ε`, so `τ₁ = {⟨a2, z⟩}`.
+- After `d`: `λ = z ∧ zy = z`, so `τ₁ = {⟨a2, ε⟩}`.
+
+**Repair.** The formalization keeps the thesis' QSFST definition and changes only the
+construction (`FST.quasiSubseq`):
+
+- `τ_i` doesn't normalize.
+- A separator state is a pair `⟨ℓ, E⟩`, so the global lcp `λ(q,σ)` flows through the separator
+  channel (`η_x` takes lcps and unions).
+- `η_i(T, ⟨m, E⟩) = {⟨p, m⁻¹w⟩ | ⟨p,w⟩ ∈ T ∪ Δ̂ⁱ_ε(E)}` does the normalization.
+
+As in Chapter 3, the proof rests on an exact invariant (`deltaStar_quasiSubseq`). It also
+covers the separator-sharing gap described above for `quasidet_inclusion_right`, which recurs
+in `quasisubseq_inclusion_right`.
+
+Minor issues noticed along the way:
+
+- The proof of `quasisubseq_inclusion_right` stops after the inductive step, without the final
+  `ψ` argument.
+- In `quasisubseq_completion`, the pair `⟨p'', u''⟩` with `u' ∧ u'' = ε` may lie in a different
+  component than `⟨p', u'⟩`. The argument also needs `w ≠ ε`, because the start state is not
+  normalized.
+- `τ_i^{(n+1)}` refers to `λ^{(n)}(q,σ)`, but `λ^{(n)}` does not yet contain `(q,σ)` for
+  `q ∈ R_n`.
+- Alg. `qsfst_traversal`, line 8, reads `λ_j(q_j, σ_j)`; it should be `σ_i`.
+
 ## Not yet formalized
 
-- Complexity bounds: `O(kn)` traversal, `O(k|Σ||Q|2^{|X|}Σ2^{|Q_i|})` for Alg. `quasi_det_sfsa`,
-  and the imperative correctness of Alg. `quasi_det_sfsa`.
+- Complexity bounds: `O(kn)` and `O(k(n+m))` traversals, `O(kn)` for Alg. `lcp`,
+  `O(k|Σ||Q|2^{|X|}Σ2^{|Q_i|})` for Alg. `quasi_det_sfsa`, and the imperative correctness of
+  Alg. `quasi_det_sfsa`.
 - §3.2: Thompson automata and their constant-size separators.
-- Chapter 4: separated transducers and quasi-subsequentialization.
+- Cited results: the trimming algorithm (Mihov–Schulz) and Mohri's subsequentialization theorem.
+- For transducers, the finite-state device is the restriction of `𝒯'` to its finitely many
+  reachable states. It is not built as a separate structure with finite component types.

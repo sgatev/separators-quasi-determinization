@@ -3,3 +3,9 @@ import Sqdfsa.FSA
 import Sqdfsa.Separated
 import Sqdfsa.QDFA
 import Sqdfsa.QuasiDet
+import Sqdfsa.Lcp
+import Sqdfsa.Reach
+import Sqdfsa.FST
+import Sqdfsa.SST
+import Sqdfsa.QSFST
+import Sqdfsa.QuasiSubseq

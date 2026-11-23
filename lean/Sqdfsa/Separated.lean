@@ -13,15 +13,31 @@ namespace Sqdfsa
 
 variable {α Q ι : Type*}
 
-namespace FSA
+section Partition
 
-variable (A : FSA α Q) (part : Q → Option ι)
+variable (part : Q → Option ι)
 
 /-- The separator `X`. -/
 def sepX : Set Q := {q | part q = none}
 
 /-- The component `𝒞(Q_i) = Q_i ∪ X`. -/
 def comp (i : ι) : Set Q := {q | part q = none ∨ part q = some i}
+
+variable {part}
+
+theorem sepX_subset_comp (i : ι) : sepX part ⊆ comp part i := fun _ h => Or.inl h
+
+/-- Every state lies in some component. -/
+theorem exists_mem_comp [Nonempty ι] (q : Q) : ∃ i, q ∈ comp part i := by
+  rcases h : part q with _ | i
+  · exact ⟨Classical.arbitrary ι, Or.inl h⟩
+  · exact ⟨i, Or.inr h⟩
+
+end Partition
+
+namespace FSA
+
+variable (A : FSA α Q) (part : Q → Option ι)
 
 /-- `X` is a separator in `A`: no transition joins two different blocks. -/
 def IsSeparator : Prop :=
@@ -33,8 +49,6 @@ def IsKSeparated [Fintype ι] (k : ℕ) : Prop :=
     ∀ i, {q | part q = some i}.Nonempty
 
 variable {A part}
-
-theorem sepX_subset_comp (i : ι) : sepX part ⊆ comp part i := fun _ h => Or.inl h
 
 /-- Proposition (§3.1): a separator in the graph `𝒢_A` is a separator in `A`. -/
 theorem isSeparator_of_graph (h : IsGraphSeparator A.graphEdges part) : A.IsSeparator part :=

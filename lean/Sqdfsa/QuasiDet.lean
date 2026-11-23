@@ -1,5 +1,6 @@
 import Sqdfsa.Separated
 import Sqdfsa.QDFA
+import Sqdfsa.Reach
 
 /-!
 # Quasi-determinization of separated finite-state automata (thesis §3.5)
@@ -144,100 +145,17 @@ theorem exists_quasiDet [Finite Q] (hA : A.IsSeparator part) :
       ← Nat.card_eq_fintype_card]
   exact ⟨A.quasiDet part, quasiDet_language hA, fun i => card_powerset _, card_powerset _⟩
 
-/-! ### Lemma `quasidet_completion`
+/-! ### Lemma `quasidet_completion` -/
 
-The sets `R^{(n)}` of the incremental construction: `R^{(0)} = ∅`, `R^{(1)} = {s}`, and
-`R^{(n+1)} = R^{(n)} ∪ {δ(q, σ) | q ∈ R_n, σ ∈ Σ}` with `R_n = R^{(n)} \ R^{(n-1)}`. -/
-
-variable (A part) in
-/-- `R^{(n)}` paired with `R^{(n-1)}`. -/
-def reachSeq : ℕ → Set (∀ i, QuasiState part i) × Set (∀ i, QuasiState part i)
-  | 0 => (∅, ∅)
-  | 1 => ({(A.quasiDet part).start}, ∅)
-  | n + 2 =>
-    ((reachSeq (n + 1)).1 ∪ {p | ∃ q ∈ (reachSeq (n + 1)).1 \ (reachSeq (n + 1)).2, ∃ a,
-      p = (A.quasiDet part).delta q a}, (reachSeq (n + 1)).1)
-
-variable (A part) in
-/-- `R^{(n)}`. -/
-def R (n : ℕ) : Set (∀ i, QuasiState part i) := (reachSeq A part n).1
-
-theorem reachSeq_snd (n : ℕ) : (reachSeq A part (n + 1)).2 = R A part n := by
-  cases n <;> rfl
-
-theorem R_succ_succ (n : ℕ) :
-    R A part (n + 2) = R A part (n + 1) ∪
-      {p | ∃ q ∈ R A part (n + 1) \ R A part n, ∃ a, p = (A.quasiDet part).delta q a} := by
-  show (reachSeq A part (n + 2)).1 = _
-  rw [reachSeq, reachSeq_snd]; rfl
-
-theorem R_mono : Monotone (R A part) := by
-  refine monotone_nat_of_le_succ fun n => ?_
-  rcases n with _ | n
-  · exact Set.empty_subset _
-  · rw [R_succ_succ]; exact Set.subset_union_left
-
-variable (A part) in
-/-- States reachable from `s` by words of length at most `m`. -/
-def D (m : ℕ) : Set (∀ i, QuasiState part i) :=
-  {p | ∃ w : List α, w.length ≤ m ∧ p = (A.quasiDet part).deltaStar (A.quasiDet part).start w}
-
-/-- `R^{(n+1)}` consists exactly of the states `δ*(s, w)` with `|w| ≤ n`. -/
-theorem R_succ_eq (n : ℕ) : R A part (n + 1) = D A part n := by
-  induction n using Nat.strong_induction_on with
-  | _ n ih =>
-  rcases n with _ | n
-  · ext p
-    simp only [R, reachSeq, D, Set.mem_singleton_iff, Nat.le_zero, List.length_eq_zero_iff,
-      Set.mem_ofPred_eq, exists_eq_left, QDFA.deltaStar_nil]
-  have ihn := ih n (Nat.lt_succ_self n)
-  ext p
-  rw [R_succ_succ, Set.mem_union, ihn]
-  simp only [D, Set.mem_ofPred_eq]
-  constructor
-  · rintro (⟨w, hw, rfl⟩ | ⟨q, ⟨⟨w, hw, rfl⟩, -⟩, a, rfl⟩)
-    · exact ⟨w, by omega, rfl⟩
-    · exact ⟨w ++ [a], by simp; omega, by rw [QDFA.deltaStar_append_singleton]⟩
-  · rintro ⟨w, hw, rfl⟩
-    rcases Nat.lt_or_eq_of_le hw with hw | hw
-    · exact Or.inl ⟨w, by omega, rfl⟩
-    obtain ⟨v, a, rfl⟩ : ∃ v a, w = v ++ [a] := by
-      rcases List.eq_nil_or_concat w with h | ⟨v, a, h⟩
-      · simp [h] at hw
-      · exact ⟨v, a, by simpa using h⟩
-    simp only [List.length_append, List.length_singleton] at hw
-    rw [QDFA.deltaStar_append_singleton]
-    by_cases hv : (A.quasiDet part).deltaStar (A.quasiDet part).start v ∈ R A part n
-    · -- `δ*(s, v)` was already reached by a shorter word `v'`
-      rcases n with _ | m
-      · simp [R, reachSeq] at hv
-      rw [ih m (by omega)] at hv
-      obtain ⟨v', hv', hvv⟩ := hv
-      refine Or.inl ⟨v' ++ [a], by simp; omega, ?_⟩
-      rw [hvv, QDFA.deltaStar_append_singleton]
-    · exact Or.inr ⟨_, ⟨⟨v, by omega, rfl⟩, hv⟩, a, rfl⟩
-
-/-- Lemma `quasidet_completion`: the sequence `R^{(n)}` stabilizes, and its limit is the set of
-all states reachable from `s`. -/
+/-- Lemma `quasidet_completion`: the sequence `R^{(n)}` of the incremental construction
+stabilizes, and its limit is the set of all states reachable from `s`. -/
 theorem reach_stabilizes [Finite Q] :
-    ∃ m, ∀ n ≥ m, R A part n = R A part (n + 1) ∧
-      R A part (n + 1) = {p | ∃ w, p = (A.quasiDet part).deltaStar (A.quasiDet part).start w} := by
-  obtain ⟨m, hm⟩ := WellFoundedGT.monotone_chain_condition (⟨R A part, R_mono⟩ :
-    ℕ →o Set (∀ i, QuasiState part i))
-  simp only [OrderHom.coe_mk] at hm
-  refine ⟨m, fun n hn => ⟨(hm n hn).symm.trans (hm (n + 1) (by omega)), ?_⟩⟩
-  ext p
-  constructor
-  · intro hp
-    rw [R_succ_eq] at hp
-    obtain ⟨w, -, rfl⟩ := hp
-    exact ⟨w, rfl⟩
-  · rintro ⟨w, rfl⟩
-    have hw : (A.quasiDet part).deltaStar (A.quasiDet part).start w ∈ R A part (w.length + 1) := by
-      rw [R_succ_eq]; exact ⟨w, le_rfl, rfl⟩
-    rcases le_total (w.length + 1) m with h | h
-    · exact R_mono (by omega) hw
-    · rw [← hm _ h, hm (n + 1) (by omega)] at hw; exact hw
+    ∃ m, ∀ n ≥ m,
+      reachR (A.quasiDet part).delta (A.quasiDet part).start n =
+        reachR (A.quasiDet part).delta (A.quasiDet part).start (n + 1) ∧
+      reachR (A.quasiDet part).delta (A.quasiDet part).start n =
+        reachable (A.quasiDet part).delta (A.quasiDet part).start :=
+  reachR_stabilizes (Set.toFinite _)
 
 end FSA
 

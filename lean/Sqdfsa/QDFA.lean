@@ -64,6 +64,18 @@ theorem mem_iterEtaX {β : Type*} {X : Type w} {k : ℕ} [NeZero k] (f : X → X
     | zero => exact Or.inl h
     | succ j => exact Or.inr ⟨_, ⟨j, rfl⟩, h⟩
 
+/-- `η_x^k` commutes with homomorphisms of the extension function. -/
+theorem iterEtaX_hom {X Y : Type*} {k : ℕ} [NeZero k] (f : X → X → X) (g : Y → Y → Y)
+    (h : X → Y) (hh : ∀ a b, h (f a b) = g (h a) (h b)) (r : Fin k → X) :
+    h (iterEtaX f r) = iterEtaX g (h ∘ r) := by
+  have fold : ∀ (l : List X) (a : X), h (l.foldl f a) = (l.map h).foldl g (h a) := by
+    intro l
+    induction l with
+    | nil => intro a; rfl
+    | cons y l ih => intro a; simp [List.foldl_cons, ih, hh]
+  simp only [iterEtaX, fold, List.map_tail, List.map_map]
+  rfl
+
 namespace QDFA
 
 variable {α : Type u} {k : ℕ} [NeZero k] {Q : Fin k → Type v} {X : Type w} (M : QDFA α k Q X)
