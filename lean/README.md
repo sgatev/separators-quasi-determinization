@@ -52,6 +52,23 @@ No `sorry`s; the main theorems depend only on `propext`, `Classical.choice`, `Qu
 | Lemma `quasisubseq_completion` | `FST.pending_bounded`, `reachable_quasiSubseq_finite`, `quasisubseq_completion` | `QuasiSubseq.lean` |
 | Thm. quasi-subsequentialization | `FST.quasiSubseq_relation`, `FST.exists_quasiSubseq` | `QuasiSubseq.lean` |
 
+### Complexity bounds
+
+Cost model, as in the thesis: table lookups, membership tests, symbol comparisons and
+concatenations cost 1 step; set operations in Alg. `quasi_det_sfsa` cost `|Q|`. Each algorithm is
+written as a function that returns its result together with its step count. Each is proved to
+compute its specification and to satisfy the stated bound.
+
+| Thesis | Lean | Result |
+|---|---|---|
+| Alg. `qdfsa_traversal`, `O(kn)` | `QDFA.traverseT_spec`, `traverseT_cost_le` | exactly `1 + 5kn + k` steps |
+| Alg. `lcp`, `O(kn)` with `n = min |wᵢ|` | `lcpCols_eq_lcpK`, `lcp_algorithm_cost_le` | at most `(|p| + 2)k`, where `|p| ≤ n` is the result |
+| Alg. `qsfst_traversal`, `O(k(n+m))` | `QSFST.traverseT_eq`, `traverseT_cost_le` | at most `12k(n+1) + k|v|` when it returns `v` |
+| Alg. `quasi_det_sfsa`: loop iterations | `quasiDetIterations_eq_frontier`, `quasiDetIterations_eq_subset` | **equal** to the number of states of the subset-construction DFA |
+| Alg. `quasi_det_sfsa`, `O(k|Σ||Q|2^{|X|}Σᵢ2^{|Q_i|})` | `thesis_iteration_bound_false`, `thesis_runtime_bound_false` | **false**; corrected: `quasiDetCost_le`, `O(k|Σ||Q|·D)` with `D ≤ 2^{|Q|}` |
+
+Files: `Complexity/Traversal.lean` and `Complexity/QuasiDet.lean`.
+
 ## Modelling choices
 
 - `Σ_ε = Option α`, words are `List α`, partitions `{X, Q_1, …, Q_k}` are `part : Q → Option (Fin k)`.
@@ -130,11 +147,44 @@ Minor issues noticed along the way:
   `q ∈ R_n`.
 - Alg. `qsfst_traversal`, line 8, reads `λ_j(q_j, σ_j)`; it should be `σ_i`.
 
+## Problem in §3.5: the runtime bound for Alg. `quasi_det_sfsa` is false
+
+The thesis bounds the number of while-loop iterations by `2^{|X|}(1 + Σᵢ 2^{|Q_i|})`. That
+counts entries of the per-component tables. The loop, however, iterates over *global* states:
+tuples of quasi-states, one per state in `R`. By the invariant `deltaStar_quasiDet`, global
+states correspond one-to-one to the states of the subset-construction DFA
+(`quasiDetIterations_eq_subset`). The number of those can be close to `∏ᵢ 2^{|Q_i|}`, not `Σᵢ`.
+
+Counterexample `blowup k`, with alphabet `Fin k`:
+
+- Start state `x` (the separator), with `ε`-transitions to `q_1, …, q_k`.
+- `q_j` loops on every letter except `j`.
+- So `|X| = |Q_i| = 1` and `|Σ| = k`.
+
+After reading `w`, exactly the `q_j` with `j ∉ w` are alive, so the loop runs at least `2^k`
+times (`blowup_iterations`). The thesis' iteration bound is `4k + 2`, which fails for `k ≥ 5`.
+Its runtime bound is `4k³(k+1)`, which fails for every constant factor.
+
+The space claim (table sizes `Σᵢ 2^{|Q_i|+|X|}`) is unaffected. Only the time to build the
+tables is underestimated: it is `O(k|Σ||Q|·D)`, where `D` is the size of the DFA that the
+construction is meant to avoid building.
+
+Smaller issues in the complexity proofs:
+
+- Alg. `lcp` costs `Θ(k)` even when the shortest word is empty, so its bound is `O(k(n+1))`
+  rather than `O(kn)`.
+- The `O(k(n+m))` bound for `qsfst_traversal` needs early exit in Alg. `lcp`. The per-call bound
+  `O(k·min|lⱼ|)` stated in the thesis does not sum to `O(km)`, because `min|lⱼ|` can be much
+  larger than the common prefix that ends up in the output.
+- `prop:quasidet_auto_1` is referenced but never defined, and `Visited_x`, `Visited_i` don't
+  occur in Alg. `quasi_det_sfsa`.
+
 ## Not yet formalized
 
-- Complexity bounds: `O(kn)` and `O(k(n+m))` traversals, `O(kn)` for Alg. `lcp`,
-  `O(k|Σ||Q|2^{|X|}Σ2^{|Q_i|})` for Alg. `quasi_det_sfsa`, and the imperative correctness of
-  Alg. `quasi_det_sfsa`.
+- Imperative correctness of Alg. `quasi_det_sfsa`. Its iteration count is taken from the
+  frontier sequence `R^{(n)}`, as justified by the thesis' proposition `𝒜_c = 𝒜'`. The
+  algorithms are modelled as functional programs with explicit step counts, not run on an
+  operational machine model.
 - §3.2: Thompson automata and their constant-size separators.
 - Cited results: the trimming algorithm (Mihov–Schulz) and Mohri's subsequentialization theorem.
 - For transducers, the finite-state device is the restriction of `𝒯'` to its finitely many

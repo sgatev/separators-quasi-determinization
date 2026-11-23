@@ -9,3 +9,5 @@ import Sqdfsa.FST
 import Sqdfsa.SST
 import Sqdfsa.QSFST
 import Sqdfsa.QuasiSubseq
+import Sqdfsa.Complexity.Traversal
+import Sqdfsa.Complexity.QuasiDet
