@@ -15,9 +15,12 @@ namespace sqdfa {
 namespace {
 
 template <int K>
-std::pair<Nfa, Qdfa<K>> Build(std::string_view expression) {
+std::pair<Nfa, Qdfa<K>> Build(
+    std::string_view expression,
+    SeparatorWeight weight = SeparatorWeight::kSymbols) {
   auto [nfa, description] = BuildThompsonNfa(expression);
-  const SeparatedStates<K> separated_states = SeparateStates<K>(description);
+  const SeparatedStates<K> separated_states =
+      SeparateStates<K>(description, weight);
   ComputeEpsilonClosure(&nfa);
   return {nfa, EagerQuasiDeterminize<K>(nfa, separated_states)};
 }
@@ -33,19 +36,26 @@ TEST(EagerQuasiDeterminize, Example) {
 }
 
 template <int K>
-void ExpectAgreesWithNfa() {
+void ExpectAgreesWithNfa(SeparatorWeight weight) {
   for (std::string_view expression : TestExpressions()) {
-    const auto [nfa, qdfa] = Build<K>(expression);
+    const auto [nfa, qdfa] = Build<K>(expression, weight);
     for (const std::string& word : AllWords("01", 10)) {
       EXPECT_EQ(qdfa.Match(word), nfa.Match(word))
-          << K << " components, expression " << expression << ", word \""
+          << K << " components, weight " << static_cast<int>(weight)
+          << ", expression " << expression << ", word \""
           << word << "\"";
     }
   }
 }
 
-TEST(EagerQuasiDeterminize, AgreesWithNfa2) { ExpectAgreesWithNfa<2>(); }
-TEST(EagerQuasiDeterminize, AgreesWithNfa3) { ExpectAgreesWithNfa<3>(); }
+TEST(EagerQuasiDeterminize, AgreesWithNfa2) {
+  ExpectAgreesWithNfa<2>(SeparatorWeight::kStates);
+  ExpectAgreesWithNfa<2>(SeparatorWeight::kSymbols);
+}
+TEST(EagerQuasiDeterminize, AgreesWithNfa3) {
+  ExpectAgreesWithNfa<3>(SeparatorWeight::kStates);
+  ExpectAgreesWithNfa<3>(SeparatorWeight::kSymbols);
+}
 
 }  // namespace
 }  // namespace sqdfa

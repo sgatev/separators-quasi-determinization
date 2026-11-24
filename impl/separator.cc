@@ -1,67 +1,65 @@
 #include "separator.h"
 
+#include <algorithm>
+#include <iterator>
+#include <variant>
+
 namespace sqdfa {
 
-uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
-  std::stack<uint32_t, std::vector<uint32_t>> past_datas;
-  const uint32_t states_count_limit =
-      (description.Node(node_idx).states_count * 2) / 3;
-  uint32_t inside_states_count = description.Node(node_idx).states_count - 2;
-  uint32_t outside_states_count = 0;
+namespace {
 
-  while (inside_states_count > states_count_limit) {
+// The weight of the inner states of a subautomaton (all but its start and
+// final states, which form the separator if the walk stops there).
+uint32_t InnerWeight(const ThompsonNode& node, SeparatorWeight weight) {
+  return weight == SeparatorWeight::kStates ? node.states_count - 2
+                                            : node.symbols_count;
+}
+
+uint32_t Weight(const ThompsonNode& node, SeparatorWeight weight) {
+  return weight == SeparatorWeight::kStates ? node.states_count
+                                            : node.symbols_count;
+}
+
+}  // namespace
+
+uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx,
+                      SeparatorWeight weight) {
+  std::stack<uint32_t, std::vector<uint32_t>> past_datas;
+  const uint32_t weight_limit =
+      (Weight(description.Node(node_idx), weight) * 2) / 3;
+
+  // Descend into the heavier child while the current subautomaton is too
+  // heavy. Symbol nodes have no inner states, so the walk stops there.
+  while (InnerWeight(description.Node(node_idx), weight) > weight_limit &&
+         !std::holds_alternative<SymbolNode>(description.Node(node_idx).node)) {
     past_datas.push(node_idx);
     description.Node(node_idx).Match(
         [](const SymbolNode) {},
         [&](const ConcatNode concat_data) {
-          const ThompsonNode left_data =
-              description.Node(concat_data.left_node_idx);
-          const ThompsonNode right_data =
-              description.Node(concat_data.right_node_idx);
-
-          if (left_data.states_count >= right_data.states_count) {
-            node_idx = concat_data.left_node_idx;
-            outside_states_count += right_data.states_count;
-          } else {
-            node_idx = concat_data.right_node_idx;
-            outside_states_count += left_data.states_count;
-          }
-
-          inside_states_count = description.Node(node_idx).states_count - 2;
+          node_idx = Weight(description.Node(concat_data.left_node_idx),
+                            weight) >=
+                             Weight(description.Node(
+                                        concat_data.right_node_idx),
+                                    weight)
+                         ? concat_data.left_node_idx
+                         : concat_data.right_node_idx;
         },
         [&](const UnionNode union_data) {
-          const ThompsonNode left_data =
-              description.Node(union_data.left_node_idx);
-          const ThompsonNode right_data =
-              description.Node(union_data.right_node_idx);
-
-          if (left_data.states_count >= right_data.states_count) {
-            node_idx = union_data.left_node_idx;
-            outside_states_count += right_data.states_count + 2;
-          } else {
-            node_idx = union_data.right_node_idx;
-            outside_states_count += left_data.states_count + 2;
-          }
-
-          inside_states_count = description.Node(node_idx).states_count - 2;
+          node_idx =
+              Weight(description.Node(union_data.left_node_idx), weight) >=
+                      Weight(description.Node(union_data.right_node_idx),
+                             weight)
+                  ? union_data.left_node_idx
+                  : union_data.right_node_idx;
         },
-        [&](const IterNode iter_data) {
-          node_idx = iter_data.node_idx;
-          inside_states_count = description.Node(node_idx).states_count - 2;
-          outside_states_count += 2;
-        });
+        [&](const IterNode iter_data) { node_idx = iter_data.node_idx; });
   }
 
   if (!past_datas.empty()) {
     description.Node(past_datas.top())
         .Match([](const SymbolNode) {},
                [&](const ConcatNode concat_data) {
-                 const ThompsonNode left_data =
-                     description.Node(concat_data.left_node_idx);
-                 const ThompsonNode right_data =
-                     description.Node(concat_data.right_node_idx);
-
-                 if (left_data.states_count >= right_data.states_count) {
+                 if (concat_data.left_node_idx == node_idx) {
                    description.Node(past_datas.top()).start_state =
                        description.Node(concat_data.right_node_idx).start_state;
                    description.Node(past_datas.top()).final_state =
@@ -83,12 +81,13 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
                  const ThompsonNode right_data =
                      description.Node(union_data.right_node_idx);
 
-                 if (left_data.states_count >= right_data.states_count) {
+                 if (union_data.left_node_idx == node_idx) {
                    uint32_t fake_first_idx = description.NodesCount();
                    description.AddNode({
                        .start_state = description.Node(node_idx).start_state,
                        .final_state = description.Node(node_idx).start_state,
                        .states_count = 1,
+                       .symbols_count = 0,
                        .node = SymbolNode{},
                    });
 
@@ -97,6 +96,7 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
                        .start_state = description.Node(node_idx).start_state,
                        .final_state = right_data.final_state,
                        .states_count = right_data.states_count + 1,
+                       .symbols_count = right_data.symbols_count,
                        .node =
                            ConcatNode{
                                .left_node_idx = fake_first_idx,
@@ -109,6 +109,7 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
                        .start_state = description.Node(node_idx).final_state,
                        .final_state = description.Node(node_idx).final_state,
                        .states_count = 1,
+                       .symbols_count = 0,
                        .node = SymbolNode{},
                    });
 
@@ -122,6 +123,7 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
                        .start_state = description.Node(node_idx).start_state,
                        .final_state = description.Node(node_idx).start_state,
                        .states_count = 1,
+                       .symbols_count = 0,
                        .node = SymbolNode{},
                    });
 
@@ -130,6 +132,7 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
                        .start_state = description.Node(node_idx).start_state,
                        .final_state = left_data.final_state,
                        .states_count = left_data.states_count + 1,
+                       .symbols_count = left_data.symbols_count,
                        .node =
                            ConcatNode{
                                .left_node_idx = fake_first_idx,
@@ -142,6 +145,7 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
                        .start_state = description.Node(node_idx).final_state,
                        .final_state = description.Node(node_idx).final_state,
                        .states_count = 1,
+                       .symbols_count = 0,
                        .node = SymbolNode{},
                    });
 
@@ -157,11 +161,53 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx) {
     do {
       description.Node(past_datas.top()).states_count -=
           description.Node(node_idx).states_count;
+      description.Node(past_datas.top()).symbols_count -=
+          description.Node(node_idx).symbols_count;
       past_datas.pop();
     } while (!past_datas.empty());
   }
 
   return node_idx;
+}
+
+namespace {
+
+void InsertEssential(const ThompsonDescription& description,
+                     const ThompsonNode& node, std::vector<uint32_t>* states) {
+  node.Match(
+      [&](const SymbolNode) {
+        if (node.symbols_count > 0) {
+          states->push_back(node.final_state);
+        }
+      },
+      [&](const ConcatNode& concat_data) {
+        InsertEssential(description,
+                        description.Node(concat_data.left_node_idx), states);
+        InsertEssential(description,
+                        description.Node(concat_data.right_node_idx), states);
+      },
+      [&](const UnionNode& union_data) {
+        InsertEssential(description,
+                        description.Node(union_data.left_node_idx), states);
+        InsertEssential(description,
+                        description.Node(union_data.right_node_idx), states);
+      },
+      [&](const IterNode& iter_data) {
+        InsertEssential(description, description.Node(iter_data.node_idx),
+                        states);
+      });
+}
+
+}  // namespace
+
+std::vector<uint32_t> EssentialStates(const ThompsonDescription& description) {
+  const ThompsonNode& root = description.Node(description.NodeIdx());
+  std::vector<uint32_t> states = {root.start_state};
+  InsertEssential(description, root, &states);
+  std::sort(std::begin(states), std::end(states));
+  states.erase(std::unique(std::begin(states), std::end(states)),
+               std::end(states));
+  return states;
 }
 
 void Insert(const ThompsonDescription& description, const ThompsonNode& node,

@@ -646,34 +646,114 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
   Unlike \Cref{prop:quasidet_complexity}, this bound does not depend on $D$. For the
   finite-state automata $\mathcal{A}_k$ above, $|U_i \cup T_i| \leq 4$, and
   \Cref{alg:quasi_det_sfsa_components} completes in time polynomial in $k$, whereas
-  \Cref{alg:quasi_det_sfsa} executes at least $2^k$ iterations. If the size of the
-  separator is bounded by a constant, the bound becomes $\mathcal{O}(|\Sigma| |Q|
-  \sum_{i=1}^k 2^{|Q_i|})$. This is the case for finite-state automata constructed from
-  regular expressions.
+  \Cref{alg:quasi_det_sfsa} executes at least $2^k$ iterations.
+
+The bound $2^{|Q_i| + |X|}$ counts all subsets of $\mathcal{C}(Q_i)$. The quasi-states
+that the constructions produce are $\epsilon$-closed, and by
+\Cref{prop:essential_closure} they are determined by their essential states in $Q_i$
+and their separator states. Let $m_i = |Q_i \cap Q^\Sigma|$ for $i \in \{ 1, 2, \ldots,
+k \}$.
+
+\begin{lemma}\label{lem:quasidet_essential}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. Then every element of $U_i \cup T_i$ is of the form
+  $\hat{\Delta}_\epsilon^i(B \cup E)$ for $B \subseteq Q_i \cap Q^\Sigma$ and $E
+  \subseteq X$. Consequently, $|U_i \cup T_i| \leq 2^{m_i + |X|}$, and the $i$-th
+  components of both $\mathcal{A}'$ and $\mathcal{A}''$ have at most $2^{m_i + |X|}$
+  quasi-states, for $i \in \{ 1, 2, \ldots, k \}$.
+\end{lemma}
+
+\begin{proof}
+  Let $i \in \{ 1, 2, \ldots, k \}$. We show that every element of $U_i \cup T_i$ is of
+  the form $\hat{\Delta}_\epsilon^i(Z)$ for some $Z \subseteq Q^\Sigma \cup X$. Then the
+  first claim follows from \Cref{prop:essential_closure}. First, $s^i =
+  \hat{\Delta}_\epsilon^i(S)$ and $S \subseteq Q^\Sigma$. Let $P \subseteq
+  \mathcal{C}(Q_i)$, $\sigma \in \Sigma$ and $x \subseteq X$. Every element of
+  $\hat{\Delta}_f(P, \{ \sigma \})$ is the target of a transition labelled with
+  $\sigma$, so $\hat{\Delta}_f(P, \{ \sigma \}) \subseteq Q^\Sigma$. Thus, $\tau_i(P,
+  \sigma) = \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(P, \{ \sigma \}))$ is of the required
+  form, and so is
+  \begin{equation*}
+    \eta_i(\tau_i(P, \sigma), x) = \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(P, \{ \sigma
+    \})) \cup \hat{\Delta}_\epsilon^i(x) = \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(P, \{
+    \sigma \}) \cup x).
+  \end{equation*}
+  Every element of $U_i$ is $s^i$ or of the second form, and every element of $T_i$ is
+  of the first form.
+
+  There are $2^{m_i}$ subsets $B$ and $2^{|X|}$ subsets $E$, so $|U_i \cup T_i| \leq
+  2^{m_i + |X|}$. The quasi-states of $\mathcal{A}''$ are $U_i \cup T_i$. The
+  quasi-states of $\mathcal{A}'$ are $s^i$ and the values of $\tau_i$ and $\eta_i$ on
+  components of reachable states. By \Cref{lem:quasidet_components}, these components
+  lie in $U_i$, so the quasi-states of $\mathcal{A}'$ also lie in $U_i \cup T_i$.
+\end{proof}
+
+The same argument bounds the deterministic finite-state automaton.
+
+\begin{proposition}\label{prop:essential_dfa}
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton. Then $D \leq 2^{|Q^\Sigma|}$.
+\end{proposition}
+
+\begin{proof}
+  $Reach(\epsilon) = \hat{\Delta}_\epsilon(S)$ and $Reach(u\sigma) =
+  \hat{\Delta}_\epsilon(\hat{\Delta}_f(Reach(u), \{ \sigma \}))$ for $u \in \Sigma^*$
+  and $\sigma \in \Sigma$. Thus, every set $Reach(w)$ is of the form
+  $\hat{\Delta}_\epsilon(Z)$ for some $Z \subseteq Q^\Sigma$, and there are at most
+  $2^{|Q^\Sigma|}$ such sets.
+\end{proof}
+
+\begin{theorem}\label{thm:quasidet_components_essential}
+  For every $k$-separated finite-state automaton $\mathcal{A} = \langle \Sigma, Q, X,
+  S, F, \Delta \rangle$, \Cref{alg:quasi_det_sfsa_components} constructs a
+  $k$-separated quasi-deterministic finite-state automaton $\mathcal{A}''$ with
+  $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A}$ and at most $2^{m_i + |X|}$
+  quasi-states in its $i$-th component in $\mathcal{O}((|\Sigma| + 2^{|X|}) |Q|
+  2^{|X|} \sum_{i=1}^k 2^{m_i})$ time.
+\end{theorem}
+
+\begin{proof}
+  The proof of \Cref{prop:quasidet_components_complexity} applies, with the bounds
+  $|U_i|, |T_i| \leq 2^{m_i + |X|}$ of \Cref{lem:quasidet_essential} in place of
+  $2^{|Q_i| + |X|}$. The remaining claims follow from \Cref{thm:quasidet_components}
+  and \Cref{lem:quasidet_essential}.
+\end{proof}
+
+Since $m_i \leq |Q_i|$, \Cref{thm:quasidet_components_essential} refines
+\Cref{thm:quasidet_components}. The difference matters when many states are entered
+only by $\epsilon$-transitions, as in finite-state automata constructed from regular
+expressions. If the size of the separator is bounded by a constant, the bound becomes
+$\mathcal{O}(|\Sigma| |Q| \sum_{i=1}^k 2^{m_i})$.
 
   \begin{corollary}\label{cor:quasidet_regex}
     Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$ and let
     $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be the finite-state
     automaton constructed from $\mathcal{E}$ by the algorithm described in
-    \Cref{thm:thompson}. Then a $2$-separated quasi-deterministic finite-state automaton
+    \Cref{thm:thompson}, and let $m$ be the number of occurrences of symbols of $\Sigma$
+    in $\mathcal{E}$. Then a $2$-separated quasi-deterministic finite-state automaton
     $\mathcal{A}''$ such that $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{E}$
-    can be constructed in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3} |Q|})$ time.
+    can be constructed in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3} m})$ time.
   \end{corollary}
 
   \begin{proof}
-    By \Cref{thm:thompson_separator}, \Cref{alg:thompson_separator} finds a separator
-    $X$ and a partition $\{ X, Q_1, Q_2 \}_Q$ with $|X| = 2$ and $|Q_1|, |Q_2| \leq
-    \frac{2}{3} |Q|$ in $\mathcal{O}(|Q|)$ time. By \Cref{thm:quasidet_components}
-    applied with $k = 2$, \Cref{alg:quasi_det_sfsa_components} constructs
-    $\mathcal{A}''$ with $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A} =
-    \mathcal{L}_\mathcal{E}$ in
+    By \Cref{thm:thompson_separator_symbols}, the symbol-balanced variant of
+    \Cref{alg:thompson_separator} finds a separator $X$ and a partition $\{ X, Q_1, Q_2
+    \}_Q$ with $|X| = 2$ and $m_1, m_2 \leq \frac{2}{3} m + 1$ in $\mathcal{O}(|Q|)$
+    time. By \Cref{thm:quasidet_components_essential} applied with $k = 2$,
+    \Cref{alg:quasi_det_sfsa_components} constructs $\mathcal{A}''$ with
+    $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A} = \mathcal{L}_\mathcal{E}$ in
     \begin{equation*}
-      \mathcal{O}((|\Sigma| + 4) |Q| \cdot 4 \cdot (2^{|Q_1|} + 2^{|Q_2|})) =
-      \mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3} |Q|})
+      \mathcal{O}((|\Sigma| + 4) |Q| \cdot 4 \cdot (2^{m_1} + 2^{m_2})) =
+      \mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3} m})
     \end{equation*}
     time.
   \end{proof}
 
-  In comparison, the deterministic finite-state automaton constructed by
-  \Cref{thm:rabin_scott} can have up to $2^{|Q|}$ states, and \Cref{alg:quasi_det_sfsa}
-  executes one iteration per state (\Cref{prop:quasidet_iterations}).
+  In comparison, by \Cref{prop:essential_dfa,prop:thompson_essential} the deterministic
+  finite-state automaton constructed by \Cref{thm:rabin_scott} has at most $2^{m + 1}$
+  states, and \Cref{alg:quasi_det_sfsa} executes one iteration per state
+  (\Cref{prop:quasidet_iterations}). The exponent $m$ is the right one to compare
+  with: every symbol occurrence contributes a Type 2 finite-state automaton with two
+  states, so $|Q| \geq 2m$, and a bound of $2^{\frac{2}{3} |Q|}$, as obtained from
+  \Cref{thm:thompson_separator} and \Cref{thm:quasidet_components}, would not improve
+  on $2^{m + 1}$.

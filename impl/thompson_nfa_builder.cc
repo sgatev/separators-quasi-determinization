@@ -22,6 +22,7 @@ uint32_t ThompsonNfaBuilder::BuildSymbol(const char symbol) noexcept {
       .start_state = start_state,
       .final_state = final_state,
       .states_count = 2,
+      .symbols_count = symbol == '~' || symbol == char_empty ? 0u : 1u,
       .node = SymbolNode{},
   });
 }
@@ -40,6 +41,7 @@ uint32_t ThompsonNfaBuilder::BuildIter(const uint32_t node_idx) noexcept {
       .start_state = start_state,
       .final_state = final_state,
       .states_count = node.states_count + 2,
+      .symbols_count = node.symbols_count,
       .node =
           IterNode{
               .node_idx = node_idx,
@@ -63,6 +65,7 @@ uint32_t ThompsonNfaBuilder::BuildUnion(
       .start_state = start_state,
       .final_state = final_state,
       .states_count = left_data.states_count + right_data.states_count + 2,
+      .symbols_count = left_data.symbols_count + right_data.symbols_count,
       .node =
           UnionNode{
               .left_node_idx = left_node_idx,
@@ -80,7 +83,8 @@ uint32_t ThompsonNfaBuilder::BuildConcat(
   return description_.AddNode(ThompsonNode{
       .start_state = left_data.start_state,
       .final_state = right_data.final_state,
-      .states_count = left_data.states_count + right_data.states_count + 2,
+      .states_count = left_data.states_count + right_data.states_count,
+      .symbols_count = left_data.symbols_count + right_data.symbols_count,
       .node =
           ConcatNode{
               .left_node_idx = left_node_idx,

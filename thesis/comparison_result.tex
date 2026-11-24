@@ -101,10 +101,10 @@ single run on an Apple silicon laptop and are only indicative.
     $(0|\epsilon).(1|\epsilon)...$ & 12 & 12 & 29 & 40 \\
     \hline
     $(0|1)*.0.(0|1)^{16}$ & 131073 & 131073 & 24669 & 3441 \\
-     & 484 ms & 638 ms & 45 ms & 5 ms \\
+     & 472 ms & 629 ms & 41 ms & 5 ms \\
     \hline
     $(0|1)*.0.(0|1)^{20}$ & 2097153 & 2097153 & 98685 & 7281 \\
-     & 9 s & 11 s & 206 ms & 12 ms \\
+     & 9 s & 11 s & 206 ms & 13 ms \\
     \hline
   \end{tabular}
   \caption{Number of iterations of the main loop and, for the larger expressions,
@@ -116,4 +116,44 @@ For the first three expressions both algorithms complete in a few milliseconds. 
 the last two, the number of iterations of \Cref{alg:quasi_det_sfsa} grows with the
 size of the DFA, whereas \Cref{alg:quasi_det_sfsa_components} only depends on the
 sizes of the components and the separator. For $(0|1)*.0.(0|1)^{20}$ and $k = 3$, it
-constructs the quasi-deterministic finite-state automaton about $900$ times faster.
+constructs the quasi-deterministic finite-state automaton more than $800$ times faster.
+\bigbreak
+\Cref{tbl:symbol_comparison} repeats the comparison of the number of states with the
+symbol-balanced variant of \Cref{alg:thompson_separator}
+(\Cref{thm:thompson_separator_symbols}), which balances the essential states instead of
+all states. For $3$ components, the implementation applies either variant twice, as in
+the tables above.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{||c c c c c||}
+    \hline
+    Expression & 2-QDFA & 3-QDFA & 2-QDFA'' & 3-QDFA'' \\ [0.5ex]
+    \hline
+    $(a.b.c...)$ & 31 & 36 & 108 & 216 \\
+    \hline
+    $(a|b|c|...).(a|b|c|...)*$ & 57 & 44 & 164 & 321 \\
+    \hline
+    $(0|\epsilon).(1|\epsilon)...$ & 15 & 20 & 30 & 42 \\
+    \hline
+    $(0|1)*.0.(0|1)^{16}$ & 6273 & 976 & 12478 & 2098 \\
+    \hline
+    $(0|1)*.0.(0|1)^{20}$ & 49409 & 3232 & 98686 & 7282 \\
+    \hline
+  \end{tabular}
+  \caption{Number of states of quasi-deterministic finite-state automata constructed
+    with symbol-balanced separators.}
+  \label{tbl:symbol_comparison}
+\end{table}
+
+For $(0|1)*.0.(0|1)^{16}$, the symbol-balanced separator yields components with $m_1 =
+22$ and $m_2 = 14$ essential states instead of $24$ and $12$, and the
+quasi-deterministic finite-state automata are about half as large. For $(0|1)*.0.(0|1)^{20}$
+both variants find the same separator. For $(a|b|c|...).(a|b|c|...)*$ the
+symbol-balanced separator is worse for \Cref{alg:quasi_det_sfsa_components}: both
+separators split the essential states evenly, but the symbol-balanced one leads to more
+quasi-states that are not components of reachable states. The bounds of
+\Cref{lem:quasidet_essential} are worst-case bounds, and a separator that is better
+with respect to them need not be better on a particular finite-state automaton.

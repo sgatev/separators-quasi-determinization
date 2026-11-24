@@ -49,7 +49,12 @@ descent in the expression tree (`descend`). File: `Thompson.lean`.
 | Loop condition and Prop. `thompson_sep_5`: blocks of size `≤ 2\|Q\|/3` | `descend_bounds`, `ncard_block_zero/one` |
 | Prop. `thompson_sep_2`: at most `\|Q\|` iterations | `descendSteps_le` |
 | Thm. `thompson_separator` | `thompson_separator` |
-| Cor. `quasidet_regex`: quasi-determinization in `O(\|Σ\|·\|Q\|·2^{2\|Q\|/3})` | `thompson_quasiDet` |
+| Quasi-determinization in `O(\|Σ\|·\|Q\|·2^{2\|Q\|/3})` with the state-balanced separator | `thompson_quasiDet` |
+| Symbol occurrences `m`, targets of symbol transitions, `\|Q^Σ\| ≤ m + 1` (Prop. `thompson_essential`) | `nsym`, `symTargets`, `ncard_symTargets`, `essential_thompson` |
+| Essential states of the two blocks | `ncard_essential_block_zero_le`, `ncard_essential_block_one_le` |
+| Symbol-balanced variant of Alg. `thompson_separator` | `descendSym`, `descendSym_bounds`, `thompsonSepSym` |
+| Thm. `thompson_separator_symbols`: blocks with `≤ 2m/3 + 1` essential states | `thompson_separator_symbols` |
+| Cor. `quasidet_regex`: quasi-determinization in `O(\|Σ\|·\|Q\|·2^{2m/3})` | `thompson_quasiDet_symbols` |
 
 ### Chapter 4 (transducers)
 
@@ -102,6 +107,19 @@ Alg. `quasi_det_sfsa_components` in §3.5.
 | The worklist processes each element of `U_i` exactly once | `FSA.perComponent_iterations` |
 | Cost `O((|Σ| + 2^{|X|})·|Q|·2^{|X|}·Σᵢ2^{|Q_i|})` | `FSA.perComponentCost_le` |
 | `blowup k`: `|U_i ∪ T_i| ≤ 4`, while Alg. `quasi_det_sfsa` needs `≥ 2^k` iterations | `FSA.blowup_perComponent` |
+
+### Essential states
+
+File: `Essential.lean`.
+
+| Thesis | Lean |
+|---|---|
+| Def. `essential_states`: `Q^Σ` | `FSA.essential` |
+| Prop. `essential_closure` | `FSA.compClose_eq_essential` |
+| Lemma `quasidet_essential`: quasi-states are `Δ̂ᵢ_ε(B ∪ E)`, `\|U_i ∪ T_i\| ≤ 2^{m_i + \|X\|}` | `FSA.compStates_subset_kernels`, `FSA.ncard_compStates_le_essential` |
+| Thm. `quasidet_components_essential`: cost `O((\|Σ\| + 2^{\|X\|})·\|Q\|·2^{\|X\|}·Σᵢ2^{m_i})` | `FSA.perComponentCost_le_essential` |
+
+Prop. `essential_dfa` (`D ≤ 2^{|Q^Σ|}`) is not formalized.
 
 
 ## Modelling choices
@@ -220,6 +238,7 @@ Smaller issues in the complexity proofs:
   frontier sequence `R^{(n)}`, as justified by the thesis' proposition `𝒜_c = 𝒜'`. The
   algorithms are modelled as functional programs with explicit step counts, not run on an
   operational machine model.
+- Prop. `essential_dfa`: the subset construction has at most `2^{|Q^Σ|}` reachable states.
 - §3.2: the planarity of the graphs of Thompson automata (Mathlib has no theory of planar
   embeddings; the result only motivates the use of separators), and the correctness of the
   Thompson construction itself (cited in the thesis).

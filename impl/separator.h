@@ -22,14 +22,23 @@ struct SeparatedStates {
 };
 
 ABSL_MUST_USE_RESULT uint32_t FindInternal(ThompsonDescription& description,
-                                           uint32_t node_idx);
+                                           uint32_t node_idx,
+                                           SeparatorWeight weight);
 
 void Insert(const ThompsonDescription& description, const ThompsonNode& node,
             std::unordered_set<uint32_t>* outside_states);
 
+// The essential states of a Thompson automaton: its start state and the
+// targets of transitions labelled with symbols of the alphabet. Every
+// quasi-state of component i is determined by its essential states in Q_i
+// and its separator states.
+ABSL_MUST_USE_RESULT std::vector<uint32_t> EssentialStates(
+    const ThompsonDescription& description);
+
 template <int K>
 ABSL_MUST_USE_RESULT SeparatedStates<K> SeparateStates(
-    ThompsonDescription description) {
+    ThompsonDescription description,
+    SeparatorWeight weight = SeparatorWeight::kSymbols) {
   std::unordered_set<uint32_t> separator;
   std::unordered_set<uint32_t> nodes;
   nodes.insert(description.NodeIdx());
@@ -37,12 +46,16 @@ ABSL_MUST_USE_RESULT SeparatedStates<K> SeparateStates(
   for (int i = 1; i < K; i++) {
     uint32_t node_idx =
         *std::max_element(std::begin(nodes), std::end(nodes),
-                          [&description](uint32_t first, uint32_t second) {
-                            return description.Node(first).states_count <
-                                   description.Node(second).states_count;
+                          [&](uint32_t first, uint32_t second) {
+                            const ThompsonNode& a = description.Node(first);
+                            const ThompsonNode& b = description.Node(second);
+                            return weight == SeparatorWeight::kStates
+                                       ? a.states_count < b.states_count
+                                       : a.symbols_count < b.symbols_count;
                           });
 
-    const uint32_t inside_data_idx = FindInternal(description, node_idx);
+    const uint32_t inside_data_idx =
+        FindInternal(description, node_idx, weight);
     separator.insert(description.Node(inside_data_idx).start_state);
     separator.insert(description.Node(inside_data_idx).final_state);
 

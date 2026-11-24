@@ -192,6 +192,53 @@ satisfies the separator condition.
   \end{align*}
 \end{proof}
 
+A state that is entered only by $\epsilon$-transitions is reached only together with the
+states it is reached from. The following states are the ones that determine the
+$\epsilon$-closed sets of states that we work with.
+
+\begin{definition}\label{def:essential_states}
+  The set of \emph{essential states} of a finite-state automaton $\mathcal{A} =
+  \langle \Sigma, Q, S, F, \Delta \rangle$ is
+  \begin{equation*}
+    Q^\Sigma = S \cup \{ q \in Q \mid \exists q' \in Q \; \exists \sigma \in \Sigma
+    (\langle q', \sigma, q \rangle \in \Delta) \}.
+  \end{equation*}
+\end{definition}
+
+\begin{proposition}\label{prop:essential_closure}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton and let $Z \subseteq Q^\Sigma \cup X$. Then
+  \begin{equation*}
+    \hat{\Delta}_\epsilon^i(Z) = \hat{\Delta}_\epsilon^i((Z \cap Q_i) \cup
+    (\hat{\Delta}_\epsilon^i(Z) \cap X))
+  \end{equation*}
+  for $i \in \{ 1, 2, \ldots, k \}$. In particular, $\hat{\Delta}_\epsilon^i(Z)$ is
+  determined by a subset of $Q_i \cap Q^\Sigma$ and a subset of $X$.
+\end{proposition}
+
+\begin{proof}
+  Let $q \in \hat{\Delta}_\epsilon^i((Z \cap Q_i) \cup (\hat{\Delta}_\epsilon^i(Z)
+  \cap X))$. Then $q \in \mathcal{C}(Q_i)$ and there exists $q'$ in $Z \cap Q_i$ or in
+  $\hat{\Delta}_\epsilon^i(Z) \cap X$ such that $\langle q', \epsilon, q \rangle \in
+  \Delta^*$. In the first case, $q' \in Z$. In the second case, there exists $z \in Z$
+  such that $\langle z, \epsilon, q' \rangle \in \Delta^*$, and thus $\langle z,
+  \epsilon, q \rangle \in \Delta^*$. In both cases, $q \in \hat{\Delta}_\epsilon^i(Z)$.
+
+  Conversely, let $q \in \hat{\Delta}_\epsilon^i(Z)$. Then $q \in \mathcal{C}(Q_i)$ and
+  there exists $z \in Z$ such that $\langle z, \epsilon, q \rangle \in \Delta^*$. If $z
+  \in Q_i$, then $z \in Z \cap Q_i$. If $q \in X$, then $q \in
+  \hat{\Delta}_\epsilon^i(Z) \cap X$ and $\langle q, \epsilon, q \rangle \in \Delta^*$.
+  If $z \in X$, then $z \in \hat{\Delta}_\epsilon^i(Z) \cap X$, since $z \in X
+  \subseteq \mathcal{C}(Q_i)$. Otherwise, $z \in Q_j$ for some $j \neq i$ and $q \in
+  Q_i$. By \Cref{prop:separator_path}, there exists $x \in X$ such that $\langle z,
+  \epsilon, x \rangle, \langle x, \epsilon, q \rangle \in \Delta^*$. Then $x \in
+  \hat{\Delta}_\epsilon^i(Z) \cap X$. In all cases, $q \in \hat{\Delta}_\epsilon^i((Z
+  \cap Q_i) \cup (\hat{\Delta}_\epsilon^i(Z) \cap X))$.
+
+  Since $Z \cap Q_i \subseteq Q_i \cap Q^\Sigma$ and $\hat{\Delta}_\epsilon^i(Z) \cap X
+  \subseteq X$, the last claim follows.
+\end{proof}
+
 The states of a deterministic finite-state automaton $\mathcal{A'} = \langle \Sigma,
 Q', s, F', \delta \rangle$ derived by applying the construction described in
 \Cref{thm:rabin_scott} are subsets of the states of the source finite-state automaton

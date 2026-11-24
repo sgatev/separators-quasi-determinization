@@ -1,7 +1,9 @@
+#include <algorithm>
 #include <chrono>
 #include <cinttypes>
 #include <initializer_list>
 #include <iostream>
+#include <iterator>
 #include <optional>
 #include <ratio>
 #include <string>
@@ -81,15 +83,57 @@ void RunDfa(const Nfa& nfa) {
             << dfa.TransitionsCount() << " transitions" << std::endl;
 }
 
-template <int K>
-void RunQdfa(Nfa nfa, ThompsonDescription description) {
-  static_assert(K >= 1, "number of QDFA components has to be at least 1");
+const char* WeightName(SeparatorWeight weight) {
+  return weight == SeparatorWeight::kStates ? "states" : "symbols";
+}
 
+// Prints |X| and, for every component, |Q_i| and the number m_i of essential
+// states in Q_i. The component quasi-states are bounded by 2^(m_i + |X|).
+template <int K>
+void PrintSeparator(const ThompsonDescription& description,
+                    const SeparatedStates<K>& separated_states) {
+  const std::vector<uint32_t> essential = EssentialStates(description);
+  std::cout << "separator: |X| = " << separated_states.separator.size();
+  for (int i = 0; i < K; i++) {
+    uint32_t states = 0;
+    uint32_t essential_states = 0;
+    for (uint32_t state : separated_states.components[i]) {
+      if (std::binary_search(std::begin(separated_states.separator),
+                             std::end(separated_states.separator), state)) {
+        continue;
+      }
+      states++;
+      if (std::binary_search(std::begin(essential), std::end(essential),
+                             state)) {
+        essential_states++;
+      }
+    }
+    std::cout << ", |Q_" << i + 1 << "| = " << states << ", m_" << i + 1
+              << " = " << essential_states;
+  }
+  std::cout << " (m = " << essential.size() - 1 << ")" << std::endl;
+}
+
+template <int K>
+SeparatedStates<K> RunSeparator(const ThompsonDescription& description,
+                                SeparatorWeight weight) {
   SeparatedStates<K> separated_states;
   {
     const Timer timer = MakeTimer("separator construction");
-    separated_states = SeparateStates<K>(description);
+    separated_states = SeparateStates<K>(description, weight);
   }
+  std::cout << "weight: " << WeightName(weight) << std::endl;
+  PrintSeparator<K>(description, separated_states);
+  return separated_states;
+}
+
+template <int K>
+void RunQdfa(Nfa nfa, ThompsonDescription description,
+             SeparatorWeight weight) {
+  static_assert(K >= 1, "number of QDFA components has to be at least 1");
+
+  const SeparatedStates<K> separated_states =
+      RunSeparator<K>(description, weight);
 
   const Timer timer = MakeTimer("QDFA construction");
   uint64_t iterations = 0;
@@ -100,14 +144,12 @@ void RunQdfa(Nfa nfa, ThompsonDescription description) {
 }
 
 template <int K>
-void RunEagerQdfa(Nfa nfa, ThompsonDescription description) {
+void RunEagerQdfa(Nfa nfa, ThompsonDescription description,
+                  SeparatorWeight weight) {
   static_assert(K >= 1, "number of QDFA components has to be at least 1");
 
-  SeparatedStates<K> separated_states;
-  {
-    Timer timer = MakeTimer("separator construction");
-    separated_states = SeparateStates<K>(description);
-  }
+  const SeparatedStates<K> separated_states =
+      RunSeparator<K>(description, weight);
 
   ComputeEpsilonClosure(&nfa);
 
@@ -182,17 +224,20 @@ void Run() {
     RunDfa(nfa);
     std::cout << std::endl;
 
-    RunQdfa<2>(nfa, description);
-    std::cout << std::endl;
+    for (SeparatorWeight weight :
+         {SeparatorWeight::kStates, SeparatorWeight::kSymbols}) {
+      RunQdfa<2>(nfa, description, weight);
+      std::cout << std::endl;
 
-    RunEagerQdfa<2>(nfa, description);
-    std::cout << std::endl;
+      RunEagerQdfa<2>(nfa, description, weight);
+      std::cout << std::endl;
 
-    RunQdfa<3>(nfa, description);
-    std::cout << std::endl;
+      RunQdfa<3>(nfa, description, weight);
+      std::cout << std::endl;
 
-    RunEagerQdfa<3>(nfa, description);
-    std::cout << std::endl;
+      RunEagerQdfa<3>(nfa, description, weight);
+      std::cout << std::endl;
+    }
   }
 }
 

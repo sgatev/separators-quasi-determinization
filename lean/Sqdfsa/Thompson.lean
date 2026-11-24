@@ -1,4 +1,4 @@
-import Sqdfsa.PerComponent
+import Sqdfsa.Essential
 
 /-!
 # Separators in Thompson automata (thesis §3.2)
@@ -20,8 +20,17 @@ Results:
 * `thompsonSep_block_le`: both blocks have at most `2|Q|/3` states (loop condition and
   Proposition `thompson_sep_5`).
 * `descendSteps_le`: the walk takes at most `|Q|` steps (Proposition `thompson_sep_2`).
-* `thompson_quasiDet_cost`: combined with the per-component algorithm, every regular expression
+* `thompson_quasiDet`: combined with the per-component algorithm, every regular expression
   can be quasi-determinized in `O(|Σ|·|Q|·2^{2|Q|/3})` time.
+
+The symbol-balanced variant (`descendSym`) balances the number `m` of symbol occurrences
+instead of the number of states:
+* `ncard_essential_block_zero_le`, `ncard_essential_block_one_le`: the essential states of the
+  two blocks are bounded by the symbol occurrences inside and outside of the subexpression.
+* `thompson_separator_symbols`: Theorem `thompson_separator_symbols`, both blocks have at most
+  `2m/3 + 1` essential states.
+* `thompson_quasiDet_symbols`: Corollary `quasidet_regex`, every regular expression can be
+  quasi-determinized in `O(|Σ|·|Q|·2^{2m/3})` time.
 
 The planarity of the graphs of Thompson automata (first proposition of §3.2) is not
 formalized: Mathlib has no theory of planar embeddings, and the result is only used to motivate
@@ -496,5 +505,267 @@ theorem thompson_quasiDet (r : RegularExpression α) :
       ≤ 3 * (Nat.card α + 2 ^ 2 + 1) * nstates r * 2 ^ 2 * (2 * 2 ^ (2 * nstates r / 3)) :=
         Nat.mul_le_mul_left _ hsum
     _ = 24 * (Nat.card α + 5) * nstates r * 2 ^ (2 * nstates r / 3) := by ring
+
+/-! ### Essential states of Thompson automata -/
+
+/-- The number of occurrences of symbols in `e`. -/
+def nsym : RegularExpression α → ℕ
+  | .zero => 0
+  | .epsilon => 0
+  | .char _ => 1
+  | .comp a b => nsym a + nsym b
+  | .plus a b => nsym a + nsym b
+  | .star a => nsym a
+
+/-- The targets of symbol transitions of the Thompson automaton. -/
+def symTargets (e : RegularExpression α) : Set (TState e) :=
+  {q | ∃ p a, (p, some a, q) ∈ tDelta e}
+
+theorem symTargets_comp (a b : RegularExpression α) :
+    symTargets (.comp a b) =
+      (Sum.inl : TState a → TState (.comp a b)) '' symTargets a ∪
+        (Sum.inr : TState b → TState (.comp a b)) '' symTargets b := by
+  ext q
+  simp only [symTargets, tDelta, liftT, Set.mem_ofPred_eq, Set.mem_union, Set.mem_image,
+    Set.mem_singleton_iff, Prod.mk.injEq]
+  constructor
+  · rintro ⟨p, c, ((⟨t, ht, h₁, h₂, h₃⟩ | ⟨t, ht, h₁, h₂, h₃⟩) | ⟨-, h, -⟩)⟩
+    · exact Or.inl ⟨t.2.2, ⟨t.1, c, by rw [← h₂]; exact ht⟩, h₃⟩
+    · exact Or.inr ⟨t.2.2, ⟨t.1, c, by rw [← h₂]; exact ht⟩, h₃⟩
+    · cases h
+  · rintro (⟨u, ⟨p, c, h⟩, rfl⟩ | ⟨u, ⟨p, c, h⟩, rfl⟩)
+    · exact ⟨.inl p, c, Or.inl (Or.inl ⟨_, h, rfl, rfl, rfl⟩)⟩
+    · exact ⟨.inr p, c, Or.inl (Or.inr ⟨_, h, rfl, rfl, rfl⟩)⟩
+
+theorem symTargets_plus (a b : RegularExpression α) :
+    symTargets (.plus a b) =
+      (fun x => .inr (.inl x) : TState a → TState (.plus a b)) '' symTargets a ∪
+        (fun x => .inr (.inr x) : TState b → TState (.plus a b)) '' symTargets b := by
+  ext q
+  simp only [symTargets, tDelta, liftT, Set.mem_ofPred_eq, Set.mem_union, Set.mem_image,
+    Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq]
+  constructor
+  · rintro ⟨p, c, ((⟨t, ht, h₁, h₂, h₃⟩ | ⟨t, ht, h₁, h₂, h₃⟩) | h)⟩
+    · exact Or.inl ⟨t.2.2, ⟨t.1, c, by rw [← h₂]; exact ht⟩, h₃⟩
+    · exact Or.inr ⟨t.2.2, ⟨t.1, c, by rw [← h₂]; exact ht⟩, h₃⟩
+    · rcases h with ⟨-, h, -⟩ | ⟨-, h, -⟩ | ⟨-, h, -⟩ | ⟨-, h, -⟩ <;> cases h
+  · rintro (⟨u, ⟨p, c, h⟩, rfl⟩ | ⟨u, ⟨p, c, h⟩, rfl⟩)
+    · exact ⟨.inr (.inl p), c, Or.inl (Or.inl ⟨_, h, rfl, rfl, rfl⟩)⟩
+    · exact ⟨.inr (.inr p), c, Or.inl (Or.inr ⟨_, h, rfl, rfl, rfl⟩)⟩
+
+theorem symTargets_star (a : RegularExpression α) :
+    symTargets (.star a) = (Sum.inr : TState a → TState (.star a)) '' symTargets a := by
+  ext q
+  simp only [symTargets, tDelta, liftT, Set.mem_ofPred_eq, Set.mem_union, Set.mem_image,
+    Set.mem_insert_iff, Set.mem_singleton_iff, Prod.mk.injEq]
+  constructor
+  · rintro ⟨p, c, (⟨t, ht, h₁, h₂, h₃⟩ | h)⟩
+    · exact ⟨t.2.2, ⟨t.1, c, by rw [← h₂]; exact ht⟩, h₃⟩
+    · rcases h with ⟨-, h, -⟩ | ⟨-, h, -⟩ | ⟨-, h, -⟩ | ⟨-, h, -⟩ <;> cases h
+  · rintro ⟨u, ⟨p, c, h⟩, rfl⟩
+    exact ⟨.inr p, c, Or.inl ⟨_, h, rfl, rfl, rfl⟩⟩
+
+/-- Every symbol occurrence contributes exactly one target of a symbol transition. -/
+theorem ncard_symTargets : ∀ e : RegularExpression α, (symTargets e).ncard = nsym e
+  | .zero => by
+    have : symTargets (.zero : RegularExpression α) = ∅ := by
+      ext q; simp [symTargets, tDelta]
+    rw [this, Set.ncard_empty]; rfl
+  | .epsilon => by
+    have : symTargets (.epsilon : RegularExpression α) = ∅ := by
+      ext q; simp [symTargets, tDelta]
+    rw [this, Set.ncard_empty]; rfl
+  | .char c => by
+    have : symTargets (.char c : RegularExpression α) = {true} := by
+      ext q; simp only [symTargets, tDelta, Set.mem_ofPred_eq, Set.mem_singleton_iff,
+        Prod.mk.injEq]
+      exact ⟨fun ⟨_, _, _, _, h⟩ => h, fun h => ⟨false, c, rfl, rfl, h⟩⟩
+    rw [this, Set.ncard_singleton]; rfl
+  | .comp a b => by
+    rw [symTargets_comp, Set.ncard_union_eq, Set.ncard_image_of_injective _ Sum.inl_injective,
+      Set.ncard_image_of_injective _ Sum.inr_injective, ncard_symTargets a, ncard_symTargets b]
+    · rfl
+    · rw [Set.disjoint_left]; rintro _ ⟨_, -, rfl⟩ ⟨_, -, h⟩; cases h
+  | .plus a b => by
+    rw [symTargets_plus, Set.ncard_union_eq,
+      Set.ncard_image_of_injective _ (fun _ _ h => Sum.inl_injective (Sum.inr_injective h)),
+      Set.ncard_image_of_injective _ (fun _ _ h => Sum.inr_injective (Sum.inr_injective h)),
+      ncard_symTargets a, ncard_symTargets b]
+    · rfl
+    · rw [Set.disjoint_left]; rintro _ ⟨_, -, rfl⟩ ⟨_, -, h⟩; cases h
+  | .star a => by
+    rw [symTargets_star, Set.ncard_image_of_injective _ Sum.inr_injective, ncard_symTargets a]
+    rfl
+
+/-- The transitions of a subautomaton are transitions of the whole automaton. -/
+theorem Pos.lift_mem : ∀ {e : RegularExpression α} (p : Pos e) {t : TState p.expr × Option α ×
+    TState p.expr}, t ∈ tDelta p.expr → liftT p.emb t ∈ tDelta e
+  | _, here _, _, h => h
+  | _, compL p, t, h => Or.inl (Or.inl ⟨liftT p.emb t, p.lift_mem h, rfl⟩)
+  | _, compR p, t, h => Or.inl (Or.inr ⟨liftT p.emb t, p.lift_mem h, rfl⟩)
+  | _, plusL p, t, h => Or.inl (Or.inl ⟨liftT p.emb t, p.lift_mem h, rfl⟩)
+  | _, plusR p, t, h => Or.inl (Or.inr ⟨liftT p.emb t, p.lift_mem h, rfl⟩)
+  | _, star p, t, h => Or.inl ⟨liftT p.emb t, p.lift_mem h, rfl⟩
+
+theorem Pos.image_symTargets_subset (p : Pos r) : p.emb '' symTargets p.expr ⊆ symTargets r := by
+  rintro _ ⟨u, ⟨q, a, h⟩, rfl⟩
+  exact ⟨p.emb q, a, p.lift_mem h⟩
+
+/-- The start state of the whole automaton lies in a subautomaton only as its start state. -/
+theorem Pos.start_of_mem_range : ∀ {e : RegularExpression α} (p : Pos e) {u : TState p.expr},
+    p.emb u = tStart e → u = tStart p.expr
+  | _, here _, _, h => h
+  | _, compL p, _, h => p.start_of_mem_range (Sum.inl_injective h)
+  | _, compR _, _, h => by cases h
+  | _, plusL _, _, h => by cases h
+  | _, plusR _, _, h => by cases h
+  | _, star _, _, h => by cases h
+
+theorem essential_thompson :
+    (thompson r).essential = {tStart r} ∪ symTargets r := rfl
+
+/-- The essential states among the inner states of the subautomaton at `p` are targets of its
+symbol transitions. -/
+theorem essential_block_zero_subset (p : Pos r) :
+    (thompson r).essential ∩ {x | sepPart p x = some 0} ⊆ p.emb '' symTargets p.expr := by
+  rintro x ⟨hx, h0⟩
+  obtain ⟨u, hu, rfl⟩ := (sepPart_eq_zero p x).mp h0
+  rcases hx with hx | ⟨y, a, hy⟩
+  · exact absurd (p.start_of_mem_range (Set.mem_singleton_iff.mp hx)) hu.1
+  · obtain ⟨t', ht', he⟩ := p.local hy (Or.inr ⟨u, hu, rfl⟩)
+    simp only [liftT, Prod.mk.injEq] at he
+    obtain ⟨-, h₂, h₃⟩ := he
+    refine ⟨u, ⟨t'.1, a, ?_⟩, rfl⟩
+    rw [p.emb_injective h₃, h₂]
+    exact ht'
+
+theorem ncard_essential_block_zero_le (p : Pos r) :
+    ((thompson r).essential ∩ {x | sepPart p x = some 0}).ncard ≤ nsym p.expr ∧
+      ((thompson r).essential ∩ {x | sepPart p x = some 0}).ncard ≤ nstates p.expr - 2 := by
+  constructor
+  · refine (Set.ncard_le_ncard (essential_block_zero_subset p) (Set.toFinite _)).trans ?_
+    rw [Set.ncard_image_of_injective _ p.emb_injective, ncard_symTargets]
+  · rw [← ncard_block_zero p]
+    exact Set.ncard_le_ncard Set.inter_subset_right (Set.toFinite _)
+
+theorem ncard_essential_block_one_le (p : Pos r) :
+    ((thompson r).essential ∩ {x | sepPart p x = some 1}).ncard ≤ 1 + (nsym r - nsym p.expr) := by
+  have hsub : (thompson r).essential ∩ {x | sepPart p x = some 1} ⊆
+      {tStart r} ∪ (symTargets r \ p.emb '' symTargets p.expr) := by
+    rintro x ⟨hx | hx, h1⟩
+    · exact Or.inl hx
+    · refine Or.inr ⟨hx, ?_⟩
+      rintro ⟨u, -, rfl⟩
+      exact (sepPart_eq_one p _).mp h1 ⟨u, rfl⟩
+  refine (Set.ncard_le_ncard hsub (Set.toFinite _)).trans ((Set.ncard_union_le _ _).trans ?_)
+  rw [Set.ncard_singleton, Set.ncard_sdiff (p.image_symTargets_subset) (Set.toFinite _),
+    Set.ncard_image_of_injective _ p.emb_injective, ncard_symTargets, ncard_symTargets]
+
+/-! ### The symbol-balanced variant of Algorithm `thompson_separator` -/
+
+/-- The symbol-balanced variant: while the current subexpression has more than `2N/3` symbol
+occurrences, descend into the child with more symbol occurrences (Types 3 and 4) or the only
+child (Type 5). Types 1 and 2 stop the descent. -/
+def descendSym (N : ℕ) : ∀ e : RegularExpression α, Pos e
+  | .comp a b =>
+    if 3 * nsym (.comp a b) ≤ 2 * N then .here _
+    else if nsym b ≤ nsym a then .compL (descendSym N a) else .compR (descendSym N b)
+  | .plus a b =>
+    if 3 * nsym (.plus a b) ≤ 2 * N then .here _
+    else if nsym b ≤ nsym a then .plusL (descendSym N a) else .plusR (descendSym N b)
+  | .star a =>
+    if 3 * nsym (.star a) ≤ 2 * N then .here _ else .star (descendSym N a)
+  | e => .here e
+
+/-- After the descent, the subexpression has at most `2N/3` symbol occurrences (or is a leaf
+without inner states), and at most `2N/3` occurrences lie outside of it. -/
+theorem descendSym_bounds (N : ℕ) : ∀ e : RegularExpression α, nsym e ≤ N →
+    3 * (N - nsym e) ≤ 2 * N →
+      (3 * nsym (descendSym N e).expr ≤ 2 * N ∨ nstates (descendSym N e).expr = 2) ∧
+        3 * (N - nsym (descendSym N e).expr) ≤ 2 * N
+  | .zero, _, h | .epsilon, _, h | .char _, _, h =>
+    ⟨Or.inr rfl, by simpa [descendSym, Pos.expr] using h⟩
+  | .comp a b, hN, h => by
+    simp only [nsym] at hN h
+    simp only [descendSym]
+    split_ifs with h₁ h₂
+    · exact ⟨Or.inl h₁, by simpa [Pos.expr, nsym] using h⟩
+    · simp only [nsym] at h₁
+      exact descendSym_bounds N a (by omega) (by omega)
+    · simp only [nsym] at h₁
+      exact descendSym_bounds N b (by omega) (by omega)
+  | .plus a b, hN, h => by
+    simp only [nsym] at hN h
+    simp only [descendSym]
+    split_ifs with h₁ h₂
+    · exact ⟨Or.inl h₁, by simpa [Pos.expr, nsym] using h⟩
+    · simp only [nsym] at h₁
+      exact descendSym_bounds N a (by omega) (by omega)
+    · simp only [nsym] at h₁
+      exact descendSym_bounds N b (by omega) (by omega)
+  | .star a, hN, h => by
+    simp only [nsym] at hN h
+    simp only [descendSym]
+    split_ifs with h₁
+    · exact ⟨Or.inl h₁, by simpa [Pos.expr, nsym] using h⟩
+    · simp only [nsym] at h₁
+      exact descendSym_bounds N a (by omega) (by omega)
+
+/-- The partition computed by the symbol-balanced variant. -/
+noncomputable def thompsonSepSym (r : RegularExpression α) : TState r → Option (Fin 2) :=
+  sepPart (descendSym (nsym r) r)
+
+/-- Theorem `thompson_separator_symbols`: the Thompson automaton of every regular expression
+with `m` symbol occurrences has a separator `X` with `|X| = 2` whose blocks have at most
+`2m/3 + 1` essential states each; the first block has at most `2m/3`. -/
+theorem thompson_separator_symbols (r : RegularExpression α) :
+    (thompson r).IsSeparator (thompsonSepSym r) ∧ (sepX (thompsonSepSym r)).ncard = 2 ∧
+      3 * ((thompson r).essential ∩ {x | thompsonSepSym r x = some 0}).ncard ≤ 2 * nsym r ∧
+      ∀ i, 3 * ((thompson r).essential ∩ {x | thompsonSepSym r x = some i}).ncard ≤
+        2 * nsym r + 3 := by
+  obtain ⟨h₀, h₁⟩ := descendSym_bounds (nsym r) r le_rfl (by simp)
+  have hz := ncard_essential_block_zero_le (descendSym (nsym r) r)
+  have hb0 : 3 * ((thompson r).essential ∩ {x | thompsonSepSym r x = some 0}).ncard ≤
+      2 * nsym r := by
+    simp only [thompsonSepSym]
+    rcases h₀ with h₀ | h₀
+    · have := hz.1; omega
+    · have := hz.2; omega
+  refine ⟨thompson_isSeparator _, ncard_thompsonSep_sepX _, hb0, fun i => ?_⟩
+  fin_cases i
+  · exact hb0.trans (by omega)
+  · have := ncard_essential_block_one_le (descendSym (nsym r) r)
+    simp only [thompsonSepSym, Fin.mk_one]
+    omega
+
+/-- Corollary `quasidet_regex`: the per-component algorithm, applied to the Thompson automaton
+of `r` with the separator of the symbol-balanced variant, produces an equivalent
+quasi-deterministic automaton in `O(|Σ|·|Q|·2^{2m/3})` time, where `m` is the number of symbol
+occurrences in `r`. The subset construction may produce up to `2^{m+1}` states. -/
+theorem thompson_quasiDet_symbols (r : RegularExpression α) :
+    ((thompson r).perComponent (thompsonSepSym r)).language = (thompson r).language ∧
+      FSA.perComponentCost (Nat.card α) 2 (nstates r)
+          (fun i => ((thompson r).compClosure (thompsonSepSym r) i).ncard)
+          (fun i => ((thompson r).tauImage (thompsonSepSym r) i).ncard) ≤
+        48 * (Nat.card α + 5) * nstates r * 2 ^ (2 * nsym r / 3) := by
+  obtain ⟨hsep, hX, -, hblock⟩ := thompson_separator_symbols r
+  refine ⟨FSA.perComponent_language hsep, ?_⟩
+  have hc := FSA.perComponentCost_le_essential (A := thompson r) (part := thompsonSepSym r) hsep
+  rw [hX, card_tState] at hc
+  refine hc.trans ?_
+  have hpow : ∀ i : Fin 2,
+      2 ^ ((thompson r).essential ∩ {q | thompsonSepSym r q = some i}).ncard ≤
+        2 * 2 ^ (2 * nsym r / 3) := fun i => by
+    rw [← pow_succ']
+    exact Nat.pow_le_pow_right (by norm_num) (by have := hblock i; omega)
+  have hsum : ∑ i : Fin 2,
+      2 ^ ((thompson r).essential ∩ {q | thompsonSepSym r q = some i}).ncard ≤
+        4 * 2 ^ (2 * nsym r / 3) := by
+    rw [Fin.sum_univ_two]; have := hpow 0; have := hpow 1; omega
+  calc 3 * (Nat.card α + 2 ^ 2 + 1) * nstates r * 2 ^ 2 *
+        ∑ i : Fin 2, 2 ^ ((thompson r).essential ∩ {q | thompsonSepSym r q = some i}).ncard
+      ≤ 3 * (Nat.card α + 2 ^ 2 + 1) * nstates r * 2 ^ 2 * (4 * 2 ^ (2 * nsym r / 3)) :=
+        Nat.mul_le_mul_left _ hsum
+    _ = 48 * (Nat.card α + 5) * nstates r * 2 ^ (2 * nsym r / 3) := by ring
 
 end Sqdfsa

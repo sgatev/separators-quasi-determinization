@@ -29,6 +29,8 @@ struct ThompsonNode {
   uint32_t start_state;
   uint32_t final_state;
   uint32_t states_count;
+  // Number of transitions labelled with a symbol of the alphabet (not epsilon).
+  uint32_t symbols_count;
   std::variant<SymbolNode, ConcatNode, UnionNode, IterNode> node;
 
   template <class... M>
@@ -36,6 +38,11 @@ struct ThompsonNode {
     return std::visit(Overload(std::forward<M>(matchers)...), node);
   }
 };
+
+// The measure that Algorithm thompson_separator balances between the
+// components: the number of states, or the number of symbol transitions (the
+// essential states, which bound the number of quasi-states).
+enum class SeparatorWeight { kStates, kSymbols };
 
 class ThompsonDescription {
  public:

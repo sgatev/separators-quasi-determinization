@@ -588,6 +588,94 @@ algorithm and providing a bound for the size of the resulting separator.
   Follows directly from \Cref{prop:thompson_sep_2,prop:thompson_sep_4,prop:thompson_sep_5,prop:thompson_sep_6}.
 \end{proof}
 
+\Cref{alg:thompson_separator} balances the numbers of states of the components. By
+\Cref{lem:quasidet_essential}, however, the number of quasi-states of a component
+depends only on its essential states (\Cref{def:essential_states}). For a finite-state
+automaton $\mathcal{A}_c$ constructed using the algorithm described in
+\Cref{thm:thompson}, let $m(\mathcal{A}_c)$ be the number of its transitions labelled
+with symbols of $\Sigma$. Only Type 2 finite-state automata introduce such transitions,
+one each, so $m(\mathcal{A}_c)$ is the number of occurrences of symbols of $\Sigma$ in
+the regular expression from which $\mathcal{A}_c$ is constructed. Moreover,
+$m(\mathcal{A}_c) = m(\mathcal{A}_c') + m(\mathcal{A}_c'')$ if $\mathcal{A}_c$ is Type 3
+or Type 4, and $m(\mathcal{A}_c) = m(\mathcal{A}_c')$ if $\mathcal{A}_c$ is Type 5.
+
+\begin{proposition}\label{prop:thompson_essential}
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}. Then
+  $Q^\Sigma \setminus S$ consists of the final states of the Type 2 sub-automata of
+  $\mathcal{A}$ whose transition is labelled with a symbol of $\Sigma$. In particular,
+  $|Q^\Sigma| \leq m(\mathcal{A}) + 1$.
+\end{proposition}
+
+\begin{proof}
+  Every transition labelled with a symbol of $\Sigma$ is the transition of a Type 2
+  sub-automaton, and its target is the final state of that sub-automaton. Since $|S| =
+  1$, $|Q^\Sigma| \leq m(\mathcal{A}) + 1$.
+\end{proof}
+
+The \emph{symbol-balanced variant} of \Cref{alg:thompson_separator} replaces the
+condition at line~\ref{alg:ts:while} with ``$m(\mathcal{A}_c) > \frac{2}{3}
+m(\mathcal{A})$ and $\mathcal{A}_c$ is not Type 1 or Type 2'', and the conditions
+$|Q_c'| \geq |Q_c''|$ with $m(\mathcal{A}_c') \geq m(\mathcal{A}_c'')$. The values
+$m(\mathcal{A}_c)$ for all sub-automata can be computed in advance in $\mathcal{O}(|Q|)$
+time.
+
+\begin{theorem}\label{thm:thompson_separator_symbols}
+  Let $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be a finite-state
+  automaton constructed using the algorithm described in \Cref{thm:thompson}, and let
+  $m = m(\mathcal{A})$. The symbol-balanced variant of \Cref{alg:thompson_separator}
+  finds a separator $X$ and a partition $\{ X, Q_1, Q_2 \}_Q$ such that $|X| = 2$ and
+  $|Q_i \cap Q^\Sigma| \leq \frac{2}{3} m + 1$ for $i \in \{ 1, 2 \}$ in $\mathcal{O}(|Q|)$
+  time. Moreover, $|Q_1 \cap Q^\Sigma| \leq \frac{2}{3} m$.
+\end{theorem}
+
+\begin{proof}
+  The proofs of
+  \Cref{prop:thompson_sep_2,prop:thompson_sep_3,prop:thompson_sep_4,prop:thompson_sep_6}
+  do not depend on the loop condition or on which sub-automaton is chosen, so they
+  apply to the variant as well. Thus, the variant completes in $\mathcal{O}(|Q|)$ time,
+  $|X| = 2$, and $X$ is a separator for the partition $\{ X, Q_1, Q_2 \}_Q$ where $Q_1 =
+  Q_c \setminus X$ and $Q_2 = R$ are the values returned at line~\ref{alg:ts:return}.
+  Let $\mathcal{A}_c$ be the final value of the current sub-automaton.
+
+  Let $S = \{ s \}$. We first show that $s \not\in Q_1$, by showing that $S_c = \{ s
+  \}$ whenever $s \in Q_c$. Initially $S_c = S$. Since $Q_c$ only decreases, it
+  suffices to consider an iteration that starts with $S_c = \{ s \}$ and after which
+  $s$ still belongs to $Q_c$. The start state of a Type 4 or Type 5 finite-state
+  automaton belongs to none of its sub-automata, so $\mathcal{A}_c$ is Type 3. Its
+  start state is $S_c'$, so $s \in Q_c'$, the iteration continues with
+  $\mathcal{A}_c'$, and afterwards $S_c = S_c' = \{ s \}$. Therefore, $s \in X$ or $s
+  \in R$.
+
+  Consider $q \in Q_1 \cap Q^\Sigma$. Then $q \neq s$, so by
+  \Cref{prop:thompson_essential} $q$ is the final state of a Type 2 sub-automaton
+  $\mathcal{A}_t$ of $\mathcal{A}$ whose transition is labelled with a symbol of
+  $\Sigma$. Since $q \in Q_c$, the sub-automata $\mathcal{A}_t$ and $\mathcal{A}_c$ are
+  nested. Since $q \not\in X$, $\mathcal{A}_c \neq \mathcal{A}_t$, so $\mathcal{A}_t$ is
+  a proper sub-automaton of $\mathcal{A}_c$. Distinct states $q$ correspond to distinct
+  transitions, so $|Q_1 \cap Q^\Sigma| \leq m(\mathcal{A}_c)$. If $\mathcal{A}_c$ is
+  Type 1 or Type 2, then $Q_1 = \emptyset$. Otherwise, the loop condition is false, and
+  $|Q_1 \cap Q^\Sigma| \leq m(\mathcal{A}_c) \leq \frac{2}{3} m$.
+
+  Similarly, every state of $(Q_2 \cap Q^\Sigma) \setminus S$ is the final state of a
+  Type 2 sub-automaton with a transition labelled with a symbol of $\Sigma$ that is not
+  a sub-automaton of $\mathcal{A}_c$. Therefore, $|Q_2 \cap Q^\Sigma| \leq 1 + m -
+  m(\mathcal{A}_c)$. We show that $m(\mathcal{A}_c) \geq \frac{1}{3} m$. If
+  $\mathcal{A}_c = \mathcal{A}$, then $m(\mathcal{A}_c) = m$. Otherwise, let
+  $\mathcal{A}_b$ be the value of $\mathcal{A}_c$ in the last iteration of the loop.
+  Then $m(\mathcal{A}_b) > \frac{2}{3} m$ and $\mathcal{A}_b$ is Type 3, 4 or 5. If it
+  is Type 3 or Type 4, the chosen sub-automaton $\mathcal{A}_c$ satisfies
+  $m(\mathcal{A}_c) \geq \frac{1}{2} m(\mathcal{A}_b) > \frac{1}{3} m$. If it is Type 5,
+  then $m(\mathcal{A}_c) = m(\mathcal{A}_b) > \frac{2}{3} m$. Therefore, $|Q_2 \cap
+  Q^\Sigma| \leq 1 + \frac{2}{3} m$.
+\end{proof}
+
+The additive constant in the bound for $Q_2$ is needed. For $\mathcal{E} = \sigma*$
+we have $m = 1$. The variant descends from the Type 5 finite-state automaton into its
+Type 2 sub-automaton, so $X$ consists of the states of the Type 2 sub-automaton and
+$Q_2$ of the start and final states of $\mathcal{A}$. Thus, $|Q_2 \cap Q^\Sigma| = 1 >
+\frac{2}{3} m$.
+
 For small regular expressions, one of the sets $Q_1$ and $Q_2$ may be empty. For
 example, for $\mathcal{E} = \sigma$ we have $Q = X$ and $Q_1 = Q_2 = \emptyset$. As
 remarked in \Cref{section:separated_finite_state_automata}, the results of this chapter

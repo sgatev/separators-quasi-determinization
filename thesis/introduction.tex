@@ -58,12 +58,18 @@ The main contributions of this thesis are the following.
   \item An analysis of the construction time. A direct construction processes as many
     states as the subset construction (\Cref{prop:quasidet_iterations}). We give a
     per-component construction whose running time depends only on the sizes of the
-    components and the separator (\Cref{thm:quasidet_components}).
-  \item Separators of size $2$ with components of at most $\frac{2}{3}|Q|$ states for
-    finite-state automata constructed from regular expressions, computed in linear time
-    (\Cref{thm:thompson_separator}). As a consequence, every regular expression can be
-    quasi-determinized in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3}|Q|})$ time
-    (\Cref{cor:quasidet_regex}).
+    components and the separator (\Cref{thm:quasidet_components}). Both the size and
+    the running time depend only on the essential states of the components: the start
+    states and the targets of non-$\epsilon$ transitions
+    (\Cref{lem:quasidet_essential,thm:quasidet_components_essential}).
+  \item Separators of size $2$ for finite-state automata constructed from regular
+    expressions, computed in linear time, whose components have at most
+    $\frac{2}{3}|Q|$ states (\Cref{thm:thompson_separator}) or at most $\frac{2}{3}m +
+    1$ essential states, where $m$ is the number of symbol occurrences
+    (\Cref{thm:thompson_separator_symbols}). As a consequence, every regular expression
+    can be quasi-determinized in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3}m})$ time
+    (\Cref{cor:quasidet_regex}), whereas the subset construction may produce up to
+    $2^{m+1}$ states.
   \item Quasi-subsequential finite-state transducers and a construction of such a
     transducer for every trimmed functional $k$-separated finite-state transducer
     whose function has bounded variation

@@ -33,15 +33,23 @@ passing all subsets of the separator to the extension functions.
 \Cref{alg:quasi_det_sfsa_components} does this in $\mathcal{O}((|\Sigma| + 2^{|X|}) |Q|
 2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$ time (\Cref{thm:quasidet_components}), independently of
 the size of the deterministic finite-state automaton. The price is that the constructed
-device may contain quasi-states that are not components of reachable states.
+device may contain quasi-states that are not components of reachable states. All
+quasi-states are $\epsilon$-closed and determined by their essential states and their
+separator states, so $|Q_i|$ can be replaced by the number $m_i$ of essential states of
+$Q_i$ in both bounds (\Cref{lem:quasidet_essential,thm:quasidet_components_essential}).
 
 \paragraph{Regular expressions.}
 Finite-state automata constructed from regular expressions by the algorithm described in
 \Cref{thm:thompson} have separators of size $2$ whose components have at most
 $\frac{2}{3}|Q|$ states, and \Cref{alg:thompson_separator} finds them in linear time
-(\Cref{thm:thompson_separator}). Together with \Cref{alg:quasi_det_sfsa_components},
-every regular expression can be quasi-determinized in $\mathcal{O}(|\Sigma| |Q|
-2^{\frac{2}{3}|Q|})$ time (\Cref{cor:quasidet_regex}). In the experiments of
+(\Cref{thm:thompson_separator}). For quasi-determinization, the relevant measure is the
+number $m$ of symbol occurrences: the subset construction produces at most $2^{m+1}$
+states, while $|Q| \geq 2m$. The symbol-balanced variant of
+\Cref{alg:thompson_separator} finds separators of size $2$ whose components have at most
+$\frac{2}{3}m + 1$ essential states (\Cref{thm:thompson_separator_symbols}). Together
+with \Cref{alg:quasi_det_sfsa_components}, every regular expression can be
+quasi-determinized in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3}m})$ time
+(\Cref{cor:quasidet_regex}). In the experiments of
 \Cref{tbl:state_comparison,tbl:time_comparison}, for the expression
 $(0|1)*.0.(0|1)^{20}$ the deterministic finite-state automaton has $2097153$ states.
 \Cref{alg:quasi_det_sfsa_components} constructs an equivalent $3$-separated
@@ -68,9 +76,12 @@ are formalized in the Lean theorem prover, using the Mathlib library, in the dir
 quasi-determinization and quasi-subsequentialization constructions and their
 correctness, the completion lemmas, the equivalence of quasi-deterministic and
 deterministic finite-state automata, the complexity bounds of the traversal algorithms
-and of \Cref{alg:quasi_det_sfsa_components}, the iteration count of
+and of \Cref{alg:quasi_det_sfsa_components}, including the refined bounds in terms of
+essential states (\Cref{lem:quasidet_essential,thm:quasidet_components_essential}), the
+iteration count of
 \Cref{alg:quasi_det_sfsa} together with the finite-state automata $\mathcal{A}_k$, and the
-separators of \Cref{alg:thompson_separator}. It does not cover the planarity of the
+separators of \Cref{alg:thompson_separator} and of its symbol-balanced variant together with
+\Cref{cor:quasidet_regex}. It does not cover \Cref{prop:essential_dfa}, the planarity of the
 graphs of finite-state automata constructed from regular expressions, the results cited
 from the literature (\Cref{thm:rabin_scott,thm:thompson,thm:choffrut_mohri}), and the
 correctness of the pseudocode of the construction algorithms line by line. The

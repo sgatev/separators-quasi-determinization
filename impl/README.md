@@ -29,5 +29,12 @@ Requires Bazel 7 or later (Bzlmod); dependencies come from the Bazel Central Reg
   `(0|1)*.0.(0|1)^20`, and prints the number of main-loop iterations of both algorithms.
 - Both algorithms skip quasi-states that were already processed. Previously a state pushed
   twice before being processed was processed twice; the resulting tables were the same.
+- Separators can balance either the number of states or the number of symbol occurrences
+  (`SeparatorWeight`, default `kSymbols`), as in Theorem `thompson_separator_symbols`. The
+  symbol-balanced descent stops at symbol nodes. `main` runs both variants and prints `|X|`,
+  `|Q_i|` and the number `m_i` of essential states in each component. The tests cover both.
+- Fixed `BuildConcat`, which added 2 to `states_count` although concatenation adds no states.
+  This only changes the 3-component state-balanced separator of `(a.b.c...)`; all state,
+  transition and iteration counts in the thesis' tables are unchanged.
 - The per-component algorithm computes the `eta` entries once per distinct result of `tau`,
   instead of once per (quasi-state, symbol) pair. The constructed device is unchanged.
