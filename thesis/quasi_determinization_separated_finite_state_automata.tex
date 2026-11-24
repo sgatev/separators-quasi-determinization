@@ -630,7 +630,7 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
     2^{|Q_i|}$.
   \end{proof}
 
-  \begin{theorem}
+  \begin{theorem}\label{thm:quasidet_components}
     For every $k$-separated finite-state automaton $\mathcal{A} = \langle \Sigma, Q, X,
     S, F, \Delta \rangle$ a $k$-separated quasi-deterministic finite-state automaton
     $\mathcal{A}''$ with $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A}$ and at
@@ -647,6 +647,33 @@ component. \Cref{alg:quasi_det_sfsa_components} computes $\mathcal{A}''$.
   finite-state automata $\mathcal{A}_k$ above, $|U_i \cup T_i| \leq 4$, and
   \Cref{alg:quasi_det_sfsa_components} completes in time polynomial in $k$, whereas
   \Cref{alg:quasi_det_sfsa} executes at least $2^k$ iterations. If the size of the
-  separator is bounded by a constant, as for the finite-state automata constructed from
-  regular expressions in \Cref{section:regular_expressions_automata}, the bound becomes
-  $\mathcal{O}(|\Sigma| |Q| \sum_{i=1}^k 2^{|Q_i|})$.
+  separator is bounded by a constant, the bound becomes $\mathcal{O}(|\Sigma| |Q|
+  \sum_{i=1}^k 2^{|Q_i|})$. This is the case for finite-state automata constructed from
+  regular expressions.
+
+  \begin{corollary}\label{cor:quasidet_regex}
+    Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$ and let
+    $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta \rangle$ be the finite-state
+    automaton constructed from $\mathcal{E}$ by the algorithm described in
+    \Cref{thm:thompson}. Then a $2$-separated quasi-deterministic finite-state automaton
+    $\mathcal{A}''$ such that $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{E}$
+    can be constructed in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3} |Q|})$ time.
+  \end{corollary}
+
+  \begin{proof}
+    By \Cref{thm:thompson_separator}, \Cref{alg:thompson_separator} finds a separator
+    $X$ and a partition $\{ X, Q_1, Q_2 \}_Q$ with $|X| = 2$ and $|Q_1|, |Q_2| \leq
+    \frac{2}{3} |Q|$ in $\mathcal{O}(|Q|)$ time. By \Cref{thm:quasidet_components}
+    applied with $k = 2$, \Cref{alg:quasi_det_sfsa_components} constructs
+    $\mathcal{A}''$ with $\mathcal{L}_{\mathcal{A}''} = \mathcal{L}_\mathcal{A} =
+    \mathcal{L}_\mathcal{E}$ in
+    \begin{equation*}
+      \mathcal{O}((|\Sigma| + 4) |Q| \cdot 4 \cdot (2^{|Q_1|} + 2^{|Q_2|})) =
+      \mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3} |Q|})
+    \end{equation*}
+    time.
+  \end{proof}
+
+  In comparison, the deterministic finite-state automaton constructed by
+  \Cref{thm:rabin_scott} can have up to $2^{|Q|}$ states, and \Cref{alg:quasi_det_sfsa}
+  executes one iteration per state (\Cref{prop:quasidet_iterations}).

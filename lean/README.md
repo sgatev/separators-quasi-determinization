@@ -34,6 +34,23 @@ No `sorry`s; the main theorems depend only on `propext`, `Classical.choice`, `Qu
 | Lemmas `quasidet_inclusion_right/left` | `FSA.delta_quasiDet_reach`, `FSA.deltaStar_quasiDet` | `QuasiDet.lean` |
 | Thm. quasi-determinization | `FSA.quasiDet_language`, `FSA.exists_quasiDet` (includes the `2^{|Q_i|+|X|}` state bound) | `QuasiDet.lean` |
 
+### §3.2 Separators in Thompson automata
+
+The Thompson construction is built structurally (`TState`, `thompson`), so that states of a
+subexpression's automaton embed into the whole automaton. Algorithm `thompson_separator` is a
+descent in the expression tree (`descend`). File: `Thompson.lean`.
+
+| Thesis | Lean |
+|---|---|
+| Thompson construction, Types 1–5 | `thompson`, `tDelta`, `nstates`, `card_tState` |
+| Inner states of a subautomaton only have transitions within it | `Pos.local` |
+| Props. `thompson_sep_3`, `thompson_sep_6`: `X` separates the blocks | `thompson_isSeparator` |
+| Prop. `thompson_sep_4`: `\|X\| = 2` | `ncard_thompsonSep_sepX` |
+| Loop condition and Prop. `thompson_sep_5`: blocks of size `≤ 2\|Q\|/3` | `descend_bounds`, `ncard_block_zero/one` |
+| Prop. `thompson_sep_2`: at most `\|Q\|` iterations | `descendSteps_le` |
+| Thm. `thompson_separator` | `thompson_separator` |
+| Cor. `quasidet_regex`: quasi-determinization in `O(\|Σ\|·\|Q\|·2^{2\|Q\|/3})` | `thompson_quasiDet` |
+
 ### Chapter 4 (transducers)
 
 | Thesis | Lean | File |
@@ -203,7 +220,9 @@ Smaller issues in the complexity proofs:
   frontier sequence `R^{(n)}`, as justified by the thesis' proposition `𝒜_c = 𝒜'`. The
   algorithms are modelled as functional programs with explicit step counts, not run on an
   operational machine model.
-- §3.2: Thompson automata and their constant-size separators.
+- §3.2: the planarity of the graphs of Thompson automata (Mathlib has no theory of planar
+  embeddings; the result only motivates the use of separators), and the correctness of the
+  Thompson construction itself (cited in the thesis).
 - Cited results: the trimming algorithm (Mihov–Schulz) and Mohri's subsequentialization theorem.
 - For transducers, the finite-state device is the restriction of `𝒯'` to its finitely many
   reachable states. It is not built as a separate structure with finite component types.
