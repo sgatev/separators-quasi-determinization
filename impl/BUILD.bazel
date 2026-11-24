@@ -300,3 +300,33 @@ cc_test(
         "@gtest//:gtest_main",
     ],
 )
+
+cc_binary(
+    name = "bench",
+    srcs = ["bench.cc"],
+    deps = [
+        ":boundary_quasi_determinize",
+        ":determinize",
+        ":dfa",
+        ":eager_quasi_determinize",
+        ":nfa",
+        ":parser",
+        ":qdfa",
+        ":regex",
+        ":separator",
+        ":thompson_description",
+        ":thompson_nfa_builder",
+    ],
+)
+
+cc_test(
+    name = "separator_test",
+    srcs = ["separator_test.cc"],
+    deps = [
+        ":nfa",
+        ":separator",
+        ":test_util",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)

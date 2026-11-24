@@ -30,6 +30,21 @@ class Dfa {
   // Makes a state of the automaton final.
   void MakeFinalState(uint32_t state);
 
+  // Returns the start state.
+  ABSL_MUST_USE_RESULT uint32_t StartState() const { return start_state_; }
+
+  // Returns true if the state is final.
+  ABSL_MUST_USE_RESULT bool IsFinal(uint32_t state) const {
+    return final_states_[state];
+  }
+
+  // Returns the target of the transition from state with symbol, or
+  // uint32_null if there is none.
+  ABSL_MUST_USE_RESULT uint32_t Next(uint32_t state, char symbol) const {
+    return FindTransitionTarget(transitions_, state_transitions_[state],
+                                symbol);
+  }
+
   // Returns the number of states of the finite-state automaton.
   ABSL_MUST_USE_RESULT uint32_t StatesCount() const;
 

@@ -48,6 +48,9 @@ class QdfaComponent {
   ABSL_MUST_USE_RESULT uint32_t MakeEtaTransition(uint32_t from,
                                                   uint32_t value) const;
 
+  // Returns the empty state of the component.
+  ABSL_MUST_USE_RESULT uint32_t EmptyState() const { return empty_state_; }
+
   // Returns the start state of the component.
   ABSL_MUST_USE_RESULT uint32_t StartState() const;
 

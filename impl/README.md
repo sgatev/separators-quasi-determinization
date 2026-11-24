@@ -10,6 +10,7 @@ Imported from the original `qdfa` repository (2019–2020) without its history.
 ```sh
 bazel test -c opt --config=opt //...   # unit tests
 bazel run -c opt --config=opt //:main   # benchmark on the thesis' expressions
+bazel run -c opt --config=opt //:bench  # matching throughput
 ```
 
 Requires Bazel 7 or later (Bzlmod); dependencies come from the Bazel Central Registry.
@@ -36,6 +37,17 @@ Requires Bazel 7 or later (Bzlmod); dependencies come from the Bazel Central Reg
 - Fixed `BuildConcat`, which added 2 to `states_count` although concatenation adds no states.
   This only changes the 3-component state-balanced separator of `(a.b.c...)`; all state,
   transition and iteration counts in the thesis' tables are unchanged.
+- Fixed the separator construction for more than 2 components: when the descent cut a child
+  out of a union, `FindInternal` rewrote the cut child instead of the union, so some states
+  belonged to two components and others to none. This changed the 3-component results for
+  `(a|b|c|...).(a|b|c|...)*`. `separator_test` now checks that separations of 200 random
+  expressions are partitions without transitions between components, for up to 16
+  components, and the QDFA tests use 40 random expressions.
+- `Qdfa::Match` rejects a word once no NFA state is reached. Previously a symbol outside the
+  alphabet could make it read past the tables of the lazy construction.
+- `bench` measures matching throughput. All devices are converted to dense arrays first (the
+  `Match` functions of `Dfa` and `Qdfa` follow linked lists of transitions), and the NFA is
+  simulated with bit sets. Every device is checked against the NFA on 2000 random words.
 - `boundary_quasi_determinize.h`: the construction with boundaries (thesis §3.6). Boundaries
   are computed from the transitions (`ComputeBoundaries`). Separator states are bit masks
   over `X` (`|X| ≤ 64`), and `η_i` is a table of `2^{|X_i|}` entries per row. `main` runs it for

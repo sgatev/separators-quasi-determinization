@@ -33,7 +33,7 @@ empty quasi-state of each component.
     \hline
     $(a.b.c...)$ & 52 & 27 & 31 & 36 & 108 & 216 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 206 & 53 & 57 & 43 & 85 & 110 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 206 & 53 & 57 & 62 & 85 & 142 \\
     \hline
     $(0|\epsilon).(1|\epsilon)...$ & 60 & 11 & 15 & 20 & 29 & 40 \\
     \hline
@@ -63,7 +63,7 @@ $\tau_1, \ldots, \tau_k$ with nonempty values, plus the number of entries of $\e
     \hline
     $(a.b.c...)$ & 51 & 26 & 57 & 63 & 278 & 588 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 257 & 1378 & 784 & 147 & 1636 & 1177 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 257 & 1378 & 784 & 529 & 1636 & 2180 \\
     \hline
     $(0|\epsilon).(1|\epsilon)...$ & 69 & 55 & 52 & 53 & 168 & 260 \\
     \hline
@@ -97,7 +97,7 @@ single run on an Apple silicon laptop and are only indicative.
     \hline
     $(a.b.c...)$ & 28 & 28 & 108 & 216 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 53 & 37 & 85 & 110 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 53 & 53 & 85 & 142 \\
     \hline
     $(0|\epsilon).(1|\epsilon)...$ & 12 & 12 & 29 & 40 \\
     \hline
@@ -135,7 +135,7 @@ the tables above.
     \hline
     $(a.b.c...)$ & 31 & 36 & 108 & 216 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 57 & 44 & 164 & 321 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 57 & 62 & 164 & 366 \\
     \hline
     $(0|\epsilon).(1|\epsilon)...$ & 15 & 20 & 30 & 42 \\
     \hline
@@ -177,9 +177,9 @@ also the number of iterations of the main loop. The last columns show $|X|$ and 
     \hline
     $(a.b.c...)$ & 88 & 88 & 100 & 101 & 18 & 2 \\
     \hline
-    $(a|b|c|...).(a|b|c|...)*$ & 110 & 108 & 191 & 199 & 8 & 5 \\
+    $(a|b|c|...).(a|b|c|...)*$ & 110 & 162 & 240 & 299 & 30 & 4 \\
     \hline
-    $(0|\epsilon).(1|\epsilon)...$ & 25 & 31 & 43 & 57 & 17 & 2 \\
+    $(0|\epsilon).(1|\epsilon)...$ & 25 & 31 & 43 & 56 & 16 & 2 \\
     \hline
     $(0|1)*.0.(0|1)^{16}$ & 12477 & 421 & 177 & 137 & 22 & 2 \\
      & 22 ms & 669 $\mu$s & 219 $\mu$s & 154 $\mu$s & & \\
@@ -197,7 +197,57 @@ For $(0|1)*.0.(0|1)^{20}$ with $16$ components, the quasi-deterministic finite-s
 automaton has $185$ quasi-states, compared with $7282$ for $3$ components without boundaries
 and $2097153$ states of the deterministic finite-state automaton. Without boundaries,
 \Cref{alg:quasi_det_sfsa_components} would tabulate $\eta_i$ for $2^{19}$ separator states
-per quasi-state and $\eta_x$ with $4^{19}$ entries. For $(a|b|c|...).(a|b|c|...)*$, repeated
-splitting soon produces empty components and boundaries of size $5$, and more components do
-not help. For the small expressions, the number of quasi-states grows slowly with $k$,
+per quasi-state and $\eta_x$ with $4^{19}$ entries. For $(a|b|c|...).(a|b|c|...)*$, whose
+deterministic finite-state automaton has only $53$ states, more components do not help: the
+boundaries have up to $4$ states, and the number of quasi-states grows with $k$. For the small expressions, the number of quasi-states grows slowly with $k$,
 since every component contributes at least its start and empty quasi-states.
+\bigbreak
+\Cref{tbl:throughput_comparison} presents the matching throughput, measured with the program
+\texttt{bench} of the implementation. All devices are converted to dense arrays, so that
+every look-up in a table is a single array access. The NFA is simulated with bit sets: for
+every state and symbol, the $\epsilon$-closure of the successors is precomputed, and a step
+unites these sets for the active states. Each device matches a uniformly random word of
+$4$ MiB over the alphabet of the expression in full. The table shows the median of $7$
+runs on an Apple silicon laptop; repeated measurements differed by up to $15\%$. The DFA
+for $(0|1)*.0.(0|1)^{24}$ with $2^{25} + 1$ states was not constructed.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabular}{||c c c c c c c c c||}
+    \hline
+    Expression & NFA & DFA & 2-QDFA'' & 3-QDFA'' & \multicolumn{4}{c||}{with boundaries} \\
+    & & & & & $k = 2$ & $k = 4$ & $k = 8$ & $k = 16$ \\ [0.5ex]
+    \hline
+    $(a|b|c|...).(a|b|c|...)*$ & 8.9 & 355 & 106 & 84 & 142 & 72 & 58 & 23 \\
+    \hline
+    $(0|1)*.0.(0|1)^{16}$ & 15.9 & 192 & 65 & 83 & 88 & 112 & 74 & 29 \\
+    \hline
+    $(0|1)*.0.(0|1)^{20}$ & 11.8 & 69 & 52 & 61 & 62 & 111 & 74 & 29 \\
+    \hline
+    $(0|1)*.0.(0|1)^{24}$ & 9.9 & -- & 9.7 & 46 & 10.7 & 110 & 73 & 29 \\
+    \hline
+  \end{tabular}
+  \caption{Matching throughput in MB/s.}
+  \label{tbl:throughput_comparison}
+\end{table}
+
+The DFA is the fastest device as long as its table is small. For $(0|1)*.0.(0|1)^{20}$ its
+table has $2^{22}$ entries, look-ups miss the cache, and its throughput drops to $69$ MB/s.
+The quasi-deterministic finite-state automata show the same effect: with $2$ components,
+the throughput drops to about $10$ MB/s for $(0|1)*.0.(0|1)^{24}$, where the components have
+$787198$ quasi-states. With $4$ components and boundaries, the tables have at most $2005$
+quasi-states, and the throughput stays at about $110$ MB/s for all three expressions. This
+is faster than the DFA for $(0|1)*.0.(0|1)^{20}$ and about $11$ times faster than the
+simulation of the NFA. Beyond that, the time per symbol grows linearly with the number of
+components, as expected from \Cref{alg:qdfsa_traversal}, and the throughput drops to about
+$29$ MB/s for $16$ components, which is still about three times the throughput of the NFA
+simulation. For $(a|b|c|...).(a|b|c|...)*$, whose DFA has $53$ states, the DFA is best and
+additional components only cost time. With $2$ components, the device with boundaries is
+faster than the one of \Cref{alg:quasi_det_sfsa_components}, since it combines the
+separator states by a bitwise union instead of look-ups in the table of $\eta_x$.
+
+The number of components thus trades the size of the tables for the work per symbol. The
+best choice in these experiments is the smallest number of components for which the tables
+fit into the cache.

@@ -1,6 +1,7 @@
 #ifndef SQDFA_TEST_UTIL_H_
 #define SQDFA_TEST_UTIL_H_
 
+#include <random>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -48,7 +49,44 @@ inline const std::vector<std::string_view>& TestExpressions() {
       "(0|~).(1|~).(0|~).(1|~)",
       "(0.1|1.0)*.(0|1)*",
       "((0|1).(0|1))*.1",
+      "(0|1|0.1|1.0).(0|1|0.1|1.0)*",
+      "((0|1).((0.1)|(1|0.0))*)|(1.(0|1))*",
   };
+  return expressions;
+}
+
+// Returns a random fully parenthesized regular expression over {0, 1, ~}.
+inline std::string RandomExpression(std::mt19937& random, int depth) {
+  std::uniform_int_distribution<int> pick(0, depth <= 0 ? 2 : 6);
+  switch (pick(random)) {
+    case 0:
+      return "0";
+    case 1:
+      return "1";
+    case 2:
+      return depth <= 0 ? "~" : "0";
+    case 3:
+    case 4:
+      return "(" + RandomExpression(random, depth - 1) + "." +
+             RandomExpression(random, depth - 1) + ")";
+    case 5:
+      return "(" + RandomExpression(random, depth - 1) + "|" +
+             RandomExpression(random, depth - 1) + ")";
+    default:
+      return "(" + RandomExpression(random, depth - 1) + ")*";
+  }
+}
+
+// Random expressions followed by the fixed test expressions.
+inline std::vector<std::string> RandomTestExpressions(int count) {
+  std::mt19937 random(7);
+  std::vector<std::string> expressions;
+  for (int i = 0; i < count; i++) {
+    expressions.push_back(RandomExpression(random, 6));
+  }
+  for (std::string_view expression : TestExpressions()) {
+    expressions.emplace_back(expression);
+  }
   return expressions;
 }
 

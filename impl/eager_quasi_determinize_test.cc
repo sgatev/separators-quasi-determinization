@@ -37,7 +37,7 @@ TEST(EagerQuasiDeterminize, Example) {
 
 template <int K>
 void ExpectAgreesWithNfa(SeparatorWeight weight) {
-  for (std::string_view expression : TestExpressions()) {
+  for (const std::string& expression : RandomTestExpressions(40)) {
     const auto [nfa, qdfa] = Build<K>(expression, weight);
     for (const std::string& word : AllWords("01", 10)) {
       EXPECT_EQ(qdfa.Match(word), nfa.Match(word))
@@ -55,6 +55,10 @@ TEST(EagerQuasiDeterminize, AgreesWithNfa2) {
 TEST(EagerQuasiDeterminize, AgreesWithNfa3) {
   ExpectAgreesWithNfa<3>(SeparatorWeight::kStates);
   ExpectAgreesWithNfa<3>(SeparatorWeight::kSymbols);
+}
+TEST(EagerQuasiDeterminize, AgreesWithNfa4) {
+  ExpectAgreesWithNfa<4>(SeparatorWeight::kStates);
+  ExpectAgreesWithNfa<4>(SeparatorWeight::kSymbols);
 }
 
 }  // namespace

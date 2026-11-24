@@ -56,108 +56,63 @@ uint32_t FindInternal(ThompsonDescription& description, uint32_t node_idx,
   }
 
   if (!past_datas.empty()) {
-    description.Node(past_datas.top())
-        .Match([](const SymbolNode) {},
-               [&](const ConcatNode concat_data) {
-                 if (concat_data.left_node_idx == node_idx) {
-                   description.Node(past_datas.top()).start_state =
-                       description.Node(concat_data.right_node_idx).start_state;
-                   description.Node(past_datas.top()).final_state =
-                       description.Node(concat_data.right_node_idx).final_state;
-                   description.Node(past_datas.top()).node =
-                       description.Node(concat_data.right_node_idx).node;
-                 } else {
-                   description.Node(past_datas.top()).start_state =
-                       description.Node(concat_data.left_node_idx).start_state;
-                   description.Node(past_datas.top()).final_state =
-                       description.Node(concat_data.left_node_idx).final_state;
-                   description.Node(past_datas.top()).node =
-                       description.Node(concat_data.left_node_idx).node;
-                 }
-               },
-               [&](const UnionNode union_data) {
-                 const ThompsonNode left_data =
-                     description.Node(union_data.left_node_idx);
-                 const ThompsonNode right_data =
-                     description.Node(union_data.right_node_idx);
-
-                 if (union_data.left_node_idx == node_idx) {
-                   uint32_t fake_first_idx = description.NodesCount();
-                   description.AddNode({
-                       .start_state = description.Node(node_idx).start_state,
-                       .final_state = description.Node(node_idx).start_state,
-                       .states_count = 1,
-                       .symbols_count = 0,
-                       .node = SymbolNode{},
-                   });
-
-                   uint32_t first_concat_idx = description.NodesCount();
-                   description.AddNode({
-                       .start_state = description.Node(node_idx).start_state,
-                       .final_state = right_data.final_state,
-                       .states_count = right_data.states_count + 1,
-                       .symbols_count = right_data.symbols_count,
-                       .node =
-                           ConcatNode{
-                               .left_node_idx = fake_first_idx,
-                               .right_node_idx = union_data.right_node_idx,
-                           },
-                   });
-
-                   uint32_t fake_second_idx = description.NodesCount();
-                   description.AddNode({
-                       .start_state = description.Node(node_idx).final_state,
-                       .final_state = description.Node(node_idx).final_state,
-                       .states_count = 1,
-                       .symbols_count = 0,
-                       .node = SymbolNode{},
-                   });
-
-                   description.Node(node_idx).node = ConcatNode{
-                       .left_node_idx = first_concat_idx,
-                       .right_node_idx = fake_second_idx,
-                   };
-                 } else {
-                   uint32_t fake_first_idx = description.NodesCount();
-                   description.AddNode({
-                       .start_state = description.Node(node_idx).start_state,
-                       .final_state = description.Node(node_idx).start_state,
-                       .states_count = 1,
-                       .symbols_count = 0,
-                       .node = SymbolNode{},
-                   });
-
-                   uint32_t first_concat_idx = description.NodesCount();
-                   description.AddNode({
-                       .start_state = description.Node(node_idx).start_state,
-                       .final_state = left_data.final_state,
-                       .states_count = left_data.states_count + 1,
-                       .symbols_count = left_data.symbols_count,
-                       .node =
-                           ConcatNode{
-                               .left_node_idx = fake_first_idx,
-                               .right_node_idx = union_data.left_node_idx,
-                           },
-                   });
-
-                   uint32_t fake_second_idx = description.NodesCount();
-                   description.AddNode({
-                       .start_state = description.Node(node_idx).final_state,
-                       .final_state = description.Node(node_idx).final_state,
-                       .states_count = 1,
-                       .symbols_count = 0,
-                       .node = SymbolNode{},
-                   });
-
-                   description.Node(node_idx).node = ConcatNode{
-                       .left_node_idx = first_concat_idx,
-                       .right_node_idx = fake_second_idx,
-                   };
-                 }
-               },
-               [&](const IterNode iter_data) {
-                 description.Node(past_datas.top()).node = SymbolNode{};
-               });
+    // Remove the subautomaton at node_idx from its parent. The parent is
+    // copied, since adding nodes may reallocate the description.
+    const uint32_t parent_idx = past_datas.top();
+    const ThompsonNode parent = description.Node(parent_idx);
+    parent.Match(
+        [](const SymbolNode) {},
+        [&](const ConcatNode concat_data) {
+          // The parent becomes the remaining child.
+          const uint32_t other_idx = concat_data.left_node_idx == node_idx
+                                         ? concat_data.right_node_idx
+                                         : concat_data.left_node_idx;
+          const ThompsonNode other = description.Node(other_idx);
+          description.Node(parent_idx).start_state = other.start_state;
+          description.Node(parent_idx).final_state = other.final_state;
+          description.Node(parent_idx).node = other.node;
+        },
+        [&](const UnionNode union_data) {
+          // The parent keeps its start and final states and the remaining
+          // child: s -> other -> f.
+          const uint32_t other_idx = union_data.left_node_idx == node_idx
+                                         ? union_data.right_node_idx
+                                         : union_data.left_node_idx;
+          const ThompsonNode other = description.Node(other_idx);
+          const uint32_t fake_first_idx = description.AddNode({
+              .start_state = parent.start_state,
+              .final_state = parent.start_state,
+              .states_count = 1,
+              .symbols_count = 0,
+              .node = SymbolNode{},
+          });
+          const uint32_t first_concat_idx = description.AddNode({
+              .start_state = parent.start_state,
+              .final_state = other.final_state,
+              .states_count = other.states_count + 1,
+              .symbols_count = other.symbols_count,
+              .node =
+                  ConcatNode{
+                      .left_node_idx = fake_first_idx,
+                      .right_node_idx = other_idx,
+                  },
+          });
+          const uint32_t fake_second_idx = description.AddNode({
+              .start_state = parent.final_state,
+              .final_state = parent.final_state,
+              .states_count = 1,
+              .symbols_count = 0,
+              .node = SymbolNode{},
+          });
+          description.Node(parent_idx).node = ConcatNode{
+              .left_node_idx = first_concat_idx,
+              .right_node_idx = fake_second_idx,
+          };
+        },
+        [&](const IterNode) {
+          // The parent keeps only its start and final states.
+          description.Node(parent_idx).node = SymbolNode{};
+        });
     do {
       description.Node(past_datas.top()).states_count -=
           description.Node(node_idx).states_count;

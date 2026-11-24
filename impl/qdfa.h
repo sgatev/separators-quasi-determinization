@@ -39,8 +39,15 @@ class Qdfa {
 
     for (char symbol : input) {
       std::array<uint32_t, K> tau;
+      bool dead = true;
       for (int i = 0; i < K; i++) {
         tau[i] = components_[i].MakeTauTransition(state[i], symbol);
+        dead = dead && tau[i] == components_[i].EmptyState();
+      }
+      // No state of the NFA is reached, for example because the symbol is
+      // not in the alphabet. The tables have no entries for this case.
+      if (dead) {
+        return false;
       }
 
       std::array<uint32_t, K> rho;
