@@ -1,0 +1,110 @@
+\chapter{Conclusion}
+\label{chapter:conclusion}
+
+In this thesis, we studied finite-state devices whose graphs contain a separator, and
+showed how a separator can be used to obtain deterministic representations that are
+smaller than those produced by the classical constructions.
+
+\section{Summary}
+
+\paragraph{Quasi-determinization.}
+A $k$-separated quasi-deterministic finite-state automaton keeps one deterministic
+quasi-state per component and passes information between the components only through
+the separator. Every $k$-separated finite-state automaton has an equivalent
+quasi-deterministic finite-state automaton whose $i$-th component has at most $2^{|Q_i|
++ |X|}$ quasi-states, whereas a deterministic finite-state automaton may need up to
+$2^{|Q|}$ states. Its correctness rests on \Cref{lem:quasidet_invariant}: the
+quasi-states of a reachable state are exactly the projections $Reach(w) \cap
+\mathcal{C}(Q_i)$ of the corresponding state of the subset construction. In particular,
+every reachable separator state belongs to all quasi-states, and the separator transition
+function is what keeps the components synchronized. Words are processed in
+$\mathcal{O}(k)$ time per symbol (\Cref{alg:qdfsa_traversal}).
+
+\paragraph{Construction time.}
+The small size of a quasi-deterministic finite-state automaton does not imply that it can
+be constructed quickly. \Cref{alg:quasi_det_sfsa} explores the reachable states of
+$\mathcal{A}'$, and by \Cref{prop:quasidet_iterations} there are exactly as many of them
+as states of the deterministic finite-state automaton constructed by
+\Cref{thm:rabin_scott}. The finite-state automata $\mathcal{A}_k$ show that this number
+can be exponentially larger than the sizes of the components. Since the tables of a
+quasi-deterministic finite-state automaton are indexed by component quasi-states and
+separator states only, they can instead be computed for each component separately, by
+passing all subsets of the separator to the extension functions.
+\Cref{alg:quasi_det_sfsa_components} does this in $\mathcal{O}((|\Sigma| + 2^{|X|}) |Q|
+2^{|X|} \sum_{i=1}^k 2^{|Q_i|})$ time (\Cref{thm:quasidet_components}), independently of
+the size of the deterministic finite-state automaton. The price is that the constructed
+device may contain quasi-states that are not components of reachable states.
+
+\paragraph{Regular expressions.}
+Finite-state automata constructed from regular expressions by the algorithm described in
+\Cref{thm:thompson} have separators of size $2$ whose components have at most
+$\frac{2}{3}|Q|$ states, and \Cref{alg:thompson_separator} finds them in linear time
+(\Cref{thm:thompson_separator}). Together with \Cref{alg:quasi_det_sfsa_components},
+every regular expression can be quasi-determinized in $\mathcal{O}(|\Sigma| |Q|
+2^{\frac{2}{3}|Q|})$ time (\Cref{cor:quasidet_regex}). In the experiments of
+\Cref{tbl:state_comparison,tbl:time_comparison}, for the expression
+$(0|1)*.0.(0|1)^{20}$ the deterministic finite-state automaton has $2097153$ states.
+\Cref{alg:quasi_det_sfsa_components} constructs an equivalent $3$-separated
+quasi-deterministic finite-state automaton with $7282$ quasi-states in $7281$ iterations,
+where \Cref{alg:quasi_det_sfsa} needs $2097153$ iterations.
+
+\paragraph{Transducers.}
+The same approach applies to trimmed functional $k$-separated finite-state transducers
+whose function has bounded variation. Here, quasi-states carry pending outputs, and the
+outputs of the components have to be normalized by their common prefix. This prefix
+depends on all components, so it cannot be computed by the quasi-state transition
+functions $\tau_i$ alone. The construction of
+\Cref{section:quasi_subsequentialization} therefore passes it through the separator
+states, and the extension functions $\eta_i$ perform the normalization.
+\Cref{lem:quasisubseq_invariant} characterizes the reachable states, and bounded
+variation guarantees that only finitely many of them exist
+(\Cref{lem:quasisubseq_completion}).
+
+\section{Formal verification}
+
+The main results of \Cref{chapter:separators_finite_state_automata,chapter:separators_finite_state_transducers}
+are formalized in the Lean theorem prover, using the Mathlib library, in the directory
+\texttt{lean} of the accompanying repository. The formalization covers the
+quasi-determinization and quasi-subsequentialization constructions and their
+correctness, the completion lemmas, the equivalence of quasi-deterministic and
+deterministic finite-state automata, the complexity bounds of the traversal algorithms
+and of \Cref{alg:quasi_det_sfsa_components}, the iteration count of
+\Cref{alg:quasi_det_sfsa} together with the finite-state automata $\mathcal{A}_k$, and the
+separators of \Cref{alg:thompson_separator}. It does not cover the planarity of the
+graphs of finite-state automata constructed from regular expressions, the results cited
+from the literature (\Cref{thm:rabin_scott,thm:thompson,thm:choffrut_mohri}), and the
+correctness of the pseudocode of the construction algorithms line by line. The
+algorithms are modelled by the sequences of states they process.
+
+\section{Future work}
+
+\paragraph{Per-component quasi-subsequentialization.}
+\Cref{alg:quasi_det_sfsa_components} relies on the finiteness of the set of separator
+states $2^X$. For transducers, separator states also carry pending outputs and a common
+prefix, so there are infinitely many candidates. A per-component construction would
+need a bound on the pending outputs, such as the one derived from bounded variation in
+the proof of \Cref{lem:quasisubseq_completion}, and a way to enumerate only the relevant
+separator states.
+
+\paragraph{Experiments with transducers.}
+The implementation covers finite-state automata only. Implementing the
+quasi-subsequentialization of \Cref{section:quasi_subsequentialization} would allow the
+same comparison for transducers, for example for transducers constructed from rewrite
+rules.
+
+\paragraph{Size of the constructed devices.}
+\Cref{alg:quasi_det_sfsa_components} trades construction time for size: it may tabulate
+quasi-states that no reachable state uses. These could be removed afterwards by a
+traversal of the reachable states, but such a traversal again processes as many states as
+the deterministic finite-state automaton has. Bounding the number of unused quasi-states,
+or avoiding them without enumerating global states, remains open.
+
+\paragraph{Other separators.}
+For finite-state automata constructed from regular expressions, the implementation
+obtains separators for $k > 2$ components by applying the idea of
+\Cref{alg:thompson_separator} repeatedly, which adds two separator states per additional
+component. Bounds on the sizes of the resulting components remain to be proved. For general
+finite-state automata with planar graphs, the separator theorem of Lipton and Tarjan
+(\Cref{thm:lipton_tarjan}) gives separators of size $\mathcal{O}(\sqrt{|Q|})$. Since
+the bounds depend exponentially on $|X|$, the balance between the size of the separator
+and the sizes of the components determines which separators are useful in practice.
