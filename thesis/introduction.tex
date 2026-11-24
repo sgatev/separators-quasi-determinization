@@ -34,9 +34,84 @@ Similar results follow for other classes of graphs \cite{gilbert_hutchinson_tarj
 \cite{alon_seymour_thomas}.
 \bigbreak
 In this thesis, we take a closer look at graphs corresponding to finite-state
-automata and finite-state transducers. We show that the existence of a separator
-in the graph can
-lead to a more space-efficient deterministic representation of the finite-state
-device. We then observe that graphs corresponding to finite-state automata derived
-from regular expressions \cite{thompson} contain separators of constant size and use
-them as an illustrative example for the new construction. 
+automata and finite-state transducers, and show how a separator in the graph can be
+used to obtain deterministic representations that are smaller than those produced by
+the classical constructions. If a set of states $X$ splits the remaining states into
+components $Q_1, \ldots, Q_k$ that are not connected by transitions, a
+\emph{quasi-deterministic} finite-state automaton\footnote{The term is also used by
+Caron, Flouret and Mignot \cite{caron_flouret_mignot} for a different notion:
+structures derived from $(k,l)$-unambiguous automata that use a window of fixed size.
+The two notions are unrelated.} keeps one deterministic quasi-state per component and
+synchronizes the components through the separator. The number of components controls a
+trade-off. With a single component, a quasi-deterministic finite-state automaton is a
+deterministic finite-state automaton: it performs one look-up per input symbol but may
+need up to $2^{|Q|}$ states. With $k$ components, it performs $\mathcal{O}(k)$ look-ups
+per input symbol and has at most $2^{|Q_i| + |X|}$ quasi-states in its $i$-th
+component.
+\bigbreak
+The main contributions of this thesis are the following.
+\begin{itemize}
+  \item A quasi-determinization construction for $k$-separated finite-state automata,
+    together with a characterization of its reachable states: they are exactly the
+    projections of the states of the subset construction onto the components
+    (\Cref{lem:quasidet_invariant}).
+  \item An analysis of the construction time. A direct construction processes as many
+    states as the subset construction (\Cref{prop:quasidet_iterations}). We give a
+    per-component construction whose running time depends only on the sizes of the
+    components and the separator (\Cref{thm:quasidet_components}).
+  \item Separators of size $2$ with components of at most $\frac{2}{3}|Q|$ states for
+    finite-state automata constructed from regular expressions, computed in linear time
+    (\Cref{thm:thompson_separator}). As a consequence, every regular expression can be
+    quasi-determinized in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3}|Q|})$ time
+    (\Cref{cor:quasidet_regex}).
+  \item Quasi-subsequential finite-state transducers and a construction of such a
+    transducer for every trimmed functional $k$-separated finite-state transducer
+    whose function has bounded variation
+    (\Cref{chapter:separators_finite_state_transducers}).
+  \item A formalization of the main results in the Lean theorem prover, and an
+    implementation of the constructions for finite-state automata with an
+    experimental comparison.
+\end{itemize}
+\Cref{chapter:preliminaries} introduces the notation.
+\Cref{chapter:separators_finite_state_automata} studies separated finite-state
+automata, \Cref{chapter:separators_finite_state_transducers} separated finite-state
+transducers, and \Cref{chapter:conclusion} summarizes the results and discusses future
+work.
+
+\section{Related work}
+
+\paragraph{Decompositions of automata constructed from regular expressions.}
+The observation that the automata constructed from regular expressions by the algorithm
+of Thompson \cite{thompson} decompose along the parse tree of the expression into parts
+that share only their start and final states is not new. Myers \cite{myers} uses it to
+match regular expressions faster than by simulating the nondeterministic automaton: the
+automaton is decomposed into parts of logarithmic size, and for each part transitions
+between sets of its states are tabulated in advance. Bille and Farach-Colton
+\cite{bille_farach_colton} refine this approach and reduce its space requirements. In
+these algorithms, the parts are small, their number grows with the size of the
+expression, and the tables are used to simulate the nondeterministic automaton on a
+text. In contrast, we consider arbitrary separated finite-state automata, construct a
+quasi-deterministic finite-state automaton in advance whose reachable states correspond
+exactly to the states of the subset construction, and study how its size and the cost
+of its construction depend on the separator and the components. With one component,
+the construction yields a deterministic finite-state automaton; decompositions into
+many small parts are closer in spirit to the tabulation approach of Myers.
+
+\paragraph{Partial determinization.}
+In practice, the cost of determinization is often reduced by not determinizing the whole
+automaton at once. Van Noord \cite{van_noord} compares variants of the subset
+construction for automata with many $\epsilon$-transitions, as they arise in natural
+language processing. Becchi and Crowley \cite{becchi_crowley} keep the states that
+cause the blow-up nondeterministic in hybrid automata for deep packet inspection. These
+approaches are heuristic. Quasi-deterministic finite-state automata are fully
+deterministic devices whose size is bounded in terms of a separator.
+
+\paragraph{Deterministic devices for transducers.}
+Subsequential finite-state transducers represent exactly the functions of bounded
+variation that are realized by finite-state transducers \cite{mohri_applications}.
+Bimachines represent every regular string function deterministically, using a
+left-to-right and a right-to-left deterministic automaton \cite{mihov_schulz}, and can be
+constructed space-efficiently \cite{gerdjikov_mihov_schulz}. Quasi-subsequential
+finite-state transducers, like subsequential ones, read the input once from left to
+right and are restricted to functions of bounded variation, but their size is bounded in
+terms of a separator.
