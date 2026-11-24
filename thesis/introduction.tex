@@ -70,6 +70,10 @@ The main contributions of this thesis are the following.
     can be quasi-determinized in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3}m})$ time
     (\Cref{cor:quasidet_regex}), whereas the subset construction may produce up to
     $2^{m+1}$ states.
+  \item Boundaries: the quasi-states of a component need to record only the separator
+    states $X_i$ that share transitions with it, which removes the factor $2^{|X|}$ from
+    the bounds and makes many components practical
+    (\Cref{thm:quasidet_boundaries}).
   \item Quasi-subsequential finite-state transducers and a construction of such a
     transducer for every trimmed functional $k$-separated finite-state transducer
     whose function has bounded variation

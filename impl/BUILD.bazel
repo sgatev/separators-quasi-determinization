@@ -4,6 +4,7 @@ cc_binary(
     name = "main",
     srcs = ["main.cc"],
     deps = [
+        ":boundary_quasi_determinize",
         ":determinize",
         ":dfa",
         ":eager_quasi_determinize",
@@ -271,5 +272,31 @@ cc_library(
         ":thompson_description",
         ":thompson_nfa_builder",
         "@gtest",
+    ],
+)
+
+cc_library(
+    name = "boundary_quasi_determinize",
+    hdrs = ["boundary_quasi_determinize.h"],
+    deps = [
+        ":composite_state",
+        ":nfa",
+        ":separator",
+        "@absl//absl/algorithm:container",
+        "@absl//absl/base:core_headers",
+        "@absl//absl/container:flat_hash_map",
+    ],
+)
+
+cc_test(
+    name = "boundary_quasi_determinize_test",
+    srcs = ["boundary_quasi_determinize_test.cc"],
+    deps = [
+        ":boundary_quasi_determinize",
+        ":nfa",
+        ":separator",
+        ":test_util",
+        "@gtest",
+        "@gtest//:gtest_main",
     ],
 )

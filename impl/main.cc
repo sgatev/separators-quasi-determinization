@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include "boundary_quasi_determinize.h"
 #include "determinize.h"
 #include "dfa.h"
 #include "eager_quasi_determinize.h"
@@ -162,6 +163,34 @@ void RunEagerQdfa(Nfa nfa, ThompsonDescription description,
             << " iterations" << std::endl;
 }
 
+template <int K>
+void RunBoundaryQdfa(Nfa nfa, ThompsonDescription description,
+                     SeparatorWeight weight) {
+  const SeparatedStates<K> separated_states =
+      RunSeparator<K>(description, weight);
+  const auto boundaries = ComputeBoundaries<K>(nfa, separated_states);
+  std::cout << "boundaries:";
+  for (const auto& boundary : boundaries) {
+    std::cout << " " << boundary.size();
+  }
+  std::cout << std::endl;
+
+  const Timer timer = MakeTimer("boundary QDFA construction");
+  uint64_t iterations = 0;
+  const BoundaryQdfa<K> qdfa =
+      BoundaryQuasiDeterminize<K>(nfa, separated_states, &iterations);
+  std::cout << K << "-boundary-qdfa: " << qdfa.StatesCount() << " states, "
+            << qdfa.TransitionsCount() << " transitions, " << iterations
+            << " iterations" << std::endl;
+}
+
+template <int... Ks>
+void RunBoundaryQdfas(const Nfa& nfa, const ThompsonDescription& description,
+                      SeparatorWeight weight) {
+  ((RunBoundaryQdfa<Ks>(nfa, description, weight), std::cout << std::endl),
+   ...);
+}
+
 Union LatinAlphabetUnion() {
   return Union({
       Char('a'), Char('b'), Char('c'), Char('d'), Char('e'), Char('f'),
@@ -237,6 +266,8 @@ void Run() {
 
       RunEagerQdfa<3>(nfa, description, weight);
       std::cout << std::endl;
+
+      RunBoundaryQdfas<2, 3, 4, 6, 8, 12, 16>(nfa, description, weight);
     }
   }
 }

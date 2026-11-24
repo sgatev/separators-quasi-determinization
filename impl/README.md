@@ -36,5 +36,9 @@ Requires Bazel 7 or later (Bzlmod); dependencies come from the Bazel Central Reg
 - Fixed `BuildConcat`, which added 2 to `states_count` although concatenation adds no states.
   This only changes the 3-component state-balanced separator of `(a.b.c...)`; all state,
   transition and iteration counts in the thesis' tables are unchanged.
+- `boundary_quasi_determinize.h`: the construction with boundaries (thesis §3.6). Boundaries
+  are computed from the transitions (`ComputeBoundaries`). Separator states are bit masks
+  over `X` (`|X| ≤ 64`), and `η_i` is a table of `2^{|X_i|}` entries per row. `main` runs it for
+  2 to 16 components; the tests compare it with the NFA for 2 to 8 components.
 - The per-component algorithm computes the `eta` entries once per distinct result of `tau`,
   instead of once per (quasi-state, symbol) pair. The constructed device is unchanged.

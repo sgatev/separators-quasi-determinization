@@ -22,7 +22,9 @@ transitions. For finite-state automata constructed from regular expressions with
 symbol occurrences, we find separators of size $2$ whose components have at most
 $\frac{2}{3}m + 1$ essential states in linear time. As a consequence, every regular
 expression can be quasi-determinized in $\mathcal{O}(|\Sigma| |Q| 2^{\frac{2}{3}m})$
-time, compared with up to $2^{m+1}$ states of the subset construction. For trimmed
+time, compared with up to $2^{m+1}$ states of the subset construction. Restricting each
+component to the separator states $X_i$ adjacent to it replaces $2^{|X|}$ by $2^{|X_i|}$ in
+these bounds, which makes many components practical. For trimmed
 functional $k$-separated finite-state transducers whose function has bounded variation,
 we construct an equivalent quasi-subsequential finite-state transducer.
 \bigbreak

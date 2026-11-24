@@ -56,6 +56,16 @@ $(0|1)*.0.(0|1)^{20}$ the deterministic finite-state automaton has $2097153$ sta
 quasi-deterministic finite-state automaton with $7282$ quasi-states in $7281$ iterations,
 where \Cref{alg:quasi_det_sfsa} needs $2097153$ iterations.
 
+\paragraph{Boundaries.}
+A component shares transitions only with some of the separator states, its boundary $X_i$.
+Recording only these in its quasi-states, while the separator state is still passed as a
+subset of $X$, gives an equivalent quasi-deterministic finite-state automaton with at most
+$2^{m_i + |X_i|}$ quasi-states in the $i$-th component, constructed in
+$\mathcal{O}(\sum_{i=1}^k (|\Sigma| + 2^{|X_i|}) |Q| 2^{m_i + |X_i|})$ time
+(\Cref{thm:quasidet_boundaries}). For regular expressions, the boundaries stay small when
+the number of components grows. For $(0|1)*.0.(0|1)^{20}$ and $16$ components, the
+construction produces $185$ quasi-states (\Cref{tbl:boundary_comparison}).
+
 \paragraph{Transducers.}
 The same approach applies to trimmed functional $k$-separated finite-state transducers
 whose function has bounded variation. Here, quasi-states carry pending outputs, and the
@@ -77,7 +87,8 @@ quasi-determinization and quasi-subsequentialization constructions and their
 correctness, the completion lemmas, the equivalence of quasi-deterministic and
 deterministic finite-state automata, the complexity bounds of the traversal algorithms
 and of \Cref{alg:quasi_det_sfsa_components}, including the refined bounds in terms of
-essential states (\Cref{lem:quasidet_essential,thm:quasidet_components_essential}), the
+essential states (\Cref{lem:quasidet_essential,thm:quasidet_components_essential}) and
+the construction with boundaries (\Cref{lem:boundary_invariant,lem:boundary_essential,thm:quasidet_boundaries}), the
 iteration count of
 \Cref{alg:quasi_det_sfsa} together with the finite-state automata $\mathcal{A}_k$, and the
 separators of \Cref{alg:thompson_separator} and of its symbol-balanced variant together with
@@ -114,7 +125,9 @@ or avoiding them without enumerating global states, remains open.
 For finite-state automata constructed from regular expressions, the implementation
 obtains separators for $k > 2$ components by applying the idea of
 \Cref{alg:thompson_separator} repeatedly, which adds two separator states per additional
-component. Bounds on the sizes of the resulting components remain to be proved. For general
+component. With boundaries (\Cref{section:quasi_determinization_boundaries}) the growth of
+$X$ matters only through the traversal, but bounds on the sizes of the resulting components
+and of their boundaries remain to be proved. For general
 finite-state automata with planar graphs, the separator theorem of Lipton and Tarjan
 (\Cref{thm:lipton_tarjan}) gives separators of size $\mathcal{O}(\sqrt{|Q|})$. Since
 the bounds depend exponentially on $|X|$, the balance between the size of the separator

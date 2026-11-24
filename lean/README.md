@@ -121,6 +121,25 @@ File: `Essential.lean`.
 
 Prop. `essential_dfa` (`D ≤ 2^{|Q^Σ|}`) is not formalized.
 
+### Quasi-determinization with boundaries
+
+File: `Boundary.lean`. `𝒜ᵇ` is a QDFA with the same quasi-state and separator types as `𝒜'`.
+
+| Thesis | Lean |
+|---|---|
+| Def. `boundaries`, bag `B_i = Q_i ∪ X_i` | `FSA.IsBoundary`, `FSA.bag`; `IsBoundary.isSeparator`, `isBoundary_sepX` |
+| Prop. `boundary_path` | `FSA.IsBoundary.exists_bnd_of_star` |
+| Construction `𝒜ᵇ`; `ηᵇ_i` reads only `t ∩ B_i` and `x ∩ X_i` | `FSA.boundaryDet`, `boundaryDet_eta_congr` |
+| Lemma `boundary_invariant` | `FSA.deltaX_boundaryDet_reach`, `deltaStar_boundaryDet`, `boundaryDet_language` |
+| `Uᵇ_i`, `Tᵇ_i`; reachable states have components in `Uᵇ_i` | `FSA.bndClosure`, `bndTauImage`, `deltaStar_mem_bndClosure` |
+| Prop. `boundary_essential_closure` | `FSA.eclose_inter_bag_eq` |
+| Lemma `boundary_essential`: `\|Uᵇ_i\|, \|Tᵇ_i\| ≤ 2^{m_i + \|X_i\|}` | `FSA.ncard_bndClosure_le`, `ncard_bndTauImage_le` |
+| Thm. `quasidet_boundaries`: cost `O(Σᵢ(\|Σ\| + 2^{\|X_i\|})·\|Q\|·2^{m_i + \|X_i\|})` | `FSA.boundaryCost_le` |
+
+`bndClosure` closes over all separator states `x ⊆ X`; by `boundaryDet_eta_congr` this is the
+same set as closing over `x ⊆ X_i`. As for `𝒜''`, the restricted tables are not built as a
+separate structure for `𝒜ᵇ`. The traversal cost with bit-vector unions is not formalized.
+
 
 ## Modelling choices
 

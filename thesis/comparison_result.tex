@@ -1,4 +1,5 @@
 \section{Comparison results}
+\label{section:comparison_result}
 
 In this section, we compare the finite-state devices constructed from regular
 expressions by the implementation in the directory \texttt{impl} of the accompanying
@@ -157,3 +158,46 @@ separators split the essential states evenly, but the symbol-balanced one leads 
 quasi-states that are not components of reachable states. The bounds of
 \Cref{lem:quasidet_essential} are worst-case bounds, and a separator that is better
 with respect to them need not be better on a particular finite-state automaton.
+\bigbreak
+\Cref{tbl:boundary_comparison} presents the construction of
+\Cref{section:quasi_determinization_boundaries} with the boundaries $X_i$ consisting of the
+separator states that share a transition with $Q_i$, for up to $16$ components. The
+separators are symbol-balanced and obtained as above. For each number of components, the
+table shows the number of quasi-states $\sum_{i=1}^k |U_i^b \cup T_i^b|$. Since
+$\eta_i^b(t, \emptyset) = t \cap \mathcal{B}(Q_i)$, we have $T_i^b \subseteq U_i^b$, so this is
+also the number of iterations of the main loop. The last columns show $|X|$ and $\max_i |X_i|$ for $16$ components.
+
+\begin{table}[ht]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{||c c c c c c c||}
+    \hline
+    Expression & $k = 2$ & $k = 4$ & $k = 8$ & $k = 16$ & $|X|$ & $\max_i |X_i|$ \\ [0.5ex]
+    \hline
+    $(a.b.c...)$ & 88 & 88 & 100 & 101 & 18 & 2 \\
+    \hline
+    $(a|b|c|...).(a|b|c|...)*$ & 110 & 108 & 191 & 199 & 8 & 5 \\
+    \hline
+    $(0|\epsilon).(1|\epsilon)...$ & 25 & 31 & 43 & 57 & 17 & 2 \\
+    \hline
+    $(0|1)*.0.(0|1)^{16}$ & 12477 & 421 & 177 & 137 & 22 & 2 \\
+     & 22 ms & 669 $\mu$s & 219 $\mu$s & 154 $\mu$s & & \\
+    \hline
+    $(0|1)*.0.(0|1)^{20}$ & 98685 & 997 & 297 & 185 & 19 & 2 \\
+     & 246 ms & 1 ms & 396 $\mu$s & 217 $\mu$s & & \\
+    \hline
+  \end{tabular}
+  \caption{Number of quasi-states and, for the larger expressions, construction time of
+    quasi-deterministic finite-state automata with boundaries.}
+  \label{tbl:boundary_comparison}
+\end{table}
+
+For $(0|1)*.0.(0|1)^{20}$ with $16$ components, the quasi-deterministic finite-state
+automaton has $185$ quasi-states, compared with $7282$ for $3$ components without boundaries
+and $2097153$ states of the deterministic finite-state automaton. Without boundaries,
+\Cref{alg:quasi_det_sfsa_components} would tabulate $\eta_i$ for $2^{19}$ separator states
+per quasi-state and $\eta_x$ with $4^{19}$ entries. For $(a|b|c|...).(a|b|c|...)*$, repeated
+splitting soon produces empty components and boundaries of size $5$, and more components do
+not help. For the small expressions, the number of quasi-states grows slowly with $k$,
+since every component contributes at least its start and empty quasi-states.

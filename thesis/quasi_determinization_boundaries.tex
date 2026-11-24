@@ -1,0 +1,186 @@
+\section{Quasi-determinization with boundaries}
+\label{section:quasi_determinization_boundaries}
+
+The bounds of \Cref{thm:quasidet_components_essential} contain the factor $2^{|X|}$ for every
+component, and the table of $\eta_x$ has $4^{|X|}$ entries. If a finite-state automaton is
+split into many components, the separator grows with the number of components. For example,
+applying \Cref{alg:thompson_separator} repeatedly adds two separator states per additional
+component. A single component, however, shares transitions only with few separator states.
+In this section we index the quasi-states of each component by these separator states only.
+
+\begin{definition}\label{def:boundaries}
+  Let $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ be a $k$-separated
+  finite-state automaton. Sets $X_1, X_2, \ldots, X_k \subseteq X$ are \emph{boundaries} of
+  $\mathcal{A}$ if and only if
+  \begin{itemize}
+    \item for every $\langle p, \sigma, q \rangle \in \Delta$ and $i \in \{ 1, 2, \ldots, k
+      \}$, if $p \in Q_i$ or $q \in Q_i$, then $p, q \in Q_i \cup X_i$, and
+    \item $X = \bigcup_{i=1}^k X_i$.
+  \end{itemize}
+  The set $\mathcal{B}(Q_i) = Q_i \cup X_i$ is the \emph{bag} of $Q_i$.
+\end{definition}
+
+The sets $X_i = X$ for $i \in \{ 1, 2, \ldots, k \}$ are boundaries of every $k$-separated
+finite-state automaton, and then $\mathcal{B}(Q_i) = \mathcal{C}(Q_i)$. The smallest
+boundaries consist of the separator states that share a transition with a state of $Q_i$;
+separator states that share no transition with any $Q_i$ are added to an arbitrary $X_i$. The
+first condition alone already implies that $X$ is a separator.
+
+\begin{proposition}\label{prop:boundary_path}
+  Let $X_1, X_2, \ldots, X_k$ be boundaries of a $k$-separated finite-state automaton
+  $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$, let $\langle z, w, q \rangle
+  \in \Delta^*$, $z \not\in Q_i$ and $q \in Q_i$ for $i \in \{ 1, 2, \ldots, k \}$. Then
+  there exist $w', w'' \in \Sigma^*$ and $x \in X_i$ such that $w = w'w''$ and $\langle z,
+  w', x \rangle, \langle x, w'', q \rangle \in \Delta^*$.
+\end{proposition}
+
+\begin{proof}
+  Consider a path from $z$ to $q$ with label $w$ and its first transition $\langle p, \sigma,
+  p' \rangle$ with $p \not\in Q_i$ and $p' \in Q_i$. It exists since $z \not\in Q_i$ and $q
+  \in Q_i$. By the first condition of \Cref{def:boundaries}, $p \in Q_i \cup X_i$, so $p \in
+  X_i$. Letting $x = p$ shows the statement.
+\end{proof}
+
+Let $X_1, X_2, \ldots, X_k$ be boundaries of a $k$-separated finite-state automaton
+$\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$. The $k$-separated
+quasi-deterministic finite-state automaton $\mathcal{A}^b$ is obtained from $\mathcal{A}'$ by
+replacing the start state and the quasi-state extension functions with
+\begin{align*}
+  s^i &= \hat{\Delta}_\epsilon(S) \cap \mathcal{B}(Q_i),\\
+  \eta_i^b(t, x) &= (t \cap \mathcal{B}(Q_i)) \cup (\hat{\Delta}_\epsilon(x \cap X_i) \cap
+  \mathcal{B}(Q_i))
+\end{align*}
+for $t \subseteq \mathcal{C}(Q_i)$, $x \subseteq X$ and $i \in \{ 1, 2, \ldots, k \}$. The
+functions $\tau_i$, $\rho_i$ and $\eta_x$ are those of $\mathcal{A}'$. In particular,
+$\tau_i(P, \sigma) = \hat{\Delta}_\epsilon^i(\hat{\Delta}_f(P, \{ \sigma \}))$ still uses
+the $\epsilon$-closure in all of $\mathcal{A}$, and $\rho_i(\tau_i(P, \sigma))$ contains every
+separator state reached in this way, not only those in $X_i$. The quasi-state $\eta_i^b(t,
+x)$ depends only on $t \cap \mathcal{B}(Q_i)$ and $x \cap X_i$.
+
+\begin{lemma}\label{lem:boundary_invariant}
+  Let $\mathcal{A}^b$ be constructed as above. Then
+  \begin{equation*}
+    \delta^{b*}(s, w)^i = Reach(w) \cap \mathcal{B}(Q_i)
+  \end{equation*}
+  for $w \in \Sigma^*$ and $i \in \{ 1, 2, \ldots, k \}$, and $\mathcal{L}_{\mathcal{A}^b} =
+  \mathcal{L}_\mathcal{A}$.
+\end{lemma}
+
+\begin{proof}
+  We prove the statement by induction on the length of $w$. For $w = \epsilon$ it holds by
+  definition of $s^i$. Let $w = u\sigma$ with $u \in \Sigma^*$ and $\sigma \in \Sigma$, let
+  $p = \delta^{b*}(s, u)$, and assume $p^r = Reach(u) \cap \mathcal{B}(Q_r)$ for $r \in \{ 1,
+  2, \ldots, k \}$. As in the proof of \Cref{lem:quasidet_invariant}, $\tau_r(p^r, \sigma)
+  \subseteq Reach(w)$.
+
+  We first show that $\delta_x^b(p, \sigma) = Reach(w) \cap X$. The inclusion $\subseteq$
+  follows from the observation above. Let $x \in Reach(w) \cap X$. There exist $s' \in S$
+  and $y, z \in Q$ such that $\langle s', u, y \rangle \in \Delta^*$, $\langle y, \sigma, z
+  \rangle \in \Delta$ and $\langle z, \epsilon, x \rangle \in \Delta^*$. Since the bags cover
+  $Q$, there exists $r$ such that $y \in \mathcal{B}(Q_r)$, and thus $y \in p^r$. Since $x
+  \in X \subseteq \mathcal{C}(Q_r)$, $x \in \tau_r(p^r, \sigma) \cap X \subseteq
+  \delta_x^b(p, \sigma)$.
+
+  Now, $\delta^{b*}(s, w)^i = (\tau_i(p^i, \sigma) \cap \mathcal{B}(Q_i)) \cup
+  (\hat{\Delta}_\epsilon(\delta_x^b(p, \sigma) \cap X_i) \cap \mathcal{B}(Q_i))$. Both parts
+  are contained in $Reach(w) \cap \mathcal{B}(Q_i)$. Conversely, let $q \in Reach(w) \cap
+  \mathcal{B}(Q_i)$ and let $y, z$ be as above for $q$ in place of $x$. If $y \in
+  \mathcal{B}(Q_i)$, then $y \in p^i$ and $q \in \tau_i(p^i, \sigma)$. Otherwise, if $q \in
+  X_i$, then $q \in \delta_x^b(p, \sigma) \cap X_i$. Otherwise, $q \in Q_i$. Since $y
+  \not\in \mathcal{B}(Q_i)$, by the first condition of \Cref{def:boundaries} $z \not\in Q_i$.
+  By \Cref{prop:boundary_path}, there exists $x \in X_i$ such that $\langle z, \epsilon, x
+  \rangle, \langle x, \epsilon, q \rangle \in \Delta^*$. Then $x \in Reach(w) \cap X_i =
+  \delta_x^b(p, \sigma) \cap X_i$, and $q \in \hat{\Delta}_\epsilon(\delta_x^b(p, \sigma) \cap
+  X_i)$.
+
+  Since the bags cover $Q$, $Reach(w) \cap F \neq \emptyset$ if and only if
+  $\delta^{b*}(s, w)^i \cap F \neq \emptyset$ for some $i$. Therefore,
+  $\mathcal{L}_{\mathcal{A}^b} = \mathcal{L}_\mathcal{A}$.
+\end{proof}
+
+The per-component construction of \Cref{alg:quasi_det_sfsa_components} applies to
+$\mathcal{A}^b$ with two changes. Since $\eta_i^b$ reads only $x \cap X_i$, it suffices to
+apply it for $x \subseteq X_i$. Since it reads only $t \cap \mathcal{B}(Q_i)$, it suffices to
+tabulate it for the distinct sets $\tau_i(P, \sigma) \cap \mathcal{B}(Q_i)$. For $i \in \{ 1,
+2, \ldots, k \}$ let $U_i^b$ be the smallest set such that $s^i \in U_i^b$ and
+$\eta_i^b(\tau_i(P, \sigma), x) \in U_i^b$ for $P \in U_i^b$, $\sigma \in \Sigma$ and $x
+\subseteq X_i$, and let $T_i^b = \{ \tau_i(P, \sigma) \cap \mathcal{B}(Q_i) \mid P \in U_i^b,
+\sigma \in \Sigma \}$. As in \Cref{lem:quasidet_components}, $\delta^{b*}(s, w)^i \in U_i^b$
+for $w \in \Sigma^*$, so the tables of $\tau_i$ and $\rho_i$ on $U_i^b \times \Sigma$ and of
+$\eta_i^b$ on $T_i^b \times 2^{X_i}$ determine $\mathcal{A}^b$ on its reachable states. The
+values of $\rho_i$ are subsets of $X$. The function $\eta_x$ is the union of subsets of $X$
+and is not tabulated.
+
+\begin{proposition}\label{prop:boundary_essential_closure}
+  Let $X_1, X_2, \ldots, X_k$ be boundaries of a $k$-separated finite-state automaton
+  $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$ and let $Z \subseteq Q$. Then
+  \begin{equation*}
+    \hat{\Delta}_\epsilon(Z) \cap \mathcal{B}(Q_i) = \hat{\Delta}_\epsilon((Z \cap Q_i) \cup
+    (\hat{\Delta}_\epsilon(Z) \cap X_i)) \cap \mathcal{B}(Q_i)
+  \end{equation*}
+  for $i \in \{ 1, 2, \ldots, k \}$.
+\end{proposition}
+
+\begin{proof}
+  The inclusion $\supseteq$ holds since $\hat{\Delta}_\epsilon(\hat{\Delta}_\epsilon(Z)) =
+  \hat{\Delta}_\epsilon(Z)$. Let $q \in \hat{\Delta}_\epsilon(Z) \cap \mathcal{B}(Q_i)$ and
+  $z \in Z$ with $\langle z, \epsilon, q \rangle \in \Delta^*$. If $z \in Q_i$ or $q \in X_i$,
+  then $q$ belongs to the right-hand side. Otherwise, $z \not\in Q_i$ and $q \in Q_i$, and by
+  \Cref{prop:boundary_path} there exists $x \in X_i \cap \hat{\Delta}_\epsilon(Z)$ with
+  $\langle x, \epsilon, q \rangle \in \Delta^*$.
+\end{proof}
+
+\begin{lemma}\label{lem:boundary_essential}
+  Let $\mathcal{A}^b$ be constructed as above and $m_i = |Q_i \cap Q^\Sigma|$. Then every
+  element of $U_i^b \cup T_i^b$ is of the form $\hat{\Delta}_\epsilon(B \cup E) \cap
+  \mathcal{B}(Q_i)$ for $B \subseteq Q_i \cap Q^\Sigma$ and $E \subseteq X_i$. Consequently,
+  $|U_i^b|, |T_i^b| \leq 2^{m_i + |X_i|}$.
+\end{lemma}
+
+\begin{proof}
+  Since $\hat{\Delta}_\epsilon^i(Y) \cap \mathcal{B}(Q_i) = \hat{\Delta}_\epsilon(Y) \cap
+  \mathcal{B}(Q_i)$, every element of $U_i^b \cup T_i^b$ is of the form
+  $\hat{\Delta}_\epsilon(Z) \cap \mathcal{B}(Q_i)$, where $Z$ is $S$,
+  $\hat{\Delta}_f(P, \{ \sigma \})$ or $\hat{\Delta}_f(P, \{ \sigma \}) \cup x$ for $x
+  \subseteq X_i$. In all cases $Z \subseteq Q^\Sigma \cup X$, so $Z \cap Q_i \subseteq Q_i
+  \cap Q^\Sigma$, and the statement follows from \Cref{prop:boundary_essential_closure}.
+\end{proof}
+
+\begin{theorem}\label{thm:quasidet_boundaries}
+  Let $X_1, X_2, \ldots, X_k$ be boundaries of a $k$-separated finite-state automaton
+  $\mathcal{A} = \langle \Sigma, Q, X, S, F, \Delta \rangle$. Then a $k$-separated
+  quasi-deterministic finite-state automaton $\mathcal{A}^b$ with $\mathcal{L}_{\mathcal{A}^b}
+  = \mathcal{L}_\mathcal{A}$, whose $i$-th component consists of tables of $\tau_i$ and
+  $\rho_i$ with $|\Sigma| |U_i^b|$ entries and of $\eta_i^b$ with $2^{|X_i|} |T_i^b|$ entries,
+  can be constructed in
+  \begin{equation*}
+    \mathcal{O}(\sum_{i=1}^k (|\Sigma| + 2^{|X_i|}) |Q| 2^{m_i + |X_i|})
+  \end{equation*}
+  time.
+\end{theorem}
+
+\begin{proof}
+  The construction explores $U_i^b$ with a worklist as in
+  \Cref{alg:quasi_det_sfsa_components}. Each of the $|U_i^b|$ explored quasi-states requires
+  $\mathcal{O}(|\Sigma| |Q|)$ time to compute $\tau_i$ and $\rho_i$, and each of the
+  $|T_i^b|$ rows of $\eta_i^b$ requires $\mathcal{O}(2^{|X_i|} |Q|)$ time. The table of
+  $\eta_x$ is not computed. The bound follows from \Cref{lem:boundary_essential}, and the
+  correctness from \Cref{lem:boundary_invariant}.
+\end{proof}
+
+The bound no longer contains $2^{|X|}$, only the sizes $|X_i|$ of the boundaries. The
+traversal (\Cref{alg:qdfsa_traversal}) changes in one respect: the separator states are
+subsets of $X$ and are combined by union instead of a look-up in a table of $\eta_x$. If they
+are represented as bit vectors, a union takes $\mathcal{O}(\lceil |X| / w \rceil)$ time on a
+machine with words of $w$ bits, and the look-up of $\eta_i^b$ extracts the $|X_i|$ bits of
+$X_i$. A word of length $n$ is processed in $\mathcal{O}(n (k \lceil |X| / w \rceil +
+\sum_{i=1}^k |X_i|))$ time, which is $\mathcal{O}(kn)$ if $|X| \leq w$ and the boundaries
+have constant size.
+
+For finite-state automata constructed from regular expressions, the boundaries obtained by
+applying \Cref{alg:thompson_separator} repeatedly are small. Every sub-automaton shares
+transitions with the rest of the finite-state automaton only through its start and final
+states. A component is a sub-automaton from which $h$ sub-automata have been cut out, so its
+boundary has at most $2 + 2h$ states, independently of $|X|$. In the experiments of
+\Cref{section:comparison_result}, all boundaries for the expressions $(0|1)*.0.(0|1)^n$ have
+at most $2$ states for up to $16$ components, while $|X|$ grows to $22$.
