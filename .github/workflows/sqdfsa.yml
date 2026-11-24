@@ -1,0 +1,74 @@
+name: Sqdfsa
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  impl:
+    name: Implementation (Bazel)
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: impl
+    env:
+      # The sources are compiled with -Wall -Werror; use the compiler they are
+      # developed with.
+      CC: clang
+      CXX: clang++
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}-impl
+          repository-cache: true
+      - name: Test
+        run: bazel test -c opt --config=opt --test_output=errors //...
+      - name: Build the benchmarks
+        run: bazel build -c opt --config=opt //:main //:bench
+
+  lean:
+    name: Formalization (Lean)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for sorry
+        run: |
+          if grep -rnw sorry lean/Sqdfsa lean/Sqdfsa.lean; then
+            echo "::error::The formalization contains sorry"
+            exit 1
+          fi
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: lean
+          use-mathlib-cache: true
+
+  thesis:
+    name: Thesis (LaTeX)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: thesis
+          root_file: main.tex
+          latexmk_use_xelatex: true
+          latexmk_shell_escape: true
+      - name: Check references
+        working-directory: thesis
+        run: |
+          if grep -nE "undefined (references|citations)|Reference .* undefined|Citation .* undefined" main.log; then
+            echo "::error::The thesis has undefined references"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thesis
+          path: thesis/main.pdf
