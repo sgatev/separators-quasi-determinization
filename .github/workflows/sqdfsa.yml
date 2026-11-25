@@ -80,10 +80,32 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}thesis.pdf
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: thesis
+      # GitHub Pages serves the PDF inline, so that browsers display it.
+      - name: Prepare the site
+        run: |
+          mkdir site
+          cp main.pdf site/thesis.pdf
+          cat > site/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <meta http-equiv="refresh" content="0; url=thesis.pdf">
+          <title>Separators for Quasi-Determinization of Finite-State Devices</title>
+          <a href="thesis.pdf">Thesis (PDF)</a>
+          HTML
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
       - name: Replace the thesis-latest release
         env:
           GH_TOKEN: ${{ github.token }}

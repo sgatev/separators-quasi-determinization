@@ -2,8 +2,9 @@
 
 [![Sqdfsa](https://github.com/sgatev/separators-quasi-determinization/actions/workflows/sqdfsa.yml/badge.svg?branch=main)](https://github.com/sgatev/separators-quasi-determinization/actions/workflows/sqdfsa.yml)
 
-**[Download the latest thesis PDF](https://github.com/sgatev/separators-quasi-determinization/releases/download/thesis-latest/thesis.pdf)**
-(rebuilt by CI on every push to `main`)
+**[Read the latest thesis (PDF)](https://sgatev.github.io/separators-quasi-determinization/thesis.pdf)**
+([download](https://github.com/sgatev/separators-quasi-determinization/releases/download/thesis-latest/thesis.pdf);
+rebuilt by CI on every push to `main`)
 
 Determinizing a finite-state automaton can blow up the number of states exponentially. The
 thesis studies automata whose graphs contain a separator: a set of states `X` whose removal
