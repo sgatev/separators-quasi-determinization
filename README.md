@@ -1,8 +1,8 @@
 # Separators for Quasi-Determinization of Finite-State Devices
 
-[![Sqdfsa](https://github.com/sgatev/sqdfsa-old/actions/workflows/sqdfsa.yml/badge.svg?branch=main)](https://github.com/sgatev/sqdfsa-old/actions/workflows/sqdfsa.yml)
+[![Sqdfsa](https://github.com/sgatev/separators-quasi-determinization/actions/workflows/sqdfsa.yml/badge.svg?branch=main)](https://github.com/sgatev/separators-quasi-determinization/actions/workflows/sqdfsa.yml)
 
-**[Download the latest thesis PDF](https://github.com/sgatev/sqdfsa-old/releases/download/thesis-latest/thesis.pdf)**
+**[Download the latest thesis PDF](https://github.com/sgatev/separators-quasi-determinization/releases/download/thesis-latest/thesis.pdf)**
 (rebuilt by CI on every push to `main`)
 
 Determinizing a finite-state automaton can blow up the number of states exponentially. The
