@@ -72,3 +72,27 @@ jobs:
         with:
           name: thesis
           path: thesis/main.pdf
+
+  publish:
+    name: Publish thesis PDF
+    needs: thesis
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: thesis
+      - name: Replace the thesis-latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mv main.pdf thesis.pdf
+          gh release delete thesis-latest --yes --cleanup-tag || true
+          gh release create thesis-latest thesis.pdf \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "Thesis (latest build)" \
+            --notes "Built by CI from $GITHUB_SHA."
