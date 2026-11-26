@@ -14,28 +14,29 @@
 \end{definition}
 
 \begin{definition}
-  A graph $\mathcal{G} = \langle V, E \rangle$ is \emph{planar} if and only if there
-  exist a total injective function $f_v$ that maps vertices of the graph to distinct
-  points in the real plane, and a total injective function $f_e$ that maps edges of the
-  graph to simple curves in the real plane, such that
-  \begin{itemize}
-    \item $f_e(\{ v', v'' \})$ has end points equal to $f_v(v')$ and $f_v(v'')$ for
-	    $\{ v', v'' \} \in E$,
-    \item curves in $rng(f_e)$ intersect only at points in $rng(f_v)$.
-  \end{itemize}
-\end{definition}
-
-\begin{definition}
   The set $X$ is a \emph{separator in a graph} $\mathcal{G} = \langle V, E \rangle$
   if and only if there exists a partition ${\{ X, V_1, \ldots, V_n \}}_V$ for $n > 1$
   such that $\{ v', v'' \} \not\in E$ for $v' \in V_i$ and $v'' \in V_j$ if $i
   \neq j$ for $i, j \in \{1, 2, \ldots, n \}$.
 \end{definition}
 
-\begin{theorem}[Lipton, Tarjan, see \cite{lipton_tarjan_theorem}]
-  \label{thm:lipton_tarjan}
-  There exists an algorithm that, given a planar graph $\mathcal{G} = \langle V, E
-  \rangle$, finds a separator $X$ and a partition $\{ X, V_1, V_2 \}_V$, such that
-  $|X| \leq 2 \sqrt{2|V|}$ and $|V_i| \leq \frac{2}{3} |V|$ for $i \in \{ 1, 2 \}$,
-  in $\mathcal{O}(|V|)$ time.
-\end{theorem}
+A \emph{two-terminal graph} is a graph $\mathcal{G} = \langle V, E \rangle$ together with
+two distinct vertices $a, b \in V$, its terminals, written $\langle \mathcal{G}, a, b
+\rangle$. Let $\langle \langle V_1, E_1 \rangle, a_1, b_1 \rangle$ and $\langle \langle V_2,
+E_2 \rangle, a_2, b_2 \rangle$ be two-terminal graphs. If $V_1 \cap V_2 = \{ b_1 \}$ and
+$b_1 = a_2$, their \emph{series composition} is $\langle \langle V_1 \cup V_2, E_1 \cup E_2
+\rangle, a_1, b_2 \rangle$. If $V_1 \cap V_2 = \{ a_1, b_1 \}$, $a_1 = a_2$ and $b_1 =
+b_2$, their \emph{parallel composition} is $\langle \langle V_1 \cup V_2, E_1 \cup E_2
+\rangle, a_1, b_1 \rangle$.
+
+\begin{definition}\label{def:series_parallel}
+  The \emph{two-terminal series--parallel graphs} are the smallest class of two-terminal
+  graphs that contains $\langle \langle \{ a, b \}, \{ \{ a, b \} \} \rangle, a, b
+  \rangle$ for all distinct vertices $a$ and $b$ and is closed under series and parallel
+  composition.
+\end{definition}
+
+Series--parallel graphs are planar and have treewidth at most $2$
+\cite{bodlaender_arboretum}, so they have balanced separators of constant size. For
+finite-state automata constructed from regular expressions, separators of size $2$ are
+computed in \Cref{section:regular_expressions_automata}.

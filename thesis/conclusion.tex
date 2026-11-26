@@ -92,8 +92,8 @@ the construction with boundaries (\Cref{lem:boundary_invariant,lem:boundary_esse
 iteration count of
 \Cref{alg:quasi_det_sfsa} together with the finite-state automata $\mathcal{A}_k$, and the
 separators of \Cref{alg:thompson_separator} and of its symbol-balanced variant together with
-\Cref{cor:quasidet_regex}. It does not cover \Cref{prop:essential_dfa}, the planarity of the
-graphs of finite-state automata constructed from regular expressions, the results cited
+\Cref{cor:quasidet_regex}. It does not cover \Cref{prop:essential_dfa},
+\Cref{prop:thompson_series_parallel}, the results cited
 from the literature (\Cref{thm:rabin_scott,thm:thompson,thm:choffrut_mohri}), and the
 correctness of the pseudocode of the construction algorithms line by line. The
 algorithms are modelled by the sequences of states they process.
@@ -127,8 +127,15 @@ obtains separators for $k > 2$ components by applying the idea of
 \Cref{alg:thompson_separator} repeatedly, which adds two separator states per additional
 component. With boundaries (\Cref{section:quasi_determinization_boundaries}) the growth of
 $X$ matters only through the traversal, but bounds on the sizes of the resulting components
-and of their boundaries remain to be proved. For general
-finite-state automata with planar graphs, the separator theorem of Lipton and Tarjan
-(\Cref{thm:lipton_tarjan}) gives separators of size $\mathcal{O}(\sqrt{|Q|})$. Since
-the bounds depend exponentially on $|X|$, the balance between the size of the separator
-and the sizes of the components determines which separators are useful in practice.
+and of their boundaries remain to be proved. For finite-state automata whose graphs are not series--parallel, other separator theorems
+apply. Every planar graph with $n$ vertices has a separator of at most $2 \sqrt{2n}$
+vertices whose two components have at most $\frac{2}{3} n$ vertices each, and Lipton and
+Tarjan find it in $\mathcal{O}(n)$ time \cite{lipton_tarjan_theorem}. Their theorem also
+holds with weights on the vertices, so the components can be balanced with respect to the
+essential states. Similar theorems hold for graphs of bounded genus
+\cite{gilbert_hutchinson_tarjan} and for graphs without a fixed complete minor
+\cite{alon_seymour_thomas}. Since the bounds of this thesis depend exponentially on $|X|$,
+a separator of size $\mathcal{O}(\sqrt{|Q|})$ adds a factor of $2^{\mathcal{O}(\sqrt{|Q|})}$,
+and only separators that are small in absolute terms are useful in practice. Automata whose
+graphs have bounded treewidth, which generalize the series--parallel graphs of
+\Cref{prop:thompson_series_parallel}, are a natural next class.

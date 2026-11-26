@@ -32,9 +32,9 @@ instead of the number of states:
 * `thompson_quasiDet_symbols`: Corollary `quasidet_regex`, every regular expression can be
   quasi-determinized in `O(|Σ|·|Q|·2^{2m/3})` time.
 
-The planarity of the graphs of Thompson automata (first proposition of §3.2) is not
-formalized: Mathlib has no theory of planar embeddings, and the result is only used to motivate
-the use of separators.
+The first proposition of §3.2 (`thompson_series_parallel`: the graphs of Thompson automata are
+subgraphs of series–parallel graphs) is not formalized; it is only used to motivate the use of
+separators.
 -/
 
 set_option linter.unusedSectionVars false

@@ -258,9 +258,9 @@ Smaller issues in the complexity proofs:
   algorithms are modelled as functional programs with explicit step counts, not run on an
   operational machine model.
 - Prop. `essential_dfa`: the subset construction has at most `2^{|Q^Σ|}` reachable states.
-- §3.2: the planarity of the graphs of Thompson automata (Mathlib has no theory of planar
-  embeddings; the result only motivates the use of separators), and the correctness of the
-  Thompson construction itself (cited in the thesis).
+- §3.2: Prop. `thompson_series_parallel` (the graphs of Thompson automata are subgraphs of
+  series–parallel graphs; it only motivates the use of separators), and the correctness of
+  the Thompson construction itself (cited in the thesis).
 - Cited results: the trimming algorithm (Mihov–Schulz) and Mohri's subsequentialization theorem.
 - For transducers, the finite-state device is the restriction of `𝒯'` to its finitely many
   reachable states. It is not built as a separate structure with finite component types.

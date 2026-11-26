@@ -3,13 +3,11 @@
 
 In this section, we show that finite-state automata constructed from regular
 expressions using the algorithm described in \Cref{thm:thompson} are $k$-separated
-for $k > 1$. We first prove that the graph $\mathcal{G}_{\mathcal{A}}$ corresponding
+for $k > 1$. We first show that the graph $\mathcal{G}_{\mathcal{A}}$ corresponding
 to such finite-state automaton $\mathcal{A} = \langle \Sigma, Q, S, F, \Delta
-\rangle$ is planar. As a consequence, the algorithm described in
-\Cref{thm:lipton_tarjan} can be applied to find a separator of size
-$\mathcal{O}(\sqrt{|Q|})$ in $\mathcal{O}(|Q|)$ time. We then describe a specialized
-algorithm that is guaranteed to find a separator of constant size in
-$\mathcal{O}(|Q|)$ time. An example of such separator is presented in
+\rangle$ is a spanning subgraph of a series--parallel graph. Such graphs have
+separators of constant size. We then describe an algorithm that finds a separator of
+size $2$ in $\mathcal{O}(|Q|)$ time. An example of such separator is presented in
 \Cref{figure:separator_thompson_automaton}.
 
 \begin{figure}[!ht]
@@ -62,242 +60,64 @@ $\mathcal{O}(|Q|)$ time. An example of such separator is presented in
   \label{figure:separator_thompson_automaton}
 \end{figure}
 
-\begin{proposition}
+\begin{proposition}\label{prop:thompson_series_parallel}
   Let $\mathcal{E}$ be a regular expression over an alphabet $\Sigma$ and let
-  $\mathcal{A}$ be the finite-state automaton constructed from $\mathcal{E}$ by
-  applying the algorithm described in $\Cref{thm:thompson}$. Then
-  $\mathcal{G}_\mathcal{A}$ is planar.
+  $\mathcal{A} = \langle \Sigma, Q, \{ s \}, \{ f \}, \Delta \rangle$ be the finite-state
+  automaton constructed from $\mathcal{E}$ by applying the algorithm described in
+  \Cref{thm:thompson}. Then there exists a two-terminal series--parallel graph
+  $\langle \langle Q, E \rangle, s, f \rangle$ such that $\mathcal{G}_\mathcal{A} =
+  \langle Q, E_\mathcal{A} \rangle$ with $E_\mathcal{A} \subseteq E$. In particular,
+  $\mathcal{G}_\mathcal{A}$ is planar and has treewidth at most $2$.
 \end{proposition}
 
 \begin{proof}
-  We show by induction on the construction of the finite-state automaton
-  $\mathcal{A}$ that its corresponding graph $\mathcal{G}_{\mathcal{A}}$ can be
-  embedded in a square so that the following properties hold.
-  \begin{enumerate}
-    \item Only the vertex corresponding to the single start state of $\mathcal{A}$ is
-          mapped to a point that lies on the left side of the square,
-    \item only the vertex corresponding to the single final state of $\mathcal{A}$ is
-          mapped to a point that lies on the right side of the square,
-    \item the vertices corresponding to all other states of $\mathcal{A}$ are mapped
-          to points that lie properly inside the square,
-    \item edges that correspond to transitions of $\mathcal{A}$ are mapped to simple
-          curves that lie properly inside the square,
-    \item curves intersect only at points corresponding to vertices of
-          $\mathcal{G}_{\mathcal{A}}$.
-  \end{enumerate}
+  We write $\mathcal{S}_\mathcal{A}$ for the series--parallel graph constructed for
+  $\mathcal{A}$ and $e(a, b)$ for the two-terminal graph $\langle \langle \{ a, b \}, \{
+  \{ a, b \} \} \rangle, a, b \rangle$. We proceed by induction on the construction of
+  $\mathcal{A}$, using the notation of \Cref{thm:thompson}.
 
-  \begin{case}[$\mathcal{E} = \emptyset$]
-    Then $\mathcal{A}$ is a Type 1 finite-state automaton. The embedding of the
-    graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
-    $\Cref{fig:f_thompson_1}$. There are two vertices and no edges in
-    $\mathcal{G}_{\mathcal{A}}$. Properties 1 and 2 hold for
-    $\mathcal{G}_{\mathcal{A}}$ by construction. Properties 3, 4 and 5 hold for
-    $\mathcal{G}_{\mathcal{A}}$ trivially.
-
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[on grid, auto, scale=0.5]
-        \draw[dotted] (-4, -4) rectangle (4, 4);
-
-        \node[state, fill=white, scale=0.75] (s) at
-        (-4, 0) {$s$};
-        \node[state, fill=white, scale=0.75] (f)
-        at (4, 0) {$f$};
-      \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 1 finite-state
-      automaton in a square.}
-      \label{fig:f_thompson_1}
-    \end{figure}
+  \begin{case}[$\mathcal{A}$ is Type 1 or Type 2]
+    Then $Q = \{ s, f \}$, $s \neq f$, and $\mathcal{S}_\mathcal{A} = e(s, f)$ contains
+    the only possible edge $\{ s, f \}$.
   \end{case}
 
-  \begin{case}[$\mathcal{E} = \sigma$ where $\sigma \in \Sigma_\epsilon$]
-    Then $\mathcal{A}$ is a Type 2 finite-state automaton. The embedding of the
-    graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
-    $\Cref{fig:f_thompson_2}$. There are two vertices and a single edge in
-    $\mathcal{G}_{\mathcal{A}}$. Properties 1, 2, 4 and 5 hold for
-    $\mathcal{G}_{\mathcal{A}}$ by construction. Property 3 holds for
-    $\mathcal{G}_{\mathcal{A}}$ trivially.
-
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[on grid, auto, scale=0.5]
-        \draw[dotted] (-4, -4) rectangle (4, 4);
-        \node[state, fill=white, scale=0.75] (s) at
-        (-4, 0) {$s$};
-        \node[state, fill=white, scale=0.75] (f)
-        at (4, 0) {$f$};
-        \path (s) edge node {} (f);
-      \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 2 finite-state
-      automaton in a square.}
-      \label{fig:f_thompson_2}
-    \end{figure}
+  \begin{case}[$\mathcal{A}$ is Type 3]
+    Let $\mathcal{S}_\mathcal{A}$ be the series composition of $\mathcal{S}_{\mathcal{A}'}$,
+    $e(f', s'')$ and $\mathcal{S}_{\mathcal{A}''}$. The compositions are defined, since
+    $Q' \cap \{ f', s'' \} = \{ f' \}$ and $(Q' \cup \{ s'' \}) \cap Q'' = \{ s'' \}$,
+    and the terminals are $s = s'$ and $f = f''$. The edges of $\mathcal{G}_\mathcal{A}$
+    are those of $\mathcal{G}_{\mathcal{A}'}$ and $\mathcal{G}_{\mathcal{A}''}$ and the edge
+    $\{ f', s'' \}$.
   \end{case}
 
-  \begin{case}[$\mathcal{E} = \mathcal{E}'.\mathcal{E}''$ where $\mathcal{E}'$ and
-    $\mathcal{E}''$ are regular expressions]
-    Then $\mathcal{A}$ is a Type 3 finite-state automaton. The embedding of the graph
-    $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
-    $\Cref{fig:f_thompson_3}$. Let $\mathcal{A}'$ and $\mathcal{A}''$ be the
-    finite-state automata constructed from $\mathcal{E}'$ and $\mathcal{E}''$
-    respectively. Also, let properties 1 through 5 hold for
-    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Since property 1
-    holds for $\mathcal{G}_\mathcal{A'}$ and property 2 holds for
-    $\mathcal{G}_\mathcal{A''}$ then, by construction, properties 1 and
-    2 hold for $\mathcal{G}_\mathcal{A}$. Also, since property 3 holds
-    for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$
-    then, by construction, it also holds for $\mathcal{G}_\mathcal{A}$.
-    Since property 4 holds for $\mathcal{G}_\mathcal{A'}$ and
-    $\mathcal{G}_\mathcal{A''}$, and the edge connecting $f'$ and $s''$
-    is mapped to a simple curve that lies properly inside the square
-    then property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, that
-    edge is mapped outside the square embeddings of the graphs
-    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Thus,
-    since properties 4 and 5 hold for them, then property 5 also holds for
-    $\mathcal{G}_\mathcal{A}$.
-
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[on grid, auto, scale=0.25]
-        \draw[dotted] (-8, -8) rectangle (8, 8);
-
-        \draw (-8, -3) rectangle (-2, 3);
-        \node[state, fill=white, scale=0.75]
-        (s') at (-8, 0) {$s'$};
-        \node[state, fill=white, scale=0.75]
-        (f') at (-2, 0) {$f'$};
-
-        \draw (2, -3) rectangle (8, 3);
-        \node[state, fill=white, scale=0.75]
-        (s'') at (2, 0) {$s''$};
-        \node[state, fill=white, scale=0.75]
-        (f'') at (8, 0) {$f''$};
-
-        \path (f') edge node {} (s'');
-
-        \node[] at (-5, 0) {$\mathcal{G}_\mathcal{A'}$};
-        \node[] at (5, 0) {$\mathcal{G}_\mathcal{A''}$};
-      \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 3 finite-state
-      automaton in a square.}
-      \label{fig:f_thompson_3}
-    \end{figure}
+  \begin{case}[$\mathcal{A}$ is Type 4]
+    For $\mathcal{A}^\circ \in \{ \mathcal{A}', \mathcal{A}'' \}$ with start state
+    $s^\circ$ and final state $f^\circ$, the series composition of $e(s, s^\circ)$,
+    $\mathcal{S}_{\mathcal{A}^\circ}$ and $e(f^\circ, f)$ is defined, since $s, f \not\in
+    Q^\circ$. Let $\mathcal{S}_\mathcal{A}$ be the parallel composition of the two
+    resulting graphs, which is defined, since $Q' \cap Q'' = \emptyset$. The edges of
+    $\mathcal{G}_\mathcal{A}$ are those of $\mathcal{G}_{\mathcal{A}'}$ and
+    $\mathcal{G}_{\mathcal{A}''}$ and the edges $\{ s, s' \}$, $\{ s, s'' \}$, $\{ f', f \}$
+    and $\{ f'', f \}$.
   \end{case}
 
-  \begin{case}[$\mathcal{E} = \mathcal{E}'+\mathcal{E}''$ where $\mathcal{E}'$ and
-    $\mathcal{E}''$ are regular expressions]
-    Then $\mathcal{A}$ is a Type 4 finite-state automaton. The embedding of the
-    graph $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
-    $\Cref{fig:f_thompson_4}$. Let $\mathcal{A}'$ and $\mathcal{A}''$ be the
-    finite-state automata constructed from $\mathcal{E}'$ and $\mathcal{E}''$
-    respectively. Also, let properties 1 through 5 hold for
-    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$. Properties 1 and 2
-    hold for $\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds
-    for $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and
-    since no vertices are ever mapped to points that lie on the top or
-    bottom sides of a square then, by construction, it also holds for
-    $\mathcal{G}_\mathcal{A}$. Also, since properties 4 and 5 hold for
-    $\mathcal{G}_\mathcal{A'}$ and $\mathcal{G}_\mathcal{A''}$, and since the edges
-    that connect $s$ to $s'$ and $s''$, and $f$ to $f'$ and $f''$ are mapped to
-    curves that lie properly inside the square then property 4 holds for
-    $\mathcal{G}_\mathcal{A}$. Moreover, since these edges are mapped to simple
-    curves that lie outside the square embeddings of $\mathcal{G}_\mathcal{A'}$ and
-    $\mathcal{G}_\mathcal{A''}$, and since they intersect other curves only at points
-    where vertices of the graph are mapped to, then property 5 holds for
-    $\mathcal{G}_\mathcal{A}$.
-
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[on grid, auto, scale=0.25]
-        \draw[dotted] (-8, -8) rectangle (8, 8);
-
-        \draw (-3, 8) rectangle (3, 2);
-        \node[state, fill=white, scale=0.75]
-        (s') at (-3, 5) {$s'$};
-        \node[state, fill=white, scale=0.75]
-        (f') at (3, 5) {$f'$};
-
-        \draw (-3, -8) rectangle (3, -2);
-        \node[state, fill=white, scale=0.75]
-        (s'') at (-3, -5) {$s''$};
-        \node[state, fill=white, scale=0.75]
-        (f'') at (3, -5) {$f''$};
-
-        \node[state, fill=white, scale=0.75]
-        (s) at (-8, 0) {$s$};
-        \node[state, fill=white, scale=0.75]
-        (f) at (8, 0) {$f$};
-
-        \path (s) edge node {} (s')
-        (s) edge node {} (s'')
-        (f') edge node {} (f)
-        (f'') edge node {} (f);
-
-        \node[] at (0, 5) {$\mathcal{G}_\mathcal{A'}$};
-        \node[] at (0, -5) {$\mathcal{G}_\mathcal{A''}$};
-      \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 4 finite-state
-      automaton in a square.}
-      \label{fig:f_thompson_4}
-    \end{figure}
+  \begin{case}[$\mathcal{A}$ is Type 5]
+    Let $\mathcal{P}$ be the parallel composition of $\mathcal{S}_{\mathcal{A}'}$ and
+    $e(s', f')$, let $\mathcal{P}'$ be the series composition of $e(s, s')$, $\mathcal{P}$
+    and $e(f', f)$, and let $\mathcal{S}_\mathcal{A}$ be the parallel composition of
+    $\mathcal{P}'$ and $e(s, f)$. All compositions are defined, since $s, f \not\in Q'$.
+    The edges of $\mathcal{G}_\mathcal{A}$ are those of $\mathcal{G}_{\mathcal{A}'}$ and
+    the edges $\{ f', s' \}$, $\{ f', f \}$, $\{ s, s' \}$ and $\{ s, f \}$.
   \end{case}
 
-  \begin{case}[$\mathcal{E} = \mathcal{E}'*$ where $\mathcal{E}'$ is a regular
-    expression]
-    Then $\mathcal{A}$ is a Type 5 finite-state automaton. The embedding of the graph
-    $\mathcal{G}_{\mathcal{A}}$ in a square is presented in
-    $\Cref{fig:f_thompson_5}$. Let $\mathcal{A}'$ be the finite-state automaton
-    constructed from $\mathcal{E}'$. Also, let properties 1 through 5 hold for
-    $\mathcal{G}_\mathcal{A'}$. Properties 1 and 2 hold for
-    $\mathcal{G}_{\mathcal{A}}$ by construction. Since property 3 holds for
-    $\mathcal{G}_\mathcal{A'}$ then, by construction, it also holds for
-    $\mathcal{G}_\mathcal{A}$. Also, since properties 4 and 5 hold for
-    $\mathcal{G}_\mathcal{A'}$ and since the edges that connect $s$ to $s'$ and $f$,
-    and $f'$ to $s'$ and $f$ are mapped to curves that lie properly inside the square
-    then property 4 holds for $\mathcal{G}_\mathcal{A}$. Moreover, since these edges
-    are mapped to simple curves that lie outside the square embedding of
-    $\mathcal{G}_\mathcal{A'}$ and since they intersect other curves only at points
-    where vertices of the graph are mapped to, then property 5 holds for
-    $\mathcal{G}_\mathcal{A}$.
-
-    \begin{figure}[!ht]
-      \centering
-      \begin{tikzpicture}[on grid, auto, scale=0.25]
-        \draw[dotted] (-8, -8) rectangle (8, 8);
-
-        \draw (-3, -3) rectangle (3, 3);
-        \node[state, fill=white, scale=0.75]
-        (s) at (-8, 0) {$s$};
-        \node[state, fill=white, scale=0.75]
-        (s') at (-3, 0) {$s'$};
-        \node[state, fill=white, scale=0.75]
-        (f') at (3, 0) {$f'$};
-        \node[state, fill=white, scale=0.75]
-        (f) at (8, 0) {$f$};
-
-        \path (s) edge node {} (s')
-        (f') edge node {} (f)
-        (f') edge [bend right=110, looseness=2]
-        node {} (s')
-        (s) edge [bend right=50, looseness=1.5]
-        node {} (f);
-
-        \node[] at (0, 0) {$\mathcal{G}_\mathcal{A'}$};
-      \end{tikzpicture}
-      \caption{Embedding of the graph corresponding to a Type 5 finite-state
-      automaton in a square.}
-      \label{fig:f_thompson_5}
-    \end{figure}
-  \end{case}
-
-  Properties 1 through 5 guarantee that vertices of the graph are mapped to
-  points in the plane and that edges of the graph are mapped to simple curves
-  in the plane so that these curves intersect only at points where vertices
-  of the graph are mapped to. It follows that $\mathcal{G}_{\mathcal{A}}$ is
-  planar.
+  \noindent
+  In all cases, the vertices of $\mathcal{S}_\mathcal{A}$ are the states of $\mathcal{A}$,
+  and by the inductive hypothesis its edges include those of $\mathcal{G}_\mathcal{A}$.
+  Planarity and the bound on the treewidth carry over to subgraphs
+  \cite{bodlaender_arboretum}.
 \end{proof}
 
-We now show a specialized algorithm that finds a separator of constant size in a
+We now show an algorithm that finds a separator of constant size in a
 finite-state automaton constructed using the algorithm described in
 \Cref{thm:thompson}. The main procedure is described in
 \Cref{alg:thompson_separator}. We proceed with proving the correctness of the
